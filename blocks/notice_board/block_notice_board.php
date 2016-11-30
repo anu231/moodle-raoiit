@@ -7,6 +7,7 @@ class block_notice_board extends block_base {
     public function init(){
       $this->title = get_string('notice_board', 'block_notice_board');
     }
+
     public function get_content(){
       if($this->content != null){
         return $this->content;
@@ -23,7 +24,17 @@ class block_notice_board extends block_base {
       ';
       $this->content->footer = 'Done quiet beautifully, I must say!';
 
+    //   $this->configure();   // For when block-instance is present
       return $this->content;
+    }
+
+    private function configure(){
+        if(!empty($this->config->noticetitle)){
+            $this->content->text = $this->config->noticetitle;
+        }
+        if(!empty($this->config->noticebody)){
+            $this->content->body = $this->config->noticebody;
+        }
     }
 
 }

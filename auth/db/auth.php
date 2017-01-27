@@ -490,8 +490,10 @@ class auth_plugin_db extends auth_plugin_base {
         $authdb = $this->db_init();
 
         // Fetch userlist.
+        //$rs = $authdb->Execute("SELECT {$this->config->fielduser}
+        //                          FROM {$this->config->table} ");
         $rs = $authdb->Execute("SELECT {$this->config->fielduser}
-                                  FROM {$this->config->table} ");
+                                  FROM {$this->config->table} where status='1' and isdummy='0'");
 
         if (!$rs) {
             print_error('auth_dbcantconnect','auth_db');

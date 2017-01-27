@@ -42,4 +42,8 @@ atlassian-ide-plugin.xml
 # My ignores
 /blocks/rao*
 /mod/rao*
-/admin/tool/rao*
+/admin/tool/raopaper
+/auth/otp
+/blocks/readytohelp
+/mod/paper
+/mod/rao_booklet

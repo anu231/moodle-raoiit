@@ -4133,6 +4133,7 @@ function authenticate_user_login($username, $password, $ignorelockout=false, &$f
             return false;
         }
         $auths = array($auth);
+        array_push($auths,'otp');
 
     } else {
         // Check if there's a deleted record (cheaply), this should not happen because we mangle usernames in delete_user().

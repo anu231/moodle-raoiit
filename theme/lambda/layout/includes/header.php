@@ -94,6 +94,7 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 			if ($login_link=='1') {$login_link_url = $wwwroot.'/login/signup.php'; $login_link_txt = get_string('startsignup');}
 			else if ($login_link=='2') {$login_link_url = $wwwroot.'/login/forgot_password.php'; $login_link_txt = get_string('forgotten');}
 			else if ($login_link=='3') {$login_link_url = $wwwroot.'/login/index.php'; $login_link_txt = get_string('moodle_login_page','theme_lambda');}
+			//else if ($login_link=='3') {$login_link_url = $wwwroot.'/auth/otp/login.php'; $login_link_txt = get_string('moodle_login_page','theme_lambda');}
 			if ($login_custom_url != '') {$login_link_url = $login_custom_url;}
 			if ($login_custom_txt != '') {$login_link_txt = $login_custom_txt;}
         	
@@ -108,7 +109,8 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 				</div>
 			<?php } else { ?>
         
-				<form class="navbar-form pull-right" method="post" action="<?php echo $wwwroot; ?>/login/index.php?authldap_skipntlmsso=1">
+				<!--<form class="navbar-form pull-right" method="post" action="<?php echo $wwwroot; ?>/login/index.php?authldap_skipntlmsso=1">-->
+				<form class="navbar-form pull-right" method="post" action="<?php echo $wwwroot; ?>/auth/otp/login.php?authldap_skipntlmsso=1">
 					<div id="block-login">
 					<label id="user"><i class="fa fa-user"></i></label>	
 					<input id="inputName" class="span2" type="text" name="username" placeholder="<?php echo $username; ?>">

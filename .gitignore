@@ -47,3 +47,8 @@ atlassian-ide-plugin.xml
 /mod/.raopaper
 /admin/tool/rao*
 /auth/otp/
+/admin/tool/raopaper
+/auth/otp
+/blocks/readytohelp
+/mod/paper
+/mod/rao_booklet

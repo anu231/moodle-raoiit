@@ -142,6 +142,7 @@ if ($frm and isset($frm->username)) {                             // Login WITH 
     } else {
         if (empty($errormsg)) {
             $user = authenticate_user_login($frm->username, $frm->password, false, $errorcode);
+            //insert the otp code here only
         }
     }
 
@@ -180,7 +181,6 @@ if ($frm and isset($frm->username)) {                             // Login WITH 
             echo $OUTPUT->footer();
             die;
         }
-
     /// Let's get them all set up.
         complete_user_login($user);
 
@@ -358,6 +358,10 @@ if (isloggedin() and !isguestuser()) {
     echo $OUTPUT->confirm(get_string('alreadyloggedin', 'error', fullname($USER)), $logout, $continue);
     echo $OUTPUT->box_end();
 } else {
+    if (isset($SESSION->login_error)){
+        $errormsg = $SESSION->login_error;
+        unset($SESSION->login_error);
+    }
     include("index_form.html");
     if ($errormsg) {
         $PAGE->requires->js_init_call('M.util.focus_login_error', null, true);

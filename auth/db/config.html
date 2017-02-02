@@ -193,6 +193,7 @@
         $passtype["sha1"]      = get_string("sha1", "auth");
         $passtype["saltedcrypt"]      = get_string("auth_dbsaltedcrypt", "auth_db");
         $passtype["internal"]  = get_string("internal", "auth");
+        $passtype["pbkdf2"] = get_string("pbkdf2","auth");
         echo html_writer::select($passtype, "passtype", $config->passtype, false);
 
         ?>

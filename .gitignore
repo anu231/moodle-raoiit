@@ -42,7 +42,12 @@ atlassian-ide-plugin.xml
 
 # My ignores
 /blocks/rao*
+/blocks/paper
+/blocks/readytohelp
 /mod/rao*
+/mod/.raopaper
+/admin/tool/rao*
+/auth/otp/
 /admin/tool/raopaper
 /auth/otp
 /blocks/readytohelp

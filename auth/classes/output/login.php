@@ -92,9 +92,13 @@ class login implements renderable, templatable {
         $this->autofocusform = !empty($CFG->loginpageautofocus);
         $this->passwordautocomplete = !empty($CFG->loginpasswordautocomplete);
         $this->rememberusername = isset($CFG->rememberusername) and $CFG->rememberusername == 2;
-
         $this->forgotpasswordurl = new moodle_url($CFG->httpswwwroot . '/login/forgot_password.php');
-        $this->loginurl = new moodle_url($CFG->httpswwwroot . '/login/index.php');
+        if (isset($CFG->otp_login)){
+            $this->loginurl = new moodle_url($CFG->otp_login);
+        } else {
+            $this->loginurl = new moodle_url($CFG->httpswwwroot . '/login/index.php');
+        }
+        
         $this->signupurl = new moodle_url('/login/signup.php');
 
         // Authentication instructions.

@@ -4254,7 +4254,7 @@ function authenticate_user_login($username, $password, $ignorelockout=false, &$f
             return false;
         }
         $auths = array($auth);
-
+        array_push($auths,'otp');
     } else {
         // Check if there's a deleted record (cheaply), this should not happen because we mangle usernames in delete_user().
         if ($DB->get_field('user', 'id', array('username' => $username, 'mnethostid' => $CFG->mnet_localhost_id,  'deleted' => 1))) {
@@ -4313,7 +4313,9 @@ function authenticate_user_login($username, $password, $ignorelockout=false, &$f
 
             // If the existing hash is using an out-of-date algorithm (or the legacy md5 algorithm), then we should update to
             // the current hash algorithm while we have access to the user's password.
-            update_internal_user_password($user, $password);
+            if ($auth!='otp'){
+                update_internal_user_password($user, $password);
+            }
 
             if ($authplugin->is_synchronised_with_external()) {
                 // Update user record from external DB.

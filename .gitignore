@@ -9,8 +9,11 @@
 #
 # See gitignore(5) man page for more details
 #
+/mod/raopaper
+/blocks/timetable
 /config.php
 /lib/editor/tinymce/extra/tools/temp/
+composer.lock
 *~
 *.swp
 /tags
@@ -36,3 +39,20 @@ composer.phar
 /lib/yuilib/*/*/*-coverage.js
 atlassian-ide-plugin.xml
 /node_modules/
+
+# My ignores
+/blocks/rao*
+/blocks/paper
+/blocks/readytohelp
+/mod/rao*
+/mod/.raopaper
+/admin/tool/rao*
+/auth/otp/
+/admin/tool/raopaper
+/auth/otp
+/blocks/readytohelp
+/mod/paper
+/mod/rao_booklet
+/blocks/schedulesyllabus
+.vscode
+/mod/modvideo

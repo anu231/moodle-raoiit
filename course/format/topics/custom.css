@@ -6,10 +6,22 @@
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
     z-index: 10;
     text-align: center;
+    transition: 200ms ease-out box-shadow, border-radius;
+}
+
+.searchPanel.floating {
+    box-shadow: 0px 3px 9px 1px rgba(0, 0, 0, 0.2);
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
 }
 
 .searchPanel .topicSearchBox {
     padding: 5px;
     display: inline-block;
     margin: 0 auto;
+}
+
+.searchPanel .topicSearchBox #topicSearch {
+    outline: none;
+    user-select: none;
 }

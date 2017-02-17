@@ -37,7 +37,7 @@
         '<div class="topicSearchBox">' +
             '<label for="search">Search: ' +
             '   <input id="topicSearch" class="search" name="search" placeholder=" Booklets, Papers, Topics, etc."/> ' +
-            '   <button id="topicSearchButton" class="btn btn-info btn-small">Search</button>' +
+            '   <button id="topicSearchButton" class="btn btn-primary btn-small">Search</button>' +
             '   <button id="topicResetButton" class="btn btn-danger btn-small">Reset</button>' +
             '</label>'+
         '</div>';
@@ -70,14 +70,14 @@
     var searchPanelPosition = searchPanel.getBoundingClientRect();
     var navbarHeight = document.querySelector('.navbar').clientHeight;
     document.onscroll = function(e) {
-        var offset = navbarHeight;
+        var offset = 0;
         var topDiff = searchPanelPosition.top - pageYOffset - offset;
         if(topDiff <= 10){
             searchPanel.classList.add('floating');
             searchPanel.style.transform = `translateY(${-topDiff}px)`
         } else {
             searchPanel.classList.remove('floating');
-            searchPanel.style.transform = '';            
+            searchPanel.style.transform = '';
         }
     }
 

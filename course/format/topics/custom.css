@@ -24,4 +24,5 @@
 .searchPanel .topicSearchBox #topicSearch {
     outline: none;
     user-select: none;
+    padding-left: 10px;
 }

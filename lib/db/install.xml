@@ -3443,58 +3443,60 @@
     <TABLE NAME="rao_user" COMMENT="Data from the admission form. Linked to every user">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>      
-        <FIELD NAME="userid" TYPE="int" LENGTH="35" NOTNULL="true" SEQUENCE="true"/>      
-        <FIELD NAME="admissionlocation" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT="Student Name"/>
-        <FIELD NAME="admissiondate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT="Student Name"/>
-        <FIELD NAME="name" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT="Student Name"/>
-        <FIELD NAME="birthdate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="gender" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="category" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="fathersname" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="mothersname" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="fathersoccupation" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="mothersoccupation" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="address1" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="address2" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="city" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="pincode" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="state" TYPE="char" LENGTH="50" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="studentsmobile" TYPE="int" LENGTH="15" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="fathersmobile" TYPE="int" LENGTH="15" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="mothersmobile" TYPE="int" LENGTH="15" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="landline" TYPE="int" LENGTH="20" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="studentsemail" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="fathersemail" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="mothersemail" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="classtype" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT="TODO: Currently its an enum"/>
-        <FIELD NAME="coursename" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="studycenter" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="preferredtieup" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="targetyear" TYPE="char" LENGTH="4" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>      
+        <FIELD NAME="admissionlocation" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="Student Name"/>
+        <FIELD NAME="admissiondate" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Student Name"/>
+        <FIELD NAME="firstname" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="Student Name"/>
+        <FIELD NAME="middlename" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="Student Name"/>
+        <FIELD NAME="lastname" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="Student Name"/>
+        <FIELD NAME="birthdate" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="gender" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="category" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="fathername" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="mothername" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="fatheroccupation" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="motheroccupation" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="address1" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="address2" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="city" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="pincode" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="state" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="studentmobile" TYPE="int" LENGTH="15" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="fathermobile" TYPE="int" LENGTH="15" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="mothermobile" TYPE="int" LENGTH="15" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="landline" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="studentemail" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="fatheremail" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="motheremail" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="classtype" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="TODO: Currently its an enum"/>
+        <FIELD NAME="coursename" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="studycenter" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="preferredtieup" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="targetyear" TYPE="char" LENGTH="4" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
         <FIELD NAME="ttbatchid" TYPE="int" LENGTH="11" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="extbatchid" TYPE="char" LENGTH="30" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="extbatchid" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
         <FIELD NAME="status" TYPE="char" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT=""/>
         <FIELD NAME="idcardstatus" TYPE="char" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="idcardremarks" TYPE="char" LENGTH="150" NOTNULL="false" DEFAULT="" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="idcardremarks" TYPE="char" LENGTH="150" NOTNULL="false" SEQUENCE="false" COMMENT=""/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="userid" TYPE="foreign" FIELDS="id" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
     <TABLE NAME="academic_details" COMMENT="Data under the header academic details">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="userid" TYPE="int" LENGTH="35" NOTNULL="true" SEQUENCE="true"/>              
-        <FIELD NAME="class" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="board" TYPE="char" LENGTH="50" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="percentmarks" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="year" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="lastschool" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>              
+        <FIELD NAME="class" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="board" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="percentmarks" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="year" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="lastschool" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT=""/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="userid" TYPE="foreign" FIELDS="id" REFTABLE="rao_user" REFFIELDS="id"/>
+        <KEY NAME="userid" TYPE="foreign" FIELDS="id" REFTABLE="rao_user" REFFIELDS="userid"/>
       </KEYS>
     </TABLE>
   </TABLES>

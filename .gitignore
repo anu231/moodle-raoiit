@@ -41,18 +41,18 @@ atlassian-ide-plugin.xml
 /node_modules/
 
 # My ignores
-/blocks/rao*
-/blocks/paper
-/blocks/readytohelp
-/mod/rao*
+#/blocks/rao*
+#/blocks/paper
+#/blocks/readytohelp
+#/mod/rao*
 /mod/.raopaper
-/admin/tool/rao*
-/auth/otp/
-/admin/tool/raopaper
-/auth/otp
-/blocks/readytohelp
-/mod/paper
-/mod/rao_booklet
-/blocks/schedulesyllabus
+#/admin/tool/rao*
+#/auth/otp/
+#/admin/tool/raopaper
+#/auth/otp
+#/blocks/readytohelp
+#/mod/paper
+#/mod/rao_booklet
+#/blocks/schedulesyllabus
 .vscode
 /mod/modvideo

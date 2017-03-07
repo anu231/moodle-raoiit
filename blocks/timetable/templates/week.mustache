@@ -1,0 +1,39 @@
+<div class="timetable">
+    <div id="index">
+        <div class="index-header">Jump To:</div>
+        {{#days}}
+        <div class="index-item" onclick="jumpTo('{{fancydate}}')">{{fancydate}}</div>
+        {{/days}}
+    </div>
+    <table class="table table-bordered">
+        <thead id="theader" class="tt-header">
+            <tr>
+                <th>From</th>
+                <th>To</th>
+                <th>Faculty</th>
+                <th>Topics/Test</th>
+                <th>Notes</th>
+                <th>Batch</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{#days}}
+            <tr>
+                <td id="{{fancydate}}" colspan="7" class="date">{{fancydate}}</td>
+            </tr>
+            {{#items}}
+                <tr class="{{subject}} {{testclass}}">
+                    <td>{{starttime}}</td>
+                    <td>{{endtime}}</td>
+                    <td>{{teacher}}</td>
+                    <td>{{topicname}}</td>
+                    <td>{{notes}}</td>
+                    <td>{{batch}}</td>
+                </tr>
+            {{/items}}
+        {{/days}}
+        </tbody>
+    </table>
+</div>
+<link rel="stylesheet" href="templates/css/view.css">
+<script src="templates/js/view.js"></script>

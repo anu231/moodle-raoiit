@@ -1,0 +1,25 @@
+<div class="paper-card">
+    <div class="paper-name">{{name}}</div>
+    <hr>
+    <div class="info">
+        <div class="item duration-div"><span class="">Duration: <b>{{duration}}</b></span></div>
+        <div class="item date-div"><span class="">Date: <b>{{date}}</b></span></div>
+        <div class="item syllabus-div"><span class="">Syllabus: {{syllabus}}</span></div>
+    </div>
+    <div class="marks-div">
+        <table id="markstable" class="table table-hover table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>Question Type</th>
+                    <th>Positive</th>
+                    <th>Negative</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{{markingscheme}}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<link rel="stylesheet" href="templates/css/paper.css">

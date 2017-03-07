@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/paper/db" VERSION="20101203" COMMENT="XMLDB file for Moodle blocks/paper"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+    <TABLES>
+        <TABLE NAME="block_paper" COMMENT="Paper metadata.">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+                <FIELD NAME="paperid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="decimal paper identifier" />
+                <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Course paper belongs to"/>
+                <FIELD NAME="name" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Paper name"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="standard" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The standard: 8,7..12,r "/>
+                <FIELD NAME="stream" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Engg/Medical/Prefoundation"/>
+                <FIELD NAME="date" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Date of paper"/>
+                <FIELD NAME="duration" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Duration of paper"/>
+                <FIELD NAME="syllabus" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Syllabus for the paper"/>
+                <FIELD NAME="markingscheme" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Marking scheme converted to string."/>
+                <FIELD NAME="instructions" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Instructions for the paper"/>
+                <FIELD NAME="solutions" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Link to solution"/>
+                <FIELD NAME="offline" TYPE="char" LENGTH="4" NOTNULL="true" SEQUENCE="false" COMMENT="Paper offline? yes/no" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="courseid" UNIQUE="false" FIELDS="courseid"/>
+            </INDEXES>
+        </TABLE>
+
+        <TABLE NAME="paper_claims" COMMENT="Student claims regarding papers.">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="paperid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="question" TYPE="int" LENGTH="4" NOTNULL="false" SEQUENCE="false" COMMENT="The question number under question" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="UserId" />
+                <FIELD NAME="claimtext" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Students concern" />
+                <FIELD NAME="remark" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Remark from the concerned teacher"/>
+                <FIELD NAME="status" TYPE="char" LENGTH="255" NOTNULL="true" COMMENT="Unresolved/Processing/Resolved/Declined" />
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+                <KEY NAME="paperid" TYPE="foreign" FIELDS="paperid" REFTABLE="paper" REFFIELDS="id" />
+            </KEYS>
+        </TABLE>
+    </TABLES>
+</XMLDB>

@@ -2518,28 +2518,7 @@ function xmldb_main_upgrade($oldversion) {
         }
         // Main savepoint reached.
         upgrade_main_savepoint(true, 2016120500.05);
-    }
-
-    // Add academic_details table
-    if($oldversion < 2017120501.00) {
-        $table = new xmldb_table('academic_details');
-
-        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);        
-        $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
-        $table->add_field('class', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
-        $table->add_field('board', XMLDB_TYPE_CHAR, '50', null, XMLDB_NOTNULL, null, null);
-        $table->add_field('percentmarks', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
-        $table->add_field('year', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
-        $table->add_field('lastschool', XMLDB_TYPE_CHAR, '100', null, XMLDB_NOTNULL, null, null);
-
-        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
-        $table->add_key('userid', XMLDB_KEY_FOREIGN, array('userid'), 'rao_user', array('userid'));
-
-        if (!$dbman->table_exists($table)) {
-            $dbman->create_table($table);
-        }
-        upgrade_main_savepoint(true, 2016120500.06);
-    }    
+    }   
 
     return true;
 }

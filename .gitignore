@@ -9,8 +9,6 @@
 #
 # See gitignore(5) man page for more details
 #
-/mod/raopaper
-/blocks/timetable
 /config.php
 /lib/editor/tinymce/extra/tools/temp/
 composer.lock
@@ -45,7 +43,7 @@ atlassian-ide-plugin.xml
 #/blocks/paper
 #/blocks/readytohelp
 #/mod/rao*
-/mod/.raopaper
+#/mod/.raopaper
 #/admin/tool/rao*
 #/auth/otp/
 #/admin/tool/raopaper
@@ -55,4 +53,3 @@ atlassian-ide-plugin.xml
 #/mod/rao_booklet
 #/blocks/schedulesyllabus
 .vscode
-/mod/modvideo

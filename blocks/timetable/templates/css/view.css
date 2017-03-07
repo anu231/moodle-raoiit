@@ -1,0 +1,81 @@
+.timetable .tt-header {
+    will-change: transfrom;
+    transition: 0.1s ease-out transfrom;
+}
+
+.timetable .tt-header-floating {
+    background-color: #3f51b5;
+    color: white;
+    border-radius: 0px;
+}
+.timetable .tt-header-floating th {
+    border-radius: 0px;
+}
+
+.timetable #index {
+    background-color: #f5f5f5;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    margin-left: 1px;
+    margin-right: 2px;
+}
+.timetable #index.tt-index-floating {
+    border-bottom: 2px solid white;
+    border-top: 2px solid white;
+}
+.timetable .index-header {
+    padding: 2px;
+    margin-left: 5px;
+    font-size: 0.9em;
+}
+
+.timetable .index-item {
+    display: block;
+    color: #2196f3;
+    /*border: 1px solid magenta;*/
+    padding: 2px 5px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.timetable .index-item:hover {
+    transform: scale(1.05);
+    color: 3f51b5;
+}
+
+.date {
+    text-align: center !important;
+    font-weight: bold;
+    font-size: 1.4em;
+    background-color: #3f51b5;
+    color: white;
+}
+
+tr:hover .date {
+    background-color: #2f41a5;
+}
+
+.test {
+    background-color: rgba(0.40, 0, 0, 0.5);
+}
+
+.Physics {
+    background-color: rgba(157, 187, 205, 0.3);
+}
+
+tr.Chemistry {
+    background-color: rgba(220, 220, 220, 0.3);
+}
+
+tr.Maths {
+    background-color: rgba(247, 70, 47, 0.3);
+}
+
+tr.Biology {
+    background-color: rgba(70, 191, 189, 0.3);
+}
+
+tr.Zoology {
+    background-color: rgba(253, 180, 92, 0.3);
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="block/readytohelp/db" VERSION="20101203" COMMENT="XMLDB file for Moodle block/readytohelp"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+    <TABLES>
+        <TABLE NAME="grievance_categories" COMMENT="Category Assigned to Grievances">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="name" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="email" TYPE="text" SEQUENCE="false" NOTNULL="false" COMMENT="List of emails associated with converned dept"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+            </KEYS>
+        </TABLE>
+        <TABLE NAME="grievance_entries" COMMENT="Grievance raised by students">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+                <FIELD NAME="username" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Username of user raising a Grievance"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"/>
+                <FIELD NAME="category" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Category of Grievance"/>
+                <FIELD NAME="subject" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Subject of Grievance"/>
+                <FIELD NAME="description" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Description of Grievance"/>
+                <FIELD NAME="status" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Status of Grievance: Pending/Closed"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="category" TYPE="foreign" FIELDS="category" REFTABLE="grievance_categories" REFFIELDS="id" />
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="id" UNIQUE="true" FIELDS="id"/>
+            </INDEXES>
+        </TABLE>
+
+        <TABLE NAME="grievance_responses" COMMENT="Responses Provided to Grievances">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="grievance_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="This will be the 'thread' id for future back and forth" />
+                <FIELD NAME="deptid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Deaprtment who wrote the reponse" />
+                <FIELD NAME="email" TYPE="text" LENGTH="40" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Email for mods. Userid for student" />
+                <FIELD NAME="approved" TYPE="int" DEFAULT="0" LENGTH="4" NOTNULL="true" SEQUENCE="false" COMMENT="Approval status. 0 -> pending. 1 -> approved. -1 -> disapproved." />
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"/>
+                <FIELD NAME="body" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="The body of the response" />
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+                <KEY NAME="grievance_id" TYPE="foreign" FIELDS="grievance_id" REFTABLE="grievance_entries" REFFIELDS="id" />
+                <KEY NAME="deptid" TYPE="foreign" FIELDS="deptid" REFTABLE="grievance_categories" REFFIELDS="id"/>
+            </KEYS> 
+        </TABLE>
+
+        <TABLE NAME="grievance_admins" COMMENT="Users who can review responses and perform admin activities">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
+                <FIELD NAME="username" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Moodle userid of the admin" />
+                <FIELD NAME="haspermission" TYPE="int" LENGTH="5" NOTNULL="true" SEQUENCE="false" DEFAULT="1" COMMENT="1- Yes, 2- no" />
+            </FIELDS>
+            <INDEXES>
+                <INDEX NAME="id" UNIQUE="true" FIELDS="id"/>
+            </INDEXES>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+                <KEY NAME="username" TYPE="foreign" FIELDS="username" REFTABLE="user" REFFIELDS="username" />
+            </KEYS>
+        </TABLE>
+    </TABLES>
+</XMLDB>

@@ -1,0 +1,86 @@
+<h2>Manage departments</h2>
+<p>You can assign new people to a department, remove assigned people from an apartment, etc</p>
+<hr>
+<div class="grievance_manage_department">
+{{#departments}}
+<div class="department">
+    <div class="name-block">
+        <h4>{{id}} <u>{{name}}</u></h4>
+    </div>
+    <div class="emails-block">
+        Assigned Emails 
+        {{#emails}}
+            <div class="email">
+                {{email}}
+                <a href="review_response.php?action=fire&email={{email}}&deptid={{id}}&cid={{courseid}}">
+                    <img class="fire-icon" src="templates/res/remove-user.png" alt="remove">
+                </a>
+            </div>
+        {{/emails}}
+        <span class="text-danger">{{message}}</span>
+    </div>
+    <div class="add-new-block">
+        Assign new email:
+        <form action="review_response.php?" method="GET">
+            <input type="hidden" name="deptid" value="{{id}}">
+            <input type="hidden" name="cid" value="{{courseid}}">
+            <input type="hidden" name="action" value="assign">
+            <input type="email" name="email" id="email">
+            <!--<input type="submit" value="Add"></input>-->
+            <input class="add-user-icon" type="image" src="templates/res/add-user.png" alt="Add User">
+        </form>
+    </div>
+</div>
+<hr>
+{{/departments}}
+</div>
+
+<style>
+.grievance_manage_department .department {
+    border: 1px solid #2196F3;
+    padding: 10px 20px;
+    border-radius: 3px;
+}
+.grievance_manage_department .name-block {
+    margin-bottom: 15px;
+}
+.grievance_manage_department .add-new-block {
+    margin-top: 15px;
+}
+.grievance_manage_department .email {
+    display: inline-block;
+    border: 2px solid #2196F3;
+    border-radius: 500px;
+    padding: 3px 12px;
+    margin-left: 5px;
+    transition: 0.2s all ease;
+}
+.grievance_manage_department .email:hover {
+    border: 2px solid #2196F3;
+    box-shadow: 0px 1px 4px 0px #333333;
+}
+.grievance_manage_department .fire-icon {
+    width: 1.2em;
+    margin-left: 6px;
+    transition: 0.2s all ease;
+}
+.grievance_manage_department .fire-icon:hover {
+    transform: scale(1.2);
+}
+.grievance_manage_department .add-user-icon {
+    width: 1.6em;
+    padding: 0px;
+    margin-bottom: 12px;
+    margin-left: 3px;
+    border-radius: 500px;
+    transition: 0.2s all ease;
+    outline: none;
+}
+.grievance_manage_department .add-user-icon:hover {
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    transform: scale(1.2);
+}
+
+
+
+</style>

@@ -1,0 +1,34 @@
+<table id="grievance-list" class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <td>Sr</td>
+            <td>Date</td>
+            <td>Category</td>
+            <td>Subject</td>
+            <td>Status</td>
+            <td>Response</td>
+        </tr>
+    </thead>
+    <tbody>
+        {{#grievances}}
+        <tr class="clickable" onclick="javascript:window.location='view.php?gid={{_gid}}&deptid={{_deptid}}'">
+            <td>{{index}}</td>
+            <td>{{date}}</td>
+            <td>{{category}}</td>
+            <td>{{subject}}</td>
+            <td class="status">{{status}}</td>
+            <td><a href="view.php?gid={{_gid}}&deptid={{_deptid}}">{{response}}</a></td>
+        </tr>
+        {{/grievances}}
+    </tbody>
+</table>
+
+<style>
+#grievance-list .status{
+    text-transform: capitalize;
+}
+
+#grievance-list .clickable:hover{
+    cursor:pointer;
+}
+</style>

@@ -1,0 +1,91 @@
+#header {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 5%;
+    border: 2px solid black;
+}
+
+
+/*Goto UI*/
+
+.my_goto {
+    position: absolute;
+    left: 4em;
+    display: block;
+    top: 0;
+    height: 44px;
+    color: #FFF;
+    opacity: 0.8;
+    padding: 10px;
+    z-index: 10000000!important;
+    transition: 0.3s all ease;
+}
+
+.my_goto.fade {
+    opacity: 0;
+}
+
+.my_goto.shake {
+    animation: shakeanim 0.1s 3;
+}
+
+@keyframes shakeanim {
+    0% {
+        transform: translateX(0px);
+    }
+    25% {
+        transform: translateX(5px);
+    }
+    50% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+.my_goto #goto_field {
+    width: 3em;
+    border: none;
+    height: 1.5em;
+    background-color: #eeeeee;
+    color: black;
+}
+
+.back_button {
+    position: absolute;
+    right: 6em;
+    display: block;
+    top: 0;
+    height: 44px;
+    color: #FFF;
+    opacity: 0.8;
+    padding: 10px;
+    z-index: 10000000!important;
+    transition: 0.3s all ease;
+}
+
+.back_button.fade {
+    opacity: 0;
+}
+
+/* Move button to the right edge on small screens */
+@media (-webkit-min-device-pixel-ratio: 1.1),
+(-webkit-min-device-pixel-ratio: 1.09375),
+(min-resolution: 105dpi),
+(min-resolution: 1.1dppx) {
+    .back_button {
+        position: absolute;
+        right: 0em;
+        display: block;
+        top: 0;
+        height: 44px;
+        color: #FFF;
+        opacity: 0.8;
+        padding: 10px;
+        z-index: 10000000!important;
+        transition: 0.3s all ease;
+    }
+}

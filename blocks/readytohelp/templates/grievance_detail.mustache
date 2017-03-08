@@ -1,0 +1,201 @@
+<div class="grievance-box query">
+    <!--<h5>Query block</h5>-->
+    <div class="subject"><small>{{query.category}}</small> | <b>{{query.subject}}</b></div>
+    <div class="description">
+        <p>{{query.description}}</p>
+    </div>
+    <div class="timestamp">{{query.time}} | <span class="status">Status: {{query.status}}</span></div>
+</div>
+
+{{#responses}}
+<div class="grievance-box response-{{class}}">
+
+    {{#mod_controls}}
+    <!-- Hide blocks if mod_controls not set. -->
+    <div class="mod-controls {{mod_controls}}"> <!-- Hide for user chatboxes -->
+        <a href="view.php?gid={{gid}}&deptid={{deptid}}&action=approve&rid={{rid}}&gmode={{gmode}}">
+            <img class="approved-img approved-left approved-yes  approved-enabled-{{approved}}" src="templates/res/approved-yes.png" alt="{{rapproved}}"/>
+        </a>
+        <a href="view.php?gid={{gid}}&deptid={{deptid}}&action=disapprove&rid={{rid}}&gmode={{gmode}}">
+            <img class="approved-img approved-no  approved-enabled-{{approved}}" src="templates/res/approved-no.png" alt="{{rapproved}}"/>
+        </a>
+        <a href="view.php?gid={{gid}}&deptid={{deptid}}&action=remind&rid={{rid}}&gmode={{gmode}}">
+            <img class="remind-img" src="templates/res/remind.png" alt="{{rapproved}}"/>
+        </a>
+        <span class="primary"> {{email}}</span>
+    </div>
+    {{/mod_controls}}
+
+    <div class="response-body">{{{body}}}</div>
+    <div class="timestamp">{{time}}</div>
+    {{#userid}}
+        <div class="reply div {{reply-div-show}}">
+            <a class="reply-link" href="view.php?gid={{gid}}&deptid={{deptid}}&email={{userid}}&reply=1#id_body"><img class="reply-icon" src="templates/res/reply.png" alt="replyIcon"/>Reply</a>
+        </div>
+    {{/userid}}
+</div>
+{{/responses}}
+
+<div class="grievances status-button">
+    <button class="btn btn-danger">Close</button>
+    <button class="btn btn-primary">Open</button>
+</div>
+
+{{#messages}}
+// Special messages if any
+{{/messages}}
+<hr>
+
+<style>
+.grievance-box{
+    display: inline-block;
+    width: 85%;
+    margin-bottom: 4%;
+    padding: 10px 10px 5px 10px;
+    border: 0px solid #fdfdeb;
+    border-radius: 24px;
+    background-color: #fdfdeb;
+    box-shadow: 0px 2px 7px 0px #969696;
+}
+.grievance-box.query, .grievance-box.response-user{
+    border-bottom-left-radius: 0px;
+    border-color: #3F51B5;
+}
+.grievance-box.response-mod{
+    margin-left: 10%;
+    border-bottom-right-radius: 0px;
+    border-color: #F44336;
+}
+.grievance-box .subject {
+    padding: 5px;
+}
+.grievance-box .description {
+    padding: 5px;
+}
+.grievance-box .status {
+    opacity: 1;
+    padding: 4px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.grievance-box .response-body {
+    padding: 5px;
+    margin-bottom: 1em;
+}
+.grievance-box .timestamp{
+    display: inline;    
+    opacity: 0.8;
+    font-size: 0.8em;
+    float:left;
+}
+.grievance-box.response-mod .timestamp{
+    float: right;
+}
+.grievance-box .reply-div.hide{
+    display:none;
+}
+
+.grievance-box .reply-icon{
+    width: 1.0em;
+    margin-right: 0.6em;
+}
+.grievance-box .reply-link{
+    color: #f44336;
+}
+.grievance-box .reply-link:hover{
+    font-size: 1.1em;
+    color: #670700;
+    text-decoration: underline;
+}
+
+/* Mod controls */
+.grievance-box .mod-controls{
+    display: inline-block;
+    visibility: hidden;
+    background-color: #ffffff;
+    /*border: 2px solid #3f51b5;*/
+    border-radius: 24px;
+    padding : 4px 8px;
+    box-shadow: 0px 1px 3px 0px;
+}
+.grievance-box .mod-controls.show{
+    visibility: visible;
+}
+
+/*Reply button*/
+.grievance-box .remind-img {
+    width: 1.3em;
+    padding: 3px;
+    transition: 0.1s ease all;
+}
+.grievance-box .remind-img:hover{
+    animation: wiggle ease 0.3s 2;
+    transition: 0.2s ease all;
+}
+
+/* Approve/Disapprove buttons */
+.grievance-box .approved-img {
+    width: 1.3em;
+    padding: 3px;
+    transition: 0.1s ease all;
+    opacity: 0.3;
+}
+.grievance-box .approved-enabled-yneos:hover{
+    opacity: 1;
+    border-radius: 50%;
+    box-shadow: 0px 2px 1px 1px #8e8e8e;  
+}
+.grievance-box .approved-yes.approved-enabled-yes {
+    opacity: 1;
+    box-shadow: inset 0px 2px 1px 1px #8e8e8e;
+    border-radius: 50%;
+}
+.grievance-box .approved-no.approved-enabled-no {
+    opacity: 1;
+    box-shadow: inset 0px 2px 1px 1px #8e8e8e;
+    border-radius: 50%;
+}
+.grievance-box .approved-yes.approved-enabled-yes:hover {
+    cursor:default;
+}
+.grievance-box .approved-no.approved-enabled-no:hover {
+    cursor:default;
+}
+.grievance-box .approved-no.approved-enabled-yes {
+    opacity: 0.3;
+}
+.grievance-box .approved-yes.approved-enabled-no {
+    opacity: 0.3;
+}
+.grievance-box .approved-no.approved-enabled-yes:hover {
+    opacity: 1;
+    border-radius: 50%;
+    box-shadow: 0px 2px 1px 1px #8e8e8e;
+}
+.grievance-box .approved-yes.approved-enabled-no:hover {
+    opacity: 1;
+    border-radius: 50%;
+    box-shadow: 0px 2px 1px 1px #8e8e8e;  
+}
+/* Animations */
+@keyframes wiggle {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    25% {
+        /*width: 1.4em;*/
+        transform: rotateZ(15deg);
+    }
+    50% {
+        /*width: 1.4em;*/
+        transform: rotateZ(0deg);
+    }
+    75% {
+        /*width: 1.4em;*/
+        transform: rotateZ(-15deg);
+    }
+    100% {
+        transform: rotateZ(0deg);
+    }
+}
+</style>

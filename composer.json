@@ -8,5 +8,8 @@
         "phpunit/phpunit": "5.5.*",
         "phpunit/dbUnit": "1.4.*",
         "moodlehq/behat-extension": "3.32.4"
+    },
+    "require": {
+        "phpmailer/phpmailer": "^5.2"
     }
 }

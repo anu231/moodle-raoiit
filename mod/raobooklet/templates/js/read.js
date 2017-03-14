@@ -1,14 +1,15 @@
-var instance, backlink;
+var instance, bookletid, backlink;
 
 // Initialization
-// Setup instance and backlink variables for goback()
+// Setup bookletid and backlink variables for goback()
 var getquery = window.location.search.substr(1);
 var params = getquery.split('&');
 params.forEach(function(param) {
     var key = param.split('=')[0];
-    if (key == 'instance') instance = param.split('=')[1]; 
-    else if (key == 'b') backlink = param.split('=')[1]; 
-}, this);
+    if (key == 'bookletid') bookletid = param.split('=')[1]; 
+    else if (key == 'b') backlink = param.split('=')[1];
+    else if (key == 'instance') instance = param.split('=')[1];
+});
 
 
 
@@ -19,7 +20,7 @@ xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState == XMLHttpRequest.DONE) {
         if (xmlhttp.status == 200) {
             images = JSON.parse(xmlhttp.responseText);
-            for (var i = 0; i < 20; i++) {
+            for (var i = 0; i < Object.keys(images).length; i++) {
                 items.push({
                     src: images[i],
                     w: 2479, // TODO Remove hardcoding
@@ -34,7 +35,7 @@ xmlhttp.onreadystatechange = function () {
         }
     }
 };
-xmlhttp.open("GET", "read.php?instance="+instance+"&get_items=1", true);
+xmlhttp.open("GET", "read.php?bookletid="+bookletid+"&get_items=1", true);
 xmlhttp.send();
 
 
@@ -136,5 +137,6 @@ function goto() {
 }
 
 function goback() {
-    window.location = "view.php?id="+backlink;
+    // Send user to instance
+    window.location = "view.php?id="+instance;
 }

@@ -35,12 +35,15 @@ class block_timetable extends block_base {
             <br> Please Check Again Later.";
 		}
         $html = '<ul class="timetable-list">';
-            foreach($timetable[$today] as &$lecture){
-                $html .= $this->format_lecture($lecture);
-            }
+            // foreach($timetable[$today] as &$lecture){
+            //     $html .= $this->format_lecture($lecture);
+            // }
         $html .= "</ul>";
         $html .= "<hr>";
         $html .= "<link rel='stylesheet' href='$CFG->wwwroot/blocks/timetable/templates/css/block.css'>";
+        // $html .= "<script src='$CFG->wwwroot/blocks/timetable/templates/js/block.js'>";
+        // $url = 'http://192.168.1.161/moodle/timetable.php?id='.$_SESSION['USER']->username;
+        $html .= "<script src='$CFG->wwwroot/blocks/timetable/templates/js/block.js'>";
         return $html;
 HTML;
     }

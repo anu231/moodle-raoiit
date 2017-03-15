@@ -3,6 +3,10 @@
     margin: 0px;
 }
 
+.timetable-list .header {
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+    padding: 2px 5px;
+}
 .timetable-list .lecture-item {
     position: relative;
     padding: 6px;
@@ -15,8 +19,7 @@
 }
 .timetable-list .time {
     display: inline-block;
-    padding: 4px;
-    margin-right: 4px;
+    margin-right: 20px;
     background-color: #f5f5f5;
     border-radius: 5px;
     font-style: italic;
@@ -34,8 +37,7 @@
 }
 .timetable-list .teacher {
     display: inline-block;
-    position: absolute;
-    right: 6px;
+    position: relative;
     font-size: 0.9em;
     padding: 2px;
     width: 25%;

@@ -1,6 +1,26 @@
 <?php
 
-require_once('locallib.php');
+
+function get_timetable(){
+    //  Initiate curl
+    $ch = curl_init();
+    // $url = 'http://192.168.1.161/moodle/timetable.php?id='.$_SESSION['USER']->username;
+    $url = 'http://192.168.1.161/moodle/timetable.php?id='.'817172';
+    // Disable SSL verification
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    // Will return the response, if false it print the response
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    // Set the url
+    curl_setopt($ch, CURLOPT_URL,$url);
+    // Execute
+    $result=curl_exec($ch);
+    // Closing
+    curl_close($ch);
+    return json_decode($result,true);
+}
+
+
+
 
 class block_timetable_renderer extends plugin_renderer_base {
     public function week() {
@@ -13,7 +33,6 @@ class block_timetable_renderer extends plugin_renderer_base {
 
 class week implements renderable {
     public function __construct() {
-        $json = get_timetable();
         $this->days = $this->get_days_lectures();
     }
     private $subj_map = array(

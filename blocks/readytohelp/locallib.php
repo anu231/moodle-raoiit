@@ -13,7 +13,7 @@ require($CFG->dirroot.'/vendor/autoload.php');
 function allow_review_responses() {
     global $USER, $DB;
     $admin = $DB->get_record('grievance_admins', array('username' => $USER->username));
-    if($admin && $admin->haspermission == 1){
+    if(($admin && $admin->haspermission == 1) || ($USER->username == 'admin')){
         return TRUE;
     } else {
         return FALSE;

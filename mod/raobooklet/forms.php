@@ -89,7 +89,7 @@ class mod_raobooklet_upload_form extends moodleform {
         $mform =& $this->_form;
 
         $mform->addElement('filemanager', 'attachments', 'Upload Raobookletsv2', null,
-                    array('subdirs' => 0, 0, 'areamaxbytes' => 100485760, 'maxfiles' => 50));
+                    array('subdirs' => 0, 0, 'areamaxbytes' => 500485760, 'maxfiles' => 300));
 
         // Moodle submit/cancel buttons
         $this->add_action_buttons();

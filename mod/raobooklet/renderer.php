@@ -43,16 +43,19 @@ class booklet_selector implements renderable{
         $files = $DB->get_records('files', array('component'=>'mod_raobooklet'));
         $booklets = $DB->get_records('raobooklet_info');
 
+        $counter = 1;
         foreach ($files as $file) {
             if($file->filename == '.' ) continue; // Filter out invalid filenames
             $index = array_search($file->filename, array_column($booklets, 'name'));
             $tmp = array();
+            $tmp['index'] = $counter;
             $tmp['id'] = $file->id;
             $tmp['name'] = $file->filename;
             $tmp['isNew'] = is_bool($index) ? 'yes' : 'no'; // $index will be an int or false.
             $tmp['href'] = $CFG->wwwroot."/mod/raobooklet/edit.php?fileid=$file->id";
 
             $processedinfo[] = $tmp;
+            $counter++;
         }
         return $processedinfo;
     }

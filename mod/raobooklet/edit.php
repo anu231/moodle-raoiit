@@ -65,13 +65,13 @@ if($data = $mform->get_data()){
     raobooklet_edit_info($data, $mform);
 } else if($mform->is_cancelled()) {
     // Display just the template
-    echo $output->heading('redirecting cuz is_cancelled');
+    echo $output->heading('Cancelled');
     // TODO redirect here
 } else if ( $shouldDisplayForm ){
     $mform->display();
 } else {
     // TODO redirect here
-    echo $output->heading('Please select a booklet');
+    echo $output->heading('Please select a booklet to edit it');
 }
 
 echo $output->footer();

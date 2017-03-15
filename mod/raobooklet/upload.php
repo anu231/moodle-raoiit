@@ -17,7 +17,7 @@ if (empty($entry->id)) {
 }
 $draftitemid = file_get_submitted_draft_itemid('attachments');
 file_prepare_draft_area($draftitemid, $context->id, 'mod_raobooklet', 'uploads', $entry->id,
-                        array('subdirs' => 0, 'maxbytes' => 100485760, 'maxfiles' => 50));
+                        array('subdirs' => 0, 'maxbytes' => 500485760, 'maxfiles' => 300));
 $entry->attachments = $draftitemid;
 $uploadform->set_data($entry);
 /**************** /DO NOT MESS ****************/
@@ -27,7 +27,7 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading($draftitemid);
 if($data = $uploadform->get_data()){
     file_save_draft_area_files($data->attachments, $context->id, 'mod_raobooklet', 'uploads',
-                   0, array('subdirs' => 0, 'maxbytes' =>100485760 , 'maxfiles' => 50));
+                   0, array('subdirs' => 0, 'maxbytes' =>500485760 , 'maxfiles' => 300));
     echo $OUTPUT->heading("Success");
 } else {
     $uploadform->display();

@@ -1,6 +1,2 @@
-Add an email hook when new module gets updated
-Add setTypes to mod_form
-Add strings in lang/
-Set sane defaults for some stuff
-Add custom js
-Add autocomplete feature - /topics/search/?term=yolo
+Instance creation form
+Filepicker and metadata while creating Instance

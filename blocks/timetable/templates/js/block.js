@@ -1,12 +1,16 @@
 var timetable,
-    url = 'http://192.168.1.161/moodle/timetable.php?id=' + '817172',
+    userid = document.getElementById('ttuserid');
+    url = 'http://192.168.1.161/moodle/timetable.php?id=' + userid,
+    url = 'http://192.168.1.161/moodle/timetable.php?id=' + '817172', // Dev only
     div = document.getElementsByClassName('timetable-list')[0];
 
 function get_item(json){
     var template = '<li>'+
         '<div class="lecture-item">'+
-        '<div class="time">' + $starttime - $endtime +'</div>'+
-        '<div class="subject"><span class="label $subject">' + $subject + '</span></div>'+
+        '<div class="header">'+
+            '<div class="time">' + $starttime - $endtime +'</div>'+
+            '<div class="subject"><span class="label $subject">' + $subject + '</span></div>'+
+        '</div>'+
         '<div class="topic">' + $topicname +'</div>'+
         '<div class="teacher">- ' + $teacher +'</div>'+
         '</div>'+
@@ -42,21 +46,19 @@ var subj_map = {
 
 function generateTimetableHtml(timetable){
     var innerHtml = '';
-    console.log(timetable);
-    Object.keys(timetable).forEach(function(key){
-        lectures = timetable[key];
-        Object.keys(lectures).forEach(function(item){
-            var tmp = lectures[item];
-            innerHtml += makeItem({
-                starttime: tmp['sh']+':'+tmp['sm'],
-                endtime: tmp['eh']+':'+tmp['em'],
-                teacher: tmp['sn'],
-                topicname: tmp['ton'],
-                subject: subj_map[tmp['subj']]
-            });
+    var today = Object.keys(timetable)[0];
+    lectures = timetable[today];
+    Object.keys(lectures).forEach(function(item){
+        var tmp = lectures[item];
+        innerHtml += makeItem({
+            starttime: tmp['sh']+':'+tmp['sm'],
+            endtime: tmp['eh']+':'+tmp['em'],
+            teacher: tmp['sn'],
+            topicname: tmp['ton'],
+            subject: subj_map[tmp['subj']]
         });
     });
-    console.log(innerHtml);
+    console.log(div.innerHTML);
     div.innerHTML = '';
     div.innerHTML = innerHtml;
 }
@@ -64,8 +66,10 @@ function generateTimetableHtml(timetable){
 function makeItem(lecture){
     return '<li>'+
                 '<div class="lecture-item">'+
-                '<div class="time">' + lecture.starttime +"-"+ lecture.endtime +'</div>'+
-                '<div class="subject"><span class="label "' + lecture.subject+ '">' + lecture.subject + '</span></div>'+
+                '<div class="header">'+
+                    '<div class="time">' + lecture.starttime +"-"+ lecture.endtime +'</div>'+
+                    '<div class="subject"><span class="label "' + lecture.subject+ '">' + lecture.subject + '</span></div>'+
+                '</div>'+
                 '<div class="topic">' + lecture.topicname +'</div>'+
                 '<div class="teacher">- ' + lecture.teacher +'</div>'+
                 '</div>'+

@@ -55,7 +55,9 @@ if(isset($booklet) && $shouldDisplayForm) $mform->set_data($booklet); // Inject 
 // Page Rendering
 $output = $PAGE->get_renderer('mod_raobooklet');
 echo $output->header();
-echo $output->booklet_selector();
+if(!$shouldDisplayForm){
+    echo $output->booklet_selector();
+}
 if(isset($booklet->id))   echo $output->heading("Updating existing bookletinfo for file id: ".$fileid);
 else echo $output->heading("Creating new bookletinfo for file id: ".$fileid);
 
@@ -65,7 +67,7 @@ if($data = $mform->get_data()){
     raobooklet_edit_info($data, $mform);
 } else if($mform->is_cancelled()) {
     // Display just the template
-    echo $output->heading('Cancelled');
+    redirect(new moodle_url('/mod/raobooklet/edit.php'));
     // TODO redirect here
 } else if ( $shouldDisplayForm ){
     $mform->display();

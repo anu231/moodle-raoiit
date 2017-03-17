@@ -1,4 +1,6 @@
-(function () {
+setTimeout(
+function () {
+    window.scrollTo(0, 0);
 
     var SELECTORS = { // DO NOT CHANGE
         coursecontent: '.course-content',
@@ -35,8 +37,8 @@
     searchPanel.classList.add('searchPanel');
     searchPanel.innerHTML = '' +
         '<div class="topicSearchBox">' +
-            '<label for="search">Search: ' +
-            '   <input id="topicSearch" class="search" name="search" placeholder=" Booklets, Papers, Topics, etc."/> ' +
+            '<label for="search">Search Topics :  ' +
+            '   <input id="topicSearch" class="search" name="search" placeholder="ex: Alkenes"/> ' +
             '   <button id="topicSearchButton" class="btn btn-primary btn-small">Search</button>' +
             '   <button id="topicResetButton" class="btn btn-danger btn-small">Reset</button>' +
             '</label>'+
@@ -101,4 +103,4 @@
         }, 100);
     })
 
-})();
+}, 500)

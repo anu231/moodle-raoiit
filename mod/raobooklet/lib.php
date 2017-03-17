@@ -2,14 +2,15 @@
 
 
 function raobooklet_add_instance($raobooklet, $mform=NULL){
-    global $DB, $CFG, $USER;
+    global $DB, $CFG, $USER, $COURSE, $GLOBALS;
+    // exp
     $raobooklet->timecreated = time();
     $raobooklet->asignee = $USER->username;
 
     if($raobooklet->bookletid != 0){
         // Assign an existing booklet(booklet != 0)
         // $raobooklet->name = $DB->get_record('raobooklet_info', array('bookletid' => $raobooklet->bookletid))->name;
-        $raobooklet->name = 'Booklet Solution';
+        $raobooklet->name = $GLOBALS['sectionname'];
         if($customname = $raobooklet->customname)
             $raobooklet->name = $customname;
         $id = $DB->insert_record('raobooklet', $raobooklet);
@@ -27,7 +28,7 @@ function raobooklet_add_instance($raobooklet, $mform=NULL){
         $raobooklet->bookletid = $file->get_id(); // Override bookletid(0) with $fileid. (This is how it's designed)
         $DB->insert_record('raobooklet_info', $raobooklet); // Save metadata
         // Change instance name
-        $raobooklet->name = 'Booklet Solution';
+        $raobooklet->name = $GLOBALS['sectionname'];
         if($customname = $raobooklet->customname)
             $raobooklet->name = $customname;
         $id = $DB->insert_record('raobooklet', $raobooklet); // Assign booklet
@@ -37,10 +38,10 @@ function raobooklet_add_instance($raobooklet, $mform=NULL){
 
 
 function raobooklet_update_instance($raobooklet, $mform=NULL){
-    global $DB, $CFG, $USER;
+    global $DB, $CFG, $USER, $GLOBALS;
     $raobooklet->id = $raobooklet->instance;
     $raobooklet->timemodified = time();
-    $raobooklet->name = 'Booklet Solution';
+    $raobooklet->name = $GLOBALS['sectionname'];
     if($customname = $raobooklet->customname)
         $raobooklet->name = $customname;
     if($raobooklet->bookletid != 0){

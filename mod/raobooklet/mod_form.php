@@ -28,6 +28,8 @@ class mod_raobooklet_mod_form extends moodleform_mod {
         $booklets = $mform->addElement('select', 'bookletid', 'Booklet', $BOOKLETS);
         $booklets->setSelected(0);
 
+        $customname = $mform->addElement('text', 'customname', 'Name of the Booklet');
+
         // Dont show this part when updating an instance
         if(! $this->current->id) {
             // Upload new file
@@ -39,6 +41,8 @@ class mod_raobooklet_mod_form extends moodleform_mod {
 
             $mform->addElement('text', 'filename', 'Name of the booklet file');
             $mform->setType('name', PARAM_NOTAGS);
+
+            $customname = $mform->addElement('text', 'customname', 'Name of the Booklet');            
 
             $SUBJECTS = array(
                 "none" => 'Please select a Subject', 

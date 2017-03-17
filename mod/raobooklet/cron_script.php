@@ -1,5 +1,5 @@
 <?php
-
+define('CLI_SCRIPT', true);
 require_once('../../config.php');
 
 /**

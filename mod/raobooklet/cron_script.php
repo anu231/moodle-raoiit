@@ -33,9 +33,9 @@ function log2file($message, $type=null){
 // $booklets = $DB->get_records('files', array('component'=>'mod_raobooklet'));
 $context = context_system::instance();
 $files = $fs->get_area_files($context->id, 'mod_raobooklet', 'uploads', 0);
-
+echo count($files);
 foreach ($files as $file) {
-    if(is_dir($PARENTPATH.'/'.$file->get_id())) continue;
+    //if(is_dir($PARENTPATH.'/'.$file->get_id())) continue;
     if($file->get_filename() == '.') continue;
     $hash = $file->get_contenthash();
     
@@ -44,7 +44,7 @@ foreach ($files as $file) {
     $dir = $PARENTPATH.'/'.$file->get_id();
     $success1 = mkdir($dir,0774,true);
 
-    if(!$success1) log2file("Couldn't create directory: ".$dir, 2);
+    if(!is_dir($dir)) log2file("Couldn't create directory: ".$dir, 2);
     else {
         // Start Conversion;
         log2file("Starting conversion at: ".time());
@@ -53,10 +53,10 @@ foreach ($files as $file) {
         $ret = exec($cmd,$output,$ret_var);
         if ($ret_var==0){
             log2file('Conversion complete', 0);
-            return 1;
+            #return 1;
         } else {
             log2file('Conversion failed', 2);
-            return -1;
+            #return -1;
         }
 
         log2file("Conversion Ended at: ".time(), 0);

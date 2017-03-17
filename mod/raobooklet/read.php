@@ -41,7 +41,7 @@ if ( $page == -1 && $get_items == 0 ) {
     $json = array();
     foreach ($images as $image) {
         $exp = explode('/', $image);
-        $number = explode('.', $exp[6])[0];
+        $number = explode('.', $exp[count($exp)-1])[0];
         $json[$number] = "$CFG->wwwroot/mod/raobooklet/read.php?bookletid=$bookletid&page=".$number;
     }
 

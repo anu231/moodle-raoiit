@@ -1,15 +1,29 @@
+
+body {
+    font-family: "Roboto", sans-serif !important;
+}
+.pswp__bg {
+    background-color: #333;
+}
 #header {
     position: absolute;
     top: 0px;
-    left: 0px;
-    right: 0px;
-    height: 5%;
-    border: 2px solid black;
+    left: 0%;
+    right: 0%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    text-align: center;
+    color: #fff;
+    height: 100%;
+    background: linear-gradient(30deg, #F44336,#673AB7);
 }
 
+#header #edumate {
+    font-size: 3em;
+    letter-spacing: 14.5px;
+}
 
-/*Goto UI*/
-
+/* Custom ui elements */
 .my_goto {
     position: absolute;
     left: 4em;
@@ -22,37 +36,19 @@
     z-index: 10000000!important;
     transition: 0.3s all ease;
 }
-
-.my_goto.fade {
-    opacity: 0;
-}
-
-.my_goto.shake {
-    animation: shakeanim 0.1s 3;
-}
-
-@keyframes shakeanim {
-    0% {
-        transform: translateX(0px);
+    .my_goto.fade {
+        opacity: 0;
     }
-    25% {
-        transform: translateX(5px);
+    .my_goto.shake {
+        animation: shakeanim 0.1s 3;
     }
-    50% {
-        transform: translateX(-5px);
+    .my_goto #goto_field {
+        width: 3em;
+        border: none;
+        height: 1.5em;
+        background-color: #eeeeee;
+        color: black;
     }
-    100% {
-        transform: translateX(0px);
-    }
-}
-
-.my_goto #goto_field {
-    width: 3em;
-    border: none;
-    height: 1.5em;
-    background-color: #eeeeee;
-    color: black;
-}
 
 .back_button {
     position: absolute;
@@ -66,16 +62,46 @@
     z-index: 10000000!important;
     transition: 0.3s all ease;
 }
+    .back_button.fade {
+        opacity: 0;
+    }
 
-.back_button.fade {
+/* Main Indicator */
+#main_activity {
+    /*display: none;*/
+}
+
+/* Loading Indicator */
+#loading_activity, #modal_activity {
+    position: fixed;
+    left: 30%;
+    top: 30%;
+    right: 30%;
+    border-radius: 5px;
+    background-color: #333;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.3);
+    transition: 300ms ease-out;
+}
+    #loading_activity .message,
+    #modal_activity .message {
+        font-size: 1.4em;
+        color: #eee;
+        margin-bottom: 10px;
+    }
+    #loading_activity img {
+        width: 100%;
+        max-width: 250px;
+    }
+
+.frenchRetreat {
+    transform: translateY(-700px);
     opacity: 0;
 }
 
 /* Move button to the right edge on small screens */
-@media (-webkit-min-device-pixel-ratio: 1.1),
-(-webkit-min-device-pixel-ratio: 1.09375),
-(min-resolution: 105dpi),
-(min-resolution: 1.1dppx) {
+@media only screen and (max-width: 580px) {
     .back_button {
         position: absolute;
         right: 0em;
@@ -87,5 +113,27 @@
         padding: 10px;
         z-index: 10000000!important;
         transition: 0.3s all ease;
+    }
+    #loading_activity,
+    #modal_activity {
+        left: 5%;
+        right: 5%;
+        padding: 30px 15px;
+    }
+}
+
+/* Animations */
+@keyframes shakeanim {
+    0% {
+        transform: translateX(0px);
+    }
+    25% {
+        transform: translateX(5px);
+    }
+    50% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0px);
     }
 }

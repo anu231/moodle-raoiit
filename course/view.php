@@ -293,6 +293,4 @@
     include_course_ajax($course, $modnamesused);
 
     echo $OUTPUT->footer();
-    echo "<script src='$CFG->wwwroot/blocks/readytohelp/templates/extlibs/list.js'></script>".
-        "<script src='$CFG->wwwroot/course/format/topics/custom.js'></script>".
-        "<link rel='stylesheet' href='$CFG->wwwroot/course/format/topics/custom.css'>";
+    echo "<link rel='stylesheet' href='$CFG->wwwroot/course/format/topics/custom.css'>";

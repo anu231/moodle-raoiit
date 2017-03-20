@@ -58,3 +58,5 @@ if (!empty($displaysection)) {
 
 // Include course format js module
 $PAGE->requires->js('/course/format/topics/format.js');
+$PAGE->requires->js('/blocks/readytohelp/templates/extlibs/list.js');
+$PAGE->requires->js('/course/format/topics/custom.js');

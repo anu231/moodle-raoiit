@@ -1,23 +1,47 @@
 <?php
 
+/**
+ * Generate a random string, using a cryptographically secure 
+ * pseudorandom number generator (random_int)
+ * 
+ * For PHP 7, random_int is a PHP core function
+ * For PHP 5.x, depends on https://github.com/paragonie/random_compat
+ * 
+ * @param int $length      How many characters do we want?
+ * @param string $keyspace A string of all possible characters
+ *                         to select from
+ * @return string
+ */
+function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+{
+    $str = '';
+    $max = mb_strlen($keyspace, '8bit') - 1;
+    for ($i = 0; $i < $length; ++$i) {
+        $str .= $keyspace[random_int(0, $max)];
+    }
+    return $str;
+}
+
 require_once('config.php');
 global $USER, $CFG;
 
 $secret = $CFG->secret_key;
-$nonce = base64_decode($_GET['nonce']);
+$nonce = random_str(32);
 
 if (isset($USER) && isset($USER->id) && intval($USER->id) > 0 ){
-    //eecho 'User logged in';
     $st = $USER->id.$nonce;
-	#echo $st.'<br>';
 	$hash_msg = hash_hmac('sha256',$st,$secret);
-	#echo $hash_msg.'<br>';
 	$st_encoded = base64_encode($st);
 	$hash_encoded = base64_encode($hash_msg);
-	#echo "http://192.168.1.19:8000/sso_sign_in?sso_sig=".$st_encoded.'&sso_hash='.$hash_encoded.'&nonce='.$_GET['nonce'];
-	header("Location:".$CFG->django_server."sso_sign_in?sso_sig=".$st_encoded.'&sso_hash='.$hash_encoded.'&nonce='.$_GET['nonce']);
+	$message = array();
+	$message['sig'] = $st_encoded;
+	$message['hash'] = $hash_encoded; 
+	$message['nonce'] = $nonce;
+	echo json_encode($message);
+	exit;
 } else {
-    redirect(get_login_url());
+	echo 'Invalid Login';
+	exit;
 }
 
 ?>

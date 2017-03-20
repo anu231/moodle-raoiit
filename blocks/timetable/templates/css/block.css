@@ -4,18 +4,18 @@
 }
 
 .timetable-list .header {
-    border-bottom: 1px solid rgba(0,0,0,0.5);
+    border-bottom: 1px solid rgba(0,0,0,0.3);
     padding: 2px 5px;
 }
 .timetable-list .lecture-item {
     position: relative;
     padding: 6px;
-    padding-top: 3px;
-    margin: 2px;
-    border: 2px solid #e0e0e0;
-    border-radius: 5px;
     /*box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.8);*/
     background-color: #fefefe;
+    border-bottom: 1px solid #333;
+}
+.timetable-list .lecture-item:last-child {
+    border-bottom: none;
 }
 .timetable-list .time {
     display: inline-block;

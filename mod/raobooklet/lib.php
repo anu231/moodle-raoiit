@@ -2,13 +2,17 @@
 
 
 function raobooklet_add_instance($raobooklet, $mform=NULL){
-    global $DB, $CFG, $USER;
+    global $DB, $CFG, $USER, $COURSE, $GLOBALS;
+    // exp
     $raobooklet->timecreated = time();
     $raobooklet->asignee = $USER->username;
 
     if($raobooklet->bookletid != 0){
         // Assign an existing booklet(booklet != 0)
-        $raobooklet->name = $DB->get_record('raobooklet_info', array('bookletid' => $raobooklet->bookletid))->name;
+        // $raobooklet->name = $DB->get_record('raobooklet_info', array('bookletid' => $raobooklet->bookletid))->name;
+        $raobooklet->name = $GLOBALS['sectionname'];
+        if($customname = $raobooklet->customname)
+            $raobooklet->name = $customname;
         $id = $DB->insert_record('raobooklet', $raobooklet);
         return $id;
     } else {
@@ -23,6 +27,10 @@ function raobooklet_add_instance($raobooklet, $mform=NULL){
         $raobooklet->name = $filename;
         $raobooklet->bookletid = $file->get_id(); // Override bookletid(0) with $fileid. (This is how it's designed)
         $DB->insert_record('raobooklet_info', $raobooklet); // Save metadata
+        // Change instance name
+        $raobooklet->name = $GLOBALS['sectionname'];
+        if($customname = $raobooklet->customname)
+            $raobooklet->name = $customname;
         $id = $DB->insert_record('raobooklet', $raobooklet); // Assign booklet
         return $id;
     }
@@ -30,9 +38,12 @@ function raobooklet_add_instance($raobooklet, $mform=NULL){
 
 
 function raobooklet_update_instance($raobooklet, $mform=NULL){
-    global $DB, $CFG, $USER;
+    global $DB, $CFG, $USER, $GLOBALS;
     $raobooklet->id = $raobooklet->instance;
-    $raobooklet->modified = time();
+    $raobooklet->timemodified = time();
+    $raobooklet->name = $GLOBALS['sectionname'];
+    if($customname = $raobooklet->customname)
+        $raobooklet->name = $customname;
     if($raobooklet->bookletid != 0){
         $success = $DB->update_record('raobooklet', $raobooklet);
         return $success;
@@ -42,6 +53,7 @@ function raobooklet_update_instance($raobooklet, $mform=NULL){
 
 
 function raobooklet_delete_instance($id){
+    //TODO delete associated file?
     return true;
 }
 
@@ -74,6 +86,7 @@ function raobooklet_convert_pdf($raobooklet, $basedir) {
  */
 function raobooklet_edit_info($raobooklet, $mform=NULL){
     global $DB, $CFG, $USER;
+
     if(isset($raobooklet->id)){
         $success = $DB->update_record('raobooklet_info', $raobooklet);
         return $success;

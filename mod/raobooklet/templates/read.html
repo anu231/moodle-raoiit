@@ -9,24 +9,27 @@
   <link rel="stylesheet" href="templates/extlibs/photoswipe.css">
   <link rel="stylesheet" href="templates/extlibs/default-skin.css">
   <link rel="stylesheet" href="templates/css/read.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 
 <body>
   <div id="header">
-    Raoeduconnect.com
-    <button onclick="openPhotoSwipe()">openPhotoSwipe</button>
+    <h1 id='edumate'>edumate</h1>
+    <h6>YOUR NEW MATE &trade;</h6>
+    <p>Hi! I'm edumate, your new mate! I'm here to educate you.</p>
   </div>
-  <div class="my_goto">
-    <form action="javascript:goto()">
-      Page
-      <input id="goto_field" type="number" min="1" formaction="submit" name="pageNo">
-      <button type="submit">Go</button>
-    </form>
-  </div>
-  <div class="back_button">
-    <button onclick="goback()">Back</button>
-  </div>
-  <section>
+
+  <section id="main_activity"> <!-- Dont mess with this section at ALL! -->
+    <div class="my_goto">
+      <form action="javascript:goto()">
+        Page
+        <input id="goto_field" type="number" min="1" formaction="submit" name="pageNo">
+        <button type="submit">Go</button>
+      </form>
+    </div>
+    <div class="back_button">
+      <button onclick="goback()">Back</button>
+    </div>
     <!-- Root element of PhotoSwipe. Must have class pswp. -->
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
       <!-- Background of PhotoSwipe. 
@@ -73,6 +76,24 @@
       </div>
     </div>
   </section>
+
+  <section id="ui">
+    <div id="loading_activity" class="frenchRetreat">
+      <div class="message">
+        Be patient, downloading knowledge takes time...
+      </div>
+      <div class="loading-image">
+        <img src="templates/images/loading.svg" alt="Loading...">
+      </div>
+    </div>
+    <div id="modal_activity" class="frenchRetreat">
+      <div class="message">
+        ...And Something Crashed!
+      </div>
+      <span style="color:white; font-size:1.6em;">:(</span>
+    </div>
+  </section>
+
   <script src="templates/extlibs/photoswipe.js"></script>
   <script src="templates/extlibs/photoswipe-ui-default.js"></script>
   <script src="templates/js/read.js"></script>

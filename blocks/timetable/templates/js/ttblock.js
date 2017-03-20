@@ -53,15 +53,13 @@
     }
 
     function makeItem(lecture){
-        return '<li>'+
-                    '<div class="lecture-item">'+
+        return '<li class="lecture-item">'+
                     '<div class="header">'+
                         '<div class="time">' + lecture.starttime +"-"+ lecture.endtime +'</div>'+
                         '<div class="subject"><span class="label "' + lecture.subject+ '">' + lecture.subject + '</span></div>'+
                     '</div>'+
                     '<div class="topic">' + lecture.topicname +'</div>'+
                     '<div class="teacher">- ' + lecture.teacher +'</div>'+
-                    '</div>'+
                 '</li>';
     }
 })();

@@ -109,12 +109,12 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 			<?php } else { ?>
 				<?php 
 				if (isset($CFG->otp_login)){
-					echo '<form class="navbar-form pull-right" method="post" action="'.$CFG->otp_login.'"';
+					$action= $CFG->otp_login;
 				} else {
-					echo '<form class="navbar-form pull-right" method="post" action="'.$wwwroot.'/login/index.php?authldap_skipntlmsso=1"';
+					$action=$wwwroot."/login/index.php?authldap_skipntlmsso=1";
 				}
 				?>
-				<!--<form class="navbar-form pull-right" method="post" action="<php echo $wwwroot; ?>/login/index.php?authldap_skipntlmsso=1">-->
+				<form class="navbar-form pull-right" method="post" action="<?php echo $action;?>">
 					<div id="block-login">
 					<label id="user"><i class="fa fa-user"></i></label>	
 					<input id="inputName" class="span2" type="text" name="username" placeholder="<?php echo $username; ?>">

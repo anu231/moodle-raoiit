@@ -13,7 +13,7 @@ class block_timetable extends block_base {
     }
 
     public function get_content() {
-		global $CFG;
+		global $CFG, $PAGE;
 	    if ($this->content !== null) {
 	        return $this->content;
 	    }
@@ -21,12 +21,13 @@ class block_timetable extends block_base {
 	    $this->content =  new stdClass;
 	    $this->content->text   = $this->template();
 	    $this->content->footer = "<a href='$CFG->wwwroot/blocks/timetable/view.php'>View Week Timetable</a>".
-                                "<link rel='stylesheet' href='$CFG->wwwroot/blocks/timetable/templates/css/block.css'>".
-                                "<script src='$CFG->wwwroot/blocks/timetable/templates/js/block.js'>";
+                                "<link rel='stylesheet' href='$CFG->wwwroot/blocks/timetable/templates/css/block.css'>";
+		$PAGE->requires->js( new moodle_url($CFG->wwwroot . '/blocks/timetable/templates/js/ttblock.js') );
 	    return $this->content;
 	}
 
     private function template() {
+		global $CFG;
         return '<ul class="timetable-list">'.
                     "<h3> Loading ... </h3>".
                 "</ul>".

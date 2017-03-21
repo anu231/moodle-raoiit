@@ -51,6 +51,19 @@ class editsection_form extends moodleform {
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
 
+        // CUSTOM FIELDS START
+        // (NOTE: needs course_sections.subject to be defined in /lib/db/install.xml)
+        $SUBJECTS = array(
+            0=>'Please Select a Subject',
+            1=>'Physics',
+            2=>'Chemistry',
+            3=>'Maths',
+            4=>'Biology',
+            5=>'Zoology'
+        );
+        $subjects = $mform->addElement('select', 'subject', 'Subject', $SUBJECTS);
+        // CUSTOM FIELDS END
+
         // additional fields that course format has defined
         $courseformat = course_get_format($course);
         $formatoptions = $courseformat->section_format_options(true);

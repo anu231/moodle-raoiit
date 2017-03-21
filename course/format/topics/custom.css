@@ -26,3 +26,19 @@
     user-select: none;
     padding-left: 10px;
 }
+
+li.section.main.Physics .content h3.sectionname {
+    background-color: #cfd0fe;
+}
+li.section.main.Chemistry .content h3.sectionname {
+    background-color: #8c759f;
+}
+li.section.main.Maths .content h3.sectionname {
+    background-color: #ffdfba;
+}
+li.section.main.Biology .content h3.sectionname {
+    background-color: #f5b8c7;
+}
+li.section.main.Zoology .content h3.sectionname {
+    background-color: #fbcdbe;
+}

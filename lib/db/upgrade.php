@@ -2464,5 +2464,19 @@ function xmldb_main_upgrade($oldversion) {
         // Main savepoint reached.
         upgrade_main_savepoint(true, 2016120500.04);
     }
+
+// CUSTOM MODIFICATIONS START
+
+    if (TRUE) { // Always add field irrespective of the moodleversion
+        $table = new xmldb_table('course_sections');
+        $field = new xmldb_field('subject', XMLDB_TYPE_INTEGER, '10', null, null, null, '0', null);
+
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        upgrade_main_savepoint(true, 2016120501.02);
+    }
+
+// CUSTOM MODIFICATIONS END
     return true;
 }

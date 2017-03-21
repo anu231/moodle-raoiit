@@ -2512,7 +2512,7 @@ class section_info implements IteratorAggregate {
      * @param int $notused3 argument not used (informaion is available in $modinfo)
      */
     public function __construct($data, $number, $notused1, $notused2, $modinfo, $notused3) {
-        global $CFG;
+        global $CFG, $DB;
         require_once($CFG->dirroot.'/course/lib.php');
 
         // Data that is always present
@@ -2535,6 +2535,9 @@ class section_info implements IteratorAggregate {
         // Other data from constructor arguments.
         $this->_section = $number;
         $this->modinfo = $modinfo;
+
+        // Custom Data
+        $this->_subject = $DB->get_record('course_sections', array('id'=>$data->id))->subject;  // Inject subject      
 
         // Cached course format data.
         $course = $modinfo->get_course();

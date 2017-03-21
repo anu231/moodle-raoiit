@@ -97,6 +97,7 @@ $initialdata = convert_to_array($sectioninfo);
 if (!empty($CFG->enableavailability)) {
     $initialdata['availabilityconditionsjson'] = $sectioninfo->availability;
 }
+$initialdata['subject'] = $DB->get_record('course_sections', array('id'=>$sectioninfo->id))->subject; // Inject Subject.
 $mform->set_data($initialdata);
 
 if ($mform->is_cancelled()){

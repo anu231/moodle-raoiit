@@ -189,6 +189,16 @@ abstract class format_section_renderer_base extends plugin_renderer_base {
         $o = '';
         $currenttext = '';
         $sectionstyle = '';
+        
+        $subject_map = array(
+            0 => 'default',
+            1 => 'Physics',
+            2 => 'Chemistry',
+            3 => 'Maths',
+            4 => 'Biology',
+            5 => 'Zoology',
+        );
+        $customStyle = $subject_map[$section->subject]; // Subject Classnames
 
         if ($section->section != 0) {
             // Only in the non-general sections.
@@ -200,7 +210,7 @@ abstract class format_section_renderer_base extends plugin_renderer_base {
         }
 
         $o.= html_writer::start_tag('li', array('id' => 'section-'.$section->section,
-            'class' => 'section main clearfix'.$sectionstyle, 'role'=>'region',
+            'class' => 'section main clearfix'.$sectionstyle.' '.$customStyle, 'role'=>'region',
             'aria-label'=> get_section_name($course, $section)));
 
         // Create a span that contains the section title to be used to create the keyboard section move menu.

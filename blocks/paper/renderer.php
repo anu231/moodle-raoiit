@@ -1,6 +1,6 @@
 <?php
 
-
+// require_once('locallib.php');
 
 class block_paper_renderer extends plugin_renderer_base {
 
@@ -8,6 +8,9 @@ class block_paper_renderer extends plugin_renderer_base {
         // Fetch paper information
         global $DB;
         if($paper = $DB->get_record('block_paper', array('paperid' => $paperid))){
+            $URL = "http://192.168.1.19:8000/papers/";
+            $response = paper_get_request($URL.$paperid.'/');
+            $paper->lastdate = $response ? $response->lastdate : '';
             return $this->render(new paper($paper));
         } else {
             return "<h1>Paper not found</h1>";
@@ -42,6 +45,8 @@ class paper implements renderable {
         $this->name = $paper->name;
         $this->duration = $paper->duration;
         $this->date = $this->formatdate($paper->date);
+        $this->lastdate = $this->formatdate($paper->lastdate);
+        $this->showSolution = $this->shouldShowSolution($paper);
         $this->syllabus = $paper->syllabus;
         $this->markingscheme = $this->formatmarkingscheme($paper->markingscheme);
         $this->instructions = $paper->instructions;
@@ -54,17 +59,22 @@ class paper implements renderable {
         return $f;
     }
 
+    private function shouldShowSolution($paper){
+        $diff = strtotime($paper->lastdate) - strtotime($paper->date);
+        return $diff <= 0 ? TRUE : FALSE;
+    }
+
     private function formatmarkingscheme($markstr){
         $json = json_decode($markstr);
-        $marks = array(
-            "Single Choice" => array($json->sccor, $json->scnegmarks),
-            "Multiple Choice" => array($json->mccor, $json->mcnegmarks),
-            "Arithmetic" => array($json->arcor, $json->arnegmarks),
-            "Comprehension" => array($json->chcor, $json->chnegmarks),
-            "True or False" => array($json->tfcor, $json->tfnegmarks),
-            "FB" => array($json->fbcor, $json->fbnegmarks),
-            "MS" => array($json->mscor, $json->msnegmarks)
-        );
+        $marks = array();
+        $json->sccor ? $marks["Single Choice"] = array($json->sccor, $json->scnegmarks) : null;
+        $json->mccor ? $marks["Multiple Choice"] = array($json->mccor, $json->mcnegmarks) : null;
+        $json->arcor ? $marks["Arithmetic"] =  array($json->arcor, $json->arnegmarks) : null;
+        $json->chcor ? $marks["Comprehension"] = array($json->chcor, $json->chnegmarks) : null;
+        $json->tfcor ? $marks["True or False"] = array($json->tfcor, $json->tfnegmarks) : null;
+        $json->fbcor ? $marks["FB"] = array($json->fbcor, $json->fbnegmarks): null;
+        $json->mscor ? $marks["MS"] = array($json->mscor, $json->msnegmarks): null;
+
         $markup = "";
         foreach ($marks as $mark => $type) {
             $markup .= "<tr><td>$mark</td><td>$type[0]</td><td>$type[1]</td></tr>";

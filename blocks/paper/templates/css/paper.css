@@ -17,33 +17,24 @@
     font-weight: 700;
 }
 .paper-card .info {
-    display: flex;
-    /*border: 2px solid black;*/
-    flex-basis: 45%;
-    /*vertical-align: top;*/
-    flex-grow: 1;
+    display: block;
+    border: 2px solid black;
     padding: 10px;
-    flex-wrap: wrap;
-    align-self: flex-start;
 }
 .paper-card .info .item{
     position: relative;
     padding: 6px;
     border-radius: 6px;
     background-color: white;
-    flex-grow: 1;
-    align-self: flex-start;
     box-shadow: 0px 1px 3px 0px rgba(0,0,0, 0.3);
     transition: 0.1s ease-out all;
 }
 
 .paper-card .info .duration-div{
-    flex-basis: 40%;
     margin-right: 5%;
     text-align: center;
 }
 .paper-card .info .date-div{
-    flex-basis: 40%;
     text-align: center;
 }
 .paper-card .info .syllabus-div{
@@ -68,4 +59,20 @@
 }
 .paper-card #markstable:hover{
     box-shadow: 0px 4px 10px 1px rgba(0,0,0, 0.2);
+}
+
+.paper-card .action-div {
+    position: relative;
+    width: 100%;
+}
+.paper-card .action {
+    display: inline-block;
+    position: absolute;
+    padding: 5px 10px;
+}
+.paper-card .solutions {
+
+}
+.paper-card .show{
+    right: 0;
 }

@@ -1,6 +1,6 @@
 <?php
 require($CFG->dirroot.'/vendor/autoload.php');
-require($CFG->dirroot.'/vendor/rmccue/requests/library/Requests.php'); //Requests.php
+// require($CFG->dirroot.'/vendor/rmccue/requests/library/Requests.php'); //Requests.php
 
 
 /**
@@ -68,15 +68,33 @@ function paper_remote_fetch_papers() {
     $PAPERINFOURL = "/papers/";
     $headers = array('Accept' => 'application/json');
 
-    $request = Requests::get($SERVERURL.$PAPERNAMEURL, $headers);
-    $names = json_decode($request->body);
+    // $request = Requests::get($SERVERURL.$PAPERNAMEURL, $headers);
+    $names = paper_get_request($SERVERURL.$PAPERNAMEURL);
 
-    $request = Requests::get($SERVERURL.$PAPERINFOURL, $headers);
-    $info = json_decode($request->body);
+    // $request = Requests::get($SERVERURL.$PAPERINFOURL, $headers);
+    $info = paper_get_request($SERVERURL.$PAPERINFOURL);
 
     $json = array(
         'names' => $names,
         'info' => $info
     );
     return $json;
+}
+
+// Use curl request to get paper data
+// @return json
+function paper_get_request($url) {
+    //initialize curl handle
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url); //set the url
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); //return as a variable
+    $response = curl_exec($ch); //run the whole process and return the response
+    curl_close($ch); //close the curl handle
+    if( $response )
+        return json_decode($response);
+    else{
+        echo "Error getting papers";
+        return array();
+    }
+        
 }

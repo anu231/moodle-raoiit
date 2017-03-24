@@ -4,6 +4,7 @@
     <div class="info">
         <div class="item duration-div"><span class="">Duration: <b>{{duration}}</b></span></div>
         <div class="item date-div"><span class="">Date: <b>{{date}}</b></span></div>
+        <div class="item date-div"><span class="">Last Date: <b>{{lastdate}}</b></span></div>
         <div class="item syllabus-div"><span class="">Syllabus: {{syllabus}}</span></div>
     </div>
     <div class="marks-div">
@@ -19,6 +20,18 @@
                 {{{markingscheme}}}
             </tbody>
         </table>
+    </div>
+    <hr>
+    <div class="action-div"> &nbsp;
+        //TODO ADD LINKS!
+        {{#showSolution}}
+        <div class="action solutions">
+            <button class="btn btn-info">Show solutions</button>
+        </div>
+        {{/showSolution}}
+        <div class="action show">
+            <button class="btn btn-primary">Show</button>
+        </div>
     </div>
 </div>
 

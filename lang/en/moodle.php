@@ -1269,7 +1269,7 @@ This setting determines how many recent announcements appear in the latest annou
 
 If an announcements forum is not required in the course, this setting should be set to zero.';
 $string['newuser'] = 'New user';
-$string['newusernewpasswordsubj'] = 'New user account';
+$string['newusernewpasswordsubj'] = 'New Student Portal';
 $string['newusernewpasswordtext'] = 'Hi {$a->firstname},
 
 A new account has been created for you at \'{$a->sitename}\'

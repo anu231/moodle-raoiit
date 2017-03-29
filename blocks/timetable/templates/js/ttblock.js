@@ -3,7 +3,7 @@
     var timetable,
         userid = document.getElementById('ttusername').value,
         ajaxUrl = 'http://192.168.1.161/moodle/timetable.php?id=' + userid,
-        ajaxUrl = 'http://192.168.1.161/moodle/timetable.php?id=' + '817172', // Dev only
+        //ajaxUrl = 'http://192.168.1.161/moodle/timetable.php?id=' + '817172', // Dev only
         block = document.getElementsByClassName('timetable-list')[0];
 
 

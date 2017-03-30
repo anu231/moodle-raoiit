@@ -5,4 +5,6 @@
 require_once('../../config.php');
 
 require_login();
-echo '<a href="batches.php">Batches</a>';
+echo '<a href="batch/index.php">Batches</a><br>';
+echo '<hr>';
+echo '<a href="notification/index.php">Notifications</a>';

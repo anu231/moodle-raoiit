@@ -1,0 +1,21 @@
+{{#message}}
+<div class="dialog dialog-{{status}}">
+    <h3>{{message}}</h3>
+</div>
+{{/message}}
+
+<style>
+    .dialog {
+        background-color: #eee;
+        border-radius: 10px;
+        width: 70%;
+        padding: 5px;
+        position: relative;
+        text-align: center;
+        margin: 0 auto;
+        margin-bottom: 30px;
+    }
+    .dialog-success {
+        background-color: lightgreen;
+    }
+</style>

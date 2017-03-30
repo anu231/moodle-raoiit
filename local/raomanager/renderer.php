@@ -10,27 +10,19 @@ class local_raomanager_renderer extends plugin_renderer_base {
         return $this->render_from_template('local_raomanager/batchinfo', $info);
     }
 
-    public function error($code) {
-        switch ($code) {
-            case 1:
-                $message = "Couldn't Create a New Batch (Error 1)";
-                break;
-            case 2:
-                $message = "Couldn't Save Changes to batch (Error 2)";
-                break;
-            case 3:
-                $message = "Couldn't Delete the Batch (Error 3)";
-                break;
-            default:
-                $message = '';
-                break;
-        }
-        return $this->render_from_template('local_raomanager/error', $message);
+    public function render_dialog($dialog) {
+        return $this->render_from_template('local_raomanager/dialog', $dialog);
     }
 
 }
 
-
+// Display feedback dialog box
+class dialog implements renderable {
+    public function __construct($message, $code=null) {
+        $this->status = $code == 0 ? 'success' : 'failure';
+        $this->message = $message;
+    }
+}
 
 class batch_info implements renderable {
     public function __construct(){
@@ -47,8 +39,8 @@ class batch_info implements renderable {
                 'index' => $counter,
                 'id' => $batch->id,
                 'batch' => $batch->batch,
-                'edit_link' => "batches.php?action=edit&batchid=$batch->id",
-                'delete_link' => "batches.php?action=delete&batchid=$batch->id"
+                'edit_link' => "index.php?action=edit&batchid=$batch->id",
+                'delete_link' => "index.php?action=delete&batchid=$batch->id"
             );
             $processed_batches[] = $tmp;
             $counter++;

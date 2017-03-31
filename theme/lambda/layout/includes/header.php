@@ -138,9 +138,7 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
  		echo '<div id="loggedin-user">';		
 		echo $OUTPUT->navbar_plugin_output();
 		echo $OUTPUT->user_menu();
-		echo $OUTPUT->user_picture($USER, array('size' => 80, 'class' => 'welcome_userpicture'));		
-		echo '</div>';
-
+		echo $OUTPUT->user_picture($USER, array('size' => 80, 'class' => 'welcome_userpicture'));
 	}?>
 
 	</div>

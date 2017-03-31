@@ -64,12 +64,18 @@ function update_grievance_reply($mform){
 }
 
 // Approve(1)/disapprove(0) a response
+// Also send an email to the user about the reply
 function set_response_approval($rid, $approval){
     global $DB;
     $resp = $DB->get_record('grievance_responses', array('id' => $rid));
     if($resp){
         $resp->approved = $approval == 'approve' ? 1 : -1;
-        $DB->update_record('grievance_responses', $resp);
+        $success = $DB->update_record('grievance_responses', $resp);
+        if ($success) {
+            $success = notify_student($resp);
+            if (! $success )
+                echo "Couldn't notify student!";
+        }
         return;
     } else {
         return;
@@ -147,8 +153,7 @@ function send_grievance_dept_emails($gid, $data, $type){
     global $CFG, $DB;
     $customsalt = 'aybabtu'; // TODO Move to config
     $deptid = isset($data->deptid) ? $data->deptid : $data->category; // TODO Use deptid only
-    // $emails = get_dept_emails($deptid);
-    $emails = array('akshay.handrale@raoiit.com');
+    $emails = get_dept_emails($deptid);
     $basereplyurl = $CFG->wwwroot."/blocks/readytohelp/view.php?gid=$gid&deptid=$deptid&reply=1"; // Append hash and email in sendMail
 
     if($type == "new_grievance" || $type == "reminder"){
@@ -175,7 +180,7 @@ function send_grievance_dept_emails($gid, $data, $type){
         require_once('classes/replynotification.php');
         foreach($emails as $email){
             $hash = sha1($gid.$customsalt.$email);
-            $replyurl = $basereplyurl."&email=$email&hash=$hash#id_body";
+            $replyurl = $basereplyurl."&email=$email&hash=$hash";
             $task = new block_readytohelp_replynotification();
             $task->set_custom_data(array(
                 'email' => $email,
@@ -244,4 +249,35 @@ function send_rejection_email($gid, $rid, $deptid){
     $yolo = \core\task\manager::queue_adhoc_task($task);
     return $yolo;
     
+}
+
+/**
+ * Send an email to student about a new approved response
+ */
+function notify_student($resp) {
+    global $DB, $CFG;
+    require_once('classes/studentnotification.php');
+    require_once("$CFG->dirroot/user/profile/lib.php");
+    // Get student's email'
+    $gid = $resp->grievance_id;
+    $grievance = $DB->get_record('grievance_entries', array('id' => $gid));
+    $user = $DB->get_record('user', array('username' => $grievance->username)); // Needed to get $studentdetails
+    $studentdetails = profile_user_record($user->id); // Needed to get studentemail
+    $studentemail = $studentdetails->studentemail;
+    if ($studentemail == "")
+        return FALSE;
+
+    $replyurl = $CFG->wwwroot."/blocks/readytohelp/view.php?gid=$gid&deptid=$grievance->category&email=$grievance->username&reply=1#id_body";
+
+    $task = new block_readytohelp_studentnotification();
+    $task->set_custom_data(array(
+        'email' => $studentemail,
+        'grievance' => $grievance,
+        'response' => $resp,
+        'replyurl' => $replyurl
+    ));
+    if( !$taskid = \core\task\manager::queue_adhoc_task($task) ) {
+        return FALSE;
+    }
+    return TRUE;
 }

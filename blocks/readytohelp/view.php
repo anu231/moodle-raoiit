@@ -11,15 +11,16 @@ require_once('locallib.php');
 // required_param('courseid', PARAM_INT);
 $gid = required_param('gid', PARAM_INT);
 $email = optional_param('email', 0, PARAM_RAW); // Email id of responder. OR username of student
-$deptid = optional_param('deptid', 0, PARAM_INT);
-$hash = optional_param('hash', 0, PARAM_RAW); // sha1(gid, email, timecreated);
+$deptid = optional_param('deptid', 0, PARAM_INT); // Deptid is referred to as categoryid in renderer.php
+$hash = optional_param('hash', 0, PARAM_RAW); // sha1(gid.'aybabtu'.email);
 $reply = optional_param('reply', 0, PARAM_INT); // If 1, display reply form for student
-$gmode = optional_param('gmode', '', PARAM_RAW); // gmode,sha1($gid.'aybabtu'.$deptid), shows all replies for review
+$gmode = optional_param('gmode', '', PARAM_RAW); // gmode,sha1($gid.'aybabtu'.$deptid), shows all replies for review 
 $action = optional_param('action', '', PARAM_RAW); // 'approve', 'disapprove'
 $rid = optional_param('rid', 0, PARAM_INT); // Response id
 
 // Check login and permissions
 global $DB, $OUTPUT, $PAGE, $USER;
+require_login();
 // /permissions
 
 // Check email and hash validity
@@ -38,7 +39,6 @@ if( $action ){
         }
         // redirect(new moodle_url("$CFG->wwwroot/blocks/readytohelp/view.php?gid=$g->eid&deptid=$g->cid&gmode=$gmode"));
     } else if ( $action == 'open' || $action == 'close' && $gid != 0 ){
-        // TODO
         set_grievance_status($gid, $action);
     } else if ( $action == 'remind' && $rid ) {
         // TODO Send reminder to category
@@ -61,7 +61,7 @@ echo $output->header();
 // Display student view
 echo $output->grievance_detail($gid, $gmode);
 
-// Display Reply form for student
+// Display Reply form for STUDENTS ONLY
 if($reply == 1 && $deptid && $email==$USER->username){
     $replyform = new readytohelp_reply_form("view.php?gid=$gid&deptid=$deptid&email=$USER->username&reply=1",
     array(
@@ -88,8 +88,14 @@ if($reply == 1 && $deptid && $email==$USER->username){
 }
 
 
+// NOTE!! DONT DELETE!
+// Display reply form for MODS and SITEADMIN
+// if(is_siteadmin()){
+//     $customsalt = 'aybabtu';
+//     $email='admin'; // TODO move to a different place?
+//     $hash = sha1($gid.$customsalt.$email);
+// }
 
-// Display mod reply form
 if ($email && $hash && $deptid){
     $replyform = new readytohelp_reply_form("view.php?gid=$gid&deptid=$deptid&email=$email&hash=$hash",
     array(

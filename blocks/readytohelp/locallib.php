@@ -46,6 +46,8 @@ function get_dept_emails($deptid){
 function create_grievance_reply($mform){
     global $DB;
     $mform->timecreated = time();
+    if($mform->email == 'admin') // All admin replies are preapproved by the Lord!
+        $mform->approved = 1;
     if($rid = $DB->insert_record('grievance_responses', $mform)){
         return TRUE;
     } else {
@@ -79,7 +81,7 @@ function set_grievance_status($gid, $status){
     global $DB;
     $resp = $DB->get_record('grievance_entries', array('id' => $gid));
     if($resp){
-        $resp->status = $status;
+        $resp->status = $status == 'close' ? 'closed' : 'open';
         $DB->update_record('grievance_entries', $resp);
         return;
     } else {
@@ -219,12 +221,14 @@ function send_rejection_email($gid, $rid, $deptid){
     require_once('classes/rejectednotification.php');
     global $CFG, $DB;
     $customsalt = 'aybabtu';
+    $resp = $DB->get_record('grievance_responses', array('id' => $rid));
+    if($resp->email == 'admin') // Dont send rejection mails for admin
+        return 0;
+    $response = $resp->body;
     $query = $DB->get_record('grievance_entries', array('id' => $gid));
     $subject = $query->subject;
     $description = $query->description;
 
-    $resp = $DB->get_record('grievance_responses', array('id' => $rid));
-    $response = $resp->body;
 
     $hash = sha1($gid.$customsalt.$resp->email);
     $replyurl =  $CFG->wwwroot."/blocks/readytohelp/view.php?gid=$gid&deptid=$deptid&reply=1&email=$resp->email&hash=$hash#id_body";

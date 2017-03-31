@@ -46,6 +46,10 @@ class grievance_detail implements renderable{
         $grievance = $this->get_grievance_thread($gid, $gmode);
         $this->query = $grievance['query'];
         $this->responses = $grievance['responses'];
+        $this->showstatusbuttons = is_siteadmin() ? TRUE : FALSE;
+        $statusaction = $this->query['status'] == 'open' ? 'close' : 'open';
+        $this->statusactionname = $statusaction == 'open' ? 'Open' : 'Close';
+        $this->statuslink = "view.php?gid=$gid&action=$statusaction";
     }
 
     private function get_grievance_thread($gid, $gmode){
@@ -86,7 +90,7 @@ class grievance_detail implements renderable{
                 $isuser = (int)$resp->email ? true : false; // Tracks whether the response belongs to a user. (user responses dont have emails in them)
                 $islast = $index == count($responses) - 1; // Track last response index.
 
-                $lastmodrespindex = !$isuser && $resp->approved == 1 ? $index : $lastmodrespindex;
+                $lastmodrespindex = !$isuser && $resp->approved == 1 ? $index : $lastmodrespindex; // index of the last APPROVED mod reply
                 $tmp = array(
                     'gid' => $gid,
                     'rid' => $resp->id,
@@ -107,7 +111,7 @@ class grievance_detail implements renderable{
                     } else if ($resp->approved == -1){
                         $tmp['approved'] = 'no';
                     } else {
-                        $tmp['approved'] = 'yneos'; 
+                        $tmp['approved'] = 'yneos'; // Wtf is this?
                     }
                     $tmp['mod_controls'] = $isuser == true ? 'hide' : 'show'; // Don't show controls for user chatbox
                     $formatted['responses'][$index] = $tmp;
@@ -299,7 +303,9 @@ SQL;
                 $g->replycount = $g->body != NULL && !$isuser ? 1 : 0; // Don't count user replies
                 $g->etimecreated = strftime('%G/%m/%d/-%R', $g->etimecreated);
                 $gphrase = sha1($g->eid.'aybabtu'.$g->cid); // Hash for performing admin stuff
-                $g->viewlink = "$CFG->wwwroot/blocks/readytohelp/view.php?gid=$g->eid&deptid=$g->cid&gmode=$gphrase"; // Link to the thread
+                $email = 'admin';                           // Email = 'admin' for admin
+                $hash = sha1($g->eid.'aybabty'.$email); // Allow admin reply capability
+                $g->viewlink = "$CFG->wwwroot/blocks/readytohelp/view.php?gid=$g->eid&deptid=$g->cid&gmode=$gphrase&email=$email&hash=$hash"; // Link to the thread
                 $g->remindlink = "review_response.php?action=remind&deptid=$g->cid&gid=$g->eid&cid=$COURSE->id";
                 $stack[] = $g;
             } else {

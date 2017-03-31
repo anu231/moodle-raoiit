@@ -13,7 +13,6 @@ function makeRequest(url, data){
 if (shouldAuthenticate){
     var getHash = makeRequest(moodleAuthURL);
     getHash.done(function(userDetails){
-            console.log(JSON.parse(userDetails));
             var authenticate = makeRequest(djangoAuthURL, JSON.parse(userDetails));
             authenticate.done(function(response){
                 console.error(response);

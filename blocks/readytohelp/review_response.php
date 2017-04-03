@@ -1,6 +1,7 @@
 <?php
 
 require_once('../../config.php');
+require_once('../../local/raomanager/lib.php');
 require_once('locallib.php');
 
 $courseid = required_param('cid', PARAM_INT); // Course ID for capability check
@@ -14,7 +15,7 @@ $message = optional_param('message', '', PARAM_RAW); // Display message if any
 require_login($courseid); // Required for setting context
 global $OUTPUT, $PAGE, $USER, $COURSE;
 
-if ( ! allow_review_responses() ){
+if ( ! local_raomanager_has_permission('ReadyToHelp') ){
     // Redirect to index
     redirect(new moodle_url('/'));
 }

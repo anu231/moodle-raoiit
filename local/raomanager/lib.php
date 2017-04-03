@@ -5,10 +5,9 @@ function local_raomanager_pluginmap(){
     return array(
             1 => 'Paper',
             2 => 'ReadyToHelp',
-            3 => 'GrievancePortal',
-            4 => 'RaoManager::Admin',
-            5 => 'RaoManager::Batch',
-            6 => 'RaoManager::Course',
+            3 => 'RaoManager::Admin',
+            4 => 'RaoManager::Batch',
+            5 => 'RaoManager::Course',
             6 => 'RaoManager::Notification',
         );
 }
@@ -34,8 +33,8 @@ function local_raomanager_extend_navigation(global_navigation $nav){
 // return boolean. False for failure
 function local_raomanager_has_permission($pluginname) {
     global $USER, $DB;
-    if( is_siteadmin() )
-        return TRUE;
+    // if( is_siteadmin() )
+    //     return TRUE;
     $record = $DB->get_record('raomanager_admins', array('username' => $USER->username, 'pluginname' => $pluginname ));
     if(!$record)
         return FALSE;

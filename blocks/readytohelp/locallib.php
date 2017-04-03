@@ -6,7 +6,7 @@ require($CFG->dirroot.'/vendor/autoload.php');
 // require_once($CFG->dirroot.'/vendor/phpmailer/phpmailer/PHPMailerAutoload.php');
 
 // Permission functions
-/**
+/** DEPRICATED! USE local_raomanager_has_permission('ReadyToHelp') instead;
  * Check if a user has capability to review responses
  * @return boolean true if has capability. false otherwise
  */

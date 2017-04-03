@@ -3,10 +3,14 @@
 require_once('../../../config.php');
 require_once('admin_form.php');
 require_once('locallib.php');
+require_once('../lib.php');
 
 global $CFG, $PAGE, $DB;
 require_login();
-//  TODO ADD capability checks
+require_login();
+if(! local_raomanager_has_permission('RaoManager::Admin') )
+    redirect(new moodle_url('/'));
+
 
 $action = optional_param('action', '', PARAM_RAW); // Action to perform
 $id = optional_param('id', 0, PARAM_INT); // Id of the record
@@ -76,6 +80,7 @@ if ($action == 'add') {
     $mform->display();
 } else if ($action == 'edit' && $id != 0) {
     $item = $DB->get_record('raomanager_admins', array('id'=>$id));
+    $item->pluginname = array_search($item->pluginname, local_raomanager_pluginmap());
     $mform->set_data($item);
     $mform->display();
 } else {

@@ -4,6 +4,7 @@
 
 require_once('../../../config.php');
 require_once('locallib.php');
+require_once('../lib.php');
 require_once('notification_form.php');
 
 global $CFG, $DB, $PAGE;
@@ -13,6 +14,9 @@ $code = optional_param('code', -1, PARAM_INT);
 
 $PAGE->set_url('/local/raomanager/notification/index.php');
 require_login();
+
+if(! local_raomanager_has_permission('RaoManager::Notification') )
+    redirect(new moodle_url('/'));
 
 $mform = new local_raomanager_notification_form();
 $output = $PAGE->get_renderer('local_raomanager');

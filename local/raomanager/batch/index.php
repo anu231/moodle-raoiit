@@ -10,6 +10,8 @@ global $CFG, $DB, $PAGE;
 $PAGE->set_heading('Raomanager:Batches');
 
 require_login();
+if(! local_raomanager_has_permission('RaoManager::Batch') )
+    redirect(new moodle_url('/'));
 
 $action = optional_param('action', '', PARAM_RAW); // Action to perform
 $batchid = optional_param('batchid', 0, PARAM_INT); // Data to be acted upon

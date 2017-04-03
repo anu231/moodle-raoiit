@@ -23,6 +23,14 @@ class local_raomanager_renderer extends plugin_renderer_base {
         return $this->render_from_template('local_raomanager/admininfo', $info);
     }
 
+    public function center_info(){
+        $center_info = new center_info();
+        return $this->render($center_info);
+    }
+
+    public function render_center_info($info){
+        return $this->render_from_template('local_raomanager/centerinfo', $info);
+    }
 }
 
 // Display feedback dialog box
@@ -51,6 +59,8 @@ class batch_info implements renderable {
                 'edit_link' => "index.php?action=edit&batchid=$batch->id",
                 'delete_link' => "index.php?action=delete&batchid=$batch->id"
             );
+            $center = $DB->get_record('raomanager_centers', array('id' => $batch->centerid));
+            $tmp['centername'] = $center->name;
             $processed_batches[] = $tmp;
             $counter++;
         }
@@ -74,9 +84,32 @@ class admin_info implements renderable {
                     'delete_link' => "index.php?action=delete&id=$admin->id"
                 );
                 $processed_admins[] = $tmp;
+                $counter++;
             }
-            $counter++;
         }
         $this->admins = $processed_admins;
+    }
+}
+
+class center_info implements renderable {
+    public function __construct() {
+        global $DB, $CFG;
+        $processed_centers = array();
+        $centers = $DB->get_records('raomanager_centers', array());
+        if($centers){
+            $counter = 1;
+            foreach ($centers as $center) {
+                $tmp = array(
+                    "index" => $counter,
+                    "centername" => $center->name,
+                    "zonename" => $center->zone,
+                    'edit_link' => "index.php?action=edit&centerid=$center->id",
+                    'delete_link' => "index.php?action=delete&centerid=$center->id"
+                );
+                $processed_centers[] = $tmp;
+                $counter++;
+            }
+        }
+        $this->centers = $processed_centers;
     }
 }

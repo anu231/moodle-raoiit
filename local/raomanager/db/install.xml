@@ -7,8 +7,8 @@
         <TABLE NAME="raomanager_admins" COMMENT="Users and their plugin access">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
-                <FIELD NAME="username" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT=""/>
-                <FIELD NAME="pluginname" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Name of plugin that the user has access to"/>
+                <FIELD NAME="username" TYPE="char" LENGTH="255" NOTNULL="false" COMMENT=""/>
+                <FIELD NAME="pluginname" TYPE="char" LENGTH="255" NOTNULL="false" COMMENT="Name of plugin that the user has access to"/>
                 <FIELD NAME="modified" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"/>
             </FIELDS>
             <KEYS>
@@ -21,12 +21,14 @@
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
                 <FIELD NAME="batch" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="BatchID"/>
+                <FIELD NAME="centerid" TYPE="char" LENGTH="255" NOTNULL="false"  COMMENT="Name of center of the batch"/>
                 <FIELD NAME="assignee" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="Dude/Gal to be blamed"/>
                 <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"/>
                 <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="centerid" TYPE="foreign" FIELDS="centerid" REFTABLE="raomanager_centers" REFFIELDS="id" />
             </KEYS>
         </TABLE>
 

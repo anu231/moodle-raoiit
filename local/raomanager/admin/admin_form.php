@@ -3,7 +3,7 @@
 // Feedback form
 
 require_once("$CFG->libdir/formslib.php");
-require_once("locallib.php");
+require_once("../lib.php");
 
 class local_raomanager_admin_form extends moodleform {
     function definition() {
@@ -15,8 +15,8 @@ class local_raomanager_admin_form extends moodleform {
         $mform->addElement('hidden', 'id', $id);
         $mform->setType('id', PARAM_INT);
 
-        $PLUGINS = rm_admin_pluginmap();
-        $plugins = $mform->addElement('select', 'pluginid', 'Select Plugin to assign', $PLUGINS);
+        $PLUGINS = local_raomanager_pluginmap();
+        $plugins = $mform->addElement('select', 'pluginname', 'Select Plugin to assign', $PLUGINS);
 
         $mform->addElement('text', 'username','Enter a Username');
         $mform->setType('username', PARAM_NOTAGS);

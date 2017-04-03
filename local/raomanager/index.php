@@ -16,6 +16,8 @@ if(! local_raomanager_has_permission('RaoManager::Admin') )
 echo $OUTPUT->header();
 echo '<a class="btn btn-primary" href="batch/index.php">Manage Batches</a><br>';
 echo '<hr>';
+echo '<a class="btn btn-primary" href="center/index.php">Manage Centers</a>';
+echo '<hr>';
 echo '<a class="btn btn-primary" href="notification/index.php">Manage Notifications</a>';
 echo '<hr>';
 echo '<a class="btn btn-primary" href="admin/index.php">Manage Admins</a>';

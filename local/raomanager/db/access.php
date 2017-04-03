@@ -6,7 +6,7 @@ $capabilities = array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
-            'editingteacher' => CAP_ALLOW,
+            'editingteacher' => CAP_PREVENT,
             'manager' => CAP_ALLOW
         ),
         'clonepermissionsfrom' => 'moodle/course:manageactivities'
@@ -19,7 +19,7 @@ $capabilities = array(
             'guest' => CAP_PREVENT,
             'student' => CAP_PREVENT,
             'teacher' => CAP_PREVENT,
-            'editingteacher' => CAP_ALLOW,
+            'editingteacher' => CAP_PREVENT,
             'manager' => CAP_ALLOW
         )
     ),

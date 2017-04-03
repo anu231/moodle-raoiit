@@ -1,30 +1,30 @@
 <div class="control-panel">
     <a class="btn btn-warning" href="../index.php">Go Back</a>
-    <a class="btn btn-danger" href="index.php?action=add">Click Here to Add new Batch</a>
+    <a class="btn btn-danger" href="index.php?action=add">Add new Center</a>
 </div>
 <hr>
-<h3>List of all the Batches</h3>
+<h3>List of all the Centers</h3>
 <div class="table-wrapper">
     <table class="table table-hover table-stripped table-condensed">
         <thead>
             <tr>
                 <th>Index</th>
-                <th>Batch</th>
                 <th>Center</th>
+                <th>Zone</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-            {{#batches}}
+            {{#centers}}
             <tr>
                 <td>{{index}}</td>
-                <td>{{batch}}</td>
                 <td>{{centername}}</td>
+                <td>{{zonename}}</td>
                 <td><a href="{{edit_link}}">Edit</a</td>
                 <td><a href="{{delete_link}}">Delete</a</td>
             </tr>
-            {{/batches}}
+            {{/centers}}
         </tbody>
     </table>
 </div>

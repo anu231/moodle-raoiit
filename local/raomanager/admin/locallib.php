@@ -1,21 +1,13 @@
 <?php
 // Assign new admin
+require_once('../lib.php');
 
-// Single source of pluginmap
-function rm_admin_pluginmap(){
-    return array(
-            0 => 'RaoManager',
-            1 => 'Paper',
-            2 => 'Ready To Help',
-            3 => 'Grievance Portal'
-        );
-}
 
 function rm_admin_add($permission, $mform = NULL) {
     global $DB, $USER;
     $permission->timecreated = time();
-    $pluginmap = rm_admin_pluginmap();
-    $permission->pluginname = $pluginmap[$permission->pluginid];
+    $pluginmap = local_raomanager_pluginmap();
+    $permission->pluginname = $pluginmap[$permission->pluginname];
     if ($id = $DB->insert_record('raomanager_admins', $permission))
         return $id;
     else 
@@ -26,8 +18,8 @@ function rm_admin_add($permission, $mform = NULL) {
 function rm_admin_edit($permission, $mform = NULL) {
     global $DB, $USER;
     $permission->id;
-    $pluginmap = rm_admin_pluginmap();
-    $permission->pluginname = $pluginmap[$permission->pluginid];
+    $pluginmap = local_raomanager_pluginmap();
+    $permission->pluginname = $pluginmap[$permission->pluginname];
     $permission->timemodified = time();
     if ($success = $DB->update_record('raomanager_admins', $permission))
         return $success;

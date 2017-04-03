@@ -32,7 +32,7 @@ class block_timetable extends block_base {
                     "<h3> Loading ... </h3>".
                 "</ul>".
                 "<hr>".
-                '<input type="hidden" id="ttusername" value="'.$_SESSION['USER']->username.'">';
+                '<input type="hidden" id="tturl" value="'.$CFG->timetable_url.$_SESSION['USER']->username.'">';
         // $url = 'http://192.168.1.161/moodle/timetable.php?id='.$_SESSION['USER']->username; // TODO Remove
     }
 }

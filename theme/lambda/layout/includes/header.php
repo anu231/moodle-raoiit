@@ -139,10 +139,10 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 		echo $OUTPUT->navbar_plugin_output();
 		echo $OUTPUT->user_menu();
 		echo $OUTPUT->user_picture($USER, array('size' => 80, 'class' => 'welcome_userpicture'));		
-		echo '<div style="text-align:right; position:relative; display:block;">'.
-			 '<a style="padding-right:105px; display:block;" href="http://www.google.com/?q=Yolo" target="_blank">Yolo</a>'.
-			 '<a style="padding-right:105px; display:block;" href="http://www.google.com/?q=Sakinaka" target="_blank">Cholo Sakinaka</a>';
-		echo '</div>';
+		//echo '<div style="text-align:right; position:relative; display:block;">'.
+		//	 '<a style="padding-right:105px; display:block;" href="http://www.google.com/?q=Yolo" target="_blank">Yolo</a>'.
+		//	 '<a style="padding-right:105px; display:block;" href="http://www.google.com/?q=Sakinaka" target="_blank">Cholo Sakinaka</a>';
+		//echo '</div>';
 		echo '</div>';
 
 	}?>

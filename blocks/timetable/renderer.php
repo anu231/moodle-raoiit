@@ -2,10 +2,10 @@
 
 
 function get_timetable(){
+    global $CFG, $USER;
     //  Initiate curl
     $ch = curl_init();
-    // $url = 'http://192.168.1.161/moodle/timetable.php?id='.$_SESSION['USER']->username;
-    $url = 'http://192.168.1.161/moodle/timetable.php?id='.'817172';
+    $url = $CFG->timetable_url.$USER->username;
     // Disable SSL verification
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     // Will return the response, if false it print the response

@@ -18,9 +18,11 @@ class local_raomanager_center_form extends moodleform {
 
         $mform->addElement('text', 'name','Center Name');
         $mform->setType('name', PARAM_NOTAGS);
+        $mform->addRule('name','Required','required',null,'client');
 
         $mform->addElement('text', 'zone','Zone');
         $mform->setType('zone', PARAM_NOTAGS);
+        $mform->addRule('zone','Required','required',null,'client');
 
         $this->add_action_buttons();
     }

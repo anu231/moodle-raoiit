@@ -18,6 +18,8 @@ class local_raomanager_batch_form extends moodleform {
 
         $mform->addElement('text', 'batch','Batch Name');
         $mform->setType('batch', PARAM_NOTAGS);
+        $mform->addRule('batch','Required','required',null,'client');
+
 
         $CENTERS = $DB->get_records_menu('raomanager_centers', $conditions=array(), $sort=null, $fields='id, name');
         $mform->addElement('select', 'centerid', "Center", $CENTERS);

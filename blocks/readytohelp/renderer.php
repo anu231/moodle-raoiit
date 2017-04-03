@@ -48,7 +48,7 @@ class grievance_detail implements renderable{
         $this->responses = $grievance['responses'];
         $this->showstatusbuttons = is_siteadmin() ? TRUE : FALSE;
         $statusaction = $this->query['status'] == 'open' ? 'close' : 'open';
-        $this->statusactionname = $statusaction == 'open' ? 'Open' : 'Close';
+        $this->statusactionname = $statusaction == 'open' ? 'Open Grievance' : 'Close Grievance';
         $this->statuslink = "view.php?gid=$gid&action=$statusaction";
     }
 

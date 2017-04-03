@@ -14,6 +14,15 @@ class local_raomanager_renderer extends plugin_renderer_base {
         return $this->render_from_template('local_raomanager/dialog', $dialog);
     }
 
+    public function admin_info(){
+        $admin_info = new admin_info();
+        return $this->render($admin_info);
+    }
+
+    public function render_admin_info($info){
+        return $this->render_from_template('local_raomanager/admininfo', $info);
+    }
+
 }
 
 // Display feedback dialog box
@@ -46,5 +55,28 @@ class batch_info implements renderable {
             $counter++;
         }
         return $processed_batches;
+    }
+}
+
+class admin_info implements renderable {
+    public function __construct() {
+        global $DB, $CFG;
+        $processed_admins = array();
+        $admins = $DB->get_records('raomanager_admins', array());
+        if($admins){
+            $counter = 1;
+            foreach ($admins as $admin) {
+                $tmp = array(
+                    "index" => $counter,
+                    "admin" => $admin->username,
+                    "plugin" => $admin->pluginname,
+                    'edit_link' => "index.php?action=edit&id=$admin->id",
+                    'delete_link' => "index.php?action=delete&id=$admin->id"
+                );
+                $processed_admins[] = $tmp;
+            }
+            $counter++;
+        }
+        $this->admins = $processed_admins;
     }
 }

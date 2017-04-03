@@ -3,7 +3,7 @@
 // Handles notification - SMS and Emails
 
 require_once('../../../config.php');
-require_once('../lib.php');
+require_once('locallib.php');
 require_once('notification_form.php');
 
 global $CFG, $DB, $PAGE;
@@ -34,7 +34,7 @@ if($code != -1) {
             $message = "Success! Notifications have been sent";
             break;
         case 1:
-            $message = "Failed! Couldn't send Notifications";
+            $message = "Failed! Couldn't send Notifications. Please check if you filled out the form correctly.";
             break;
         default:
             $message = "You hacker you!";

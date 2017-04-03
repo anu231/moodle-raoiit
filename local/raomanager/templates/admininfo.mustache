@@ -1,28 +1,30 @@
 <div class="control-panel">
     <a class="btn btn-warning" href="../index.php">Go Back</a>
-    <a class="btn btn-danger" href="index.php?action=add">Click Here to Add new Batch</a>
+    <a class="btn btn-danger" href="index.php?action=add">Assign New Admin</a>
 </div>
 <hr>
-<h3>List of all the Batches</h3>
+<h3>List of all Admins</h3>
 <div class="table-wrapper">
     <table class="table table-hover table-stripped table-condensed">
         <thead>
             <tr>
                 <th>Index</th>
-                <th>Batch</th>
+                <th>Admin</th>
+                <th>Plugin</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-            {{#batches}}
+            {{#admins}}
             <tr>
                 <td>{{index}}</td>
-                <td>{{batch}}</td>
+                <td>{{admin}}</td>
+                <td>{{plugin}}</td>
                 <td><a href="{{edit_link}}">Edit</a</td>
                 <td><a href="{{delete_link}}">Delete</a</td>
             </tr>
-            {{/batches}}
+            {{/admins}}
         </tbody>
     </table>
 </div>

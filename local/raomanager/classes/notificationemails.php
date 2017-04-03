@@ -12,7 +12,6 @@ class local_raomanager_notificationemails extends \core\task\adhoc_task {
         $recipients = $data->emails; // Array emails[20]
         $subject = $data->subject;
         $body = $data->body;
-        $recipients = array('akshay.handrale@raoiit.com', 'akshay.handrale@raoiit.com'); // todo Remove in prod
         foreach ($recipients as $recipient) {
             // Send email
             $mail = new PHPMailer;
@@ -41,7 +40,7 @@ class local_raomanager_notificationemails extends \core\task\adhoc_task {
             $mail->AltBody = $mail->Body;
 
             if(!$mail->send()) {
-                echo "$recipient failed";
+                echo "$recipient failed<br/>";
                 echo 'Reason: ' . $mail->ErrorInfo;
             }
 

@@ -1,3 +1,5 @@
+        block = document.getElementsByClassName('timetable-list')[0];
+
 (function(){
 
     var timetable,
@@ -11,12 +13,14 @@
         if (xmlhttp.readyState == XMLHttpRequest.DONE) {
             if (xmlhttp.status == 200) {
                 timetable = JSON.parse(xmlhttp.responseText);
-                generateTimetableHtml(timetable);
-                console.log();
+                if(timetable)
+                    generateTimetableHtml(timetable);
+                else
+                    apologize(1);
             } else if (xmlhttp.status == 400) {
-                alert('There was an error 400');
+                apologize(2);
             } else {
-                alert('Couldn\'t fetch timetable' );
+                apologize(2);
             }
         }
     };
@@ -45,7 +49,6 @@
                 subject: subj_map[tmp['subj']]
             });
         });
-        console.log(block.innerHTML);
         block.innerHTML = '';
         block.innerHTML = innerHtml;
     }
@@ -59,5 +62,18 @@
                     '<div class="topic">' + lecture.topicname +'</div>'+
                     '<div class="teacher">- ' + lecture.teacher +'</div>'+
                 '</li>';
+    }
+
+    function apologize(id){
+        switch (id) {
+            case 1:
+                block.innerHTML = "No lectures today";
+                break;
+            case 2:
+                block.innerHTML = "<li><h4>Couldn't get timetable right now. Please check back in a few minutes </h4></li>";
+                break;
+            default:
+                break;
+        }
     }
 })();

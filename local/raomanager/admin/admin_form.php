@@ -8,7 +8,7 @@ require_once("../lib.php");
 class local_raomanager_admin_form extends moodleform {
     function definition() {
         global $DB, $PAGE;
-
+        $PAGE->requires->js('/local/raomanager/templates/js/admin_form.js'); // Include autofill js
         $mform =& $this->_form;
 
 
@@ -27,7 +27,7 @@ class local_raomanager_admin_form extends moodleform {
         $mform->setType('username', PARAM_NOTAGS);
         $mform->addRule('username','Required','required',null,'client');
 
-        $mform->addElement('html', '<div id="autofill">No Results Found</div>');
+        $mform->addElement('html', '<table id="autofill" class="table table-striped table-hover table-bordered"><tr><td>No Results Found</td></tr></table>');
 
         $this->add_action_buttons();
     }

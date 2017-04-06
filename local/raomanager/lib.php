@@ -15,12 +15,12 @@ function local_raomanager_pluginmap(){
 function user_has_access($username)
 {
     $access_plugins = array();
-    global $DB;$record = $DB->get_record('raomanager_admins',array('username' => $username));
+    global $DB;$record = $DB->get_records('raomanager_admins',array('username' => $username));
     if (!$record){
         return False;
     } else {
         foreach($record as $rec){
-            array_push($access_plugins,$rec['pluginname']);
+            array_push($access_plugins,$rec->pluginname);
         }
         return $access_plugins;
     }

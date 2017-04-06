@@ -5,7 +5,6 @@
         <div class="item duration-div"><span class="">Duration: <b>{{duration}}</b></span></div>
         <div class="item date-div"><span class="">Date: <b>{{date}}</b></span></div>
         <div class="item date-div"><span class="">Last Date: <b>{{lastdate}}</b></span></div>
-        <div class="item syllabus-div"><span class="">Syllabus: {{syllabus}}</span></div>
     </div>
     <div class="marks-div">
         <table id="markstable" class="table table-hover table-striped table-condensed">
@@ -21,18 +20,22 @@
             </tbody>
         </table>
     </div>
+    <div class="syllabus-div">
+        <div style="text-align:center"><b>Syllabus</b></div>
+        {{syllabus}}
+    </div>
+    
     <hr>
-    <div class="action-div"> &nbsp;
-        //TODO ADD LINKS!
+    <!--<div class="action-div"> &nbsp;
         {{#showSolution}}
         <div class="action solutions">
-            <button class="btn btn-info">Show solutions</button>
+            <a href="{{}}" class="btn btn-info">Show solutions</a>
         </div>
         {{/showSolution}}
         <div class="action show">
-            <button class="btn btn-primary">Show</button>
+            <a href="{{}}" class="btn btn-primary">Show</a>
         </div>
-    </div>
+    </div>-->
 </div>
 
 <link rel="stylesheet" href="templates/css/paper.css">

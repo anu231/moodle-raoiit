@@ -30,10 +30,10 @@ function prettifyMarkingScheme(paper) {
 
 var DOM = {
     _paperinfo: document.getElementsByName('paperinfo')[0],
-    _selected: document.getElementsByName('name')[0], // Selected paper
-    date: document.getElementById('date'),
-    duration: document.getElementById('duration'),
-    markingscheme: document.getElementById('markingscheme'),
+    _selected: document.getElementsByName('paperid')[0], // Selected paper
+    date: document.getElementById('date') != undefined ? document.getElementById('date') : document.querySelector('#fitem_id_date > div.felement.fstatic'),  // We check for 2 different elements because they differ during instance creation and updating
+    duration: document.getElementById('duration') != undefined ? document.getElementById('duration') : document.querySelector('#fitem_id_duration > div.felement.fstatic'),
+    markingscheme: document.getElementById('markingscheme') != undefined ? document.getElementById('markingscheme') : document.querySelector('#fitem_id_markingscheme > div.felement.fstatic'),
     instructions: document.getElementsByName('instructions')[0],
     get_paper_info: function() {
         // Returns the hidden paperinfo object

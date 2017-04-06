@@ -11,12 +11,12 @@ require_login();
 
 
 // Page setup
-$PAGE->set_url('/blocks/paper/view.php');
+$PAGE->set_url('/mod/paper/view.php');
 $PAGE->set_title(format_string("Paper"));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading(format_string("Paper"));
 
-$output = $PAGE->get_renderer('block_paper');
+$output = $PAGE->get_renderer('mod');
 
 echo $output->header();
 if( $courseid == 1){

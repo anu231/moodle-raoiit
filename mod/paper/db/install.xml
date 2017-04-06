@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/paper/db" VERSION="20101203" COMMENT="XMLDB file for Moodle blocks/paper"
+<XMLDB PATH="mod/paper/db" VERSION="20101203" COMMENT="XMLDB file for Moodle mod/paper"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
     <TABLES>
-        <TABLE NAME="block_paper" COMMENT="Paper metadata.">
+        <TABLE NAME="paper" COMMENT="Paper metadata.">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+                <FIELD NAME="name" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Paper name"/>
                 <FIELD NAME="paperid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="decimal paper identifier" />
                 <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Course paper belongs to"/>
-                <FIELD NAME="name" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Paper name"/>
                 <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"/>
                 <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="standard" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The standard: 8,7..12,r "/>

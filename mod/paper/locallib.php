@@ -28,7 +28,7 @@ function paper_add_paper(stdClass $mform, $courseid) {
     $mform->timemodified = time();
 
 
-    if( $result = $DB->insert_record('block_paper', $mform) ) {
+    if( $result = $DB->insert_record('paper', $mform) ) {
         return $result;
     } else {
         return FALSE;

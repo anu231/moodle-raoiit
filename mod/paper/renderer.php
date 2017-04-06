@@ -2,23 +2,20 @@
 
 // require_once('locallib.php');
 
-class block_paper_renderer extends plugin_renderer_base {
+class mod_paper_renderer extends plugin_renderer_base {
 
-    public function paper($paperid) {
+    public function paper($paper) {
         // Fetch paper information
-        global $DB;
-        if($paper = $DB->get_record('block_paper', array('paperid' => $paperid))){
-            $URL = "http://192.168.1.19:8000/papers/";
-            $response = paper_get_request($URL.$paperid.'/');
-            $paper->lastdate = $response ? $response->lastdate : '';
-            return $this->render(new paper($paper));
-        } else {
-            return "<h1>Paper not found</h1>";
-        }
+        global $CFG;
+        $URL = $CFG->django_server;
+        $response = paper_get_request($URL.'papers/'.$paper->paperid.'/');
+        $paper->lastdate = $response ? $response->lastdate : '';
+        $rpaper = new paper($paper);
+        return $this->render($rpaper);
     }
 
     public function render_paper(paper $context) {
-        return $this->render_from_template('block_paper/paper', $context);
+        return $this->render_from_template('mod_paper/paper', $context);
     }
 
     public function course_paper_list($courseid) {
@@ -27,7 +24,7 @@ class block_paper_renderer extends plugin_renderer_base {
     }
 
     public function render_course_paper_list(course_paper_list $papers) {
-        return $this->render_from_template('block_paper/course_paper_list', $papers);
+        return $this->render_from_template('mod_paper/course_paper_list', $papers);
     }
 
     public function all_paper_list() {
@@ -35,7 +32,7 @@ class block_paper_renderer extends plugin_renderer_base {
     }
 
     public function render_all_paper_list(all_paper_list $papers) {
-        return $this->render_from_template('block_paper/all_paper_list', $papers);
+        return $this->render_from_template('mod_paper/all_paper_list', $papers);
     }
 }
 
@@ -92,10 +89,10 @@ class course_paper_list implements renderable {
     private function get_papers_for_course($courseid) {
         global $DB, $CFG;
 
-        $papers = $DB->get_records('block_paper', array('courseid' => $courseid));
+        $papers = $DB->get_records('mod_paper', array('courseid' => $courseid));
         $formattedpapers = [];
         foreach($papers as $paper){
-            $paper->viewlink = "$CFG->wwwroot/blocks/paper/view.php?pid=$paper->paperid&cid=$paper->courseid";
+            $paper->viewlink = "$CFG->wwwroot/mod/paper/view.php?pid=$paper->paperid&cid=$paper->courseid";
             $paper->date = strftime('%d/%m/%G',strtotime($paper->date));
             $formattedpapers[] = $paper;
         }
@@ -117,10 +114,10 @@ class all_paper_list implements renderable {
 
     private function get_all_papers() {
         global $DB, $CFG;
-        $papers = $DB->get_records('block_paper');
+        $papers = $DB->get_records('mod_paper');
         $courses = [];
         foreach($papers as $paper){
-            $paper->viewlink = "$CFG->wwwroot/blocks/paper/view.php?pid=$paper->paperid&cid=$paper->courseid";
+            $paper->viewlink = "$CFG->wwwroot/mod/paper/view.php?pid=$paper->paperid&cid=$paper->courseid";
             $paper->date = strftime('%d/%m/%G',strtotime($paper->date));
             $coursename = $this->coursemap[$paper->courseid];
             $courses[$coursename]['coursename'] = $coursename; // Map courseid to course name

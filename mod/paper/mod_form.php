@@ -1,19 +1,24 @@
 <?php
-// defined('MOODLE_INTERNAL') || die();
 
-// Paper addition form
 
-require_once("{$CFG->libdir}/formslib.php");
+/**
+ * Creates a new activity instance by either assigning an existing booklet or uploading and assigning
+ * a new one
+ * [NOTE] If the user does both the actions, Assignment of the existing booklet will be prioritized
+ */
+
+defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once('locallib.php');
+class mod_paper_mod_form extends moodleform_mod {
 
-// optional_param() // While updating
-class paper_form extends moodleform {
-    
     function definition() {
-        global $CFG, $PAGE;
+        global $CFG, $DB, $PAGE;
 
+        $mform =& $this->_form;
+        
         // Including Javascript
-        $PAGE->requires->js("/blocks/paper/js/paper.js");
+        $PAGE->requires->js("/mod/paper/js/paper.js");
 
         $mform =& $this->_form;
 
@@ -28,9 +33,9 @@ class paper_form extends moodleform {
         foreach ($papers['names'] as $paper) {
             $PAPERS["$paper->id"] = $paper->name;
         }
-        $name = $mform->addElement('select', 'name', 'Paper name', $PAPERS, array('onchange' => 'javascript:updateFields();', 'required'));
-        $name->setSelected("0");
-        $mform->addRule('name', 'Select a paper, ', 'required', null, 'client');
+        $name = $mform->addElement('select', 'paperid', 'Paper name', $PAPERS, array('onchange' => 'javascript:updateFields();', 'required'));
+        $name->setSelected('0');
+        $mform->addRule('paperid', 'Select a paper, ', 'required', null, 'client');
         
 
 
@@ -62,7 +67,9 @@ class paper_form extends moodleform {
         $mform->addRule('stream', 'Select a stream ', 'required', null, 'client');
 
         // Display date
-        $mform->addElement('static', 'date', 'Date', '<span id="date">Please select a paper</span>');
+        // $mform->addElement('html', '<span id="date">');
+        $mform->addElement('static', 'date', 'Date', '<span id="date">Please select a paper</span>', array('id'=>'cholo'));
+        // $mform->addElement('html', '</span>');
 
         // Display duration
         $mform->addElement('static', 'duration', 'Duration', '<span id="duration">Please select a paper</span>', array('id' => 'duration')); // TODO Make into static
@@ -83,7 +90,7 @@ class paper_form extends moodleform {
         // Link to solution
         $mform->addElement('text', 'solutions', 'Link to solutions');
         $mform->setType('solutions', PARAM_NOTAGS);
-        $mform->addRule('solutions', 'Please add a link to the solutions', 'required', null, 'client');        
+        // $mform->addRule('solutions', 'Please add a link to the solutions', 'required', null, 'client');    // ? Not required for now
 
         // Offline selection
         $OFFLINE = array(
@@ -95,9 +102,11 @@ class paper_form extends moodleform {
         $offline->setSelected('0');
         $mform->addRule('offline', 'Please select whether the paper is Offline or not', 'required', null, 'client');
 
-        // Add standard elements, common to all modules
-        $this->add_action_buttons();
 
+        // Add standard elements, common to all modules
+        $this->standard_coursemodule_elements();
+        // Moodle submit/cancel buttons
+        $this->add_action_buttons();
     }
 }
 

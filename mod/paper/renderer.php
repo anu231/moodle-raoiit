@@ -1,6 +1,6 @@
 <?php
 
-// require_once('locallib.php');
+require_once('locallib.php');
 
 class mod_paper_renderer extends plugin_renderer_base {
 

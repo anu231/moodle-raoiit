@@ -254,6 +254,7 @@ function send_rejection_email($gid, $rid, $deptid){
 /**
  * Send an email to student about a new approved response
  */
+ 
 function notify_student($resp) {
     global $DB, $CFG;
     require_once('classes/studentnotification.php');

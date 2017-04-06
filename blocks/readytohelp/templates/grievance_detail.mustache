@@ -4,7 +4,7 @@
     <div class="description">
         <p>{{query.description}}</p>
     </div>
-    <div class="timestamp">{{query.time}} | <span class="status">Status: {{query.status}}</span></div>
+    <div class="timestamp">{{query.time}} | <span class="status">Status: {{query.status}}</span> | <div class="user-details"> by user: <u><b> {{username}} </b></u></div> </div> 
 </div>
 
 {{#responses}}
@@ -22,7 +22,10 @@
         <a href="view.php?gid={{gid}}&deptid={{deptid}}&action=remind&rid={{rid}}&gmode={{gmode}}">
             <img class="remind-img" src="templates/res/remind.png" alt="{{rapproved}}"/>
         </a>
-        <span class="primary"> {{email}}</span>
+        | <span class="primary"> {{email}}</span>
+        {{#approved}}
+        | <span class="primary">Approved: <u>{{approved}}</u></span>
+        {{/approved}}
     </div>
     {{/mod_controls}}
 
@@ -49,6 +52,7 @@
 
 <style>
 .grievance-box{
+    position: relative;
     display: inline-block;
     width: 85%;
     margin-bottom: 4%;
@@ -57,6 +61,9 @@
     border-radius: 24px;
     background-color: #fdfdeb;
     box-shadow: 0px 2px 7px 0px #969696;
+}
+.grievance-box.query .user-details{
+    display: inline-block;
 }
 .grievance-box.query, .grievance-box.response-user{
     border-bottom-left-radius: 0px;
@@ -68,6 +75,7 @@
     border-color: #F44336;
 }
 .grievance-box .subject {
+    display: inline-block;
     padding: 5px;
 }
 .grievance-box .description {
@@ -141,7 +149,7 @@
     transition: 0.1s ease all;
     opacity: 0.3;
 }
-.grievance-box .approved-enabled-yneos:hover{
+.grievance-box .approved-enabled-pending:hover{
     opacity: 1;
     border-radius: 50%;
     box-shadow: 0px 2px 1px 1px #8e8e8e;  

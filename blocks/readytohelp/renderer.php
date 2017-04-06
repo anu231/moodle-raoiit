@@ -46,7 +46,7 @@ class grievance_detail implements renderable{
         $grievance = $this->get_grievance_thread($gid, $gmode);
         $this->query = $grievance['query'];
         $this->responses = $grievance['responses'];
-
+        $this->username = $grievance['userdetails']['username'];
         if(local_raomanager_has_permission('ReadyToHelp'))
             $this->showstatusbuttons = TRUE;
         else
@@ -65,7 +65,12 @@ class grievance_detail implements renderable{
 
         $formatted = array(
             'query' => null,
-            'responses' => array()
+            'responses' => array(),
+            'userdetails' => array()
+        );
+
+        $formatted['userdetails'] = array(
+            'username' => $entry->username,
         );
 
         $formatted['query'] = array(
@@ -115,7 +120,7 @@ class grievance_detail implements renderable{
                     } else if ($resp->approved == -1){
                         $tmp['approved'] = 'no';
                     } else {
-                        $tmp['approved'] = 'yneos'; // Wtf is this?
+                        $tmp['approved'] = 'pending'; // Wtf is this?
                     }
                     $tmp['mod_controls'] = $isuser == true ? 'hide' : 'show'; // Don't show controls for user chatbox
                     $formatted['responses'][$index] = $tmp;

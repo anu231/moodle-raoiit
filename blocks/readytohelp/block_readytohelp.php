@@ -1,5 +1,5 @@
 <?php
-require('locallib.php');
+// require('locallib.php');
 
 class block_readytohelp extends block_list {
     public function init() {

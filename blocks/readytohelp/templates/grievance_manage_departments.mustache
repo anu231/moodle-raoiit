@@ -5,7 +5,8 @@
 {{#departments}}
 <div class="department">
     <div class="name-block">
-        <h4>{{id}} <u>{{name}}</u></h4>
+        <h4>ID: {{id}}</h4>
+        <h4><u>{{name}}</u></h4>
     </div>
     <div class="emails-block">
         Assigned Emails 
@@ -33,6 +34,27 @@
 </div>
 <hr>
 {{/departments}}
+</div>
+<hr>
+<hr>
+<div class="add-new-dept-block">
+    <form action="review_response.php?" method="GET">
+        <input type="hidden" name="action" value="adddept">            
+        <label for="name">Add New Department (Enter department name) : 
+        </label>
+        <input type="text" name="name" id="name">
+        <button class="btn btn-primary" type="submit">Add</button>        
+    </form>
+</div>
+
+<div class="rm-dept-block">
+    <form action="review_response.php?" method="GET">
+        <input type="hidden" name="action" value="rmdept">            
+        <label for="name">Remove a Department (Enter department id) : 
+        </label>
+        <input type="number" name="deptid" id="deptid">
+        <button class="btn btn-danger" type="submit">Remove</button>
+    </form>
 </div>
 
 <style>
@@ -81,6 +103,37 @@
     transform: scale(1.2);
 }
 
-
+.add-new-dept-block {
+    background: #4caf50;
+    color: white;
+    width: 47%;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: top;
+    height: 60px;
+}
+.add-new-dept-block input#name{
+    font-size: 1.2em;
+    height: 1.5em;
+    width: 13em;
+}
+.rm-dept-block {
+    background: #f44336;
+    color: white;
+    width: 47%;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: top;
+    height: 60px;
+}
+.rm-dept-block input#deptid{
+    font-size: 1.2em;
+    height: 1.5em;
+    width: 13em;
+}
 
 </style>

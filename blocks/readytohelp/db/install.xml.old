@@ -4,20 +4,11 @@
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
     <TABLES>
-        <TABLE NAME="grievance_categories" COMMENT="Category list for student to assign">
+        <TABLE NAME="grievance_categories" COMMENT="Category Assigned to Grievances">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
-                <FIELD NAME="name" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" />
-            </FIELDS>
-            <KEYS>
-                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
-            </KEYS>
-        </TABLE>
-        <TABLE NAME="grievance_departments" COMMENT="Department details">
-            <FIELDS>
-                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
-                <FIELD NAME="name" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" />
-                <FIELD NAME="email" TYPE="text" SEQUENCE="false" NOTNULL="false" COMMENT="List of emails associated with concerned dept"/>
+                <FIELD NAME="name" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="email" TYPE="text" SEQUENCE="false" NOTNULL="false" COMMENT="List of emails associated with converned dept"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />
@@ -28,8 +19,7 @@
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
                 <FIELD NAME="username" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Username of user raising a Grievance"/>
                 <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"/>
-                <FIELD NAME="category" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Id of the category, the student THINKS his grievance belongs"/>
-                <FIELD NAME="department" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="Ids of the department, the grievance ACTUALLY belongs. (csv)"/>
+                <FIELD NAME="category" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Category of Grievance"/>
                 <FIELD NAME="subject" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Subject of Grievance"/>
                 <FIELD NAME="description" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Description of Grievance"/>
                 <FIELD NAME="status" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Status of Grievance: Pending/Closed"/>
@@ -56,7 +46,7 @@
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />
                 <KEY NAME="grievance_id" TYPE="foreign" FIELDS="grievance_id" REFTABLE="grievance_entries" REFFIELDS="id" />
-                <KEY NAME="deptid" TYPE="foreign" FIELDS="deptid" REFTABLE="grievance_departments" REFFIELDS="id"/>
+                <KEY NAME="deptid" TYPE="foreign" FIELDS="deptid" REFTABLE="grievance_categories" REFFIELDS="id"/>
             </KEYS> 
         </TABLE>
 
@@ -66,13 +56,13 @@
                 <FIELD NAME="username" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Moodle userid of the admin" />
                 <FIELD NAME="haspermission" TYPE="int" LENGTH="5" NOTNULL="true" SEQUENCE="false" DEFAULT="1" COMMENT="1- Yes, 2- no" />
             </FIELDS>
+            <INDEXES>
+                <INDEX NAME="id" UNIQUE="true" FIELDS="id"/>
+            </INDEXES>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />
                 <KEY NAME="username" TYPE="foreign" FIELDS="username" REFTABLE="user" REFFIELDS="username" />
             </KEYS>
-            <INDEXES>
-                <INDEX NAME="id" UNIQUE="true" FIELDS="id"/>
-            </INDEXES>
         </TABLE>
     </TABLES>
 </XMLDB>

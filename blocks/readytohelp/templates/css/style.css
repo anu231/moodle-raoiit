@@ -4,6 +4,10 @@
     font-size: 0.95em;
 }
 
+.responses-table td {
+    padding: 4px;
+}
+
 .responses-table .sort-button {
     width: 1em;
     margin-left: 5px;
@@ -25,6 +29,12 @@
     animation: wiggle ease 0.3s 2;
     transition: 0.2s ease all;
 }
+
+/* Mark index if the latest reply was from user, and the grievance is still open*/
+.responses-table .LRFU-0.open{
+    background-color: #b4ffb7 !important;
+}
+
 
 /* Animations */
 @keyframes wiggle {

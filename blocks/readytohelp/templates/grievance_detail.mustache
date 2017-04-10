@@ -4,7 +4,10 @@
     <div class="description">
         <p>{{query.description}}</p>
     </div>
-    <div class="timestamp">{{query.time}} | <span class="status">Status: {{query.status}}</span> | <div class="user-details"> by user: <u><b> {{username}} </b></u></div> </div> 
+    
+    <div class="timestamp">
+        {{query.time}} | <span class="status">Status: {{query.status}}</span> {{#username}} | <div class="user-details"> by user: <u><b> {{username}} </b></u></div> {{/username}}
+    </div>
 </div>
 
 {{#responses}}
@@ -19,9 +22,9 @@
         <a href="view.php?gid={{gid}}&deptid={{deptid}}&action=disapprove&rid={{rid}}&gmode={{gmode}}">
             <img class="approved-img approved-no  approved-enabled-{{approved}}" src="templates/res/approved-no.png" alt="{{rapproved}}"/>
         </a>
-        <a href="view.php?gid={{gid}}&deptid={{deptid}}&action=remind&rid={{rid}}&gmode={{gmode}}">
+        <!--<a href="view.php?gid={{gid}}&deptid={{deptid}}&action=remind&rid={{rid}}&gmode={{gmode}}">
             <img class="remind-img" src="templates/res/remind.png" alt="{{rapproved}}"/>
-        </a>
+        </a>-->
         | <span class="primary"> {{email}}</span>
         {{#approved}}
         | <span class="primary">Approved: <u>{{approved}}</u></span>
@@ -30,7 +33,7 @@
     {{/mod_controls}}
 
     <div class="response-body">{{{body}}}</div>
-    <div class="timestamp">{{time}}</div>
+    <div class="timestamp"><b>{{department}} | </b> {{time}}</div>
     {{#userid}}
         <div class="reply div {{reply-div-show}}">
             <a class="reply-link" href="view.php?gid={{gid}}&deptid={{deptid}}&email={{userid}}&reply=1#id_body"><img class="reply-icon" src="templates/res/reply.png" alt="replyIcon"/>Reply</a>

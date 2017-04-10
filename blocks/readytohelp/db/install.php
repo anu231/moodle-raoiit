@@ -1,8 +1,9 @@
 <?php
 
 function xmldb_block_readytohelp_install(){
+    // TODO VERSION CHECK
     global $DB;
-    $category = array('Ranklist/Result','Timetable','Student Portal','Branch Administration','Study Material','Student Welfare',
+    $category = array('Ranklist/Result','TimeTable[Class/Tests]','Student Portal','Branch Administration','Study Materials','Student Welfare',
     'Faculties','Rao IIT App','Pre-Foundation','Student-Profile');
     $category_records = array();
     foreach ($category as $key => $value) {

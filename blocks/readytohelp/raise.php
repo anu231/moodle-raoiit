@@ -32,8 +32,6 @@ if ($grievance_form->is_cancelled()) {
     $data->timecreated = time();
     $data->status='open';
     if (($gid=$DB->insert_record('grievance_entries',$data))){
-        //send email to the concerned departments
-        send_grievance_dept_emails($gid, $data, 'new_grievance');
         //redirect to list of grievances
         $view_url = new moodle_url('/blocks/readytohelp/list.php');
         redirect($view_url);

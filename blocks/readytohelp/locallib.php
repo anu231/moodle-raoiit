@@ -29,15 +29,34 @@ function get_grievance_categories(){
     return $result;
 }
 
+// Get all departments
+function get_grievance_departments(){
+    global $DB;
+    $result = $DB->get_records_menu('grievance_departments');
+    return $result;
+}
+
+// Manage departments assigned to grievance
+function grievance_assign_department($data, $gid){
+    global $DB;
+    $grievance = $DB->get_record('grievance_entries', array('id' => $gid));
+    $deptstr = implode(',', $data->departments);
+    $grievance->department = $deptstr;
+    return $DB->update_record('grievance_entries', $grievance);
+}
+
 // Get email addresses of a dept
 // @return (array) Emails
 function get_dept_emails($deptid){
     global $DB;
-    $result = $DB->get_record('grievance_categories', array('id' => $deptid));
-    $emails = explode(',', $result->email);
+    $result = $DB->get_record('grievance_departments', array('id' => $deptid));
     $formatted = array();
-    foreach($emails as $e){
-        $formatted[] = trim($e);
+    if($result){
+        $emails = explode(',', $result->email);
+        foreach($emails as $e){
+            if($e)
+                $formatted[] = trim($e);
+        }
     }
     return $formatted;
 }
@@ -71,14 +90,14 @@ function set_response_approval($rid, $approval){
     if($resp){
         $resp->approved = $approval == 'approve' ? 1 : -1;
         $success = $DB->update_record('grievance_responses', $resp);
-        if ($success) {
+        if ($success && $approval == 'approve') {
             $success = notify_student($resp);
             if (! $success )
-                echo "Couldn't notify student!";
+                return FALSE;
         }
-        return;
+        return TRUE;
     } else {
-        return;
+        return FALSE;
     }
 }
 
@@ -94,6 +113,19 @@ function set_grievance_status($gid, $status){
         return;
     }
 }
+
+function add_new_dept($name){
+    global $DB;
+    $dept = new stdclass;
+    $dept->name = $name;
+    return $DB->insert_record('grievance_departments', $dept);
+}
+
+function remove_dept($deptid){
+    global $DB;
+    return $DB->delete_records('grievance_departments', array('id'=>$deptid));
+}
+
 
 /** 
  * Add a new email to a department
@@ -115,7 +147,7 @@ function add_email_to_dept($deptid, $email){
         'id' => $deptid,
         'email' => $emailstr
     );
-    return $DB->update_record('grievance_categories', $obj);
+    return $DB->update_record('grievance_departments', $obj);
 }
 
 /** 
@@ -138,21 +170,22 @@ function remove_email_from_dept($deptid, $email){
         'id' => $deptid,
         'email' => $emailstr
     );
-    return $DB->update_record('grievance_categories', $obj);
+    return $DB->update_record('grievance_departments', $obj);
 }
 
 // E-mail related functions
 
-/**
+/** !!!NOTE: Do not call this method directly. Use wrappers in stead. This is because this method
+ * only accepts ONE department id!
  * Send out emails to ALL the members of a department linked with the specified category
  * @param (int) gid - Grievance id
  * @param (stdclass) data - should contain subject, description, deptid, category
  * @param (string) type - 'new_grievance', 'new_reply', 'reminder'.
  */
-function send_grievance_dept_emails($gid, $data, $type){
+function _send_grievance_dept_emails($gid, $data, $type){
     global $CFG, $DB;
     $customsalt = 'aybabtu'; // TODO Move to config
-    $deptid = isset($data->deptid) ? $data->deptid : $data->category; // TODO Use deptid only
+    $deptid = $data->deptid;
     $emails = get_dept_emails($deptid);
     $basereplyurl = $CFG->wwwroot."/blocks/readytohelp/view.php?gid=$gid&deptid=$deptid&reply=1"; // Append hash and email in sendMail
 
@@ -199,18 +232,23 @@ function send_grievance_dept_emails($gid, $data, $type){
 /**
  * Wrapper around send_greivance_dept_emails() to send reminder emails
  * @param (int) gid - Grievance Id
- * @param (int) deptid - Department ID
  * @return (bool) TRUE(Success)/FALSE(Failure) 
  */
-function send_grievance_dept_reminder_emails($gid, $deptid){
+function batch_send_grievance_dept_emails($gid, $type){
     global $DB;
     $query = $DB->get_record('grievance_entries', array('id' => $gid));
     if($query) {
-        $data = new stdClass();
-        $data->deptid = $deptid;
-        $data->subject = $query->subject;
-        $data->description = $query->description;
-        return $success = send_grievance_dept_emails($gid, $data, $type='reminder');
+        if(!$query->department)
+            return FALSE;
+        $departments = explode(',', $query->department);
+        foreach($departments as $dept){
+            $data = new stdClass();
+            $data->deptid = $dept;
+            $data->subject = $query->subject;
+            $data->description = $query->description;
+            $success = _send_grievance_dept_emails($gid, $data, $type);
+        }
+        return TRUE;
     } else {
         return FALSE;
     }
@@ -254,7 +292,7 @@ function send_rejection_email($gid, $rid, $deptid){
 /**
  * Send an email to student about a new approved response
  */
- 
+
 function notify_student($resp) {
     global $DB, $CFG;
     require_once('classes/studentnotification.php');
@@ -262,20 +300,19 @@ function notify_student($resp) {
     // Get student's email'
     $gid = $resp->grievance_id;
     $grievance = $DB->get_record('grievance_entries', array('id' => $gid));
-    $user = $DB->get_record('user', array('username' => $grievance->username)); // Needed to get $studentdetails
-    $studentdetails = profile_user_record($user->id); // Needed to get studentemail
-    $studentemail = $studentdetails->studentemail;
+    $user = $DB->get_record('user', array('username' => $grievance->username));
+    $studentemail = $user->email;
     if ($studentemail == "")
         return FALSE;
 
-    $replyurl = $CFG->wwwroot."/blocks/readytohelp/view.php?gid=$gid&deptid=$grievance->category&email=$grievance->username&reply=1#id_body";
+    $viewurl = $CFG->wwwroot."/blocks/readytohelp/view.php?gid=$gid";
 
     $task = new block_readytohelp_studentnotification();
     $task->set_custom_data(array(
         'email' => $studentemail,
         'grievance' => $grievance,
         'response' => $resp,
-        'replyurl' => $replyurl
+        'viewurl' => $viewurl
     ));
     if( !$taskid = \core\task\manager::queue_adhoc_task($task) ) {
         return FALSE;

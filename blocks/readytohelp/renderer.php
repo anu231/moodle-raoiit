@@ -40,7 +40,7 @@ class block_readytohelp_renderer extends plugin_renderer_base {
     }
 }
 
-// Detailed view of a grievance for student/mod
+// Detailed view of a grievance for student/mod (Chat bubble view)
 class grievance_detail implements renderable{
     public function __construct($gid, $gmode){
         $grievance = $this->get_grievance_thread($gid, $gmode);
@@ -62,7 +62,8 @@ class grievance_detail implements renderable{
         $entry = $DB->get_record('grievance_entries', array('id' => $gid));
         $category = $DB->get_record('grievance_categories', array('id' => $entry->category));
         $responses = $DB->get_records('grievance_responses', array('grievance_id' => $gid));
-
+        $deptmap = $DB->get_records_menu('grievance_departments'); // Cache deptid->name map
+        $deptmap[-1] = 'admin';  // Admin replies have deptid = -1
         $formatted = array(
             'query' => null,
             'responses' => array(),
@@ -108,6 +109,7 @@ class grievance_detail implements renderable{
                     'email' => $resp->email,
                     'time' => strftime('%d/%m/%G-%R', $resp->timecreated),
                     'body' => $resp->body,
+                    'department' => $isuser ? '' : $deptmap[$resp->deptid],
                     'class' => $isuser ? 'user' : 'mod',  // determine author (For chat bubble styling)
                     'modctrl' => $isuser ? 'hide' : 'show', // TODO remove this
                     'reply-div-show' => 'hide' // Show reply button for the last bubble
@@ -141,7 +143,7 @@ class grievance_detail implements renderable{
                     'gid' => $gid,
                     'deptid' => $entry->category,
                     'time' => strftime('%d/%m/%G-%R', time()),
-                    'body' => '<em><< No response yet >></em>',
+                    'body' => '<em> No response yet<br>You will be notified by email as soon as we reply.</em>',
                     'class' => 'mod',
                     'reply-div-show' => 'show'
                 );
@@ -150,8 +152,8 @@ class grievance_detail implements renderable{
                 $formatted['responses'][0] = $tmp;
             } else {
                  $formatted['responses'][0] = array(
-                    'time' => strftime('%d/%m/%G-%R', time()),
-                    'body' => '<em><< No response yet >></em>',
+                    'time' => "",
+                    'body' => '<em> No response yet<br>You will be notified by email as soon as we reply.</em>',
                     'class' => 'mod',
                     'reply-div-show' => 'show'
                 );
@@ -203,7 +205,7 @@ class grievance_list implements renderable {
             $temp = array();
             $temp['index'] = $index;
             $temp['_gid'] = $g->id;
-            $temp['_deptid'] = $g->category;
+            // $temp['_deptid'] = $g->category;
             $temp['date'] =  strftime('%d-%m-%G', $g->timecreated);
             $temp['category'] = $categories[$g->category];
             $temp['subject'] = $g->subject;
@@ -261,6 +263,8 @@ class grievance_responses implements renderable {
             entry.description AS edescription,
             entry.username AS username,
             entry.status AS estatus,
+            entry.department AS edepts,
+            department.name AS deptname,
             response.approved AS rapproved,
             response.email AS email,
             response.body AS body
@@ -269,6 +273,9 @@ class grievance_responses implements renderable {
         LEFT OUTER JOIN
             `mdl_grievance_responses` as response
             ON response.grievance_id = entry.id
+        LEFT OUTER JOIN
+            `mdl_grievance_departments` as department
+            ON department.id = entry.department
         JOIN
             `mdl_grievance_categories` as category
             ON category.id = entry.category
@@ -296,10 +303,11 @@ SQL;
     }
 
     private function process_grievances($grievances){
-        global $CFG, $COURSE;
+        global $CFG, $COURSE, $DB;
         $processed = array();
         $index = 0;
         $stack = array(); // Stack holds grievances only (not responses)
+        $deptmap = $DB->get_records_menu('grievance_departments'); // Cache deptid->name map
         foreach($grievances as $g){
             $isuser = (int)$g->email ? true : false;
             $stackindex = $this->search_by_key($stack, 'eid', $g->eid);
@@ -307,29 +315,57 @@ SQL;
                 // New Entry found. Push it on stack
                 $index++;
                 $g->index = $index;
+                $g->edescription = strlen($g->edescription) >=120 ? substr($g->edescription, 0, 120).'...' : $g->edescription;  // Culled to 120 chars
                 $g->username = $g->username;
                 $g->approvedcount = $g->rapproved == '1' && $g->rapproved != null && !$isuser ? 1 : 0; // Don't count user replies
                 $g->replycount = $g->body != NULL && !$isuser ? 1 : 0; // Don't count user replies
+                $g->userreplycount = 0;
                 $g->etimecreated = strftime('%G/%m/%d/-%R', $g->etimecreated);
-                $gphrase = sha1($g->eid.'aybabtu'.$g->cid); // Hash for performing admin stuff
+                $g->category = $g->cname;
+                $g->departments = $this->get_dept_names_from_ids($g->edepts, $g->eid, $deptmap);
+                $gphrase = sha1($g->eid.'aybabtu'.'-1'); // Hash for performing admin stuff
                 $email = 'admin';                           // Email = 'admin' for admin
-                $hash = sha1($g->eid.'aybabty'.$email); // Allow admin reply capability
-                $g->viewlink = "$CFG->wwwroot/blocks/readytohelp/view.php?gid=$g->eid&deptid=$g->cid&gmode=$gphrase&email=$email&hash=$hash"; // Link to the thread
-                $g->remindlink = "review_response.php?action=remind&deptid=$g->cid&gid=$g->eid&cid=$COURSE->id";
+                $hash = sha1($g->eid.'aybabtu'.$email); // Allow admin reply capability
+                $g->viewlink = "$CFG->wwwroot/blocks/readytohelp/view.php?gid=$g->eid&deptid=-1&gmode=$gphrase&email=$email&hash=$hash"; // Link to the thread. Department = -1 -> admin replying
+                if($g->edepts)  // Display remind link only if a department has been assigned to the query
+                    $g->remindlink = "review_response.php?action=remind&gid=$g->eid&cid=$COURSE->id";
+                $g->managedeptlink = "view.php?action=assigndept&gid=$g->eid";
                 $stack[] = $g;
             } else {
                 // Response to entry found. Update the Entry on stack accordingly
                 if( !$isuser ){ // Skip user replies
                     $stack[$stackindex]->replycount++;
                     $g->rapproved == 1 ? $stack[$stackindex]->approvedcount++ : null;
+                    $stack[$stackindex]->isLastReplyFromUser = FALSE; // If last reply is from user, mark it so.
+                } 
+                if ($isuser) {
+                    $stack[$stackindex]->userreplycount++;
+                    $stack[$stackindex]->isLastReplyFromUser = TRUE; // If last reply is from user, mark it so.
                 }
             }
         }
         return $stack;
     }
 
-    private function get_responses_for_username($username){
-        // STUB
+    // Return formatted list of departments assigned.
+    // $eid - entry id for assigning new departments
+    private function get_dept_names_from_ids($ids, $eid, $deptmap){
+        global $DB;
+        $html = '';
+        if($ids){
+            $ids = explode(',', $ids);
+            $index = 1;
+            foreach ($ids as $id) {
+                if($name = $deptmap[$id]) {
+                    $html .= $index.") ".$name."<br>";
+                    $index++;
+                }
+            }
+        }
+        if($html)
+            return $html;
+        else
+            return "No departments assigned";
     }
 }
 
@@ -345,7 +381,7 @@ class manage_departments implements renderable {
     private function get_department_info(){
         // Returns an array of departments along with related data
         global $DB;
-        $depts = $DB->get_records("grievance_categories");
+        $depts = $DB->get_records("grievance_departments");
         $departments = array();
         foreach($depts as $d) { // Silly loop because mustache doesnt accept raw results
             $d->emails  = $this->get_emails_from_string($d->email);

@@ -6,17 +6,21 @@ require_once($CFG->dirroot.'/blocks/readytohelp/locallib.php');
 class readytohelp_create_form extends moodleform{
     function definition(){
         $mform =& $this->_form; 
-        //$PAGE->set_title('Raise a Grievance');
-        //$PAGE->set_heading('Raise a Grievance');
         $mform->addElement('select','category','Category',get_grievance_categories());
         $mform->addRule('category','Category can\'t be empty','required',null,'client');
+        
         $mform->addElement('text','subject','Subject',array('size'=>'40'));
+        $mform->setType('subject', PARAM_NOTAGS);        
         $mform->addRule('subject','Subject can\'t be empty','required',null,'client');
+
         $mform->addElement('textarea','description','Description',array('rows'=>'5','cols'=>'40'));
+        $mform->setType('description', PARAM_NOTAGS);
         $mform->addRule('description','Description can\'t be empty','required',null,'client');
         // hidden elements
         $mform->addElement('hidden', 'blockid');
+        $mform->setType('blockid', PARAM_INT);
         $mform->addElement('hidden', 'courseid');
+        $mform->setType('courseid', PARAM_INT);
         $this->add_action_buttons();
     }   
 }
@@ -50,4 +54,21 @@ class readytohelp_reply_form extends moodleform{
 
         $this->add_action_buttons();
     }
+}
+
+class readytohelp_department_form extends moodleform{
+    function definition(){
+        $mform =& $this->_form;
+
+        $mform->addElement('header', 'header1', 'Manage departments for this grievance');
+
+        $select = $mform->addElement('select','departments','Select Departments (Ctrl+click to select multiple) ',get_grievance_departments(), 'style="height:9em;"');
+        $select->setMultiple(true);
+        $mform->addRule('departments','At least one department must be assigned','required',null,'client');
+
+        // hidden elements
+        $mform->addElement('hidden', 'courseid');
+        $mform->setType('courseid', PARAM_INT);
+        $this->add_action_buttons();
+    }   
 }

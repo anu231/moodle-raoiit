@@ -12,11 +12,11 @@ class block_readytohelp_studentnotification extends \core\task\adhoc_task {
         $email = $data->email;
         $response = $data->response; // Approved Mods response
         $grievance = $data->grievance;
-        $replyurl = $data->replyurl; // Url for new response
-        return $this->sendMail($email, $grievance, $replyurl);
+        $viewurl = $data->viewurl; // Url for new response
+        return $this->sendMail($email, $grievance, $viewurl);
     }
     
-    function sendMail($email, $grievance, $replyurl){
+    function sendMail($email, $grievance, $viewurl){
         $mail = new PHPMailer;
         $mail->isSMTP();
         $mail->Host = 'mail.raoiit.com';
@@ -44,7 +44,7 @@ class block_readytohelp_studentnotification extends \core\task\adhoc_task {
         <p>Description: <pre>$grievance->description</pre></p>
         <hr>
         <p>Click on the following link to view the response:</p>
-        <a href='$replyurl' target="_blank"><b><u>View Response</u></b></a>
+        <a href='$viewurl' target="_blank"><b><u>View Response</u></b></a>
         <hr>
         <small>Note: This is an automated email. Do not reply to this email.</small>
 HTML;

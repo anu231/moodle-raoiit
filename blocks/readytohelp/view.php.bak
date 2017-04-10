@@ -79,6 +79,7 @@ if($reply == 1 && $deptid && $email==$USER->username){
         // Save submitted form data; Always create a new instance
         if($success = create_grievance_reply($data)) {
             // Send notifications
+            send_grievance_dept_emails($gid, $data, 'new_reply');
             redirect(new moodle_url("/blocks/readytohelp/view.php?gid=$gid&deptid=$deptid"));
         } else {
             redirect(new moodle_url("/blocks/readytohelp/feedback_page.php?action=savefailed"));
@@ -93,13 +94,13 @@ if($reply == 1 && $deptid && $email==$USER->username){
 
 
 // NOTE!! DONT DELETE!
+// Display reply form for MODS and SITEADMIN
 // if(is_siteadmin()){
 //     $customsalt = 'aybabtu';
 //     $email='admin'; // TODO move to a different place?
 //     $hash = sha1($gid.$customsalt.$email);
 // }
 
-// Display reply form for MODS and SITEADMIN
 if ($email && $hash && $deptid){
     $replyform = new readytohelp_reply_form("view.php?gid=$gid&deptid=$deptid&email=$email&hash=$hash",
     array(

@@ -42,6 +42,9 @@
                     Responses
                 </td>
                 <td>
+                    Assigned Departments
+                </td>
+                <td>
                     Actions
                 </td>
             </tr>
@@ -50,24 +53,104 @@
         <tbody class="list">
             {{#grievances}}
             <tr>
-                <td class="index">{{index}}</td>
+                <td class="index LRFU-{{isLastReplyFromUser}} {{estatus}}">{{index}}</td>
                 <td class="category">{{cname}}</td>
                 <td class="timecreated">{{etimecreated}}</td>
                 <td class="subject">{{esubject}}</td>
-                <td class="description">{{edescription}}</td>
+                <td class="description">
+                    {{edescription}}<br>
+                    {{#userreplycount}}
+                    <span style="float:right; padding: 5px; color:#999">(+{{userreplycount}} more)</span>
+                    {{/userreplycount}}
+                </td>
                 <td class="user">{{username}}</td>
                 <td class="status">{{estatus}}</td>
                 <td>Approved: {{approvedcount}} <br> Total: {{replycount}}</td>
+                <td>{{{departments}}}</td>
                 <td>
-                    <a href="{{viewlink}}" target="_blank">View</a> <br>
-                    <a href="{{remindlink}}">
-                        Remind Dept
+                    <a href="{{viewlink}}" target="_blank">* View</a> <br>
+                    {{#remindlink}}
+                    <a href="{{remindlink}}" title="Send Emails to the department members about the grievance">
+                        * Send Reminder e-mail
+                    </a> <br>
+                    {{/remindlink}}
+                    <a href="{{managedeptlink}}" title="Add/Edit departments assigned to this grievance">
+                        * Add/Edit assigned departments
                     </a>
                 </td>
             </tr>
             {{/grievances}}
         </tbody>
     </table>
+</div>
+
+<hr>
+<div>
+    <h5>Instructions</h5>
+    <span style="color:lightgreen; padding: 2px;">Green</span> colored index = new user reply. The index will stay as it is until the department responds or you close the grievance        
+    <h6>Managing Departments</h6>
+    <ol>
+        <li>
+            <code>
+            Click on the `Manage Departments` button at the top to Add/Edit/Delete Departments and their members.
+            </code>
+        </li>
+        <li>
+            <code>
+            You MUST create departments and add valid members to them BEFORE you assign them to grievance. Without departments and valid emails,<br>
+            you can do nothing.
+            </code>
+        </li>
+    </ol>
+    <h6>Managing Responses</h6>
+    <ol>
+        <li>
+            <code>
+            You need to assign at least one department to a grievance. You do this by clicking the `Assigned Department` link in the 'Actions' column<br>
+            </code>
+        </li>
+        <li>
+            <code>
+            Once you assign a department to a query, the members of the department will be notified by email. The email contains the link which 
+            can be used to reply to the grievance.
+            </code>
+        </li>
+        <li>
+            <code>
+            You can see the number of responses (both total and approved) to the grievance in the `Responses` column. You MUST apporve each and every<br>
+            response. Only approved responses will be visible to the student.
+            </code>
+        </li>
+        <li>
+            <u>Approving / Rejecting Responses</u>
+            <ul>
+                <li>
+                    <code>
+                    To see the responses, click on the `View` link in the 'Actions' column
+                    </code>
+                </li>
+                <li>
+                    <code>
+                    You can then click on the blue checkmark button to approve a response. <br>
+                    This will make the response visible to the student. Approving a response will also notify the student about the new response.<br>
+                    </code>
+                </li>
+                <li>
+                    <code>
+                    To reject a response, click on the red X button. If you reject a response, the member will be notified of the action and will receive a link to<br>
+                    rewrite the response. You can also click on the `close` button to close a grievance.
+                    </code>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <code>
+            You can click on the `Send Reminder e-mail` button to send a reminder email to the members of the assigned department.<br>
+            Use this button if nobody has replied to a grievance within the appropriate period.
+            </code>
+        </li>
+
+    </ol>
 </div>
 <!-- SCRIPTS -->
 <script src="templates/extlibs/list.js"></script>

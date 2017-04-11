@@ -68,7 +68,7 @@ class auth_plugin_otp extends auth_plugin_base {
     }
 
     function pre_loginpage_hook(){
-        redirect(new moodle_url('/ath/otp/login.php'));
+        redirect(new moodle_url('/auth/otp/login.php'));
     }
 }
 

@@ -19,7 +19,6 @@
                 <FIELD NAME="syllabus" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Syllabus for the paper"/>
                 <FIELD NAME="markingscheme" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Marking scheme converted to string."/>
                 <FIELD NAME="instructions" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Instructions for the paper"/>
-                <FIELD NAME="solutions" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Link to solution"/>
                 <FIELD NAME="offline" TYPE="char" LENGTH="4" NOTNULL="true" SEQUENCE="false" COMMENT="Paper offline? yes/no" />
             </FIELDS>
             <KEYS>

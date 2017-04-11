@@ -38,6 +38,7 @@ class mod_paper_renderer extends plugin_renderer_base {
 
 class paper implements renderable {
     public function __construct(stdclass $paper){
+        global $CFG;
         $this->paper = $paper; // Just in case
         $this->name = $paper->name;
         $this->duration = $paper->duration;
@@ -47,7 +48,8 @@ class paper implements renderable {
         $this->syllabus = $paper->syllabus;
         $this->markingscheme = $this->formatmarkingscheme($paper->markingscheme);
         $this->instructions = $paper->instructions;
-        $this->solutions = $paper->solutions;
+        $this->solutions_url = $CFG->testing_portal_url."/#/?state=solutions&id=".$paper->paperid;
+        $this->testingportal_url = $CFG->testing_portal_url."/#/?state=view&id=".$paper->paperid;
     }
 
     private function formatdate($datestr){

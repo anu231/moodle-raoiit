@@ -1,5 +1,5 @@
 <?php
-require($CFG->dirroot.'/vendor/autoload.php');
+require_once($CFG->dirroot.'/vendor/autoload.php');
 // require($CFG->dirroot.'/vendor/rmccue/requests/library/Requests.php'); //Requests.php
 
 
@@ -96,5 +96,4 @@ function paper_get_request($url) {
         echo "Error getting papers";
         return array();
     }
-        
 }

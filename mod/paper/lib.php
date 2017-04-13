@@ -1,5 +1,6 @@
 <?php
 
+require_once($CFG->dirroot.'/calendar/lib.php');
 require_once('locallib.php');
 
 /**
@@ -7,27 +8,28 @@ require_once('locallib.php');
  * @param: $mform
  * @param: int $courseid
  */
-function paper_add_instance($raobooklet, $mform=NULL){
+function paper_add_instance($paper, $mform=NULL){
     global $DB, $COURSE;
 
     // Fill in invisible fields.
-    $paperinfo = json_decode($raobooklet->paperinfo);
-    foreach ($paperinfo as $paper) {
-        if($raobooklet->paperid == $paper->id){
-            $raobooklet->name = $paper->name;
-            $raobooklet->paperid = $paper->id; // Add paperid to $mform;
-            $raobooklet->date = $paper->startdate;
-            $raobooklet->duration = $paper->time;
-            $raobooklet->markingscheme = paper_generate_markingscheme($paper); // TODO
+    $paperinfo = json_decode($paper->paperinfo);
+    foreach ($paperinfo as $p) {
+        if($paper->paperid == $p->id){
+            $paper->name = $p->name;
+            $paper->paperid = $p->id; // Add paperid to $mform;
+            $paper->date = $p->startdate;
+            $paper->duration = $p->time;
+            $paper->markingscheme = paper_generate_markingscheme($p); // TODO
             break;
         }
     }
-    $raobooklet->courseid = $COURSE->id;
-    $raobooklet->timecreated = time();
-    $raobooklet->timemodified = time();
+    $paper->courseid = $COURSE->id;
+    $paper->timecreated = time();
+    $paper->timemodified = time();
 
 
-    if( $result = $DB->insert_record('paper', $raobooklet) ) {
+    if( $result = $DB->insert_record('paper', $paper) ) {
+        paper_add_calendar_event($paper, $result);
         return $result;
     } else {
         return FALSE;
@@ -36,27 +38,27 @@ function paper_add_instance($raobooklet, $mform=NULL){
 
 
 
-function paper_update_instance($raobooklet, $mform=NULL){
+function paper_update_instance($paper, $mform=NULL){
     global $DB, $COURSE;
 
     // Fill in invisible fields.
-    $paperinfo = json_decode($raobooklet->paperinfo);
-    foreach ($paperinfo as $paper) {
-        if($raobooklet->paperid == $paper->id){
-            $raobooklet->name = $paper->name;
-            $raobooklet->paperid = $paper->id; // Add paperid to $mform;
-            $raobooklet->date = $paper->startdate;
-            $raobooklet->duration = $paper->time;
-            $raobooklet->markingscheme = paper_generate_markingscheme($paper); // TODO
+    $paperinfo = json_decode($paper->paperinfo);
+    foreach ($paperinfo as $p) {
+        if($paper->paperid == $p->id){
+            $paper->name = $p->name;
+            $paper->paperid = $p->id; // Add paperid to $mform;
+            $paper->date = $p->startdate;
+            $paper->duration = $p->time;
+            $paper->markingscheme = paper_generate_markingscheme($p); // TODO
             break;
         }
     }
-    $raobooklet->courseid = $COURSE->id;
-    $raobooklet->timecreated = time();
-    $raobooklet->timemodified = time();
+    $paper->courseid = $COURSE->id;
+    $paper->timecreated = time();
+    $paper->timemodified = time();
 
-    $raobooklet->id = $raobooklet->instance;
-    if( $result = $DB->update_record('paper', $raobooklet) ) {
+    $paper->id = $paper->instance;
+    if( $result = $DB->update_record('paper', $paper) ) {
         return $result;
     } else {
         return FALSE;
@@ -68,4 +70,25 @@ function paper_update_instance($raobooklet, $mform=NULL){
 function paper_delete_instance($id){
     global $DB;
     return $DB->delete_records('paper', array('id'=> $id));
+}
+
+
+function paper_add_calendar_event($paper, $instanceid){
+    $event = new stdClass();
+    $event->eventtype = "PAPER_CALENDAR_EVENT"; // Constant defined somewhere in your code - this can be any string value you want. It is a way to identify the event.
+    $event->type = "STANDARD"; // This is used for events we only want to display on the calendar, and are not needed on the block_myoverview.
+    $event->name = $paper->name;
+    $event->description = null;
+    $event->courseid = $paper->courseid;
+    $event->groupid = 0;
+    $event->userid = 0;
+    $event->modulename = 'paper';
+    $event->instance = $instanceid;
+    $event->timestart = strtotime($paper->date);
+    $event->timestart = time();
+    $event->timesort = $paper->date;
+    $event->visible = instance_is_visible('paper', $paper);
+    $event->timeduration = 0;
+    
+    calendar_event::create($event);
 }

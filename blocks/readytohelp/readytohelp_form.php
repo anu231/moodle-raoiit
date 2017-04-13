@@ -6,6 +6,9 @@ require_once($CFG->dirroot.'/blocks/readytohelp/locallib.php');
 class readytohelp_create_form extends moodleform{
     function definition(){
         $mform =& $this->_form; 
+
+        $mform->addElement('header', 'header1', "Raise a New Grievance");
+
         $mform->addElement('select','category','Category',get_grievance_categories());
         $mform->addRule('category','Category can\'t be empty','required',null,'client');
         

@@ -87,11 +87,6 @@ class mod_paper_mod_form extends moodleform_mod {
         $mform->setType('instructions', PARAM_NOTAGS);
         $mform->addRule('instructions', 'Please write proper instructions for the students', 'required', null, 'client');
         
-        // Link to solution
-        $mform->addElement('text', 'solutions', 'Link to solutions');
-        $mform->setType('solutions', PARAM_NOTAGS);
-        // $mform->addRule('solutions', 'Please add a link to the solutions', 'required', null, 'client');    // ? Not required for now
-
         // Offline selection
         $OFFLINE = array(
             '0' => '',

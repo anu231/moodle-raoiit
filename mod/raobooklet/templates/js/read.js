@@ -1,3 +1,4 @@
+(function(){
 var instance,
     bookletid, 
     backlink;
@@ -213,3 +214,7 @@ xmlhttp.onreadystatechange = function () {
 };
 xmlhttp.open("GET", "read.php?bookletid="+bookletid+"&get_items=1", true);
 xmlhttp.send();
+
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+})();

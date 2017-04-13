@@ -40,6 +40,7 @@ try {
     $json['status'] = 'error';
     header('Content-Type: application/json');
     echo json_encode($json);
+    redirect(new moodle_url('/'));
     die;
 }
 

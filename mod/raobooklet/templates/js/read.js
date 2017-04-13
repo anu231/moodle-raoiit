@@ -105,7 +105,6 @@ function openPhotoSwipe(images) {
         }
     }
     });
-
     // Start
 };
 

@@ -151,7 +151,7 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 		}
 		$secret = $CFG->secret_key;
 		$nonce = random_str(32);
-		$st = $nonce.$USER->id;
+		$st = $nonce.$USER->username;
 		$hash_msg = hash_hmac('sha256',$st,$secret);
 		$st_encoded = base64_encode($st);
 		$hash_encoded = base64_encode($hash_msg);

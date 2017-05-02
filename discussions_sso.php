@@ -3,7 +3,7 @@
 require_once('config.php');
 global $USER, $CFG;
 
-$secret = $CFG->secret_key;
+$secret = $CFG->discussions_secret_key;
 $sso = urldecode($_GET['sso']);
 $sig = urldecode($_GET['sig']);
 $sso_hash = hash_hmac('sha256',$sso,$secret);

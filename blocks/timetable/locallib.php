@@ -1,10 +1,9 @@
 <?php
 
-function get_timetable(){
+/*function get_timetable(){
     //  Initiate curl
     $ch = curl_init();
-    // $url = 'http://192.168.1.161/moodle/timetable.php?id='.$_SESSION['USER']->username;
-    $url = 'http://192.168.1.161/moodle/timetable.php?id='.'817172';
+    $url = 'http://192.168.1.161/moodle/timetable.php?id='.$_SESSION['USER']->username;
     // Disable SSL verification
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     // Will return the response, if false it print the response
@@ -16,5 +15,5 @@ function get_timetable(){
     // Closing
     curl_close($ch);
     return json_decode($result,true);
-}
+}*/
 

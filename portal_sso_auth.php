@@ -29,7 +29,7 @@ $secret = $CFG->secret_key;
 $nonce = random_str(32);
 
 if (isset($USER) && isset($USER->id) && intval($USER->id) > 0 ){
-    $st = $USER->id.$nonce;
+    $st = $USER->username.$nonce;
 	$hash_msg = hash_hmac('sha256',$st,$secret);
 	$st_encoded = base64_encode($st);
 	$hash_encoded = base64_encode($hash_msg);
@@ -37,7 +37,8 @@ if (isset($USER) && isset($USER->id) && intval($USER->id) > 0 ){
 	$message['sig'] = $st_encoded;
 	$message['hash'] = $hash_encoded; 
 	$message['nonce'] = $nonce;
-	echo json_encode($message);
+	//echo json_encode($message);
+	header('Location:'.$CFG->django_server.'sso_moodle?sig='.$st_encoded.'&hash='.$hash_encoded.'&nonce='.$nonce);
 	exit;
 } else {
 	echo 'Invalid Login';

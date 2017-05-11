@@ -166,13 +166,13 @@ echo $OUTPUT->header();
 echo $OUTPUT->custom_block_region('content');
 
 // MY djangoauth.js for django authentication
-echo "<input type='hidden' id='djangoAuthURL' value='$CFG->django_server'>";
-echo "<input type='hidden' id='moodleAuthURL' value='$CFG->wwwroot/portal_sso_auth.php'>";
-if (isLoggedIn())
-    echo "<input type='hidden' id='shouldDjangoAuthenticate' value='true'>"; // If true, authenticate against django
-else
-    echo "<input type='hidden' id='shouldDjangoAuthenticate' value='false'>";
-$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/my/djangoauth.js'));
+//echo "<input type='hidden' id='djangoAuthURL' value='".$CFG->django_server."sso_moodle'>";
+//echo "<input type='hidden' id='moodleAuthURL' value='$CFG->wwwroot/portal_sso_auth.php'>";
+//if (isLoggedIn())
+//    echo "<input type='hidden' id='shouldDjangoAuthenticate' value='true'>"; // If true, authenticate against django
+//else
+//    echo "<input type='hidden' id='shouldDjangoAuthenticate' value='false'>";
+//$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/my/djangoauth.js'));
 // /MY djangoauth.js for django authentication
 
 echo $OUTPUT->footer();

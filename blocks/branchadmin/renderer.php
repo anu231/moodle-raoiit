@@ -19,7 +19,14 @@ class block_branchadmin_renderer extends plugin_renderer_base {
         $data = array();
         $data['user_list'] = $page->export_for_template($this);
         return $this->render_from_template('block_branchadmin/student_list', $data);                                                         
-    }           
+    }        
+
+     public function render_view_student($page) {                                                                                      
+        //$data = $page->export_for_template($this);
+        $data = $page->export_for_template($this);
+        //$data['user_list'] = $page->export_for_template($this);
+        return $this->render_from_template('block_branchadmin/student', $data);                                                         
+    }  
 }
 
 
@@ -64,6 +71,42 @@ class view_students implements renderable, templatable{
     public function export_for_template(renderer_base $output) {                                                                    
         //get all the students with the same center
         $data = $this->get_students_by_center();
+        return $data;                                                                                                               
+    }
+}
+
+class view_student implements renderable, templatable{
+
+    var $userid = null;
+
+    public function __construct($id) {                                                                                        
+        $this->userid = $id;                                                                                                
+    }
+    
+        /*
+    gets users who belong to the same center as the current user
+    */
+    private function get_student_info(){
+        global $DB;
+        if ($this->userid==null){
+            return null;
+        }
+        $user = $DB->get_record('user',array('username'=>$this->userid));
+        if (!$user){
+            return null;
+        }
+        profile_load_data($user);
+        return $user;
+    }
+
+    /**                                                                                                                             
+     * Export this data so it can be used as the context for a mustache template.                                                   
+     *                                                                                                                              
+     * @return stdClass                                                                                                             
+     */                                                                                                                             
+    public function export_for_template(renderer_base $output) {                                                                    
+        //get all the students with the same center
+        $data = $this->get_student_info();
         return $data;                                                                                                               
     }
 }

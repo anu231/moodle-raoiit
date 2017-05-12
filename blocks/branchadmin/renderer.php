@@ -50,6 +50,7 @@ class view_students implements renderable, templatable{
             $temp = array();
             $temp['username'] = $user->username;
             $temp['email'] = $user->email;
+           //  $temp['id'] = $user->id;echo "<br>";
             //array_push($user_list,$temp);
             $user_list[] = $temp;
         }

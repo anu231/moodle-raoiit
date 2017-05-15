@@ -1,3 +1,69 @@
-<div>
-    {{username}}
+<div align="right">
+    <a href="view_students.php?blockid=1831" class="back_button"> << Back </a>
 </div>
+<table class="view_student_list_table_td_th view_student_list_table">
+<tr>
+<th class="view_student_list_th view_student_list_table_td_th" >Fullname</th>
+<td class="view_student_list_th view_student_list_table_td_th">{{firstname}} {{lastname}}</td>
+</tr>
+<tr>
+<th class="view_student_list_th view_student_list_table_td_th" >Username</th>
+<td class="view_student_list_th view_student_list_table_td_th">{{username}}</td>
+</tr>
+<tr>
+<th class="view_student_list_th view_student_list_table_td_th">Email Id</th>
+<td class="view_student_list_th view_student_list_table_td_th">{{email}}</td>
+</tr>
+<tr>
+<th class="view_student_list_th view_student_list_table_td_th" >Fathers Email Id</th>
+<td class="view_student_list_th view_student_list_table_td_th">{{profile_field_fatheremail}}</td>
+</tr>
+<tr>
+<th class="view_student_list_th view_student_list_table_td_th" >Mothers Email Id</th>
+<td class="view_student_list_th view_student_list_table_td_th">{{profile_field_motheremail}}</td>
+</tr>
+<tr>
+<th class="view_student_list_th view_student_list_table_td_th">Mobile no</th>
+<td class="view_student_list_th view_student_list_table_td_th">{{profile_field_studentmobile}}</td>
+</tr>
+
+<tr>
+<th class="view_student_list_th view_student_list_table_td_th" >Fathers Phone</th>
+<td class="view_student_list_th view_student_list_table_td_th">{{profile_field_fathermobile}}</td>
+</tr>
+<tr>
+<th class="view_student_list_th view_student_list_table_td_th" >Mothers Phone</th>
+<td class="view_student_list_th view_student_list_table_td_th">{{profile_field_mothermobile}}</td>
+</tr>
+<tr>
+<th class="view_student_list_th view_student_list_table_td_th" >Center</th>
+<td class="view_student_list_th view_student_list_table_td_th">{{profile_field_center}}</td>
+</tr>
+<tr>
+<th class="view_student_list_th view_student_list_table_td_th" >Class Type</th>
+<td class="view_student_list_th view_student_list_table_td_th">{{profile_field_classtype}}</td>
+</tr>
+<tr>
+<th class="view_student_list_th view_student_list_table_td_th" >Batch</th>
+<td class="view_student_list_th view_student_list_table_td_th">{{profile_field_batch}}</td>
+</tr>
+</table>
+
+
+
+
+<style>
+.view_student_list_table_td_th {
+    border: 1px solid #ddd; text-align:Center;
+}
+
+.view_student_list_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.view_student_list_th:hover  {
+    height: 10px;    border: 1px solid #ddd; background:#eaedef; font-weight:bold;
+}
+.back_button{background:#21409a; color:#fff !important; padding:5px;}
+</style>

@@ -18,9 +18,10 @@ class block_branchadmin_renderer extends plugin_renderer_base {
         //$data = $page->export_for_template($this);
         $data = array();
         $data['user_list'] = $page->export_for_template($this);
+
         return $this->render_from_template('block_branchadmin/student_list', $data);                                                         
     }        
-
+             
      public function render_view_student($page) {                                                                                      
         //$data = $page->export_for_template($this);
         $data = $page->export_for_template($this);
@@ -52,10 +53,14 @@ class view_students implements renderable, templatable{
         profile_load_data($user);
         $sql = 'select * from {user} as u join {user_info_data} as ud ON u.id = ud.userid where ud.data like ?';
         $users_by_center = $DB->get_records_sql($sql,array($user->profile_field_center));
-        $user_list = array();
+      
+        $user_list = array(); 
+      
         foreach ($users_by_center as $user){
             $temp = array();
+              
             $temp['username'] = $user->username;
+
             $temp['email'] = $user->email;
            //  $temp['id'] = $user->id;echo "<br>";
             //array_push($user_list,$temp);

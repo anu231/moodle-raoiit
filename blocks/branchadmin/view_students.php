@@ -15,5 +15,5 @@ $output = $PAGE->get_renderer('block_branchadmin');
 $renderable = new view_students();
 
 echo $output->header();
-echo $output->render($renderable);
+echo $branchadmin->display();
 echo $output->footer();

@@ -15,7 +15,9 @@ class block_branchadmin extends block_list {
         $this->content         =  new stdClass;
         $this->content->items = array();
         $student_view_url = new moodle_url('/blocks/branchadmin/view_students.php', array('blockid' => $this->instance->id));
+        $sms_url = new moodle_url('/blocks/branchadmin/send_sms.php');
         $this->content->items[0] = html_writer::link($student_view_url,"View Branch Students");
+        $this->content->items[1] = html_writer::link($sms_url,"Send SMS to students");
         return $this->content;
     }
 

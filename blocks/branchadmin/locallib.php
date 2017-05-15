@@ -14,19 +14,29 @@ function get_user_center(){
     return $user->profile_field_center;
 }
 
+function get_center_obj($centre_name){
+    global $DB;
+    $center = $DB->get_records_sql('select * from {branchadmin_centre_info} where name like ?',array($centre_name));
+    if (count($center)>=0){
+        return $center[key($center)];
+    } else {
+        return false;
+    }
+}
+
 function get_batches_for_user($center){
     //gets the names of all batches with the current user
     //initialize curl handle
-    $url = 'http://analysis.raoiit.com/app/edumate/get_batches_by_center.php?center='.$center;
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url); //set the url
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); //return as a variable
-    $response = curl_exec($ch); //run the whole process and return the response
-    curl_close($ch); //close the curl handle
-    if( $response )
-        return json_decode($response);
-    else{
-        echo "Error getting batches";
-        return array();
+    //get centre object
+    global $DB;
+    $centre_obj = get_center_obj($center);
+    if (!$centre_obj){
+        return false;
     }
+    $batches = $DB->get_records('branchadmin_ttbatches',array('centreid'=>$centre_obj->id));
+    $batch_list = array();
+    foreach($batches as $batch){
+        array_push($batch_list,$batch->name);
+    }
+    return $batch_list;
 }

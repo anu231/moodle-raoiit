@@ -14,11 +14,11 @@ if (!$course = $DB->get_record('course', array('id' => $courseid))) {
 }
  
 require_login($course);
- $PAGE->set_url('/blocks/branchadmin/view.php', array('id' => $courseid));
+$PAGE->set_url('/blocks/branchadmin/view.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading(get_string('edithtml', 'block_branchadmin'));
 $simplehtml = new simplehtml_form();
- echo $OUTPUT->header();
+echo $OUTPUT->header();
 $simplehtml->display();
 echo $OUTPUT->footer();
 $simplehtml->display();

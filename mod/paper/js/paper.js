@@ -2,14 +2,15 @@
 // Returns paper given its id
 function getPaperInfo(paperid) {
     var returnval = null;
-    paperinfo = DOM.get_paper_info();
+    /*paperinfo = DOM.get_paper_info();
     paperinfo.forEach(function(paper){
         if(paper.id == paperid){
             console.log(paper);
             returnval = paper;
         }
-    });
-    return returnval;
+    });*/
+    return $.getJSON("/mod/paper/paper_info.php?id="+paperid);
+    //return returnval;
 }
 
 // Converts marking scheme to renderable html
@@ -40,7 +41,8 @@ var DOM = {
         return JSON.parse(this._paperinfo.value);
     },
     get_selected_paper: function() {
-        return this.get_paper_info()[this._selected.selectedIndex];
+        //return this.get_paper_info()[this._selected.selectedIndex];
+        return this._selected.value;
     },
     update: function(date, duration, mscheme, instructions) {
         // Update the dom with passed FORMATTED values
@@ -55,10 +57,13 @@ var DOM = {
 // Updates display fields like marking scheme, date, duration etc
 function updateFields() {
     selected_paper = DOM.get_selected_paper();
-    paperinfo = getPaperInfo(selected_paper.id);
-    date = new Date(paperinfo.startdate).toDateString();
-    duration = paperinfo.time;
-    mscheme = prettifyMarkingScheme(paperinfo);
-    instructions = paperinfo.instructions;
-    DOM.update(date, duration, mscheme, instructions);
+    paperinfo = getPaperInfo(selected_paper);
+    paperinfo.done(function(data){
+        date = new Date(data.startdate).toDateString();
+        duration = data.time;
+        mscheme = prettifyMarkingScheme(data);
+        instructions = data.instructions;
+        DOM.update(date, duration, mscheme, instructions);
+    });
+
 }

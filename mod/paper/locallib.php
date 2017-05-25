@@ -63,9 +63,10 @@ function paper_generate_markingscheme($paper){
  * @return json
  */
 function paper_remote_fetch_papers() {
-    $SERVERURL = "http://192.168.1.19:8000";
-    $PAPERNAMEURL = "/paper_names/";
-    $PAPERINFOURL = "/papers/";
+    global $CFG;
+    $SERVERURL = $CFG->django_server;
+    $PAPERNAMEURL = "paper_names/";
+    $PAPERINFOURL = "papers/";
     $headers = array('Accept' => 'application/json');
 
     // $request = Requests::get($SERVERURL.$PAPERNAMEURL, $headers);
@@ -79,6 +80,21 @@ function paper_remote_fetch_papers() {
         'info' => $info
     );
     return $json;
+}
+/**
+*fetch paper information of the provided paper id
+*
+*/
+function paper_remote_fetch_info($id){
+    global $CFG;
+    $SERVERURL = $CFG->django_server;
+    $PAPERINFOURL = "papers/".$id."/";
+    $headers = array('Accept' => 'application/json');
+
+    // $request = Requests::get($SERVERURL.$PAPERINFOURL, $headers);
+    $info = paper_get_request($SERVERURL.$PAPERINFOURL);
+
+    return $info;
 }
 
 // Use curl request to get paper data

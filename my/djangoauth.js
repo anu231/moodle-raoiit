@@ -15,9 +15,9 @@ if (shouldAuthenticate){
     getHash.done(function(userDetails){
             var authenticate = makeRequest(djangoAuthURL, JSON.parse(userDetails));
             authenticate.done(function(response){
-                console.error(response);
+                console.log(response);
             });
-            authenticate.fail((r, s)=>{console.log(s);});            
+            authenticate.fail((r, s)=>{console.error(s);});            
         }
     );
     getHash.fail((r, s)=>{console.log(s);});

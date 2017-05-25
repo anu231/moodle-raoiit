@@ -25,7 +25,7 @@ class mod_paper_mod_form extends moodleform_mod {
 
         // Inject json into a hidden field for front end processing
         $papers = paper_remote_fetch_papers();  // papers['names'] and papers['info']
-        $mform->addElement('hidden', 'paperinfo', json_encode($papers['info'])); // Paperinfo for javascript
+        //$mform->addElement('hidden', 'paperinfo', json_encode($papers['info'])); // Paperinfo for javascript
 
 
         // Populate the select element with papers

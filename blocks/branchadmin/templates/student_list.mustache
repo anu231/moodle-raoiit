@@ -1,0 +1,34 @@
+<div>
+    
+    <table class="view_student_list_table_td_th view_student_list_table">
+      <tbody>
+      <tr>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Name</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Email Id</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">View Profile</th>
+      </tr>
+      {{#user_list}}
+            
+     <tr class="view_student_list_table_td_th ">
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px; text-align:left;">{{username}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:left;">{{email}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;"><a href='view_student.php?userid={{username}}'>View</a></td>
+     </tr>
+     {{/user_list}}
+        </tbody>
+    </table>
+</div>
+<style>
+.view_student_list_table_td_th {
+    border: 1px solid #ddd;
+}
+
+.view_student_list_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.view_student_list_th:hover  {
+    height: 10px;    border: 1px solid #ddd; background:#eaedef; font-weight:bold;
+}
+</style>

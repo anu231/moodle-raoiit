@@ -88,7 +88,7 @@ function paper_remote_fetch_papers() {
 function paper_remote_fetch_info($id){
     global $CFG;
     $SERVERURL = $CFG->django_server;
-    $PAPERINFOURL = "papers/".$id."/";
+    $PAPERINFOURL = "paper_info?pid=".$id;
     $headers = array('Accept' => 'application/json');
 
     // $request = Requests::get($SERVERURL.$PAPERINFOURL, $headers);

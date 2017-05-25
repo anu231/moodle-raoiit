@@ -81,6 +81,21 @@ function paper_remote_fetch_papers() {
     );
     return $json;
 }
+/**
+*fetch paper information of the provided paper id
+*
+*/
+function paper_remote_fetch_info($id){
+    global $CFG;
+    $SERVERURL = $CFG->django_server;
+    $PAPERINFOURL = "papers/".$id."/";
+    $headers = array('Accept' => 'application/json');
+
+    // $request = Requests::get($SERVERURL.$PAPERINFOURL, $headers);
+    $info = paper_get_request($SERVERURL.$PAPERINFOURL);
+
+    return $info;
+}
 
 // Use curl request to get paper data
 // @return json

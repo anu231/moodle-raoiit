@@ -9,7 +9,7 @@ function definition(){
     $mform =& $this->_form;
     $mform->addElement('text', 'roll_number', get_string('enroll','block_branchadmin'), 'maxlength="25" size="50" ');
     $mform->addRule('roll_number', null, 'required', null, 'client');
-$mform->setType('roll_number', PARAM_TEXT);
+    $mform->setType('roll_number', PARAM_TEXT);
     global $CFG,$USER,$DB;
     $sql='SELECT name FROM mdl_raomanager_centers ORDER BY name DESC';
     $users_by_branch = $DB->get_records_sql($sql,array($user->profile_field_center));

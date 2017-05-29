@@ -33,6 +33,36 @@ class profile_field_text extends profile_field_base {
     /**
      * Overwrite the base class to display the data for this field
      */
+
+ public function __construct($fieldid = 0, $userid = 0) {
+        // First call parent constructor.
+        parent::__construct($fieldid, $userid);
+
+        // Param 1 for menu type is the options.
+        if (isset($this->field->param1)) {
+            $options = explode("\n", $this->field->param1);
+        } else {
+            $options = array();
+        }
+        $this->options = array();
+        if (!empty($this->field->required)) {
+            $this->options[''] = get_string('choose').'...';
+        }
+        foreach ($options as $key => $option) {
+            $this->options[$option] = format_string($option); // Multilang formatting with filters.
+        }
+
+        // Set the data key.
+        if ($this->data !== null) {
+            $key = $this->data;
+            if (isset($this->options[$key]) || ($key = array_search($key, $this->options)) !== false) {
+                $this->data = $key;
+                $this->datakey = $key;
+            }
+        }
+    }
+
+
     public function display_data() {
         // Default formatting.
         $data = parent::display_data();

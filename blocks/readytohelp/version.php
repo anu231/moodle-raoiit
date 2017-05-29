@@ -4,7 +4,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_readytohelp';
-$plugin->version = 2017031201;
+$plugin->version = 2017051700;
 $plugin->requires = 2014051200;
 $plugin->release = 'v0.2';
 $plugin->cron = 0;

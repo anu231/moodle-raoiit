@@ -12,7 +12,7 @@ function paper_add_instance($paper, $mform=NULL){
     global $DB, $COURSE;
 
     // Fill in invisible fields.
-    $paperinfo = json_decode($paper->paperinfo);
+    /*$paperinfo = json_decode($paper->paperinfo);
     foreach ($paperinfo as $p) {
         if($paper->paperid == $p->id){
             $paper->name = $p->name;
@@ -22,10 +22,16 @@ function paper_add_instance($paper, $mform=NULL){
             $paper->markingscheme = paper_generate_markingscheme($p); // TODO
             break;
         }
-    }
+    }*/
+    $paper_info = paper_remote_fetch_info($paper->paperid);
+    $paper->duration = $paper_info->time;
+    $paper->markingscheme = paper_generate_markingscheme($paper_info);
+    $paper->data = $paper_info->date;
+
     $paper->courseid = $COURSE->id;
     $paper->timecreated = time();
     $paper->timemodified = time();
+    $paper->name = $paper_info->name;
 
 
     if( $result = $DB->insert_record('paper', $paper) ) {

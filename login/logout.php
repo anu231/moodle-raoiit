@@ -60,5 +60,5 @@ foreach($authsequence as $authname) {
 }
 
 require_logout();
-
-redirect($redirect);
+$redirect = $CFG->django_server.'logout.php?redirect='.$CFG->wwwroot;
+redirect($redirect);//.$CFG->wwwroot

@@ -4,7 +4,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_raobooklet';
-$plugin->version = 2017031201;
+$plugin->version = 2017052901;
 $plugin->release = 'v0.2';
 $plugin->requires = 2014051200;
 $plugin->maturity = MATURITY_ALPHA;

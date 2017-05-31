@@ -171,7 +171,7 @@ class core_backup_renderer extends plugin_renderer_base {
                         $table->data = array();
                     }
                     $name = get_string('pluginname', $activity->modulename);
-                    $icon = new pix_icon('icon', $name, $activity->modulename, array('class' => 'iconlarge icon-pre'));
+                    $icon = new image_icon('icon', $name, $activity->modulename, array('class' => 'iconlarge icon-pre'));
                     $table->data[] = array(
                         $this->output->render($icon).$name,
                         $activity->title,
@@ -519,7 +519,7 @@ class core_backup_renderer extends plugin_renderer_base {
             $method = 'get';
         }
         $url->param('sesskey', sesskey());
-        $button = new single_button($url, get_string('continue'), $method);
+        $button = new single_button($url, get_string('continue'), $method, true);
         $button->class = 'continuebutton';
         return $this->render($button);
     }

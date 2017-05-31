@@ -1,0 +1,1391 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Op",
+				"optimizer"
+			],
+			[
+				"sparkp",
+				"sparkpyroj"
+			],
+			[
+				"optimi",
+				"optimizedPlan"
+			],
+			[
+				"cu",
+				"customeqneditor"
+			],
+			[
+				"custo",
+				"customer_id〔variable〕"
+			],
+			[
+				"res",
+				"$response〔variable〕"
+			],
+			[
+				"err",
+				"error_log〔function〕"
+			],
+			[
+				"task",
+				"$task_type〔variable〕"
+			],
+			[
+				"cus",
+				"customer_ip"
+			],
+			[
+				"gen",
+				"generate_marks"
+			],
+			[
+				"oc_",
+				"oc_id〔variable〕"
+			],
+			[
+				"autos",
+				"autosave_ua〔variable〕"
+			],
+			[
+				"auto",
+				"autoSave"
+			],
+			[
+				"user",
+				"useranswer"
+			],
+			[
+				"autsa",
+				"autosave_ua"
+			],
+			[
+				"fun",
+				"function〔keyword〕"
+			],
+			[
+				"atte",
+				"attempt_url"
+			],
+			[
+				"arc",
+				"arch_file〔variable〕"
+			],
+			[
+				"img",
+				"img_path〔variable〕"
+			],
+			[
+				"temp",
+				"temp_folder〔variable〕"
+			],
+			[
+				"se",
+				"set_trace"
+			],
+			[
+				"ques",
+				"questionbank_id"
+			],
+			[
+				"quest",
+				"questionbank_topics"
+			],
+			[
+				"s",
+				"set_trace"
+			],
+			[
+				"connec",
+				"connections"
+			],
+			[
+				"local",
+				"local_cursor〔variable〕"
+			],
+			[
+				"q_ser",
+				"ques_ser.save"
+			],
+			[
+				"ser",
+				"server"
+			],
+			[
+				"Ques",
+				"QuestionSerialzer〔module〕"
+			],
+			[
+				"comp",
+				"comprhension"
+			],
+			[
+				"de",
+				"delete"
+			],
+			[
+				"com",
+				"comprehension〔variable〕"
+			],
+			[
+				"paper",
+				"paperquestion〔variable〕"
+			],
+			[
+				"Pap",
+				"PaperQuestion"
+			],
+			[
+				"Comp",
+				"ComprhensionQuestion"
+			],
+			[
+				"cent",
+				"centersql"
+			],
+			[
+				"spark",
+				"sparkSession"
+			],
+			[
+				"join",
+				"joinDFWithOpt"
+			],
+			[
+				"spar",
+				"sparkSession"
+			],
+			[
+				"Us",
+				"UserAnswerSerializer"
+			],
+			[
+				"Attem",
+				"Attempt"
+			],
+			[
+				"re",
+				"request"
+			],
+			[
+				"Atte",
+				"Attempt"
+			],
+			[
+				"Tes",
+				"Testpapers"
+			],
+			[
+				"F",
+				"ForeignKey"
+			],
+			[
+				"ass",
+				"assignComprehension"
+			],
+			[
+				"compreh",
+				"comprehensions"
+			],
+			[
+				"ans",
+				"ans_keymap"
+			],
+			[
+				"php",
+				"phpserialize"
+			],
+			[
+				"subjects",
+				"subjects_random"
+			],
+			[
+				"sub",
+				"subj"
+			],
+			[
+				"subj",
+				"subjects"
+			],
+			[
+				"set",
+				"setReqValues"
+			],
+			[
+				"va",
+				"validateAssertionReason"
+			],
+			[
+				"q",
+				"questions"
+			],
+			[
+				"text",
+				"textarea\tTag"
+			],
+			[
+				"li",
+				"link\tTag"
+			],
+			[
+				"B",
+				"baseURL"
+			],
+			[
+				"mar",
+				"markEditCorrect"
+			],
+			[
+				"val",
+				"validateMCAns"
+			],
+			[
+				"Test",
+				"TestpaperSerializer"
+			],
+			[
+				"op",
+				"option\tTag"
+			],
+			[
+				"state",
+				"stateParams"
+			],
+			[
+				"show",
+				"show_detail"
+			],
+			[
+				"ro",
+				"router_testpaper"
+			],
+			[
+				"Testpaper",
+				"TestpaperSerialzer"
+			],
+			[
+				"get",
+				"getGroup"
+			],
+			[
+				"I",
+				"IMAGE_DIR"
+			],
+			[
+				"ge",
+				"get"
+			],
+			[
+				"add",
+				"addAlert"
+			],
+			[
+				"qu",
+				"question"
+			],
+			[
+				"detail",
+				"detail_route"
+			],
+			[
+				"Http",
+				"HttpResponse"
+			],
+			[
+				"im",
+				"imgPaths"
+			],
+			[
+				"Topic",
+				"TopicSerializer"
+			],
+			[
+				"TOp",
+				"TopicViewSet"
+			],
+			[
+				"Top",
+				"TopicSerializer"
+			],
+			[
+				"parent",
+				"parent_topic"
+			],
+			[
+				"pare",
+				"parent_obj"
+			],
+			[
+				"Que",
+				"QuestionBank"
+			],
+			[
+				"post",
+				"postData"
+			],
+			[
+				"in",
+				"input\tTag"
+			],
+			[
+				"di",
+				"div\tTag"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "blocks/timetable/version.php",
+			"settings":
+			{
+				"buffer_size": 285,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "blocks/timetable/db/access.php",
+			"settings":
+			{
+				"buffer_size": 610,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "blocks/timetable/lang/en/block_timetable.php",
+			"settings":
+			{
+				"buffer_size": 325,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "blocks/timetable/block_timetable.php",
+			"settings":
+			{
+				"buffer_size": 553,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib/weblib.php",
+			"settings":
+			{
+				"buffer_size": 119848,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib/configonlylib.php",
+			"settings":
+			{
+				"buffer_size": 6782,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib/upgradelib.php",
+			"settings":
+			{
+				"buffer_size": 95222,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "blocks/notice_board/lang/en/block_notice_board.php",
+			"settings":
+			{
+				"buffer_size": 324,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "blocks/notice_board/version.php",
+			"settings":
+			{
+				"buffer_size": 130,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "blocks/notice_board/block_notice_board.php",
+			"settings":
+			{
+				"buffer_size": 1130,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Xdebug Context",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Xdebug Watch",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Xdebug Stack",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Xdebug Breakpoint",
+				"read_only": true,
+				"scratch": true
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 357.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 575.0
+	},
+	"console":
+	{
+		"height": 154.0,
+		"history":
+		[
+			"which linter",
+			"import shutil",
+			"ks",
+			"exit()",
+			"exit",
+			"print ('asd')",
+			"which linter"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/var/www/moodle",
+		"/var/www/moodle/blocks/notice_board/lang",
+		"/var/www/moodle/blocks/notice_board/lang/en",
+		"/var/www/moodle/blocks/timetable",
+		"/var/www/moodle/blocks/timetable/lang",
+		"/var/www/moodle/blocks/timetable/lang/en",
+		"/var/www/moodle/lib"
+	],
+	"file_history":
+	[
+		"/var/www/moodle/moodle.sublime-project",
+		"/var/www/moodle/lib/classes/component.php",
+		"/home/anurag/.config/sublime-text-3/Packages/Xdebug Client/Xdebug.sublime-settings",
+		"/home/anurag/Codes/pyroJ/spark/sql/catalyst/dependency-reduced-pom.xml",
+		"/home/anurag/Codes/pyroJ/build_module",
+		"/home/anurag/Codes/pyroJ/spark/sql/core/pom.xml",
+		"/home/anurag/Codes/pyroJ/out.txt",
+		"/home/anurag/Codes/pyroJ/spark/sql/catalyst/pom.xml",
+		"/home/anurag/Codes/pyroJ/spark/sql/core/dependency-reduced-pom-bck.xml",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/questionaddedit.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/bower_components/tinymce/tinymce.min.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/bower_components/tinymce/tinymce.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/tinymce/customeqneditor/plugin.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/Gruntfile.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/bower_components/tinymce-dist/tinymce.min.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/authentication/views.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/rao_testseries/settings.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/student/models.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/dtp/models.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/singlecorrect.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/scripts/sync_oc_customer.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/student/ocmodels.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/git_ssh/git-ssh.sh",
+		"/home/anurag/Codes/analysis_python/rao_testseries/templates/answerkey.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/dtp/TestPaperViews.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/dtp/QuestionBankViews.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/dtp/serializers.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/index.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/.gitignore",
+		"/home/anurag/Codes/analysis_python/rao_testseries/templates/paper.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/templates/answerkey2.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/dtp/views.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/dtp/AuthenticationViews.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/questionviewer.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/services/authentication.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/question-view.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/tinymce/eqeditor.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/scripts/reset_server.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/dtp/ComprehensionViews.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/scripts/del_paper.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/dtp/TopicViews.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/student/AttemptMarksViews.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/student/serializers.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/student/AttemptViews.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/student/TestPaperViews.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/student/UserAnswerViews.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/paper-detail.html",
+		"/var/www/html/oc/raoeduconnect/catalog/controller/journal2/menu.php",
+		"/var/www/html/oc/raoeduconnect/catalog/controller/account/register.php",
+		"/var/www/html/oc/raoeduconnect/catalog/model/account/customer.php",
+		"/var/www/html/oc/raoeduconnect/admin/model/catalog/product.php",
+		"/var/www/html/oc/raoeduconnect/admin/config.php",
+		"/var/www/html/oc/raoeduconnect/index.php",
+		"/var/www/html/oc/raoeduconnect/config.php",
+		"/home/anurag/Codes/analysis_python/testseries/app/scripts/services/attempt.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/scripts/loadPapers.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/paperdetail.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/subjective.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/integertype.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/subjective.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/app.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/integertype.html",
+		"/home/anurag/Codes/pyroJ/test/src/main/scala/SimpleApp.scala",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/comprehension.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/matrixtype.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/question-add-edit.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/styles/main.css",
+		"/home/anurag/Codes/analysis_python/rao_testseries/rao_testseries/urls.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/dtp/urls.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/home.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/bower_components/tinymce-dist/plugins/customeqneditor/plugin.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/assertionreason.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/styles/question-style.css",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/paperlist.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/paperview.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/paper-viewer.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/data/botany.csv",
+		"/home/anurag/Codes/analysis_python/rao_testseries/data/organic.csv",
+		"/home/anurag/Codes/analysis_python/rao_testseries/data/Math.csv",
+		"/home/anurag/Codes/analysis_python/rao_testseries/scripts/topic-load.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/scripts/delQues.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/loadtopics.sh",
+		"/home/anurag/Codes/analysis_python/rao_testseries/data/IOC.csv",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/singlecorrect.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/multiplecorrect.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/paper-list.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/paper-add-ques.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/paperquestion.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/dtpapp.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries_v2/rao_dtp/rao_testseries/settings.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries_v2/rao_dtp/dtp/models.py",
+		"/home/anurag/Downloads/dtp_topic.csv",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/bower_components/tinymce-dist/plugins/asciimath/js/amcharmap.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/bower_components/tinymce-dist/plugins/asciimath/plugin.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/bower_components/tinymce-dist/plugins/eqneditor/plugin.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/multiplecorrect.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/scripts/input.txt",
+		"/home/anurag/Codes/analysis_python/rao_testseries/scripts/createcommand.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/testpaper.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/README",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/login.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/testpaper.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/.gitignore",
+		"/home/anurag/Codes/analysis_python/rao_testseries/dtp/disableCSRF.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/question.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/controllers/logout.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/app/views/login.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/data/physics.csv",
+		"/home/anurag/Codes/analysis_python/rao_testseries/scripts/delTopics.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/data/physical.csv",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/index.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/tpl/login.html",
+		"/home/anurag/Codes/RaoIIT/RaoIIT/www/js/services.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/js/controllers/authenticationControllers.js",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/tpl/home.html",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/js/index.js",
+		"/home/anurag/Codes/RaoIIT/RaoIIT/www/js/app.js",
+		"/home/anurag/Codes/RaoIIT/RaoIIT/www/js/rao_controllers.js",
+		"/home/anurag/Codes/RaoIIT/RaoIIT/www/index.html",
+		"/home/anurag/Codes/sushma/jeemain/getresult.py",
+		"/home/anurag/Codes/analysis_python/rao_testseries/static/bower_components/ui-bootstrap/README.md",
+		"/home/anurag/Codes/sushma/jeemain/files/data-1-10000-result.txt"
+	],
+	"find":
+	{
+		"height": 48.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"<open folders>",
+			"/home/anurag/Codes/analysis_python/rao_testseries/static/app/scripts/",
+			"/home/anurag/Codes/analysis_python/rao_testseries/static/app/",
+			"/home/anurag/Codes/analysis_python/rao_testseries/",
+			"/home/anurag/Codes/analysis_python/rao_testseries/static/",
+			"/home/anurag/Codes/pyroJ/spark-1.6.2/"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"BLOCK_TYPE_LIST",
+			"Can not load main class.",
+			"plugin_defective_exception",
+			"warning",
+			"work",
+			"sparkpyroj",
+			"main_jar",
+			"pyro",
+			"UnsafeAlignedOffset",
+			"Row",
+			"SparkHadoopWriter",
+			"spark-sql",
+			"uglify",
+			"ScriptLoader.add",
+			"AddOnManager",
+			"url",
+			"plugin",
+			"cdnify",
+			"getIndex",
+			"plugin",
+			"res",
+			"copy",
+			"build",
+			"'server'",
+			"echo $this->customer_id",
+			"echo $customer_id",
+			"account/success",
+			"autoSave",
+			"save",
+			"MT",
+			"SC",
+			"setUp",
+			"eqEditor",
+			"portal",
+			":",
+			"_.map",
+			"Straight",
+			":",
+			"left",
+			"pull-left",
+			"EqEditor",
+			"left",
+			"BooleanField(default=False",
+			"BooleanField(",
+			"BooleanField(null=True,",
+			"true",
+			"db_column",
+			"name",
+			"val",
+			"testpaperForm",
+			"MT",
+			"ng-bind-html",
+			"p>",
+			"<p",
+			"settings.SERVER_ADDR",
+			"'get'",
+			"ques_type",
+			"update",
+			"addAlert",
+			"auto-complete",
+			"dtpWebappApp",
+			"serve",
+			"wired",
+			"SparkPlanGraph",
+			":",
+			"|"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"server",
+			"::",
+			"",
+			"BooleanField(default=False,",
+			"BooleanField(default=False",
+			"BooleanField(",
+			"True",
+			"null=true,db_column",
+			"text",
+			"value",
+			"editableForm",
+			"class='dtp_option' ng-bind-html",
+			"div>",
+			"<div",
+			"question.ques_type",
+			"::"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 5,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "blocks/timetable/version.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 285,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								285,
+								285
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "blocks/timetable/db/access.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 610,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								540,
+								540
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"auto_name": "",
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "blocks/timetable/lang/en/block_timetable.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 325,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								37,
+								37
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "blocks/timetable/block_timetable.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 553,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								545,
+								545
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "lib/weblib.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 119848,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 52740.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "lib/configonlylib.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6782,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 270.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "lib/upgradelib.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 95222,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								31520,
+								31520
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 16995.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "blocks/notice_board/lang/en/block_notice_board.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 324,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								324,
+								324
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "blocks/notice_board/version.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 130,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "blocks/notice_board/block_notice_board.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1130,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 10,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 12,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				2,
+				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
+			],
+			[
+				1,
+				1,
+				2,
+				2
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			0.7,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.xdebug":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "moodle.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 1,
+	"settings":
+	{
+		"xdebug":
+		{
+			"restore_index":
+			{
+				"158":
+				{
+					"group": 0,
+					"index": 4
+				},
+				"159":
+				{
+					"group": 0,
+					"index": 5
+				},
+				"51":
+				{
+					"group": 0,
+					"index": 0
+				},
+				"54":
+				{
+					"group": 0,
+					"index": 3
+				},
+				"59":
+				{
+					"group": 1,
+					"index": 3
+				},
+				"60":
+				{
+					"group": 1,
+					"index": 2
+				},
+				"62":
+				{
+					"group": 0,
+					"index": 1
+				},
+				"63":
+				{
+					"group": 1,
+					"index": 1
+				},
+				"64":
+				{
+					"group": 0,
+					"index": 2
+				},
+				"65":
+				{
+					"group": 1,
+					"index": 0
+				}
+			},
+			"restore_layout":
+			{
+				"cells":
+				[
+					[
+						0,
+						0,
+						1,
+						1
+					],
+					[
+						1,
+						0,
+						2,
+						1
+					]
+				],
+				"cols":
+				[
+					0.0,
+					0.5,
+					1.0
+				],
+				"rows":
+				[
+					0.0,
+					1.0
+				]
+			}
+		}
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 338.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

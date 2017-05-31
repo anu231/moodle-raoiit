@@ -26,7 +26,11 @@ Feature: Blogs can be set to be only visible by the author.
 
   Scenario: A student can not see another student's blog entries.
     Given I log in as "testuser"
+<<<<<<< HEAD
     And I follow "Course 1"
+=======
+    And I am on "Course 1" course homepage
+>>>>>>> master
     And I navigate to course participants
     And I follow "Test2 User2"
     And I should see "Miscellaneous"

@@ -42,5 +42,11 @@ function xmldb_tinymce_spellchecker_upgrade($oldversion) {
     // Automatically generated Moodle v3.2.0 release upgrade line.
     // Put any upgrade step following this.
 
+<<<<<<< HEAD
+=======
+    // Automatically generated Moodle v3.3.0 release upgrade line.
+    // Put any upgrade step following this.
+
+>>>>>>> master
     return true;
 }

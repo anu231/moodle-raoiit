@@ -94,7 +94,7 @@ class behat_grade extends behat_base {
     /**
      * Hids a grade item or category.
      *
-     * Teacher must be either on the grade setup page or on the Grader report page with editing mode turned on.
+     * Teacher must be on the grade setup page.
      *
      * @Given /^I hide the grade item "(?P<grade_item_string>(?:[^"]|\\")*)"$/
      * @param string $gradeitem
@@ -110,10 +110,8 @@ class behat_grade extends behat_base {
             }
         }
 
-        $hide = behat_context_helper::escape(get_string('hide') . '  ');
-        $linkxpath = "//a[./img[starts-with(@title,$hide) and contains(@title,$gradeitem)]]";
-
-        $this->execute("behat_general::i_click_on", array($this->escape($linkxpath), "xpath_element"));
+        $this->execute("behat_general::i_click_on_in_the", array(get_string('hide'), 'link',
+            "//tr[descendant::*[text() = " . $this->escape($gradeitem) . "]]", 'xpath_element'));
     }
 
     /**
@@ -301,6 +299,7 @@ class behat_grade extends behat_base {
 
         $this->select_in_gradebook_tabs($gradepath);
     }
+<<<<<<< HEAD
 
     /**
      * Navigates to the course gradebook and selects a specified item from the grade navigation tabs.
@@ -313,4 +312,6 @@ class behat_grade extends behat_base {
     public function i_go_to_in_the_course_gradebook($gradepath) {
         $this->execute('behat_grade::i_navigate_to_in_the_course_gradebook', $gradepath);
     }
+=======
+>>>>>>> master
 }

@@ -11,6 +11,8 @@
 #
 #/mod/raopaper
 #/blocks/timetable
+*sublime*
+
 /config.php
 /lib/editor/tinymce/extra/tools/temp/
 composer.lock

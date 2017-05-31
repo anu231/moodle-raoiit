@@ -51,7 +51,11 @@ Feature: We can use Single view
       | moodle/grade:edit           | Allow      | teacher  | Course        | C1        |
       | gradereport/singleview:view | Allow      | teacher  | Course        | C1        |
     And I log in as "teacher1"
+<<<<<<< HEAD
     And I follow "Course 1"
+=======
+    And I am on "Course 1" course homepage
+>>>>>>> master
     Given I navigate to "View > Grader report" in the course gradebook
 
   @javascript
@@ -96,7 +100,11 @@ Feature: We can use Single view
         | james (Student) 1 | Very good |
     And I log out
     And I log in as "teacher2"
+<<<<<<< HEAD
     And I follow "Course 1"
+=======
+    And I am on "Course 1" course homepage
+>>>>>>> master
     Given I navigate to "View > Single view" in the course gradebook
     And I click on "Student 4" "option"
     And the "Exclude for Test assignment one" "checkbox" should be disabled

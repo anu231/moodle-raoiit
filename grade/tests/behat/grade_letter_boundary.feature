@@ -21,7 +21,11 @@ Feature: We can customise the letter boundary of a course.
       | activity | course | idnumber | name | intro | grade |
       | assign | C1 | a1 | Test assignment one | Submit something! | 100 |
     And I log in as "teacher1"
+<<<<<<< HEAD
     And I follow "Course 1"
+=======
+    And I am on "Course 1" course homepage
+>>>>>>> master
     And I navigate to "Setup > Course grade settings" in the course gradebook
     And I set the following fields to these values:
       | Grade display type | Letter |

@@ -62,7 +62,11 @@ if ($form->is_cancelled()) {
             $form->set_import_error($error);
         } else {
             $framework = $importer->import();
+<<<<<<< HEAD
             $urlparams = ['competencyframeworkid' => $framework->get_id(), 'pagecontextid' => $context->id];
+=======
+            $urlparams = ['competencyframeworkid' => $framework->get('id'), 'pagecontextid' => $context->id];
+>>>>>>> master
             $frameworksurl = new moodle_url('/admin/tool/lp/competencies.php', $urlparams);
             echo $OUTPUT->notification(get_string('competencyframeworkcreated', 'tool_lp'), 'notifysuccess');
             echo $OUTPUT->continue_button($frameworksurl);

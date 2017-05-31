@@ -13,8 +13,12 @@ Feature: Course files
       | legacyfilesinnewcourses | 1 |
       | legacyfilesaddallowed   | 1 |
     When I log in as "admin"
+<<<<<<< HEAD
     And I am on site homepage
     And I follow "Course 1"
+=======
+    And I am on "Course 1" course homepage
+>>>>>>> master
     Then "Legacy course files" "link" should exist in current page administration
     And I navigate to "Legacy course files" node in "Course administration"
     And I press "Edit legacy course files"
@@ -30,8 +34,12 @@ Feature: Course files
       | legacyfilesinnewcourses | 1 |
       | legacyfilesaddallowed   | 0 |
     When I log in as "admin"
+<<<<<<< HEAD
     And I am on site homepage
     And I follow "Course 1"
+=======
+    And I am on "Course 1" course homepage
+>>>>>>> master
     Then "Legacy course files" "link" should exist in current page administration
     And I navigate to "Legacy course files" node in "Course administration"
     And I press "Edit legacy course files"

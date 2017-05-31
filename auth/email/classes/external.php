@@ -59,7 +59,7 @@ class auth_email_external extends external_api {
     /**
      * Describes the parameters for get_signup_settings.
      *
-     * @return external_external_function_parameters
+     * @return external_function_parameters
      * @since Moodle 3.2
      */
     public static function get_signup_settings_parameters() {
@@ -179,7 +179,7 @@ class auth_email_external extends external_api {
     /**
      * Describes the parameters for signup_user.
      *
-     * @return external_external_function_parameters
+     * @return external_function_parameters
      * @since Moodle 3.2
      */
     public static function signup_user_parameters() {
@@ -286,6 +286,10 @@ class auth_email_external extends external_api {
         // Validate the data sent.
         $data = $params;
         $data['email2'] = $data['email'];
+        // Force policy agreed if a site policy is set. The client is responsible of implementing the interface check.
+        if (!empty($CFG->sitepolicy)) {
+            $data['policyagreed'] = 1;
+        }
         unset($data['recaptcharesponse']);
         unset($data['customprofilefields']);
         // Add profile fields data.

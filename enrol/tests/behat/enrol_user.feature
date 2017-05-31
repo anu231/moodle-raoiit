@@ -13,7 +13,11 @@ Feature: User can be enrolled into a course
       | Course 001 | C001      |
     And I log in as "admin"
     And I am on course index
+<<<<<<< HEAD
     And I follow "Course 001"
+=======
+    And I am on "Course 001" course homepage
+>>>>>>> master
 
   Scenario: User can be enrolled without javascript
     When I enrol "Studie One" user as "Student"

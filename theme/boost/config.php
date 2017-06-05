@@ -36,7 +36,7 @@ $THEME->scss = function($theme) {
 $THEME->layouts = [
     // Most backwards compatible layout without the blocks - this is the layout used by default.
     'base' => array(
-        'file' => 'columns1.php',
+        'file' => 'columns2.php',
         'regions' => array(),
     ),
     // Standard layout with blocks, this is recommended for most pages with general information.
@@ -153,3 +153,4 @@ $THEME->yuicssmodules = array();
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->requiredblocks = '';
 $THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
+$THEME->iconsystem = \core\output\icon_system::FONTAWESOME;

@@ -38,28 +38,26 @@
         //function define_form_specific//
         public function define_form_specific($form) {
     
-            $form->addElement('selectyesno', 'defaultdata','readonly',  get_string('profiledefaultchecked', 'admin'));
-            $form->setDefault('defaultdata', 0); // Defaults to 'no'.
-            $form->setType('defaultdata', PARAM_BOOL);
+            //$form->addElement('selectyesno', 'defaultdata','readonly',  get_string('profiledefaultchecked', 'admin'));
+            //$form->setDefault('defaultdata', 0); // Defaults to 'no'.
+            //$form->setType('defaultdata', PARAM_BOOL);
             $options = array(
             'branchadmin_ttbatches' => 'Batch',
             'branchadmin_centre_info' => 'Center'
-      
             );
             $select = $form->addElement('select', 'param1', "Select Source Table", $options);
-
         }
 
 
     //Form validate function//
 
     function define_validate_specific($data) {
-    $errors = array();
-    // Make sure defaultdata is not false
-    if ($data->param1 == false) {
-        $errors['param1'] = get_string('noprovided', 'profilefield_databasefieldmap');
-    }
-    return $errors;
+        $errors = array();
+        // Make sure defaultdata is not false
+        if ($data->param1 == false) {
+            $errors['param1'] = get_string('noprovided', 'profilefield_databasefieldmap');
+        }
+        return $errors;
     }
 
 

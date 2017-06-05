@@ -1,0 +1,2 @@
+1. validate whether the batch belongs to the specified center
+2. load the appropriate batch names with respect to the center when the center is selected

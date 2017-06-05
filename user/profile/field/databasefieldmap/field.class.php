@@ -47,61 +47,61 @@ class profile_field_databasefieldmap extends profile_field_base {
      * @param int $userid
      */
 
-      function edit_field_add(&$mform) {
-        // Create form field
-        global $CFG,$USER,$DB;
-        $param1 = $this->field->param1;
-        $id = $this->field->id;
-        $result=$DB->get_records($param1,array());
+    function edit_field_add(&$mform) {
+      // Create form field
+      global $CFG,$USER,$DB;
+      $param1 = $this->field->param1;
+      $id = $this->field->id;
+      $result=$DB->get_records($param1,array());
 
-        $attributelist=array();
-        foreach($result as $res){
-          $attributelist[$res->id] = $res->name;
-        } 
-        $checkbox = &$mform->addElement('select', $this->inputname, format_string('Select Center'), $attributelist);
+      $attributelist=array();
+      foreach($result as $res){
+        $attributelist[$res->id] = $res->name;
+      } 
+      $checkbox = &$mform->addElement('select', $this->inputname, format_string('Select '.$this->field->name), $attributelist);
 
+    }
+
+    function display_data() {
+      global $CFG,$USER,$DB;
+      $result_new=$DB->get_record($this->field->param1,array('id'=>$this->data));
+      return $result_new->name;
+    }
+
+
+
+    function edit_field_set_default(&$mform) {
+      if (!empty($param1)) {
+        $mform->setDefault($this->inputname, $this->field->param1);
       }
-
-function display_data() {
-global $CFG,$USER,$DB;
-$result_new=$DB->get_record($this->field->param1,array('id'=>$this->data));
-return $result_new->name;
-}
+    }
 
 
-
-function edit_field_set_default(&$mform) {
-   if (!empty($param1)) {
-      $mform->setDefault($this->inputname, $this->field->param1);
-   }
-}
-
-
-function edit_validate_field($usernew) {
-   $errors = array();
-   if (isset($usernew->{$this->inputname})) {
-      if ($usernew->{$this->inputname}['text'] === '') {
-       $errors[$this->inputname] = 'error';
+    function edit_validate_field($usernew) {
+      $errors = array();
+      if (isset($usernew->{$this->inputname})) {
+          if ($usernew->{$this->inputname}['text'] === '') {
+            $errors[$this->inputname] = 'error';
+          }
       }
-   }
-   return $errors;
-}
-function edit_save_data_preprocess($data, &$datarecord) {
-  if (is_array($data)) {
-     $datarecord->dataformat = $data['format'];
-     $data = $data['text'];
-  }
-  return $data;
-}
-function edit_field_set_locked(&$mform) {
-   if (!$mform->elementExists($this->inputname)) {
-      return;
-   }
-   if ($this->is_locked() and !has_capability('moodle/user:update', get_context_instance(CONTEXT_SYSTEM))) {
-      $mform->hardFreeze($this->inputname);
-      $mform->setConstant($this->inputname, $this->data);
-   }
-}
+      return $errors;
+    }
+    function edit_save_data_preprocess($data, &$datarecord) {
+      if (is_array($data)) {
+          $datarecord->dataformat = $data['format'];
+          $data = $data['text'];
+      }
+      return $data;
+    }
+    function edit_field_set_locked(&$mform) {
+      if (!$mform->elementExists($this->inputname)) {
+          return;
+      }
+      if ($this->is_locked() and !has_capability('moodle/user:update', get_context_instance(CONTEXT_SYSTEM))) {
+          $mform->hardFreeze($this->inputname);
+          $mform->setConstant($this->inputname, $this->data);
+      }
+    }
 
 }
 

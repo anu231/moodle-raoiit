@@ -3,7 +3,7 @@
 function xmldb_block_readytohelp_upgrade($oldversion=0) {
     global $DB;
     $dbman = $DB->get_manager();
-    $version = 2017041000;
+    /*$version = 2017041000;
     // Grievance Categories
     if ($oldversion < $version) {
         $table = new xmldb_table('grievance_categories');
@@ -158,5 +158,5 @@ function xmldb_block_readytohelp_upgrade($oldversion=0) {
     }
 
     // If everything occurs without any errors
-    upgrade_plugin_savepoint(true, $version, 'block', 'readytohelp');
+    upgrade_plugin_savepoint(true, $version, 'block', 'readytohelp');*/
 }

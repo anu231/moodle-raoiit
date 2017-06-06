@@ -27,9 +27,9 @@ function sync_objects($analysis, $mdl, $fieldnames, $table){
     if ($mdl!=null){
         //do fieldwise comaprison
         foreach($fieldnames as $field){
-            if ($mdl[$field] != $analysis[$field]){
+            if ($mdl->$field != $analysis[$field]){
                 $change = true;
-                $mdl[$field] = $analysis[$field];
+                $mdl->$field = $analysis[$field];
             }
         }
         if ($change){
@@ -42,7 +42,6 @@ function sync_objects($analysis, $mdl, $fieldnames, $table){
         $mdl['analysis_id'] = $analysis['id'];
         $DB->insert_record($table, $mdl);
     }
-    
 }
 
 function sync_centres(){

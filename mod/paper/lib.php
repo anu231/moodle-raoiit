@@ -82,7 +82,7 @@ function paper_delete_instance($id){
 function paper_add_calendar_event($paper, $instanceid){
     $event = new stdClass();
     $event->eventtype = "PAPER_CALENDAR_EVENT"; // Constant defined somewhere in your code - this can be any string value you want. It is a way to identify the event.
-    $event->type = "STANDARD"; // This is used for events we only want to display on the calendar, and are not needed on the block_myoverview.
+    $event->type = CALENDAR_EVENT_TYPE_STANDARD; // This is used for events we only want to display on the calendar, and are not needed on the block_myoverview.
     $event->name = $paper->name;
     $event->description = null;
     $event->courseid = $paper->courseid;

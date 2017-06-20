@@ -70,8 +70,6 @@ function fetch_numbers_for_userids($userid_list){
     foreach($userid_list as $userid){
         $data = $DB->get_records_list('user_info_data','fieldid',$field_id_list,null,'data');
     }
-    
-
 }
 
 function fetch_numbers_for_userid($userid){

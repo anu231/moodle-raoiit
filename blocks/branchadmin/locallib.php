@@ -2,16 +2,19 @@
 
 require_once('../../config.php');
 
+
 /*
 gets users who belong to the same center as the current user
 */
-function get_user_center(){
-    global $USER;
-    if ($USER->id==null){
-        return '';
+function get_user_center($userid){
+    $user_id = null;
+    if ($userid==null){
+        global $USER;
+        $user_id = $USER->id;
+    } else{
+        $user_id = $userid;
     }
-    $user = new stdClass();
-    $user->id = $USER->id;
+    $user->id = $user_id;
     profile_load_data($user);
     return $user->profile_field_center;
 }

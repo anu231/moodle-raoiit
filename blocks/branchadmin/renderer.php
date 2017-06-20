@@ -97,12 +97,20 @@ class view_student implements renderable, templatable{
         if ($this->userid==null){
             return null;
         }
-        $user = $DB->get_record('user',array('username'=>$this->userid));
-        if (!$user){
-            return null;
+        //check whether the logged in user and requested user belong to the same centre
+        $user_center = get_user_center();
+        $req_user_center = get_user_center($this->userid);
+        if ($user_center==$req_user_center){
+            $user = $DB->get_record('user',array('username'=>$this->userid));
+            if (!$user){
+                return null;
+            }
+            profile_load_data($user);
+            return $user;
+        } else {
+            $msg = new stdClass();
+            $msg->error_message = 'Requested Student does not belong to the centre assigned to you';
         }
-        profile_load_data($user);
-        return $user;
     }
 
     /**                                                                                                                             

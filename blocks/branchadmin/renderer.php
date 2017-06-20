@@ -112,6 +112,7 @@ class view_student implements renderable, templatable{
         } else {
             $msg = new stdClass();
             $msg->error_message = 'Requested Student does not belong to the centre assigned to you';
+            return $msg;
         }
     }
 

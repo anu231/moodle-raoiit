@@ -48,6 +48,7 @@ function sync_user_data_analysis($username){
     $user_profile->profile_field_fathermobile = $user_data['mobilefather'];
     $user_profile->profile_field_mothermobile = $user_data['mobilemother'];
     profile_save_data($user_profile);
+    return $user_data['ttbatchid'].'_'.$user_data['centre'];
 }
 
 function get_user_data($userid){
@@ -99,10 +100,11 @@ foreach($user_list as $user){
     $user_profile->profile_field_fathermobile = $user_data['mobilefather'];
     $user_profile->profile_field_mothermobile = $user_data['mobilemother'];
     profile_save_data($user_profile);*/
-    sync_user_data_analysis($user->username);
+    $ret = sync_user_data_analysis($user->username);
     if (constant('CLI_SCRIPT')){
         cli_write($user->username.'-updated\n');
     } else{
         echo $user->username.'-updated\n';
+        echo 'Center Updated to - '.$ret;
     }
 }

@@ -1,5 +1,7 @@
 <?php
-if ($_SERVER['REMOTE_ADDR'] != '203.123.46.194' || $_SERVER['REMOTE_ADDR'] != '192.168.1.19'){
+if ($_SERVER['REMOTE_ADDR'] == '203.123.46.194' || $_SERVER['REMOTE_ADDR'] == '192.168.1.19'){
+    define('CLI_SCRIPT',false);
+} else{
     define('CLI_SCRIPT',true);
 }
 echo constant('CLI_SCRIPT');

@@ -31,6 +31,9 @@ function get_user_data_analysis($username){
 function get_moodle_id($username){
     global $DB;
     $user_entry = $DB->get_record('user',array('username'=>$username));
+    if (!$user_entry){
+        return false;
+    }
     return $user_entry->id;
 }
 
@@ -41,6 +44,9 @@ function sync_user_data_analysis($username){
     }
     $user_profile = new stdClass();
     $user_profile->id = get_moodle_id($username);
+    if (!$user_profile->id){
+        return 'USER DNE - '.$username;
+    }
     //cli_write($user->username.'-starting\n');
     profile_load_data($user_profile);
     $user_profile->profile_field_batch = $user_data['ttbatchid'];

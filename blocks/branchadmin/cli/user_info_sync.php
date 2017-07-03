@@ -36,6 +36,9 @@ function get_moodle_id($username){
 
 function sync_user_data_analysis($username){
     $user_data = get_user_data_analysis($username);
+    if (!$user_data){
+        return 'User DNE - '.$username;
+    }
     $user_profile = new stdClass();
     $user_profile->id = get_moodle_id($username);
     //cli_write($user->username.'-starting\n');

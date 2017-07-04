@@ -80,6 +80,6 @@ tr.Zoology {
     background-color: rgba(253, 180, 92, 0.3);
 }
 
-tr.cancelclass {
+tr.cancelled {
     text-decoration: line-through;
 }

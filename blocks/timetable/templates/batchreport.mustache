@@ -1,0 +1,39 @@
+<!--
+Displays the topic completion report for the user
+-->
+{{#data}}
+<div class='completionreport'>
+    <h3>Completed Topics</h3>
+    {{#report}}
+        <div class='{{subject}}'>
+            <h4>{{subject}}</h4>
+            <ul>
+                {{#items}}
+                <li>{{name}}</li>
+                {{/items}}
+            </ul>
+        </div>
+    {{/report}}
+</div>
+<div class='ptmrecords'>
+    <h3>Batch Records</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#ptm}}
+            <tr>
+                <td>{{date}}</td>
+                <td>{{event}}</td>
+            </tr>
+            {{/ptm}}
+        </tbody>
+    </table>
+</div>
+{{/data}}
+<link rel="stylesheet" href="templates/css/view.css">
+

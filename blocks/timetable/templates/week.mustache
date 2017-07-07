@@ -1,11 +1,19 @@
-<div class="timetable">
+
+
+    <div class="timetable">
     <div id="index">
         <div class="index-header">Jump To:</div>
         {{#days}}
         <div class="index-item" onclick="jumpTo('{{fancydate}}')">{{fancydate}}</div>
         {{/days}}
     </div>
-    <table class="table table-bordered">
+
+<div id="accordion">
+ {{#days}}
+  <h3 id="{{fancydate}}" class="date" >{{fancydate}}</h3>
+  <div>
+    <p>
+   <table class="table table-bordered">
         <thead id="theader" class="tt-header">
             <tr>
                 <th>From</th>
@@ -15,25 +23,41 @@
                 <th>Notes</th>
                 <th>Batch</th>
             </tr>
-        </thead>
-        <tbody>
-        {{#days}}
+             {{#items}}
             <tr>
-                <td id="{{fancydate}}" colspan="7" class="date">{{fancydate}}</td>
-            </tr>
-            {{#items}}
-                <tr class="{{subject}} {{testclass}}">
-                    <td>{{starttime}}</td>
+            <td>{{starttime}}</td>
                     <td>{{endtime}}</td>
                     <td>{{teacher}}</td>
-                    <td>{{topicname}}</td>
+                    <th>{{topicname}}</th>
                     <td>{{notes}}</td>
                     <td>{{batch}}</td>
-                </tr>
-            {{/items}}
-        {{/days}}
-        </tbody>
-    </table>
+            </tr>
+                {{/items}}
+        </thead>
+        <tbody>
+        </table>
+    </p>
+  </div>
+  {{/days}}
+  </div>
 </div>
+ 
+
+
 <link rel="stylesheet" href="templates/css/view.css">
 <script src="templates/js/view.js"></script>
+
+
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  $( function() {
+    $( "#accordion" ).accordion();
+  } );
+  </script>
+
+<script>
+  $( function() {
+    $( "#accordion" ).accordion();
+  } );
+  </script>

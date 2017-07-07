@@ -23,6 +23,8 @@ class block_timetable extends block_base {
 	    $this->content->footer = "<a href='$CFG->wwwroot/blocks/timetable/view.php'>View Week Timetable</a>".
                                 "<link rel='stylesheet' href='$CFG->wwwroot/blocks/timetable/templates/css/block.css'>";
 		$PAGE->requires->js( new moodle_url($CFG->wwwroot . '/blocks/timetable/templates/js/ttblock.js') );
+		$PAGE->requires->js_call_amd('block_timetable/time', 'initialise',array());
+
 	    return $this->content;
 	}
 

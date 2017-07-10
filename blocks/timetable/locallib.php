@@ -100,7 +100,7 @@ function get_timetable($start_date,$end_date,$username){
         //$tmp['teacher'] = isset($lecture['sn']) ? $lecture['sn'] : '';
         if ($lecture['istest']=='0'){
             $tmp['teacher'] = $lecture['shortname'];
-            $tmp['subject'] = get_subject_name([$lecture['subj']]);
+            $tmp['subject'] = get_subject_name($lecture['subject']);
             $tmp['topicname'] = $lecture['topicname'];
         } else{
             $tmp['notes'] = $lecture['testtype'].'-'.$lecture['testnum'].' '.$lecture['event'];

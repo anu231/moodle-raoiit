@@ -2,16 +2,19 @@
 
 require_once('../../config.php');
 
+
 /*
 gets users who belong to the same center as the current user
 */
-function get_user_center(){
-    global $USER;
-    if ($USER->id==null){
-        return '';
+function get_user_center($userid){
+    $user_id = null;
+    if ($userid==null){
+        global $USER;
+        $user_id = $USER->id;
+    } else{
+        $user_id = $userid;
     }
-    $user = new stdClass();
-    $user->id = $USER->id;
+    $user->id = $user_id;
     profile_load_data($user);
     return $user->profile_field_center;
 }
@@ -67,8 +70,6 @@ function fetch_numbers_for_userids($userid_list){
     foreach($userid_list as $userid){
         $data = $DB->get_records_list('user_info_data','fieldid',$field_id_list,null,'data');
     }
-    
-
 }
 
 function fetch_numbers_for_userid($userid){

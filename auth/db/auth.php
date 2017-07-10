@@ -511,7 +511,7 @@ class auth_plugin_db extends auth_plugin_base {
 
         // Fetch userlist.
         $rs = $authdb->Execute("SELECT {$this->config->fielduser}
-                                  FROM {$this->config->table} ");
+                                  FROM {$this->config->table} where id>1253");
 
         if (!$rs) {
             print_error('auth_dbcantconnect','auth_db');

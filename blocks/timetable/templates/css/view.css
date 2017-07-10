@@ -79,3 +79,47 @@ tr.Biology {
 tr.Zoology {
     background-color: rgba(253, 180, 92, 0.3);
 }
+
+tr.cancelled {
+    text-decoration: line-through;
+}
+
+/* new css code */
+
+.accord_h4 { padding-top: 12px; padding-bottom: 12px; padding-left: 5px;
+    text-align: left;background-color: #21409a; color: white;}
+
+.hr_class{border-bottom:1px solid #eee;}
+
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #21409a;
+    color: white;
+}
+.shadow
+{
+border:1px solid #ccc;
+box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
+-webkit-box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
+-moz-box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
+-o-box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
+}
+
+/* end new css code */

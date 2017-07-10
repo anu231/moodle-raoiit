@@ -3,6 +3,7 @@
  
 defined('MOODLE_INTERNAL') || die;                                                                                                  
 require_once('../../config.php');
+require_once('locallib.php');
 //use plugin_renderer_base;  
 //require_once('classes/output/view_students.php');
  
@@ -86,7 +87,7 @@ class view_student implements renderable, templatable{
     var $userid = null;
 
     public function __construct($id) {                                                                                        
-        $this->userid = $id;                                                                                                
+        $this->username = $id;                                                                                                
     }
     
         /*
@@ -94,15 +95,25 @@ class view_student implements renderable, templatable{
     */
     private function get_student_info(){
         global $DB;
-        if ($this->userid==null){
+        if ($this->username==null){
             return null;
         }
-        $user = $DB->get_record('user',array('username'=>$this->userid));
+        //check whether the logged in user and requested user belong to the same centre
+        $user_center = get_user_center();
+        $user = $DB->get_record('user',array('username'=>$this->username));
         if (!$user){
             return null;
         }
-        profile_load_data($user);
-        return $user;
+        $req_user_center = get_user_center($user->id);
+        if ($user_center==$req_user_center){
+            profile_load_data($user);
+            //profile_display_fields($user->id);
+            return $user;
+        } else {
+            $msg = new stdClass();
+            $msg->error_message = 'Requested Student does not belong to the centre assigned to you';
+            return $msg;
+        }
     }
 
     /**                                                                                                                             

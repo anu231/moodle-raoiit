@@ -1,3 +1,3 @@
 #!/bin/bash
 cd /var/www/moodle
-git pull origin rm_3.2.1_v1
+git pull origin rm_v3.3.0

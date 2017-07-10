@@ -1,40 +1,44 @@
 <!--
-Displays the topic completion report for the user
--->
+   Displays the topic completion report for the user
+   -->
 {{#data}}
-<div class='completionreport'>
-    <h3>Completed Topics</h3>
-    {{#report}}
-        <div class='{{subject}}'>
-            <h4 data-toggle="collapse" data-target="#{{subject}}" class="accord_h4">{{subject}} &#8595;</h4>
-            <div id="{{subject}}" class="collapse shadow">
-            <ul>
-                {{#items}}
-                <li>{{name}}</li>
-                {{/items}}
-            </ul>
-            </div>
-        </div>
-    {{/report}}
+<div id="accordion">
+   {{#report}}
+   <h3 class='accord_h4'>{{subject}} &#8595;</h3>
+   <div class='shadow'>
+      <ul>
+         {{#items}}
+         <li>{{name}}</li>
+         {{/items}}
+      </ul>
+   </div>
+   {{/report}}
 </div>
 <div class='ptmrecords'>
-    <h3>Batch Records</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Notes</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#ptm}}
-            <tr>
-                <td>{{date}}</td>
-                <td>{{event}}</td>
-            </tr>
-            {{/ptm}}
-        </tbody>
-    </table>
+   <h3>Batch Records</h3>
+   <table id="batch_records">
+      <thead>
+         <tr>
+            <th>Date</th>
+            <th>Notes</th>
+         </tr>
+      </thead>
+      <tbody>
+         {{#ptm}}
+         <tr>
+            <td>{{date}}</td>
+            <td>{{event}}</td>
+         </tr>
+         {{/ptm}}
+      </tbody>
+   </table>
 </div>
 {{/data}}
 <link rel="stylesheet" href="templates/css/view.css">
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+   $( function() {
+     $( "#accordion" ).accordion();
+   } );
+</script>

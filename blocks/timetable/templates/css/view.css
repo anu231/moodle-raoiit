@@ -91,22 +91,22 @@ tr.cancelled {
 
 .hr_class{border-bottom:1px solid #eee;}
 
-#customers {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+#batch_records {
+   /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
     border-collapse: collapse;
     width: 100%;
 }
 
-#customers td, #customers th {
+#batch_records td, #batch_records th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-#customers tr:nth-child(even){background-color: #f2f2f2;}
+#batch_records tr:nth-child(even){background-color: #f2f2f2;}
 
-#customers tr:hover {background-color: #ddd;}
+#batch_records tr:hover {background-color: #ddd;}
 
-#customers th {
+#batch_records th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;

@@ -1,5 +1,6 @@
 <?php
-if ($_SERVER['REMOTE_ADDR'] == '203.123.46.194' || $_SERVER['REMOTE_ADDR'] == '192.168.1.19' || $_SERVER['HTTP_X_FORWARDED_FOR'] == '203.123.46.194'){
+if ((isset($_SERVER['REMOTE_ADDR']) && ($_SERVER['REMOTE_ADDR'] == '203.123.46.194' || $_SERVER['REMOTE_ADDR'] == '192.168.1.19'))
+ || (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] == '203.123.46.194')){
     define('CLI_SCRIPT',false);
 } else{
     define('CLI_SCRIPT',true);
@@ -10,22 +11,21 @@ require(__DIR__.'/../../../config.php');
 require_once($CFG->libdir.'/clilib.php');
 require_once($CFG->libdir.'/moodlelib.php');
 require_once($CFG->dirroot.'/user/profile/lib.php');
+require_once($CFG->dirroot.'/blocks/timetable/locallib.php');
 //require_once('../locallib.php');
 
 function get_user_data_analysis($username){
     //gets the users data from the analysis server
     global $CFG;
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $CFG->analysis_user_info_url.'?userid='.$username); //set the url
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); //return as a variable
-    $response = curl_exec($ch); //run the whole process and return the response
-    curl_close($ch); //close the curl handle
-    if( $response )
-        return json_decode($response, true);
-    else{
-        echo "Error getting data from :".$url;
-        return array();
+    $link = connect_analysis_db();
+    $qry = "select * from userinfo where userid=".$username;
+    $res = $link->query($qry);
+    if (!$res){
+        return false;
     }
+    $row= $res->fetch_assoc();
+    close_analysis_db($link);
+    return $row;
 }
 
 function get_moodle_id($username){
@@ -35,6 +35,27 @@ function get_moodle_id($username){
         return false;
     }
     return $user_entry->id;
+}
+
+function get_user_course_type($user){
+    //course types - 1 year , 2 year, repeater
+    $ctype = 'None';
+    if ($user['targetyear'] == '2019'){
+        $ctype = '2 Year Program';
+    } else if ($user['targetyear'] == '2018'){
+        //check batch
+        if ($user['batch'] == '0' || $user['batch'] == '2'){
+            if (intval($user['userid'])>=800000){
+                //1 year program
+                $ctype = '1 Year Program';
+            } else{
+                $ctype = '2 Year Program';
+            }
+        } else if ($user['batch'] == '1' || $user['batch'] == '3' || $user['batch'] == '10'){
+            $ctype = 'Repeater';
+        }
+    }
+    return $ctype;
 }
 
 function sync_user_data_analysis($username){
@@ -56,8 +77,10 @@ function sync_user_data_analysis($username){
     $user_profile->profile_field_studentmobile = $user_data['mobilenumber'];
     $user_profile->profile_field_fathermobile = $user_data['mobilefather'];
     $user_profile->profile_field_mothermobile = $user_data['mobilemother'];
+    $user_profile->profile_field_coursetype = get_user_course_type($user_data);
+    //print_r($user_profile);
     profile_save_data($user_profile);
-    return $user_data['ttbatchid'].'_'.$user_data['centre'];
+    return $user_data['ttbatchid'].'_'.$user_data['centre'].'_'.$user_profile->profile_field_coursetype;
 }
 
 function get_user_data($userid){
@@ -90,7 +113,7 @@ if (!constant('CLI_SCRIPT')){
     }
 } else{
     echo 'loading from db';
-    //$user_list = $DB->get_records('user',array('auth'=>'db'));
+    $user_list = $DB->get_records('user',array('auth'=>'db'));
 }
 
 foreach($user_list as $user){
@@ -111,7 +134,7 @@ foreach($user_list as $user){
     profile_save_data($user_profile);*/
     $ret = sync_user_data_analysis($user->username);
     if (constant('CLI_SCRIPT')){
-        cli_write($user->username.'-updated\n');
+        cli_write($user->username.'-updated\n'.$ret);
     } else{
         echo $user->username.'-updated\n';
         echo 'Center Updated to - '.$ret;

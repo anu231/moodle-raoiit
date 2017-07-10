@@ -14,7 +14,7 @@ define(['jquery'],function($){
             }, 16);
         } else {
             window.scrollTo(0, absPos);
-            done = true;
+            //done = true;
         }
     };
     // Scroll to the selected date
@@ -28,12 +28,12 @@ define(['jquery'],function($){
         window.setTimeout(function(){
             smoothTo(pageYOffset + (targetPosition.top - offset));
         }, 100);
-    }
+    };
     return {
         init : function(){
             $('.index-item').click(function(){
                 jumpTo($(this).html());
             });
         }
-    }
+    };
 });

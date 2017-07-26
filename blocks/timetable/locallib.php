@@ -17,9 +17,9 @@ $subj_map = array(
 }
 function x_week_range(&$start_date, &$end_date, $date) {
     $ts = strtotime($date);
-    $start = (date('w', $ts) == 1) ? $ts : strtotime('last monday', $ts);
+    $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
     $start_date = date('Y-m-d', $start);
-    $end_date = date('Y-m-d', strtotime('next saturday', $start));
+    $end_date = date('Y-m-d', strtotime('next sunday', $start));
 }
 
 function connect_analysis_db(){

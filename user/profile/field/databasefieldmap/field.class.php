@@ -49,9 +49,9 @@ class profile_field_databasefieldmap extends profile_field_base {
 
     function edit_field_add(&$mform) {
       // Create form field
-      global $CFG,$USER,$DB;
+      global $DB;
       $param1 = $this->field->param1;
-      $id = $this->field->id;
+      //$id = $this->field->id;
       $result=$DB->get_records($param1,array());
 
       $attributelist=array();
@@ -63,8 +63,8 @@ class profile_field_databasefieldmap extends profile_field_base {
     }
 
     function display_data() {
-      global $CFG,$USER,$DB;
-      $result_new=$DB->get_record($this->field->param1,array('id'=>$this->data));
+      global $DB;
+      $result_new=$DB->get_record($this->field->param1,array('analysis_id'=>$this->data));
       return $result_new->name;
     }
 
@@ -72,7 +72,7 @@ class profile_field_databasefieldmap extends profile_field_base {
 
     function edit_field_set_default(&$mform) {
       if (!empty($param1)) {
-        $mform->setDefault($this->inputname, $this->field->param1);
+        $mform->setDefault($this->inputname, $this->field->defaultdata);
       }
     }
 

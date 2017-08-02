@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../config.php');
+require_once(__DIR__.'/../../config.php');
 
 
 /*
@@ -126,4 +126,18 @@ function sendSMS(&$s_mobile, &$s_text){
             $this->error .= "Invalid/DND Numbers: " . trim($responseary[1]);
             return false;
         }
+    }
+
+    function get_user_center_batch_analysis($userid, $link){
+        /*
+        assumes the connection to analysis db has already been made
+        */
+        $sql = 'select centre, ttbatchid from userinfo where userid='.$userid;
+        $res = $link->query($sql);
+        if(!$res){
+            return False;
+        }
+        $row = $res->fetch_assoc();
+        if(!$row){return False;}
+        else {return $row;}
     }

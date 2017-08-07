@@ -27,15 +27,22 @@ class block_readytohelp_emailnotification extends \core\task\adhoc_task {
         // $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                    // TCP port to connect to
         $mail->SMTPOptions = array(
-        'ssl' => array(
-        'verify_peer' => false,
-        'verify_peer_name' => false,
-        'allow_self_signed' => true
-        )
+            'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+            )
         );
         $mail->isHTML(true);                                  // Set email format to HTML
         $mail->setFrom('admin-noreply@raoiit.com', 'Grievance Portal');
-        $mail->addAddress($email);
+        if (is_array($email)){
+            foreach($email as $addr){
+                $mail->addAddress($addr);
+            }
+        } else{
+            $mail->addAddress($email);
+        }
+        
 
 
         // Set content according to type of email
@@ -47,6 +54,10 @@ class block_readytohelp_emailnotification extends \core\task\adhoc_task {
             case 'reminder';
                 $mail->Subject = "[Reminder] Grievance - ".$subject;
                 $intro = 'This grievance needs your attention.';
+                break;
+            case 'admin-notification':
+                $mail->subject = 'New Grievance on Edumate - '.$subject;
+                $intro = '';
                 break;
             default:
                 $mail->Subject = "[Reminder] Grievance - ".$subject;

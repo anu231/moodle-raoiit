@@ -251,7 +251,7 @@ class grievance_responses implements renderable {
 
     // Returns grievanceset iterable
     private function get_all_grievances(){
-        global $DB;
+        global $DB, $CFG;
         $sql = <<<SQL
         SELECT
             response.id AS rid,
@@ -267,7 +267,9 @@ class grievance_responses implements renderable {
             department.name AS deptname,
             response.approved AS rapproved,
             response.email AS email,
-            response.body AS body
+            response.body AS body,
+            userinfo_b.data as ttbatchid,
+            userinfo_c.data as centerid
         FROM
             `mdl_grievance_entries` as entry
         LEFT OUTER JOIN
@@ -279,6 +281,15 @@ class grievance_responses implements renderable {
         JOIN
             `mdl_grievance_categories` as category
             ON category.id = entry.category
+        JOIN 
+            `mdl_user` as user
+            on entry.username=user.username
+        JOIN
+            (SELECT userid as userid, data as data, fieldid as fieldid FROM mdl_user_info_data where fieldid = '$CFG->BATCH_FIELD_ID') as userinfo_b
+            on user.id = userinfo_b.userid
+        JOIN
+            (SELECT userid as userid, data as data, fieldid as fieldid FROM mdl_user_info_data where fieldid = '$CFG->CENTER_FIELD_ID') as userinfo_c
+            on user.id = userinfo_c.userid
         ORDER BY
             -response.timecreated
 SQL;
@@ -301,13 +312,24 @@ SQL;
             return -1;
         }
     }
-
+    private function get_centre_list(){
+        global $DB;
+        $centrelist = $DB->get_records('branchadmin_centre_info');
+        return $centrelist;
+    }
+    private function get_batch_list(){
+        global $DB;
+        $batches = $DB->get_records('branchadmin_ttbatches');
+        return $batches;
+    }
     private function process_grievances($grievances){
         global $CFG, $COURSE, $DB;
         $processed = array();
         $index = 0;
         $stack = array(); // Stack holds grievances only (not responses)
         $deptmap = $DB->get_records_menu('grievance_departments'); // Cache deptid->name map
+        $centre_map = $this->get_centre_list();
+        $batch_map = $this->get_batch_list();
         foreach($grievances as $g){
             $isuser = (int)$g->email ? true : false;
             $stackindex = $this->search_by_key($stack, 'eid', $g->eid);
@@ -317,6 +339,8 @@ SQL;
                 $g->index = $index;
                 $g->edescription = strlen($g->edescription) >=120 ? substr($g->edescription, 0, 120).'...' : $g->edescription;  // Culled to 120 chars
                 $g->username = $g->username;
+                $g->centre = $centre_map[$g->centerid]->name;
+                $g->ttbatch = $batch_map[$g->ttbatchid]->name;
                 $g->approvedcount = $g->rapproved == '1' && $g->rapproved != null && !$isuser ? 1 : 0; // Don't count user replies
                 $g->replycount = $g->body != NULL && !$isuser ? 1 : 0; // Don't count user replies
                 $g->userreplycount = 0;

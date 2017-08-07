@@ -58,7 +58,7 @@ foreach ($files as $file) {
             log2file('Conversion failed', 2);
             log2file('Attempting to delete folder for bookletid: '.$file->id, 1);
             $success2 = rmdir($dir);
-            if(!$success)
+            if(!$success2)
                 log2file("Directory deletion failed: ".$dir);
             else
                 log2file("Done ".$dir);

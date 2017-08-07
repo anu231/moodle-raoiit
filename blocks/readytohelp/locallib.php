@@ -319,3 +319,27 @@ function notify_student($resp) {
     }
     return TRUE;
 }
+
+function send_grievance_notification_admin($data){
+    global $CFG;
+    $grievance_categories = get_grievance_categories();
+    $category = $grievance_categories[$data->category];
+    $email_text = <<<EOT
+    Roll No - $data->username<br>
+    Category - $category<br>
+    Subject - $data->subject<br>
+    Descirption - $data->description<br>
+EOT;
+    $task = new block_readytohelp_emailnotification();
+    $task->set_custom_data(array(
+        'email' => $CFG->grievance_admin_emails,
+        'type' => 'admin-notification',
+        'subject' => $data->username,
+        'description' => $email_text,
+        'replyurl' => 'Not Provided'
+    ));
+    if( !$taskid = \core\task\manager::queue_adhoc_task($task) ) {
+        return FALSE;
+    }
+    return TRUE;
+}

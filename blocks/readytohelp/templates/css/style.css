@@ -34,8 +34,12 @@
 .responses-table .LRFU-0.open{
     background-color: #b4ffb7 !important;
 }
-
-
+.status-open{
+    bgcolor:'red',
+}
+.status-red{
+    bgcolor:'yellow',
+}
 /* Animations */
 @keyframes wiggle {
     0% {

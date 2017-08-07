@@ -10,7 +10,7 @@
         <button class="btn btn-info btn-small" onclick="resetTable()">Reset</button>
     </label>
     <hr>
-    <table class="table table-bordered table-hover table-striped responses-table">
+    <table class="table table-bordered responses-table">
         <thead>
             <tr>
                 <td>
@@ -58,7 +58,7 @@
         </thead>
         <tbody class="list">
             {{#grievances}}
-            <tr>
+            <tr class="{{status_class}}">
                 <td class="index LRFU-{{isLastReplyFromUser}} {{estatus}}">{{index}}</td>
                 <td class="category">{{cname}}</td>
                 <td class="timecreated">{{etimecreated}}</td>

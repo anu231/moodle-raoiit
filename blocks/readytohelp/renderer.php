@@ -105,7 +105,7 @@ class grievance_detail implements renderable{
                     'gid' => $gid,
                     'rid' => $resp->id,
                     'deptid' => $resp->deptid,
-                    'userid' => $USER->username, // Due to mustache scoping issue, inject this in every response
+                    //'userid' => $USER->username, // Due to mustache scoping issue, inject this in every response
                     'email' => $resp->email,
                     'time' => strftime('%d/%m/%G-%R', $resp->timecreated),
                     'body' => $resp->body,
@@ -114,7 +114,9 @@ class grievance_detail implements renderable{
                     'modctrl' => $isuser ? 'hide' : 'show', // TODO remove this
                     'reply-div-show' => 'hide' // Show reply button for the last bubble
                 );
-
+                if (isset($USER->username)){
+                    $tmp['userid'] = $USER->username;
+                }
                 if( $gmode != '' ){ // Dont skip anything in godmode
                     $tmp['gmode'] = $gmode;
                     if($resp->approved == 1){
@@ -366,6 +368,11 @@ SQL;
                     $stack[$stackindex]->userreplycount++;
                     $stack[$stackindex]->isLastReplyFromUser = TRUE; // If last reply is from user, mark it so.
                 }
+            }
+            if ($g->estatus == 'closed'){
+                $g->status_class = 'success';
+            } else if ($g->estatus == 'open'){
+                $g->status_class = 'danger';
             }
         }
         return $stack;

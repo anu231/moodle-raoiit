@@ -20,7 +20,7 @@ $rid = optional_param('rid', 0, PARAM_INT); // Response id
 
 // Check login and permissions
 global $DB, $OUTPUT, $PAGE, $USER;
-require_login();
+//require_login();
 // /permissions
 
 // Check email and hash validity
@@ -32,6 +32,7 @@ if($gmode != '' && $deptid != 0 && $gid != 0){
 
 // Special actions for mods
 if( $action ){
+    require_login();
     if( ($action == 'approve' || $action == 'disapprove') && $rid != 0 && $deptid != 0){
         set_response_approval($rid, $action);
         if($action == 'disapprove'){
@@ -67,7 +68,7 @@ echo $output->header();
 echo $output->grievance_detail($gid, $gmode);
 
 // Display Reply form for STUDENTS ONLY
-if($reply == 1 && $deptid && $email==$USER->username){
+if($reply == 1 && $deptid && isset($USER->username) && $email==$USER->username){
     $replyform = new readytohelp_reply_form("view.php?gid=$gid&deptid=$deptid&email=$USER->username&reply=1",
     array(
         'grievance_id' => $gid,

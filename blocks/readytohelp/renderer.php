@@ -11,9 +11,9 @@ class block_readytohelp_renderer extends plugin_renderer_base {
         return $this->render_from_template('block_readytohelp/grievance_list', $gl);
     }
 
-    public function grievance_detail($gid, $gmode='') {
+    public function grievance_detail($gid, $gmode='',$branch_view=false) {
         // Display the grievance thread
-        $grievance_detail = new grievance_detail($gid, $gmode);
+        $grievance_detail = new grievance_detail($gid, $gmode,$branch_view);
         return $this->render($grievance_detail);
     }
 
@@ -42,11 +42,15 @@ class block_readytohelp_renderer extends plugin_renderer_base {
 
 // Detailed view of a grievance for student/mod (Chat bubble view)
 class grievance_detail implements renderable{
-    public function __construct($gid, $gmode){
+    public function __construct($gid, $gmode, $branch_view){
         $grievance = $this->get_grievance_thread($gid, $gmode);
         $this->query = $grievance['query'];
         $this->responses = $grievance['responses'];
-        $this->username = $grievance['userdetails']['username'];
+        if ($branch_view){
+            $this->username = 'anonymous';    
+        } else{
+            $this->username = $grievance['userdetails']['username'];
+        }
         if(local_raomanager_has_permission('ReadyToHelp'))
             $this->showstatusbuttons = TRUE;
         else

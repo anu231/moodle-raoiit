@@ -10,9 +10,9 @@ require_once('locallib.php');
 
 // required_param('courseid', PARAM_INT);
 $gid = required_param('gid', PARAM_INT);
-$email = optional_param('email', 0, PARAM_RAW); // Email id of responder. OR username of student
+$email = optional_param('email', null, PARAM_RAW); // Email id of responder. OR username of student
 $deptid = optional_param('deptid', 0, PARAM_INT); // Deptid is referred to as categoryid in renderer.php
-$hash = optional_param('hash', 0, PARAM_RAW); // sha1(gid.'aybabtu'.email);
+$hash = optional_param('hash', null, PARAM_RAW); // sha1(gid.'aybabtu'.email);
 $reply = optional_param('reply', 0, PARAM_INT); // If 1, display reply form for student
 $gmode = optional_param('gmode', '', PARAM_RAW); // gmode,sha1($gid.'aybabtu'.$deptid), shows all replies for review 
 $action = optional_param('action', '', PARAM_RAW); // 'approve', 'disapprove'
@@ -64,8 +64,23 @@ $PAGE->set_heading(get_string('addgrievance', 'block_readytohelp'));
 $output = $PAGE->get_renderer('block_readytohelp');
 echo $output->header();
 
+//check if the email hash matches
+global $USER;
+$is_branch_view = false;
+if (isset($USER->id) && $USER->id == 0 ){
+    //check hash
+    $computed_hash = sha1($gid.$CFG->custom_salt.$email);
+    if ($email==null || $hash == null || $computed_hash != $hash){
+        //display error message
+        echo html_writer::tag('h2','You do not have access to this grievance');
+        exit();
+    }
+    $is_branch_view = true;
+}
+
 // Display student view
-echo $output->grievance_detail($gid, $gmode);
+
+echo $output->grievance_detail($gid, $gmode, $branch_view = $is_branch_view);
 
 // Display Reply form for STUDENTS ONLY
 if($reply == 1 && $deptid && isset($USER->username) && $email==$USER->username){

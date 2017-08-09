@@ -184,7 +184,7 @@ function remove_email_from_dept($deptid, $email){
  */
 function _send_grievance_dept_emails($gid, $data, $type){
     global $CFG, $DB;
-    $customsalt = 'aybabtu'; // TODO Move to config
+    $customsalt = $CFG->custom_salt; // TODO Move to config
     $deptid = $data->deptid;
     $emails = get_dept_emails($deptid);
     $basereplyurl = $CFG->wwwroot."/blocks/readytohelp/view.php?gid=$gid&deptid=$deptid&reply=1"; // Append hash and email in sendMail

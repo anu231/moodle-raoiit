@@ -3,6 +3,7 @@
 // Email sent when the response is rejected.
 
 defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot.'/blocks/readytohelp/locallib.php');
 
 class block_readytohelp_rejectednotification extends \core\task\adhoc_task {
     
@@ -17,14 +18,7 @@ class block_readytohelp_rejectednotification extends \core\task\adhoc_task {
     }
     
     function sendMail($email, $subject, $description, $response, $replyurl){
-        $mail = new PHPMailer;
-        // $mail->SMTPDebug = 3;
-        $mail->isSMTP();
-        $mail->Host = 'mail.raoiit.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'admin-noreply@raoiit.com';
-        $mail->Password = 'v1Bdypg0';
-        $mail->Port = 587;
+        $$mail = setup_phpmailer();
         $mail->SMTPOptions = array(
         'ssl' => array(
         'verify_peer' => false,

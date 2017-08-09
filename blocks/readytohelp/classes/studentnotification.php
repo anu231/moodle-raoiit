@@ -3,6 +3,7 @@
 // Email sent when the response is rejected.
 
 defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot.'/blocks/readytohelp/locallib.php');
 
 // Notify student that there is a new response to his query
 class block_readytohelp_studentnotification extends \core\task\adhoc_task {
@@ -17,13 +18,7 @@ class block_readytohelp_studentnotification extends \core\task\adhoc_task {
     }
     
     function sendMail($email, $grievance, $viewurl){
-        $mail = new PHPMailer;
-        $mail->isSMTP();
-        $mail->Host = 'mail.raoiit.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'admin-noreply@raoiit.com';
-        $mail->Password = 'v1Bdypg0';
-        $mail->Port = 587;
+        $mail = setup_phpmailer();
         $mail->SMTPOptions = array(
         'ssl' => array(
         'verify_peer' => false,

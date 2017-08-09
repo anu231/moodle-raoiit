@@ -343,3 +343,24 @@ EOT;
     }
     return TRUE;
 }
+
+function setup_phpmailer(){
+    global $CFG;
+    $mail = new PHPMailer;
+    // $mail->SMTPDebug = 3;                               // Enable verbose debug output
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = $CFG->mail_smtp_host;  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = $CFG->mail_smtp_auth;                               // Enable SMTP authentication
+    $mail->Username = $CFG->mail_username;                 // SMTP username
+    $mail->Password = $CFG->mail_passwd;                           // SMTP password
+    // $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = $CFG->mail_port;                                    // TCP port to connect to
+    $mail->SMTPOptions = array(
+        'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+        )
+    );
+    return $mail;
+}

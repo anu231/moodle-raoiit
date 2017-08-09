@@ -3,6 +3,7 @@
 //namespace block_readytohelp;
 
 defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot.'/blocks/readytohelp/locallib.php');
 
 // Email alert when a user replies to an existing grievance
 class block_readytohelp_replynotification extends \core\task\adhoc_task {
@@ -17,15 +18,7 @@ class block_readytohelp_replynotification extends \core\task\adhoc_task {
     }
     
     function sendMail($email, $subject, $reply, $replyurl){
-        $mail = new PHPMailer;
-        // $mail->SMTPDebug = 3;                               // Enable verbose debug output
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'mail.raoiit.com';  // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'admin-noreply@raoiit.com';                 // SMTP username
-        $mail->Password = 'v1Bdypg0';                           // SMTP password
-        // $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 587;                                    // TCP port to connect to
+        $mail = setup_phpmailer();                                   // TCP port to connect to
         $mail->SMTPOptions = array(
         'ssl' => array(
         'verify_peer' => false,

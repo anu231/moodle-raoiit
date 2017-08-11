@@ -59,6 +59,9 @@ class week implements renderable {
         $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
         $start_date = date('Y-m-d', $start);
         $end_date = date('Y-m-d', strtotime('next sunday', $start));
+        if (date('w',$ts)==6){
+            $end_date = date('Y-m-d',strtotime('next sunday',strtotime($end_date)));
+        }
         return array('start_date'=>$start_date,'end_date'=>$end_date);
     }
 

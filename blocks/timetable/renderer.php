@@ -53,8 +53,12 @@ class week implements renderable {
 
     private function get_week_start_end_dates(){
         date_default_timezone_set("Asia/Calcutta");
-        $start_date = date("Y-m-d", strtotime('monday this week', strtotime(date('Y-m-d'))));
-        $end_date = date("Y-m-d", strtotime('sunday this week', strtotime(date('Y-m-d'))));
+        /*$start_date = date("Y-m-d", strtotime('monday this week', strtotime(date('Y-m-d'))));
+        $end_date = date("Y-m-d", strtotime('sunday this week', strtotime(date('Y-m-d'))));*/
+        $ts = strtotime('now');
+        $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
+        $start_date = date('Y-m-d', $start);
+        $end_date = date('Y-m-d', strtotime('next sunday', $start));
         return array('start_date'=>$start_date,'end_date'=>$end_date);
     }
 

@@ -21,6 +21,10 @@ if ($passwd==null || $userid==null){
     echo 'No Info provided';
     exit;
 }
+if (!is_numeric($userid)){
+    echo 'Only Student passwords can be reset using this';
+    exit;
+}
 global $DB;
 //get the user 
 

@@ -58,17 +58,15 @@ function get_student_batches($link, $username){
         $batches = $row['ttbatchid'];
     }
     //get the student improvement session batch
-    $qry_center = "select id from ttbatches where name like 'Student Improvement Session' and centreid=".$row['centre'];
+    $qry_center = "select id from ttbatches where (name like 'Student Improvement Session' or name like 'Homework Checking Session') and centreid=".$row['centre'];
     $res_center = $link->query($qry_center);
     if (!$res_center){
         return $batches;
     }
-    $row_center = $res_center->fetch_assoc();
-    if (!$row_center){
-        return $batches;
-    } else{
-        return $batches.','.$row_center['id'];
+    while( $row_center = $res_center->fetch_assoc()){
+        $batches .= ','.$row_center['id'];
     }
+    return $batches;
 }
 
 function get_timetable($start_date,$end_date,$username){
@@ -102,6 +100,7 @@ function get_timetable($start_date,$end_date,$username){
             $tmp['teacher'] = $lecture['shortname'];
             $tmp['subject'] = get_subject_name($lecture['subject']);
             $tmp['topicname'] = $lecture['topicname'];
+            $tmp['notes'] = $lecture['event'];
         } else{
             $tmp['notes'] = $lecture['testtype'].'-'.$lecture['testnum'].' '.$lecture['event'];
         }

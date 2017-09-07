@@ -1,0 +1,2062 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/Chart.bundle.js"></script>
+    <script src="js/utils.js"></script>
+    <!--script src="data_script.js"></script-->
+    
+    <style>
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    </style>
+    
+    <script type="text/javascript" src="js/mustache.js"></script>
+    
+    
+</head> 
+<body>
+<div id="test1">
+
+</div>
+<div id="target">
+<center><img src="loader1.gif" class='img-responsive' style='widht:500px;height:500px;'/></center><br>
+<center><p id="test1" style='font-size:20px;font-weight: bold;color:green; text-align:center;'>Loading...</p><p id="test" style='font-size:20px;font-weight: bold;color:red; text-align:center;'></p></center><br/>
+</div>
+
+<script id="template" type="x-tmpl-mustache">   
+
+{{#papers}}
+    {{#spr}}
+        {{#users}}
+            <div class='container'>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <img src='Rao-IIT-Full-New-website-Logo.png' class='img-responsive'/>
+                    </div>
+                </div>
+                <hr/>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <table class='table table-bordered table-responsive table-responsive table-condensed' border=1  cellspacing=0 style='empty-cells: hide;'>
+                            <tr style='background-color: #3f51b5 ; color:#fff; height:20px !important;' align="center">
+                                <td colspan='4' ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'>{{ name }}</p></td>
+                            </tr>
+                            <tr>
+                                <td><b>Name</b></td>
+                                <td>{{ username }}</td>
+                                <td><b>Roll No</b></td>
+                                <td>{{ userid }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Branch</td>
+                                <td>{{ centrename }}</td>
+                                <td><b>Target Course</b></td>
+                                <td>{{ course }} Target-{{ targetyear }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Total Marks</b></td>
+                                <td>{{ marksobt }}</td>
+                                <td><b>Rank</b></td>
+                                <td>{{ rank }}</td>
+                            </tr>
+                            {{/users}}
+                        </table>
+                    </div>
+                </div>
+                <hr/>
+
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-12' style='background-color: #3f51b5 ;font-weight: bold;color:white;'>
+                            <p style='font-size:20px;font-weight: bold;color:white; text-align:center;'>Students Analysis Subjectwise Comparision</p>
+                        </div>
+                        {{#phy_ques}}
+                        <div class='col-md-6' >
+                            <!-- Chart-phy-compare -->
+                            <!-- Students comparision in Physics Chart-phy_compare -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas_phy" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData_phy = {
+                                labels: ["Physics Marks Comparision with Highest & Average"],
+                                datasets: [{
+                                    label: 'SELF',
+                                    backgroundColor: color(window.chartColors.green).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.green,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ pobt }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Highest',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{#max_spr}} {{ pobt }} {{/max_spr}}
+                                        
+                                    ]
+                                },{
+                                    label: 'Average',
+                                    backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.yellow,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{#avg_spr}} {{ pobt }} {{/avg_spr}}
+                                        
+                                    ]
+                                }]
+
+                            };
+
+                            // For Physics Comparision 
+                            // graph-phy_compare
+                            var ctx_phy = document.getElementById("canvas_phy").getContext("2d");
+                                window.myBar = new Chart(ctx_phy, {
+                                    type: 'bar',
+                                    data: barChartData_phy,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Physics Marks Comparision'
+                                        }
+                                    }
+                                });
+
+                            <{{!}}/script>
+                            <hr/>
+                        </div>
+                        {{/phy_ques}}
+
+                        {{#chem_ques}}
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-Chem-compare -->
+                            <!-- Students comparision in Chemistry Chart-chem_compare -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas_chem" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData_chem = {
+                                labels: ["Chemistry Marks Comparision with Highest & Average"],
+                                datasets: [{
+                                    label: 'SELF',
+                                    backgroundColor: color(window.chartColors.green).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.green,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ cobt }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Highest',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{#max_spr}} {{ cobt }} {{/max_spr}}
+                                        
+                                    ]
+                                },{
+                                    label: 'Average',
+                                    backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.yellow,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{#avg_spr}} {{ cobt }} {{/avg_spr}}
+                                        
+                                    ]
+                                }]
+
+                            };
+
+                            // For Chemistry Comparision 
+                            // graph-chem_compare
+                            var ctx_chem = document.getElementById("canvas_chem").getContext("2d");
+                                window.myBar = new Chart(ctx_chem, {
+                                    type: 'bar',
+                                    data: barChartData_chem,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Chemistry Marks Comparision'
+                                        }
+                                    }
+                                });
+                            <{{!}}/script>
+                            <hr/>
+                        </div>
+                        {{/chem_ques}}
+                    </div>
+                    
+                </div>
+                
+                
+                <div class='row'>
+                    <div class='col-md-12'>
+                        {{#maths_ques}}
+                        <div class='col-md-6' style='margin-top:5px;'>
+
+                            <!-- Chart-maths-compare -->
+                            <!-- Students comparision in Maths Chart-maths_compare -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas_maths" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData_maths = {
+                                labels: ["Maths Marks Comparision with Highest & Average"],
+                                datasets: [{
+                                    label: 'SELF',
+                                    backgroundColor: color(window.chartColors.green).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.green,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ mobt }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Highest',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{#max_spr}} {{ mobt }} {{/max_spr}}
+                                        
+                                    ]
+                                },{
+                                    label: 'Average',
+                                    backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.yellow,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{#avg_spr}} {{ mobt }} {{/avg_spr}}
+                                        
+                                    ]
+                                }]
+
+                            };
+
+                            // For Mathematics Comparision 
+                            // graph-maths_compare
+                            var ctx_maths = document.getElementById("canvas_maths").getContext("2d");
+                                window.myBar = new Chart(ctx_maths, {
+                                    type: 'bar',
+                                    data: barChartData_maths,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Mathematics Marks Comparision'
+                                        }
+                                    }
+                                });
+
+                            <{{!}}/script>
+                            <hr/>
+                        </div>
+                        {{/maths_ques}} 
+
+                        {{#bio_ques}}
+                        <div class='col-md-6' style='margin-top:5px;'>
+
+                            <!-- Chart-bio-compare -->
+                            <!-- Students comparision in Bio Chart-bio_compare -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas_bio" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData_bio = {
+                                labels: ["Biology Marks Comparision with Highest & Average"],
+                                datasets: [{
+                                    label: 'SELF',
+                                    backgroundColor: color(window.chartColors.green).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.green,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ bobt }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Highest',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{#max_spr}} {{ bobt }} {{/max_spr}}
+                                        
+                                    ]
+                                },{
+                                    label: 'Average',
+                                    backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.yellow,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{#avg_spr}} {{ bobt }} {{/avg_spr}}
+                                        
+                                    ]
+                                }]
+
+                            };
+
+                            // For Biology Comparision 
+                            // graph-bio_compare
+                            var ctx_bio = document.getElementById("canvas_bio").getContext("2d");
+                                window.myBar = new Chart(ctx_bio, {
+                                    type: 'bar',
+                                    data: barChartData_bio,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Biology Marks Comparision'
+                                        }
+                                    }
+                                });
+                            <{{!}}/script>
+                            <hr/>
+                        </div>
+                        {{/bio_ques}}   
+
+                        <div class='col-md-6' style='margin-top:5px;'>
+                            
+                            <!-- Chart-total_compare -->
+                            <!-- Students Analysis Total Marks Compare Chart-total_compare -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas_total" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData_total = {
+                                labels: ["Total Marks Comparision with Highest & Average"],
+                                datasets: [{
+                                    label: 'SELF',
+                                    backgroundColor: color(window.chartColors.green).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.green,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ marksobt }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Highest',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{#max_spr}} {{ marksobt }} {{/max_spr}}
+                                        
+                                    ]
+                                },{
+                                    label: 'Average',
+                                    backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.yellow,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{#avg_spr}} {{ marksobt }} {{/avg_spr}}
+                                        
+                                    ]
+                                }]
+
+                            };
+
+                            // For Total Comparision 
+                            // graph-total_compare
+                            var ctx_total = document.getElementById("canvas_total").getContext("2d");
+                                window.myBar = new Chart(ctx_total, {
+                                    type: 'bar',
+                                    data: barChartData_total,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Total Marks Comparision'
+                                        }
+                                    }
+                                });
+                            <{{!}}/script>
+                            <hr/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-12' style='background-color: #3f51b5 ;font-weight: bold;color:white;'>
+                            <p style='font-size:20px;font-weight: bold;color:white; text-align:center;'>Students Analysis in Attempting Paper</p>
+                        </div>
+                        <div class='col-md-5' style='margin-top:5px;'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' valign="middle">
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Students Performance in Paper</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Total No. Of Questions</th>
+                                    <td>{{ numques  }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Correct</th>
+                                    <td> {{ total_corr }}  </td>
+                                </tr>
+                                <tr>
+                                    <th>Wrong</th>
+                                    <td>{{ total_wrong }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Unattempted</th>
+                                    <td>{{ total_unattempt }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-1 -->
+                            <!-- Students Analysis in Attempting Papers Chart-1 -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas1" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData1 = {
+                                labels: ["Student's Performance in Paper"],
+                                datasets: [{
+                                    label: 'Total Questions',
+                                    backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.grey,
+                                    borderWidth: 3,
+                                    data: [
+                                        
+                                        {{ numques  }}
+
+                                    ]
+                                }, {
+                                    label: 'Correct',
+                                    backgroundColor: color(window.chartColors.blue).alpha(5.5).rgbString(),
+                                    borderColor: window.chartColors.blue,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ total_corr }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Wrong',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ total_wrong }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Unattempted',
+                                    backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.yellow,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ total_unattempt }}
+                                        
+                                    ]
+                                }]
+                            };
+
+                            // For Performance in Paper 
+                            // graph-1
+                            var ctx1 = document.getElementById("canvas1").getContext("2d");
+                                window.myBar = new Chart(ctx1, {
+                                    type: 'bar',
+                                    data: barChartData1,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Performance in Paper'
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }],
+                                            xAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }]
+                                        }
+                                    }
+                                });
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Students Performance Analysis in Percentage</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Correct</th>
+                                    <td>{{ total_corr_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Wrong</th>
+                                    <td>{{ total_wrong_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Unattempted</th>
+                                    <td>{{ total_unattempt_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Accuracy In Solving</th>
+                                    <td>{{ total_corr_accuracy }}%</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-2 -->
+                            <!-- Students Analysis in Percentage Chart-2 -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas2" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData2 = {
+                                labels: ["Student's Performance in Paper"],
+                                datasets: [{
+                                    label: 'Correct %',
+                                    backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.grey,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ total_corr_percent }}
+                                        
+                                    ]
+                                }, {
+                                    label: 'Wrong %',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ total_wrong_percent }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Unattempted %',
+                                    backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.yellow,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ total_unattempt_percent }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Accuracy In Solving',
+                                    backgroundColor: color(window.chartColors.blue).alpha(2.5).rgbString(),
+                                    borderColor: window.chartColors.blue,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ total_corr_accuracy }}
+                                        
+                                    ]
+                                }]
+
+                            };
+
+                            // For Performance Analysis in Percentage 
+                            // graph-2
+                            var ctx2 = document.getElementById("canvas2").getContext("2d");
+                                window.myBar = new Chart(ctx2, {
+                                    type: 'bar',
+                                    data: barChartData2,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Performance Analysis in Percentage'
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }],
+                                            xAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }]
+                                        }
+                                    }
+                                });
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Students Marks Analysis</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Total Marks</th>
+                                    <td>{{ total_marks }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Positive Marks</th>
+                                    <td>{{ total_marks_correct }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Negative Marks</th>
+                                    <td>{{ total_marks_wrong }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Marks Obtained</th>
+                                    <td>{{ total_marks_obtained }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-3 -->
+                            <!-- Marks Analysis Chart-3 -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas3" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData3 = {
+                                labels: ["Student's Performance in Paper"],
+                                datasets: [{
+                                    label: 'Total Marks',
+                                    backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.grey,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ total_marks }}
+                                        
+                                    ]
+                                }, {
+                                    label: 'Positive Marks',
+                                    backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.blue,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ total_marks_correct }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Negative Marks',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ total_marks_wrong }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Marks Obtained',
+                                    backgroundColor: color(window.chartColors.orange).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.orange,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ total_marks_obtained }}
+                                        
+                                    ]
+                                }]
+                            };
+
+                            // For Marks Analysis    
+                            // graph-3
+                            var ctx3 = document.getElementById("canvas3").getContext("2d");
+                                window.myBar = new Chart(ctx3, {
+                                    type: 'bar',
+                                    data: barChartData3,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Marks Analysis'
+                                        }
+                                    }
+                                });
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                {{#phy_ques}}
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-12' style='background-color: #3f51b5 ;font-weight: bold;color:white;'>
+                            <p style='font-size:20px;font-weight: bold;color:white; text-align:center;'>Physics Analysis</p>
+                        </div>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Students Performance in Physics</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Total No. Of Questions</th>
+                                    <td>{{ phy_ques }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Correct</th>
+                                    <td>{{ pcorr }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Wrong</th>
+                                    <td>{{ pwrong }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Unattempted</th>
+                                    <td>{{ phy_unattempt }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-4 -->
+                            <!-- Physics Analysis Chart-4 -->
+                            <!-- Students Performance in Physics -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas4" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData4 = {
+                                labels: ["Student's Performance in Physics"],
+                                datasets: [{
+                                    label: 'Total Questions',
+                                    backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.grey,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ phy_ques }}
+                                        
+                                    ]
+                                }, {
+                                    label: 'Correct',
+                                    backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.blue ,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ pcorr }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Wrong',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ pwrong }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Unattempted',
+                                    backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.yellow,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ phy_unattempt }}
+                                        
+                                    ]
+                                }]
+                            };
+                            // For Students Performance in Physics  
+                            // graph-4
+                            var ctx4 = document.getElementById("canvas4").getContext("2d");
+                                window.myBar = new Chart(ctx4, {
+                                    type: 'bar',
+                                    data: barChartData4,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Students Performance in Physics'
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }],
+                                            xAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }]
+                                        }
+                                    }
+                                });
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Physics Analysis in Percentage</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Correct</th>
+                                    <td>{{ phy_corr_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Wrong</th>
+                                    <td>{{ phy_wrong_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Unattempted</th>
+                                    <td>{{ phy_unattempt_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Accuracy In Solving</th>
+                                    <td>{{ phy_corr_accuracy }}%</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-5 -->
+                            <!-- Physics Analysis Chart-5 -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas5" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData5 = {
+                                    labels: ["Physics Analysis"],
+                                    datasets: [{
+                                        label: 'Correct %',
+                                        backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.grey,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ phy_corr_percent }}
+                                            
+                                        ]
+                                    }, {
+                                        label: 'Wrong %',
+                                        backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.red,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ phy_wrong_percent }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Unattempted %',
+                                        backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.yellow,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ phy_unattempt_percent }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Accuracy In Solving',
+                                        backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.blue,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ phy_corr_accuracy }}
+                                            
+                                        ]
+                                    }]
+
+                                };
+
+                                // For Physics Analysis 
+                                // graph-5
+                                var ctx5 = document.getElementById("canvas5").getContext("2d");
+                                    window.myBar = new Chart(ctx5, {
+                                        type: 'bar',
+                                        data: barChartData5,
+                                        options: {
+                                            responsive: true,
+                                            legend: {
+                                                position: 'top',
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Physics Analysis'
+                                            },
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        //beginAtZero:true
+                                                        min:0
+                                                    }
+                                                }],
+                                                xAxes: [{
+                                                    ticks: {
+                                                        //beginAtZero:true
+                                                        min:0
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                });
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Marks Analysis - Physics</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Total Marks</th>
+                                    <td>{{ phy_total_marks }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Positive Marks</th>
+                                    <td>{{ phy_marks_correct }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Negative Marks</th>
+                                    <td>{{ phy_marks_wrong }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Marks Obtained</th>
+                                    <td>{{ pobt }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-6 -->
+                            <!-- Marks Analysis -Physics Chart-6 -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas6" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData6 = {
+                                    labels: ["Marks Analysis - Physics"],
+                                    datasets: [{
+                                        label: 'Total Marks',
+                                        backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.grey,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ phy_total_marks }}
+                                            
+                                        ]
+                                    }, {
+                                        label: 'Positive Marks',
+                                        backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.blue,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ phy_marks_correct }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Negative Marks',
+                                        backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.red,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ phy_marks_wrong }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Marks Obtained',
+                                        backgroundColor: color(window.chartColors.orange).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.orange,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ pobt }}
+                                            
+                                        ]
+                                    }]
+                                };
+
+                                // For Marks Analysis -Physics  
+                                // graph-6
+                                var ctx6 = document.getElementById("canvas6").getContext("2d");
+                                    window.myBar = new Chart(ctx6, {
+                                        type: 'bar',
+                                        data: barChartData6,
+                                        options: {
+                                            responsive: true,
+                                            legend: {
+                                                position: 'top',
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Marks Analysis - Physics'
+                                            }
+                                        }
+                                });    
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                {{/phy_ques}}
+
+                {{#chem_ques}}
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-12' style='background-color: #3f51b5 ;font-weight: bold;color:white;'>
+                            <p style='font-size:20px;font-weight: bold;color:white; text-align:center;'>Chemistry Analysis</p>
+                        </div>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Students Performance in Chemistry</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Total No. Of Questions</th>
+                                    <td>{{ chem_ques }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Correct</th>
+                                    <td>{{ ccorr }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Wrong</th>
+                                    <td>{{ cwrong }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Unattempted</th>
+                                    <td>{{ chem_unattempt }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-7 -->
+                            <!-- Chemistry Analysis Chart-4 -->
+                            <!-- Students Performance in Chemistry -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas7" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData7 = {
+                                    labels: ["Student's Performance in Chemistry"],
+                                    datasets: [{
+                                        label: 'Total Questions',
+                                        backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.grey,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ chem_ques }}
+                                            
+                                        ]
+                                    }, {
+                                        label: 'Correct',
+                                        backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.blue,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ ccorr }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Wrong',
+                                        backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.red,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ cwrong }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Unattempted',
+                                        backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.yellow,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ chem_unattempt }}
+                                            
+                                        ]
+                                    }]
+                                };
+
+                            // For Students Performance in Chemistry  
+                            // graph-7
+                            var ctx7 = document.getElementById("canvas7").getContext("2d");
+                                window.myBar = new Chart(ctx7, {
+                                    type: 'bar',
+                                    data: barChartData7,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Students Performance in Chemistry'
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }],
+                                            xAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }]
+                                        }
+                                    }
+                                });     
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Chemistry Analysis in Percentage</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Correct</th>
+                                    <td>{{ chem_corr_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Wrong</th>
+                                    <td>{{ chem_wrong_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Unattempted</th>
+                                    <td>{{ chem_unattempt_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Accuracy In Solving</th>
+                                    <td>{{ chem_corr_accuracy }}%</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-8 -->
+                            <!-- Chemistry Analysis Chart-8 -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas8" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData8 = {
+                                labels: ["Chemistry Analysis"],
+                                datasets: [{
+                                    label: 'Correct %',
+                                    backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.grey,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ chem_corr_percent }}
+                                        
+                                    ]
+                                }, {
+                                    label: 'Wrong %',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ chem_wrong_percent }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Unattempted %',
+                                    backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.yellow,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ chem_unattempt_percent }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Accuracy In Solving',
+                                    backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.blue,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ chem_corr_accuracy }}
+                                        
+                                    ]
+                                }]
+                            };
+
+                            // For Chemistry Analysis 
+                            // graph-8
+                            var ctx8 = document.getElementById("canvas8").getContext("2d");
+                                window.myBar = new Chart(ctx8, {
+                                    type: 'bar',
+                                    data: barChartData8,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Chemistry Analysis'
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }],
+                                            xAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }]
+                                        }
+                                    }
+                                });
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Marks Analysis - Chemistry</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Total Marks</th>
+                                    <td>{{ chem_total_marks }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Positive Marks</th>
+                                    <td>{{ chem_marks_correct }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Negative Marks</th>
+                                    <td>{{ chem_marks_wrong }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Marks Obtained</th>
+                                    <td>{{ cobt }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-9 -->
+                            <!-- Marks Analysis - Chemistry Chart-9 -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas9" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData9 = {
+                                labels: ["Marks Analysis - Chemistry"],
+                                datasets: [{
+                                    label: 'Total Marks',
+                                    backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.grey,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ chem_total_marks }}
+                                        
+                                    ]
+                                }, {
+                                    label: 'Positive Marks',
+                                    backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.blue,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ chem_marks_correct }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Negative Marks',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ chem_marks_wrong }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Marks Obtained',
+                                    backgroundColor: color(window.chartColors.orange).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.orange,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ cobt }}
+                                        
+                                    ]
+                                }]
+                            };
+
+                            // For Marks Analysis -Chemistry  
+                            // graph-9
+                            var ctx9 = document.getElementById("canvas9").getContext("2d");
+                                window.myBar = new Chart(ctx9, {
+                                    type: 'bar',
+                                    data: barChartData9,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Marks Analysis - Chemistry'
+                                        }
+                                    }
+                                });
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                {{/chem_ques}}
+                
+                {{#maths_ques}}
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-12' style='background-color: #3f51b5 ;font-weight: bold;color:white;'>
+                            <p style='font-size:20px;font-weight: bold;color:white; text-align:center;'>Mathematics Analysis</p>
+                        </div>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Students Performance in Mathematics</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Total No. Of Questions</th>
+                                    <td>{{ maths_ques }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Correct</th>
+                                    <td>{{ mcorr }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Wrong</th>
+                                    <td>{{ mwrong }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Unattempted</th>
+                                    <td>{{ maths_unattempt }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-10 -->
+                            <!-- Mathematics Analysis Chart-10 -->
+                            <!-- Students Performance in Mathematics -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas10" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData10 = {
+                                labels: ["Student's Performance in Mathematics"],
+                                datasets: [{
+                                    label: 'Total Questions',
+                                    backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.grey,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ maths_ques }}
+                                        
+                                    ]
+                                }, {
+                                    label: 'Correct',
+                                    backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.blue,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ mcorr }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Wrong',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ mwrong }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Unattempted',
+                                    backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.yellow,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ maths_unattempt }}
+                                        
+                                    ]
+                                }]
+                            };
+
+                            // For Students Performance in Chemistry  
+                            // graph-10
+                            var ctx10 = document.getElementById("canvas10").getContext("2d");
+                                window.myBar = new Chart(ctx10, {
+                                    type: 'bar',
+                                    data: barChartData10,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Students Performance in Mathematics'
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }],
+                                            xAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }]
+                                        }
+                                    }
+                                });
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Mathematics Analysis in Percentage</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Correct</th>
+                                    <td>{{ maths_corr_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Wrong</th>
+                                    <td>{{ maths_wrong_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Unattempted</th>
+                                    <td>{{ maths_unattempt_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Accuracy In Solving</th>
+                                    <td>{{ maths_corr_accuracy }}%</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-11 -->
+                            <!-- Mathematics Analysis Chart-11 -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas11" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData11 = {
+                                    labels: ["Mathematics Analysis"],
+                                    datasets: [{
+                                        label: 'Correct %',
+                                        backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.grey,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ maths_corr_percent }}
+                                            
+                                        ]
+                                    }, {
+                                        label: 'Wrong %',
+                                        backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.red,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ maths_wrong_percent }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Unattempted %',
+                                        backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.yellow,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ maths_unattempt_percent }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Accuracy In Solving',
+                                        backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.blue,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ maths_corr_accuracy }}
+                                            
+                                        ]
+                                    }]
+                                };
+
+                                // For Chemistry Analysis 
+                                // graph-11
+                                var ctx11 = document.getElementById("canvas11").getContext("2d");
+                                    window.myBar = new Chart(ctx11, {
+                                        type: 'bar',
+                                        data: barChartData11,
+                                        options: {
+                                            responsive: true,
+                                            legend: {
+                                                position: 'top',
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Mathematics Analysis'
+                                            },
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        //beginAtZero:true
+                                                        min:0
+                                                    }
+                                                }],
+                                                xAxes: [{
+                                                    ticks: {
+                                                        //beginAtZero:true
+                                                        min:0
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                });    
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Marks Analysis - Mathematics</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Total Marks</th>
+                                    <td>{{ maths_total_marks }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Positive Marks</th>
+                                    <td>{{ maths_marks_correct }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Negative Marks</th>
+                                    <td>{{ maths_marks_wrong }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Marks Obtained</th>
+                                    <td>{{ mobt }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-12 -->
+                            <!-- Marks Analysis -Mathematics Chart-12 -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas12" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData12 = {
+                                    labels: ["Marks Analysis - Mathematics"],
+                                    datasets: [{
+                                        label: 'Total Marks',
+                                        backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.grey,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ maths_total_marks }}
+                                            
+                                        ]
+                                    }, {
+                                        label: 'Positive Marks',
+                                        backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.blue,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ maths_marks_correct }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Negative Marks',
+                                        backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.red,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ maths_marks_wrong }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Marks Obtained',
+                                        backgroundColor: color(window.chartColors.orange).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.orange,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ mobt }}
+                                            
+                                        ]
+                                    }]
+                                };
+
+                                // For Marks Analysis -Mathematics  
+                                // graph-12
+                                var ctx12 = document.getElementById("canvas12").getContext("2d");
+                                    window.myBar = new Chart(ctx12, {
+                                        type: 'bar',
+                                        data: barChartData12,
+                                        options: {
+                                            responsive: true,
+                                            legend: {
+                                                position: 'top',
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Marks Analysis - Mathematics'
+                                            }
+                                        }
+                                });
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                {{/maths_ques}}
+                {{#bio_ques}}
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-12' style='background-color: #3f51b5 ;font-weight: bold;color:white;'>
+                            <p style='font-size:20px;font-weight: bold;color:white; text-align:center;'>Biology Analysis</p>
+                        </div>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Students Performance in Biology</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Total No. Of Questions</th>
+                                    <td>{{ bio_ques }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Correct</th>
+                                    <td>{{ bcorr }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Wrong</th>
+                                    <td>{{ bwrong }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Unattempted</th>
+                                    <td>{{ bio_unattempt }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-13 -->
+                            <!-- Biology Analysis Chart-13 -->
+                            <!-- Students Performance in Biology -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas13" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData13 = {
+                                labels: ["Student's Performance in Biology"],
+                                datasets: [{
+                                    label: 'Total Questions',
+                                    backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.grey,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ bio_ques }}
+                                        
+                                    ]
+                                }, {
+                                    label: 'Correct',
+                                    backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.blue,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ bcorr }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Wrong',
+                                    backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.red,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ bwrong }}
+                                        
+                                    ]
+                                },{
+                                    label: 'Unattempted',
+                                    backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                    borderColor: window.chartColors.yellow,
+                                    borderWidth: 3,
+                                    data: [
+                                        {{ bio_unattempt }}
+                                        
+                                    ]
+                                }]
+                            };
+
+                            // For Students Performance in Biology  
+                            // graph-13
+                            var ctx13 = document.getElementById("canvas13").getContext("2d");
+                                window.myBar = new Chart(ctx13, {
+                                    type: 'bar',
+                                    data: barChartData13,
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Students Performance in Biology'
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }],
+                                            xAxes: [{
+                                                ticks: {
+                                                    //beginAtZero:true
+                                                    min:0
+                                                }
+                                            }]
+                                        }
+                                    }
+                                });
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Biology Analysis in Percentage</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Correct</th>
+                                    <td>{{ bio_corr_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Wrong</th>
+                                    <td>{{ bio_wrong_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Unattempted</th>
+                                    <td>{{ bio_unattempt_percent }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Accuracy In Solving</th>
+                                    <td>{{ bio_corr_accuracy }}%</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-14 -->
+                            <!-- Mathematics Analysis Chart-14 -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas14" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData14 = {
+                                    labels: ["Biology Analysis"],
+                                    datasets: [{
+                                        label: 'Correct %',
+                                        backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.grey,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ bio_corr_percent }}
+                                            
+                                        ]
+                                    }, {
+                                        label: 'Wrong %',
+                                        backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.red,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ bio_wrong_percent }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Unattempted %',
+                                        backgroundColor: color(window.chartColors.yellow).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.yellow,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ bio_unattempt_percent }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Accuracy In Solving',
+                                        backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.blue,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ bio_corr_accuracy }}
+                                            
+                                        ]
+                                    }]
+                                };
+
+                                // For Biology Analysis 
+                                // graph-14
+                                var ctx14 = document.getElementById("canvas14").getContext("2d");
+                                    window.myBar = new Chart(ctx14, {
+                                        type: 'bar',
+                                        data: barChartData14,
+                                        options: {
+                                            responsive: true,
+                                            legend: {
+                                                position: 'top',
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Biology Analysis'
+                                            },
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        //beginAtZero:true
+                                                        min:0
+                                                    }
+                                                }],
+                                                xAxes: [{
+                                                    ticks: {
+                                                        //beginAtZero:true
+                                                        min:0
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                });    
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='col-md-5' style='margin-top:5px'>
+                            <table class='table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style='empty-cells: hide;' >
+                                <tr class='headerStyle' style='font-weight: bold;color:white;' >
+                                    <td colspan="2" ><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Marks Analysis - Biology</center></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Total Marks</th>
+                                    <td>{{ bio_total_marks }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Positive Marks</th>
+                                    <td>{{ bio_marks_correct }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Negative Marks</th>
+                                    <td>{{ bio_marks_wrong }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Marks Obtained</th>
+                                    <td>{{ bobt }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class='col-md-6'>                    
+
+                            <!-- Chart-15 -->
+                            <!-- Marks Analysis -Biology Chart-15 -->
+                            <div id="container" class="chart_div" align="center">
+                                <canvas id="canvas15" ></canvas>
+                            </div>
+                            <script>
+                                var color = Chart.helpers.color;
+                                var barChartData15 = {
+                                    labels: ["Marks Analysis - Biology"],
+                                    datasets: [{
+                                        label: 'Total Marks',
+                                        backgroundColor: color(window.chartColors.grey).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.grey,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ bio_total_marks }}
+                                            
+                                        ]
+                                    }, {
+                                        label: 'Positive Marks',
+                                        backgroundColor: color(window.chartColors.blue).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.blue,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ bio_marks_correct }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Negative Marks',
+                                        backgroundColor: color(window.chartColors.red).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.red,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ bio_marks_wrong }}
+                                            
+                                        ]
+                                    },{
+                                        label: 'Marks Obtained',
+                                        backgroundColor: color(window.chartColors.orange).alpha(1.5).rgbString(),
+                                        borderColor: window.chartColors.orange,
+                                        borderWidth: 3,
+                                        data: [
+                                            {{ bobt }}
+                                            
+                                        ]
+                                    }]
+                                };
+
+                                // For Marks Analysis -Biology  
+                                // graph-15
+                                var ctx15 = document.getElementById("canvas15").getContext("2d");
+                                    window.myBar = new Chart(ctx15, {
+                                        type: 'bar',
+                                        data: barChartData15,
+                                        options: {
+                                            responsive: true,
+                                            legend: {
+                                                position: 'top',
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Marks Analysis - Biology'
+                                            }
+                                        }
+                                });
+                            <{{!}}/script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                {{/bio_ques}}
+            </div>
+        {{/spr}}    
+{{/papers}}
+
+</script>
+<script src="template.js"></script>
+
+</body>
+</html>

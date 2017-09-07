@@ -1,0 +1,56 @@
+
+.img-responsive {
+    display:block;
+    max-width:100%;
+    height:auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+.headerStyle 
+{
+  color: #ffffff;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 500;
+  background-color: #07889b;
+  vertical-align: middle;
+}
+
+.mail_tr_Style 
+{
+  font-size: 10px;
+  text-align: center;
+  font-weight: 300;
+  background-color: #fff;
+}
+
+.myTable tr:hover:not(.headerStyle):hover 
+{
+  background-color: #bedcfc;
+}
+
+table.empty {
+  border-collapse: separate;
+  empty-cells: hide;
+}
+td.empty {
+  border-style: solid;
+  border-width: 1px;
+  border-color: blue;
+}
+.table th,td{
+    vertical-align: center;
+    padding:10px;
+    text-align:center;  
+}
+
+
+.table tr{
+    height:50px;
+    vertical-align: middle;
+
+}
+
+.chart_div{
+    width:120%; height:100%;
+} 

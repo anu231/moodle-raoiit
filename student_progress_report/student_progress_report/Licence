@@ -1,0 +1,23 @@
+/**************   manual_data.php   ***************/
+
+Line No-14 	replace paperid to sent the email to perticular student for perticular paperid $pid_email=768;
+Comment lines from Line No-2 to Line No-5
+
+
+/**************   util_progress_report.php   ***************/
+
+Line No-200	Change anchor path <a href="http://192.168.1.18"> to server path
+Line No-301	Change <img src="http://192.168.1.18"> path to server path
+Line No-321	Remove single line comment //
+Line No-322	put single line comment // to this line
+Line No-322	Remove multi line comment /*
+Line No-338	Remove multi line comment */
+
+Remove comment from line No-366 & put it to Line No-367   to send email to all the mails from user_info
+
+
+/**************   spr_getdata.php   ***************/
+
+If required change number of questions for respective subject from following fuction
+
+function get_subjectwise_ques($paper_data)

@@ -471,6 +471,6 @@ function gradereport_overview_myprofile_navigation(core_user\output\myprofile\tr
         $url = new moodle_url('/grade/report/overview/index.php', array('userid' => $user->id));
         $node = new core_user\output\myprofile\node('reports', 'grades', get_string('gradesoverview', 'gradereport_overview'),
                 null, $url);
-        $tree->add_node($node);
+        //$tree->add_node($node);
     }
 }

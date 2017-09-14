@@ -180,9 +180,10 @@ function get_student_token($userid){
 
 function get_student_full_report($userid){
     global $CFG;
+    $url = $CFG->django_server.'student/spr?auth='.$CFG->django_auth.'&username='.$userid;
     $ch = curl_init();
     curl_setopt_array($ch, array(
-        CURLOPT_URL => $CFG->django_server.'student/spr?auth_id='.$CFG->django_auth_id.'&username'.$userid,
+        CURLOPT_URL => $url,
         CURLOPT_RETURNTRANSFER => 1,
     ));
     $resp = curl_exec($ch);

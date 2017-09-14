@@ -188,7 +188,7 @@ function get_student_full_report($userid){
     ));
     $resp = curl_exec($ch);
     if ($resp){
-        return $resp;
+        return json_decode($resp);
     } else{
         $msg = new stdClass();
         $msg->error = curl_error($ch);

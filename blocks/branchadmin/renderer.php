@@ -178,6 +178,6 @@ class view_student_performance implements renderable, templatable{
     public function export_for_template(renderer_base $output) {                                                                    
         //get all the students with the same center
         $data = $this->get_student_performance();
-        return $data;                                                                                                               
+        return array('spr'=>$data);                                                                                                               
     }
 }

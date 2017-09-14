@@ -27,8 +27,13 @@ class block_branchadmin_renderer extends plugin_renderer_base {
         //$data = $page->export_for_template($this);
         $data = $page->export_for_template($this);
         //$data['user_list'] = $page->export_for_template($this);
-        return $this->render_from_template('block_branchadmin/student', $data);                                                         
+        return $this->render_from_template('block_branchadmin/student', $data);
     }  
+
+    public function render_view_student_performance($page){
+        $data = $page->export_for_template($this);
+        return $this->render_from_template('block_branchadmin/student_performance', $data);
+    }
 }
 
 
@@ -94,7 +99,7 @@ class view_student implements renderable, templatable{
     gets users who belong to the same center as the current user
     */
     private function get_student_info(){
-        global $DB;
+        global $DB, $CFG;
         if ($this->username==null){
             return null;
         }
@@ -108,6 +113,8 @@ class view_student implements renderable, templatable{
         if ($user_center==$req_user_center){
             profile_load_data($user);
             //profile_display_fields($user->id);
+            $user->profile_field_batch = get_batch_name($user->profile_field_batch);
+            $user->profile_field_center = get_center_name($user->profile_field_center);
             return $user;
         } else {
             $msg = new stdClass();
@@ -124,6 +131,52 @@ class view_student implements renderable, templatable{
     public function export_for_template(renderer_base $output) {                                                                    
         //get all the students with the same center
         $data = $this->get_student_info();
+        return $data;                                                                                                               
+    }
+}
+
+
+class view_student_performance implements renderable, templatable{
+
+    var $userid = null;
+
+    public function __construct($id) {                                                                                        
+        $this->username = $id;                                                                                                
+    }
+    
+        /*
+    gets users who belong to the same center as the current user
+    */
+    private function get_student_performance(){
+        global $DB, $CFG;
+        if ($this->username==null){
+            return null;
+        }
+        //check whether the logged in user and requested user belong to the same centre
+        $user_center = get_user_center();
+        $user = $DB->get_record('user',array('username'=>$this->username));
+        if (!$user){
+            return null;
+        }
+        $req_user_center = get_user_center($user->id);
+        if ($user_center==$req_user_center){
+            $spr = get_student_full_report($user->username);
+            return $user;
+        } else {
+            $msg = new stdClass();
+            $msg->error_message = 'Requested Student does not belong to the centre assigned to you';
+            return $msg;
+        }
+    }
+
+    /**                                                                                                                             
+     * Export this data so it can be used as the context for a mustache template.                                                   
+     *                                                                                                                              
+     * @return stdClass                                                                                                             
+     */                                                                                                                             
+    public function export_for_template(renderer_base $output) {                                                                    
+        //get all the students with the same center
+        $data = $this->get_student_performance();
         return $data;                                                                                                               
     }
 }

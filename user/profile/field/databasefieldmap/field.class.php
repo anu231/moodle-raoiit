@@ -47,7 +47,7 @@ class profile_field_databasefieldmap extends profile_field_base {
      * @param int $userid
      */
 
-    function edit_field_add(&$mform) {
+    function edit_field_add($mform) {
       // Create form field
       global $DB;
       $param1 = $this->field->param1;
@@ -70,7 +70,7 @@ class profile_field_databasefieldmap extends profile_field_base {
 
 
 
-    function edit_field_set_default(&$mform) {
+    function edit_field_set_default($mform) {
       if (!empty($param1)) {
         $mform->setDefault($this->inputname, $this->field->defaultdata);
       }
@@ -86,14 +86,14 @@ class profile_field_databasefieldmap extends profile_field_base {
       }
       return $errors;
     }
-    function edit_save_data_preprocess($data, &$datarecord) {
+    function edit_save_data_preprocess($data, $datarecord) {
       if (is_array($data)) {
           $datarecord->dataformat = $data['format'];
           $data = $data['text'];
       }
       return $data;
     }
-    function edit_field_set_locked(&$mform) {
+    function edit_field_set_locked($mform) {
       if (!$mform->elementExists($this->inputname)) {
           return;
       }

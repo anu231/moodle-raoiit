@@ -6,7 +6,7 @@ require_once(__DIR__.'/../../config.php');
 /*
 gets users who belong to the same center as the current user
 */
-function get_user_center($userid){
+function get_user_center($userid=null){
     $user_id = null;
     if ($userid==null){
         global $USER;
@@ -14,6 +14,7 @@ function get_user_center($userid){
     } else{
         $user_id = $userid;
     }
+    $user = new stdClass();
     $user->id = $user_id;
     profile_load_data($user);
     return $user->profile_field_center;
@@ -27,6 +28,18 @@ function get_center_obj($centre_name){
     } else {
         return false;
     }
+}
+
+function get_batch_name($batchid){
+    global $DB;
+    $batchname = $DB->get_record('branchadmin_ttbatches',array('id'=>$batchid));
+    return $batchname->name;
+}
+
+function get_center_name($cid){
+    global $DB;
+    $cname = $DB->get_record('branchadmin_centre_info',array('id'=>$cid));
+    return $cname->name;
 }
 
 function get_batches_for_user($center){
@@ -141,3 +154,45 @@ function sendSMS(&$s_mobile, &$s_text){
         if(!$row){return False;}
         else {return $row;}
     }
+
+
+/***************************************STUDENT PERFORMANCE RELATED FUNCTIONS****************/
+function get_student_token($userid){
+    global $CFG;
+    $ch = curl_init();
+    curl_setopt_array($ch, array(
+        CURLOPT_URL => $CFG->django_server.'api-auth-token',
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_POST => 1,
+        CURLOPT_POSTFIELDS => array(
+            'username' => $userid,
+            'auth_id' => $CFG->django_auth_id
+        )
+    ));
+    $resp = curl_exec($ch);
+    curl_close($curl);
+    if ($resp){
+        return $resp;
+    } else{
+        return curl_error($ch);
+    }
+}
+
+function get_student_full_report($userid){
+    global $CFG;
+    $ch = curl_init();
+    curl_setopt_array($ch, array(
+        CURLOPT_URL => $CFG->django_server.'student/spr?auth_id='.$CFG->django_auth_id.'&username'.$userid,
+        CURLOPT_RETURNTRANSFER => 1,
+    ));
+    $resp = curl_exec($ch);
+    if ($resp){
+        return $resp;
+    } else{
+        $msg = new stdClass();
+        $msg->error = curl_error($ch);
+        return $msg;
+    }
+
+}
+/********************************************************************************************/

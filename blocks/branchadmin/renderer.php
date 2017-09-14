@@ -115,6 +115,7 @@ class view_student implements renderable, templatable{
             //profile_display_fields($user->id);
             $user->profile_field_batch = get_batch_name($user->profile_field_batch);
             $user->profile_field_center = get_center_name($user->profile_field_center);
+            $user->performance_link = $CFG->wwwroot.'/blocks/branchadmin/student_performance.php?userid={{username}}';
             return $user;
         } else {
             $msg = new stdClass();

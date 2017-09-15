@@ -1,6 +1,76 @@
 <div>
-    STUDENT PERFORMANCE
-    {{#spr}}
-        
-    {{/spr}}
+   <table class="view_student_list_table_td_th view_student_list_table" width="100%">
+      <tbody>
+         <h6>{{paper}}</h6>
+         <tr rowspan="2">
+            <th class="view_student_list_th view_student_list_table_td_th view_bg" rowspan="2">Test</th>
+            <th class="view_student_list_th view_student_list_table_td_th view_bg" rowspan="2">Total</th>
+            <th class="view_student_list_th view_student_list_table_td_th view_bg" colspan="3">Physics        </th>
+            <th class="view_student_list_th view_student_list_table_td_th view_bg" colspan="3">Chem</th>
+            <th class="view_student_list_th view_student_list_table_td_th view_bg" colspan="3">Maths</th>
+            <th class="view_student_list_th view_student_list_table_td_th view_bg" colspan="3">Bio</th>
+            <th class="view_student_list_th view_student_list_table_td_th view_bg" rowspan="2">Rank</th>
+            <th class="view_student_list_th view_student_list_table_td_th view_bg" rowspan="2">Prank</th>
+            <th class="view_student_list_th view_student_list_table_td_th view_bg" rowspan="2">Crank</th>
+            <th class="view_student_list_th view_student_list_table_td_th view_bg" rowspan="2">Mrank</th>
+            <th class="view_student_list_th view_student_list_table_td_th view_bg" rowspan="2">Brank</th>
+         </tr>
+         <tr>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg small"  align="center">Total</td>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg" align="center">&#10004;</td>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg" align="center">&#10006;</td>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg small"  align="center">Total</td>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg" align="center">&#10004;</td>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg" align="center">&#10006;</td>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg small"  align="center">Total</td>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg" align="center">&#10004;</td>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg" align="center">&#10006;</td>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg small"  align="center">Total</td>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg" align="center">&#10004;</td>
+            <td class="view_student_list_th view_student_list_table_td_th view_bg" align="center">&#10006;</td>
+         <tr>
+       
+            {{#spr}}
+            <th class="view_student_list_th view_student_list_table_td_th new_border pad" width="250">
+            {{paper}}</th>
+            <th class="new_border" >{{marksobt}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th green new_border">{{pobt}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th pink new_border">{{pcorr}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th brown new_border">{{pwrong}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th green new_border">{{cobt}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th pink new_border">{{ccorr}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th brown new_border">{{cwrong}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th green new_border">{{mobt}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th pink new_border">{{mcorr}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th brown new_border">{{mwrong}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th green new_border">{{bobt}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th pink new_border">{{bcorr}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th brown new_border">{{bwrong}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th new_border">{{rank}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th new_border">{{prank}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th new_border">{{crank}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th new_border">{{mrank}}</th>
+            <th class="view_student_list_th view_student_list_table_td_th new_border">{{brank}}</th>
+         </tr>
+         {{/spr}}
+      </tbody>
+   </table>
+   <br />
 </div>
+<style>
+   .view_student_list_table_td_th {
+   border: 1px solid #314c9a; 
+   }
+   .view_student_list_table {
+   border-collapse: collapse;
+   width: 100%;
+   }
+   .view_bg{ background:#21409a; color:#fff;}
+   h6{color:#21409a;}
+   .green{ background:#91e367; color:#155300;}
+   .pink{ background:#f4c7f0; color:#99357d;}
+   .brown{background:#eecb91; color:#b45825;}
+   .new_border{border: 1px solid #c8b9b0;}
+   .pad{padding:5px;}
+   .small{ font-size:10px;}
+</style>

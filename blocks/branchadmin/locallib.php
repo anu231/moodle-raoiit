@@ -182,6 +182,7 @@ function get_student_full_report($userid){
     curl_setopt_array($ch, array(
         CURLOPT_URL => $url,
         CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_SSL_VERIFYPEER => false
     ));
     $resp = curl_exec($ch);
     if ($resp){

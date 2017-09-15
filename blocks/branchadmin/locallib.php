@@ -42,16 +42,12 @@ function get_center_name($cid){
     return $cname->name;
 }
 
-function get_batches_for_user($center){
+function get_batches_for_user(){
     //gets the names of all batches with the current user
     //initialize curl handle
     //get centre object
-    global $DB;
-    $centre_obj = get_center_obj($center);
-    if (!$centre_obj){
-        return false;
-    }
-    $batches = $DB->get_records_menu('branchadmin_ttbatches',array('centreid'=>$centre_obj->id,'status'=>'1'),null,'id,name');
+    global $DB, $USER;
+    $batches = $DB->get_records_sql('select tt.id, tt.name from (select id, name, centreid from {branchadmin_ttbatches} where status=1) as tt join (select data as d, userid as uid from {user_info_data} where fieldid=57) as ud join {branchadmin_centre_info} as ci on tt.centreid=ci.analysis_id and ci.id=ud.d where ud.uid=?',array($USER->id));
     return $batches;
 }
 
@@ -65,13 +61,14 @@ function get_batch_names($batches){
     return $bids;
 }
 
-function get_userids_by_batch($batches){
-    global $DB;
-    //get all the ids with the specified batches
-    $userids = $DB->get_records_list('user_info_data','data',get_batch_names($batches),null,'userid');
-    $userid_list = array();
-    foreach($userids as $userid){array_push($userid_list, $userid);}
-    return $userid_list;
+function get_students_by_batch($batch){
+    global $DB, $CFG;
+    //get all the users with the specified batches
+    $users = $DB->get_records_sql('select u.id, concat(u.username," - ",u.firstname," ",u.lastname) as name from {user} as u join (select userid, data from {user_info_data} where fieldid=?) as ud on u.id=ud.userid where ud.data=?',array($CFG->batch_field_id,$batch));
+    //$userids = $DB->get_records_list('user_info_data','data',get_batch_names($batches),null,'userid');
+    //$userid_list = array();
+    //foreach($userids as $userid){array_push($userid_list, $userid);}
+    return $users;
 }
 
 function fetch_numbers_for_userids($userid_list){
@@ -195,5 +192,22 @@ function get_student_full_report($userid){
         return $msg;
     }
 
+}
+/********************************************************************************************/
+/*********************************************SMS RELATED FUNCTIONS**************************/
+function bulk_fetch_numbers_for_students($students){
+    global $DB;
+    $userids = array_values($students);
+    list($usql, $params) = $DB->get_in_or_equal($userids);
+    $sql = <<<EOT
+    select uid.data from (select id from {user_info_field} where shortname like '%mobile') as fid
+    join
+    {user_info_data} as uid
+    on fid.id = uid.fieldid
+    where uid.userid $usql
+EOT;
+    //$userids = implode(',',$userid_array);
+    $res = $DB->get_records_sql($sql, $params);
+    return $res;
 }
 /********************************************************************************************/

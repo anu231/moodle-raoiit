@@ -37,6 +37,9 @@ function update_record($fieldid, $userid, $new_data){
     return False;
 }
 
+$branch_info = load_field_records_edumate('branchadmin_centre_info');
+$batch_info = load_field_records_edumate('ttbatches');
+
 foreach($users as $user){
     $data = get_user_center_batch_analysis($user->username, $link);
     $change = False;

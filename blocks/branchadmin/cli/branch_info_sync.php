@@ -5,6 +5,7 @@ Syncs the batches and centers from analysis
 
 //define('CLI_SCRIPT', true);
 require(__DIR__.'/../../../config.php');
+require_once(__DIR__.'/../../timetable/locallib.php');
 //require_once($CFG->libdir.'/clilib.php');
 
 function get_url_data($url){
@@ -41,28 +42,41 @@ function sync_objects($analysis, $mdl, $fieldnames, $table){
         $mdl = $analysis;
         $mdl['analysis_id'] = $analysis['id'];
         $DB->insert_record($table, $mdl);
+        
     }
 }
 
-function sync_centres(){
+function sync_centres($link){
     global $DB;
     //fetch all the centers from analysis
-    $fetch_centre_url = 'http://analysis.raoiit.com/app/edumate/get_centers.php';
-    $centre_list = get_url_data($fetch_centre_url);
+    $sql = 'select * from centreinfo';
+    $res = $link->query($sql);
+    $analysis_centers = [];
+
+    while($row=$res->fetch_assoc()){
+        $analysis_centers[] = $row;
+    }
+    //$fetch_centre_url = 'http://analysis.raoiit.com/app/edumate/get_centers.php';
+    //$centre_list = get_url_data($fetch_centre_url);
     //echo $centre_list;
     //$mdl_centrelist = $DB->get_records('centre_info');
-    $field_names = array('name','nearybycentres','zone','status');
-    foreach ($centre_list as $centre){
+    $field_names = array('name','nearbycentres','zone','status');
+    foreach ($analysis_centers as $centre){
         $mdl_centre = $DB->get_record('branchadmin_centre_info',array('analysis_id'=>$centre['id']));
         sync_objects($centre, $mdl_centre, $field_names, 'branchadmin_centre_info');
     }
 }
 
-function sync_batches(){
+function sync_batches($link){
     global $DB;
     //fetch all the centers from analysis
-    $fetch_batches_url = 'http://analysis.raoiit.com/app/edumate/get_batches.php';
-    $batch_list = get_url_data($fetch_batches_url);
+    $sql = 'select * from ttbatches';
+    $res = $link->query($sql);
+    $batch_list = [];
+
+    while($row=$res->fetch_assoc()){
+        $batch_list[] = $row;
+    }
     $field_names = array('name','centreid','targetyear','batch','visibletoall','iszenith','ismd','status');
     foreach ($batch_list as $batch){
         $mdl_ttbatch = $DB->get_record('branchadmin_ttbatches',array('analysis_id'=>$batch['id']));
@@ -70,5 +84,6 @@ function sync_batches(){
     }
 }
 
-sync_centres();
-sync_batches();
+$link = connect_analysis_db();
+sync_centres($link);
+sync_batches($link);

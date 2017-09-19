@@ -28,7 +28,6 @@ $field_map = array(
 function get_user_data_analysis($username){
     //gets the users data from the analysis server
     global $CFG, $branch_map, $batch_map,$link;
-    //$link = connect_analysis_db();
     $qry = "select * from userinfo where userid=".$username;
     $res = $link->query($qry);
     if (!$res){
@@ -37,17 +36,7 @@ function get_user_data_analysis($username){
     $row= $res->fetch_assoc();
     $row['ttbatchid'] = $batch_map[$row['ttbatchid']];
     $row['centre'] = $branch_map[$row['centre']];
-    //close_analysis_db($link);
     return $row;
-}
-
-function get_moodle_id($username){
-    global $DB;
-    $user_entry = $DB->get_record('user',array('username'=>$username));
-    if (!$user_entry){
-        return false;
-    }
-    return $user_entry->id;
 }
 
 function get_user_course_type($user){
@@ -85,51 +74,26 @@ EOT;
     foreach($res as $row){
         $ret[$row->fieldid] = $row;
     }
-    return $res;
-}
-
-function sync_user_data_analysis($username){
-    $user_data = get_user_data_analysis($username);
-    if (!$user_data){
-        return 'User DNE - '.$username;
-    }
-    $user_profile = new stdClass();
-    $user_profile->id = get_moodle_id($username);
-    if (!$user_profile->id){
-        return 'USER DNE - '.$username;
-    }
-    //cli_write($user->username.'-starting\n');
-    global $batch_map, $branch_map;
-    profile_load_data($user_profile);
-    if ($user_data['ttbatchid']!=0){
-        $user_profile->profile_field_batch = $batch_map[$user_data['ttbatchid']];
-    }
-    if ($user_data['centre']!=0){
-        $user_profile->profile_field_center = $branch_map[$user_data['centre']];
-    }
-    $user_profile->profile_field_fathername = $user_data['fathername'];
-    $user_profile->profile_field_birthdate = $user_data['birthdate'];
-    $user_profile->profile_field_studentmobile = $user_data['mobilenumber'];
-    $user_profile->profile_field_fathermobile = $user_data['mobilefather'];
-    $user_profile->profile_field_mothermobile = $user_data['mobilemother'];
-    $user_profile->profile_field_coursetype = get_user_course_type($user_data);
-    //print_r($user_profile);
-    profile_save_data($user_profile);
-    return $user_data['ttbatchid'].'_'.$user_data['centre'].'_'.$user_profile->profile_field_coursetype;
+    return $ret;
 }
 
 function sync_moodle_field($analysis_field, $moodle_data, $analysis_fdata, $userid){
-    global $DB;
+    global $DB, $field_map;
     $moodle_field = $field_map[$analysis_field];
     if (array_key_exists($moodle_field, $moodle_data)){
         //check for equality
-        if ($moodle_data[$moodle_field]!=$analysis_fdata){
+        if ($moodle_data[$moodle_field]->data != $analysis_fdata){
             //update moodle data
+            //echo $moodle_data[$moodle_field]->data.':'.$analysis_fdata.PHP_EOL;
             $elem = new stdClass();
-            $elem->id = $moodle_data[$moodle_field]['dataid'];
+            $elem->id = $moodle_data[$moodle_field]->dataid;
             $elem->data = $analysis_fdata;
             $DB->update_record('user_info_data',$elem);
-            cli_write($userid.':'.$analysis_field.':updated:'.$analysis_fdata);
+            return 'updated';
+            //echo $userid.':'.$analysis_field.':updated:'.$analysis_fdata;
+            //cli_write($userid.':'.$analysis_field.':updated:'.$analysis_fdata);
+        }else {
+            return 'same';
         }
     }else {
         //need to create a new record
@@ -138,7 +102,9 @@ function sync_moodle_field($analysis_field, $moodle_data, $analysis_fdata, $user
         $elem->data = $analysis_fdata;
         $elem->userid = $userid;
         $DB->insert_record('user_info_data',$elem);
-        cli_write($userid.':'.$analysis_field.':created:'.$analysis_fdata);
+        return 'created';
+        //cli_write($userid.':'.$analysis_field.':created:'.$analysis_fdata);
+        //echo $userid.':'.$analysis_field.':created:'.$analysis_fdata;
     }
 }
 
@@ -152,8 +118,17 @@ function sync_user_data_raw_sql($username, $userid){
     }
     //load user details in moodle
     $moodle_d = get_user_data_moodle($username);
-    foreach($field_map as $fm){
-        sync_moodle_field($fm, $moodle_d, $user_data[$fm], $userid);
+    foreach($field_map as $key=>$value){
+        if ($user_data[$key] == 0){
+            continue;
+        }
+        //cli_write($user_data[$key].PHP_EOL);
+        $ret = sync_moodle_field($key, $moodle_d, $user_data[$key], $userid);
+        if (!constant('CLI_SCRIPT')){
+            echo $userid.':'.$key.':'.$ret.':'.$user_data[$key].'<br>';
+        } else {
+            cli_write($userid.':'.$key.':'.$ret.':'.$user_data[$key].PHP_EOL);
+        }
     }
 }
 
@@ -161,7 +136,7 @@ global $DB;
 //get all the users aith auth == db 
 $user_list = array();
 if (!constant('CLI_SCRIPT')){
-    echo 'CLI_SCRIPT false';
+    echo 'CLI_SCRIPT false'.'<br>';
     if (isset($_GET['username'])) {
         $t = new stdClass();
         $t->username = $_GET['username'];
@@ -176,28 +151,6 @@ if (!constant('CLI_SCRIPT')){
 }
 $link = connect_analysis_db();
 foreach($user_list as $user){
-    //get the info of this user
-    /* 
-    $user_data = get_user_data($user->username);
-    $user_profile = new stdClass();
-    $user_profile->id = $user->id;
-    cli_write($user->username.'-starting\n');
-    profile_load_data($user_profile);
-    $user_profile->profile_field_batch = $user_data['ttbatchid'];
-    $user_profile->profile_field_center = $user_data['centre'];
-    $user_profile->profile_field_fathername = $user_data['fathername'];
-    $user_profile->profile_field_birthdate = $user_data['birthdate'];
-    $user_profile->profile_field_studentmobile = $user_data['mobilenumber'];
-    $user_profile->profile_field_fathermobile = $user_data['mobilefather'];
-    $user_profile->profile_field_mothermobile = $user_data['mobilemother'];
-    profile_save_data($user_profile);*/
-    //$ret = sync_user_data_analysis($user->username);
     sync_user_data_raw_sql($user->username, $user->id);
-    /*if (constant('CLI_SCRIPT')){
-        cli_write($user->username.'-updated\n'.PHP_EOL);
-    } else{
-        echo $user->username.'-updated\n';
-        echo 'Center Updated to - ';
-    }*/
 }
 close_analysis_db($link);

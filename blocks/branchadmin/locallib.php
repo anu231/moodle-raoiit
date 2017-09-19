@@ -97,7 +97,7 @@ function sendSMS(&$s_mobile, &$s_text){
         //this is the message that we want to send
         $param["message"] = stripslashes($s_text);
         //these are the recipients of the message
-        $param["to"] = $s_mobile;
+        $param["to"] = '8879986939';//'9892138542';$s_mobile;
         //this is our sender
         $param["sender"] = "RAOIIT";
 
@@ -151,7 +151,16 @@ function sendSMS(&$s_mobile, &$s_text){
         if(!$row){return False;}
         else {return $row;}
     }
-
+    
+function load_field_records_edumate($table_name){
+    global $DB;
+    $res = $DB->get_records($table_name,array());
+    $data = Array();
+    foreach($res as $r){
+        $data[$r->analysis_id] = $r->id;
+    }
+    return $data;
+}
 
 /***************************************STUDENT PERFORMANCE RELATED FUNCTIONS****************/
 function get_student_token($userid){
@@ -201,7 +210,7 @@ function bulk_fetch_numbers_for_students($students){
     $userids = array_values($students);
     list($usql, $params) = $DB->get_in_or_equal($userids);
     $sql = <<<EOT
-    select uid.data from (select id from {user_info_field} where shortname like '%mobile') as fid
+    select distinct(uid.data) from (select id from {user_info_field} where shortname like '%mobile') as fid
     join
     {user_info_data} as uid
     on fid.id = uid.fieldid

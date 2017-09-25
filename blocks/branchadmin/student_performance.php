@@ -3,10 +3,9 @@
 require_once('../../config.php');
 //require_once('classes/output/view_students.php');
 require_once('renderer.php');
-require_login();
 global $DB, $USER, $CFG, $PAGE;
 
-
+require_login();
 $PAGE->set_url('/blocks/branchadmin/view_student.php');
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading('View Student Profile');

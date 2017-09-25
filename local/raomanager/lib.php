@@ -28,6 +28,9 @@ function user_has_access($username)
 
 function local_raomanager_extend_navigation(global_navigation $nav){
     global $USER;
+    if ($USER->id==0){
+        return;
+    }
     $access_plugins = user_has_access($USER->username);
     $isadmin = is_siteadmin();
     if ($access_plugins == False && !$isadmin){

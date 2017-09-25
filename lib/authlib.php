@@ -616,6 +616,10 @@ class auth_plugin_base {
      * @param stdClass $user clone of USER object before the user session was terminated
      */
     public function postlogout_hook($user) {
+        /***added code for logging the user out of portal.raoiit.com******/
+        global $CFG;
+        $redirect = $CFG->django_server.'logout.php?redirect='.$CFG->wwwroot;
+        redirect($redirect);//.$CFG->wwwroot
     }
 
     /**

@@ -46,11 +46,11 @@ class grievance_detail implements renderable{
         $grievance = $this->get_grievance_thread($gid, $gmode);
         $this->query = $grievance['query'];
         $this->responses = $grievance['responses'];
-        if ($branch_view){
-            $this->username = 'anonymous';    
-        } else{
+        //if ($branch_view){
+        //    $this->username = 'anonymous';    
+        //} else{
             $this->username = $grievance['userdetails']['username'];
-        }
+        //}
         if(local_raomanager_has_permission('ReadyToHelp'))
             $this->showstatusbuttons = TRUE;
         else
@@ -109,7 +109,7 @@ class grievance_detail implements renderable{
                     'gid' => $gid,
                     'rid' => $resp->id,
                     'deptid' => $resp->deptid,
-                    //'userid' => $USER->username, // Due to mustache scoping issue, inject this in every response
+                    'userid' => $USER->username, // Due to mustache scoping issue, inject this in every response
                     'email' => $resp->email,
                     'time' => strftime('%d/%m/%G-%R', $resp->timecreated),
                     'body' => $resp->body,

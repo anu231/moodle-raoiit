@@ -1,0 +1,16 @@
+<div>
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Subject</th>
+        </thead>
+        <tbody>
+            {{#topics}}
+            <tr>
+                <td><a href='{{edit_url}}'>{{name}}</a></td>
+                <td>{{subject}}</td>
+            </tr>
+            {{/topics}}
+        </tbody>
+    </table>
+</div>

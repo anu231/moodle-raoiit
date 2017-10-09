@@ -1,0 +1,19 @@
+<div>
+    <h3>Biometric Records</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Event</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{#records}}
+            <tr>
+                <td>{{nodename}}</td>
+                <td>{{logtime}}</td>
+            </tr>
+        {{/records}}
+        </tbody>
+    </table>
+</div>

@@ -1,1 +1,23 @@
-HELLO
+<div>
+    <table border='1'>
+        <thead>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Type</th>
+            <th>Action</th>
+            <th colspan='2'>Sort</th>
+        </thead>
+        <tbody>
+            {{#entries}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{value}}</td>
+                    <td>{{type}}</td>
+                    <td><a class="btn btn-small" href='topicentries.php?topic={{topicid}}&entry={{id}}&action=del'><i class="icon-trash"></i></a></td>
+                    <td><a class="btn btn-small" href='topicentries.php?topic={{topicid}}&entry={{id}}&action=up'><i class="icon-arrow-up icon-white"></i></a></td>
+                    <td><a class="btn btn-small" href='topicentries.php?topic={{topicid}}&entry={{id}}&action=down'><i class="icon-arrow-down icon-white"></i></a></td>
+                </tr>
+            {{/entries}}
+        </tbody>
+    </table>
+</div>

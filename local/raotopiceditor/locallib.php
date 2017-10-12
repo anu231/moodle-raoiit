@@ -56,3 +56,29 @@ function get_topic_entries($topicid){
     $entries = $DB->get_records('raotopiceditor_topic_entries',array('topicid'=>$topicid),'sort');
     return $entries;
 }
+
+function max_sort_value_topic($topicid){
+    global $DB;
+    $max_value = $DB->get_record_sql('select max(sort) as maxval from {raotopiceditor_topic_entries} where topicid=?',array($topicid));
+    return $max_value->maxval;
+}
+
+function add_topic_entry($entry){
+    //get the last sort value
+    global $DB;
+    $last_sort = max_sort_value_topic($entry->topicid);
+    $entry->sort = $last_sort + 1;
+    $DB->insert_record('raotopiceditor_topic_entries', $entry);
+}
+
+function delete_topic_entry($entry){
+    global $DB;
+    $DB->delete_records('raotopiceditor_topic_entries',array('id'=>$entry));
+}
+
+function move_entry_up($entryid, $topic){
+    $topic_entries = get_topic_entries($topic);
+    foreach($topic_entries as $entry){
+        
+    }
+}

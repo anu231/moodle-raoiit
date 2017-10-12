@@ -1,0 +1,35 @@
+<div>
+    <h3>Biometric Records</h3>
+<h6 align="right"><a href="view_biometric.php">Back to Page</a></h6>
+      <table class="view_student_list_table_td_th view_student_list_table" width="100%">
+        <thead>
+            <tr>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Venue</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Time</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{#records}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td">{{nodename}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{logtime}}</td>
+            </tr>
+        {{/records}}
+        </tbody>
+    </table>
+</div>
+<style>
+   .view_student_list_table_td_th {
+   border: 1px solid #314c9a; 
+   }
+   .view_student_list_table {
+   border-collapse: collapse;
+   width: 100%; text-align: center;
+   }
+    .view_student_list_table_td_td {
+   border: 1px solid #ccc; 
+   }
+   .view_bg{ background:#21409a; color:#fff;}
+   h6{color:#21409a;}
+  
+</style>

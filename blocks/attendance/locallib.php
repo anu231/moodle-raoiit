@@ -6,10 +6,12 @@ function get_attendance_records($start_date, $end_date, $user='self'){
     global $USER;
     global $CFG;
     if ($user == 'self'){
-        $user = $USER->username;
+       echo $user = $USER->username;
     }
+      $user = $USER->username;
     $ch = curl_init();
-    $url = $CFG->biometric_record_url.'userid='.$user.'&sdate='.$start_date.'&edate='.$end_date;
+    $a="http://biometric.raoiit.com:8081/attendance/biometric-test.php?";
+    $url = $a.'username='.$user.'&startdate='.$start_date.'&enddate='.$end_date;
     // Disable SSL verification
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     // Will return the response, if false it print the response

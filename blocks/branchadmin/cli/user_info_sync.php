@@ -85,7 +85,7 @@ EOT;
     foreach($res as $row){
         $ret[$row->fieldid] = $row;
     }
-    return $res;
+    return $ret;
 }
 
 function sync_user_data_analysis($username){
@@ -119,14 +119,14 @@ function sync_user_data_analysis($username){
 }
 
 function sync_moodle_field($analysis_field, $moodle_data, $analysis_fdata, $userid){
-    global $DB;
+    global $DB, $field_map;
     $moodle_field = $field_map[$analysis_field];
     if (array_key_exists($moodle_field, $moodle_data)){
         //check for equality
         if ($moodle_data[$moodle_field]!=$analysis_fdata){
             //update moodle data
             $elem = new stdClass();
-            $elem->id = $moodle_data[$moodle_field]['dataid'];
+            $elem->id = $moodle_data[$moodle_field]->dataid;
             $elem->data = $analysis_fdata;
             $DB->update_record('user_info_data',$elem);
             cli_write($userid.':'.$analysis_field.':updated:'.$analysis_fdata);
@@ -152,7 +152,7 @@ function sync_user_data_raw_sql($username, $userid){
     }
     //load user details in moodle
     $moodle_d = get_user_data_moodle($username);
-    foreach($field_map as $fm){
+    foreach($field_map as $fm=>$value){
         sync_moodle_field($fm, $moodle_d, $user_data[$fm], $userid);
     }
 }
@@ -193,11 +193,11 @@ foreach($user_list as $user){
     profile_save_data($user_profile);*/
     //$ret = sync_user_data_analysis($user->username);
     sync_user_data_raw_sql($user->username, $user->id);
-    /*if (constant('CLI_SCRIPT')){
+    if (constant('CLI_SCRIPT')){
         cli_write($user->username.'-updated\n'.PHP_EOL);
     } else{
         echo $user->username.'-updated\n';
         echo 'Center Updated to - ';
-    }*/
+    }
 }
 close_analysis_db($link);

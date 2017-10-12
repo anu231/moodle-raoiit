@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__.'/../../config.php');
+require_once(__DIR__.'/../timetable/locallib.php');
 
 
 /*
@@ -220,4 +221,17 @@ EOT;
     $res = $DB->get_records_sql($sql, $params);
     return $res;
 }
+/********************************************************************************************/
+/*********************************************Branch Timetable RELATED FUNCTIONS**************************/
+function get_batches_branch($branchid){
+    //gets the batches belonging to the specific branch
+    //$branchid is the analysis id
+    $res = $DB->get_records('branchadmin_ttbatches',array('centreid'=>$branchid));
+    $batchids = Array();
+    foreach($res as $r){
+        $batchids[] = $res->analysis_id;
+    }
+    return implode(',',$batchids);
+}
+
 /********************************************************************************************/

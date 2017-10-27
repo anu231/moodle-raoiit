@@ -592,6 +592,6 @@ class cache_config {
                 return $lockconf;
             }
         }
-        throw new cache_exception('ex_nodefaultlock');
+        //throw new cache_exception('ex_nodefaultlock');
     }
 }

@@ -884,7 +884,14 @@ abstract class format_section_renderer_base extends plugin_renderer_base {
         // Now the list of sections..
         echo $this->start_section_list();
         $numsections = course_get_format($course)->get_last_section_number();
-
+        //load all rao topics
+        require_once(__DIR__.'/../../local/raotopiceditor/locallib.php');
+        //fetching the topic entry cache
+        $topic_cache = cache::make('local_raotopiceditor', 'topicentries');
+        if (!$topic_cache->get('topicentries')){
+            cache_topics_with_entries();
+        }
+        //$topic_content = null;//list_topics();
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
             if ($section == 0) {
                 // 0-section is displayed a little different then the others
@@ -922,6 +929,7 @@ abstract class format_section_renderer_base extends plugin_renderer_base {
             } else {
                 echo $this->section_header($thissection, $course, false, 0);
                 if ($thissection->uservisible) {
+                    echo $this->courserenderer->course_section_rao_list($course, $thissection, $topic_cache);
                     echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
                     echo $this->courserenderer->course_section_add_cm_control($course, $section, 0);
                 }

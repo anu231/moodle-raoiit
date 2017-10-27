@@ -12,19 +12,15 @@ function sync_dtp_topics(){
         CURLOPT_SSL_VERIFYPEER => false
     ));
     $resp = curl_exec($ch);
-    //echo $resp;
     $dtp_topics = json_decode($resp);
-    //print_r($dtp_topics);
     //get the topics currently in DB
     $edumate_topics = $DB->get_records('raotopiceditor_topics',array());
     $edu_topic_list = Array();
     foreach($edumate_topics as $topic){
         $edu_topic_list[$topic->portalref] = $topic;
     }
-    //print_r($edumate_topics);
     
     foreach($dtp_topics as $dtop){
-        //echo $dtop->id.PHP_EOL;
         if (array_key_exists($dtop->id, $edu_topic_list)){
             //check if there is an update
             if ($dtop->name != $edu_topic_list[$dtop->id]->name){
@@ -39,16 +35,39 @@ function sync_dtp_topics(){
             $etop->portalref = $dtop->id;
             $etop->name = $dtop->name;
             $etop->subject = array_search($dtop->subject, $CFG->SUBJECTS);
-            echo 'insert'.PHP_EOL;
+            echo 'insert - '.$dtop->name.PHP_EOL;
             $DB->insert_record('raotopiceditor_topics', $etop);
         }
     }
 }
 
-function list_topics(){
+function cache_topics_with_entries(){
     global $DB;
     $topics = $DB->get_records('raotopiceditor_topics',array());
-    return $topics;
+    $topic_entries = Array();
+    $topic_cache = cache::make('local_raotopiceditor', 'topicentries');
+    foreach($topics as $topic){
+        $cache_topic = $topic_cache->get($topic->id);
+        if (!$cache_topic){
+            //get all the entries in this topic
+            $entries = get_topic_entries($topic->id);
+            if (!$topic_cache->set($topic->id,json_encode($entries))){
+                //error in setting the key
+                //log this error
+            }
+        }
+    }
+    $topic_cache->set('topicentries',1);
+    //return $topics;
+}
+
+function get_topic_list_array(){
+    $top_array = Array();
+    $topics = list_topics();
+    foreach($topics as $topic){
+        $top_array[$topic->id] = $topic->name; 
+    }
+    return $top_array;
 }
 
 function get_topic_entries($topicid){
@@ -76,9 +95,35 @@ function delete_topic_entry($entry){
     $DB->delete_records('raotopiceditor_topic_entries',array('id'=>$entry));
 }
 
-function move_entry_up($entryid, $topic){
+function movetopicentry($entryid, $topic, $direction){
+    global $DB;
     $topic_entries = get_topic_entries($topic);
-    foreach($topic_entries as $entry){
-        
+    $prev_entry_index = -1;
+    $curr_entry_index = -1;
+    $entry_keys = array_keys($topic_entries);
+    foreach($entry_keys as $key=>$entry_key){
+        if ($topic_entries[$entry_key]->id == $entryid){
+            $curr_entry_index = $key;
+            break;
+        }
+        $prev_entry_index = $key;
+    }
+    $swap_index = -1;
+    if ($curr_entry_index != -1){
+        if ($curr_entry_index != 0 && $direction == 'up'){
+            $swap_index = $prev_entry_index;
+        } else if ($curr_entry_index < (count($topic_entries)-1) && $direction == 'down'){
+            $swap_index = $curr_entry_index + 1;
+        }
+    }
+    if ($swap_index != -1){
+        $curr_entry_index = $entry_keys[$curr_entry_index];
+        $swap_index = $entry_keys[$swap_index];
+        $temp = $topic_entries[$swap_index]->sort;
+        $topic_entries[$swap_index]->sort = $topic_entries[$curr_entry_index]->sort;
+        $topic_entries[$curr_entry_index]->sort = $temp;
+        //save the entries
+        $DB->update_record('raotopiceditor_topic_entries', $topic_entries[$curr_entry_index]);
+        $DB->update_record('raotopiceditor_topic_entries', $topic_entries[$swap_index]);
     }
 }

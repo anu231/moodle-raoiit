@@ -4,6 +4,7 @@ require_once('../../config.php');
 require_once('renderer.php');
 require_once('topic_form.php');
 
+
 global $PAGE, $CFG;
 require_login();
 $PAGE->set_context(context_system::instance());
@@ -44,7 +45,18 @@ foreach($form_objects as $fobj){
 if ($action == 'del' && $action_entry != null){
     //delete that entry
     delete_topic_entry($action_entry);
-}
+} else if (($action == 'up' || $action =='down') && $action_entry != null){
+    //move this entry up
+    require_once($CFG->dirroot.'/local/raotopiceditor/locallib.php');
+    if (function_exists('movetopicentry')){
+        movetopicentry($action_entry, $topicid, $action);
+    } else {
+        echo 'PROBLEM';
+    }
+    
+}// else if ($action == 'down' && $action_entry != null){
+    //move this entry down
+//}
 
 
 $renderable = new topic_entries($topicid);

@@ -1003,6 +1003,38 @@ class core_course_renderer extends plugin_renderer_base {
 
         return $output;
     }
+    /*
+    0 => 'booklet',
+    1 => 'video',
+    2 => 'link',
+    3 => 'file'
+    */
+    public function course_section_rao_list($course, $section, $topic_cache){
+        global $CFG;
+        $output = '';
+        if ($section->subject != 0){
+            $output .= html_writer::tag('div',$CFG->SUBJECTS[$section->subject]);
+        }
+        if ($section->raotopic != 0){
+            $output .= html_writer::start_tag('ul',array('class'=>'section img-text'));
+            $topic_entries = json_decode($topic_cache->get($section->raotopic));
+            //foreach($topic_content[$section->raotopic] as $entry){
+            foreach($topic_entries as $entry){
+                $output .=html_writer::start_tag('li',array('class'=>'activity'));
+                if ($entry->type=='booklet'){
+                    //display as booklet
+                    $output .= html_writer::tag('a','<i class="fa fa-book fa-lg" aria-hidden="true"></i> '.$entry->name.' boolet solutions',array('href'=>'/mod/raobooklet/read.php?bookletid='.$entry->value,'target'=>'_blank'));
+                } else if ($entry->type=='video'){
+                    $output .= html_writer::tag('a','<i class="fa fa-youtube-play fa-lg" aria-hidden="true"></i> '.$entry->name,array('href'=>$entry->value,'target'=>'_blank'));
+                } else if ($entry->type=='link'){
+                    $output .= html_writer::tag('a','<i class="fa fa-external-link fa-lg" aria-hidden="true"></i> '.$entry->name,array('href'=>$entry->value,'target'=>'_blank'));
+                }
+                $output .= html_writer::end_tag('li');
+            }
+            $output .= html_writer::end_tag('ul');
+        }
+        return $output;
+    }
 
     /**
      * Displays a custom list of courses with paging bar if necessary

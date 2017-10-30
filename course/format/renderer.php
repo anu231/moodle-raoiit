@@ -888,7 +888,7 @@ abstract class format_section_renderer_base extends plugin_renderer_base {
         require_once(__DIR__.'/../../local/raotopiceditor/locallib.php');
         //fetching the topic entry cache
         $topic_cache = cache::make('local_raotopiceditor', 'topicentries');
-        if (!$topic_cache->get('topicentries')){
+        if (!$topic_cache->get('topicentries') || $topic_cache->get('topicentries') == 0){
             cache_topics_with_entries();
         }
         //$topic_content = null;//list_topics();

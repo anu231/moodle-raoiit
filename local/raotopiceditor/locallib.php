@@ -61,6 +61,18 @@ function cache_topics_with_entries(){
     //return $topics;
 }
 
+function update_topic_cache($topicid){
+    $topic_cache = cache::make('local_raotopiceditor', 'topicentries');
+    $topic_entries = get_topic_entries($topicid);
+    $topic_cache->set($topicid, json_encode($topic_entries));
+}
+
+function list_topics(){
+    global $DB;
+    $topics = $DB->get_records('raotopiceditor_topics',array());
+    return $topics;
+}
+
 function get_topic_list_array(){
     $top_array = Array();
     $topics = list_topics();
@@ -76,6 +88,12 @@ function get_topic_entries($topicid){
     return $entries;
 }
 
+function get_topic_entry($entryid){
+    global $DB;
+    $entry = $DB->get_record('raotopiceditor_topic_entries',array('id'=>$entryid));
+    return $entry;
+}
+
 function max_sort_value_topic($topicid){
     global $DB;
     $max_value = $DB->get_record_sql('select max(sort) as maxval from {raotopiceditor_topic_entries} where topicid=?',array($topicid));
@@ -85,14 +103,20 @@ function max_sort_value_topic($topicid){
 function add_topic_entry($entry){
     //get the last sort value
     global $DB;
-    $last_sort = max_sort_value_topic($entry->topicid);
-    $entry->sort = $last_sort + 1;
-    $DB->insert_record('raotopiceditor_topic_entries', $entry);
+    if ($entry->id == 0){
+        $last_sort = max_sort_value_topic($entry->topicid);
+        $entry->sort = $last_sort + 1;
+        $DB->insert_record('raotopiceditor_topic_entries', $entry);
+    } else {
+        $DB->update_record('raotopiceditor_topic_entries', $entry);
+    }
+    update_topic_cache($entry->topicid);
 }
 
 function delete_topic_entry($entry){
     global $DB;
     $DB->delete_records('raotopiceditor_topic_entries',array('id'=>$entry));
+    update_topic_cache($entry->topicid);
 }
 
 function movetopicentry($entryid, $topic, $direction){
@@ -126,4 +150,5 @@ function movetopicentry($entryid, $topic, $direction){
         $DB->update_record('raotopiceditor_topic_entries', $topic_entries[$curr_entry_index]);
         $DB->update_record('raotopiceditor_topic_entries', $topic_entries[$swap_index]);
     }
+    update_topic_cache($topic);
 }

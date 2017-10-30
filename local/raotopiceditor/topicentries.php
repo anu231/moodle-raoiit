@@ -22,12 +22,12 @@ echo $output->header();
 //adding new entries
 $form_class_names = array('raotopiceditor_booklet_form', 'raotopiceditor_video_form', 'raotopiceditor_link_form');
 $form_objects = Array();
-foreach($form_class_names as $form_name){
-    $form_objects[] = new $form_name(null, array('topic'=>$topicid, 'type'=>explode('_', $form_name)[1]));
-}
+$edit_entry = null;
 
-foreach($form_objects as $fobj){
-    if ($form_data = $fobj->get_data()){
+foreach($form_class_names as $form_name){
+    $form_type = explode('_', $form_name)[1];
+    $form_objects[$form_type] = new $form_name(null, array('topic'=>$topicid, 'type'=>$form_type));
+    if ($form_data = $form_objects[$form_type]->get_data()){
         //form has received data in it
         //process the data
         //the display the form
@@ -36,10 +36,10 @@ foreach($form_objects as $fobj){
         $entry->value = $form_data->value;
         $entry->topicid = $form_data->topic;
         $entry->type = $form_data->type;
+        $entry->id = $form_data->id;
         add_topic_entry($entry);
         redirect('/local/raotopiceditor/topicentries.php?topic='.$form_data->topic);
     }
-    $fobj->display();
 }
 
 if ($action == 'del' && $action_entry != null){
@@ -54,9 +54,25 @@ if ($action == 'del' && $action_entry != null){
         echo 'PROBLEM';
     }
     
-}// else if ($action == 'down' && $action_entry != null){
+} else if ($action == 'edit' && $action_entry != null){
     //move this entry down
-//}
+    //load the entry into the specific form
+    //get the topic entry
+    $edit_entry = get_topic_entry($action_entry);
+}
+
+
+//display the forms
+foreach($form_objects as $type=>$fobj){
+    if ($edit_entry != null && $edit_entry->type == $type){
+        $fentry = new stdClass();
+        $fentry->name = $edit_entry->name;
+        $fentry->value = $edit_entry->value;
+        $fentry->id = $edit_entry->id;
+        $fobj->set_data($fentry);
+    }
+    $fobj->display();
+}
 
 
 $renderable = new topic_entries($topicid);

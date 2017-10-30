@@ -9,6 +9,8 @@ class raotopiceditor_booklet_form extends moodleform {
 
     function definition(){
         $mform =& $this->_form;
+        $mform->addElement('hidden','id','0');
+        $mform->setType('id', PARAM_INT);
         $mform->addElement('hidden','topic',$this->_customdata['topic']);
         $mform->setType('topic', PARAM_INT);
         $mform->addElement('hidden','type',$this->_customdata['type']);
@@ -27,6 +29,8 @@ class raotopiceditor_video_form extends moodleform {
 
     function definition(){
         $mform =& $this->_form;
+        $mform->addElement('hidden','id','0');
+        $mform->setType('id', PARAM_INT);
         $mform->addElement('hidden','topic',$this->_customdata['topic']);
         $mform->setType('topic', PARAM_INT);
         $mform->addElement('hidden','type',$this->_customdata['type']);
@@ -44,6 +48,8 @@ class raotopiceditor_link_form extends moodleform {
 
     function definition(){
         $mform =& $this->_form;
+        $mform->addElement('hidden','id','0');
+        $mform->setType('id', PARAM_INT);
         $mform->addElement('hidden','topic',$this->_customdata['topic']);
         $mform->setType('topic', PARAM_INT);
         $mform->addElement('hidden','type',$this->_customdata['type']);

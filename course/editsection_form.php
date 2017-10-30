@@ -42,15 +42,21 @@ class editsection_form extends moodleform {
 
         // CUSTOM FIELDS START
         // (NOTE: needs course_sections.subject to be defined in /lib/db/install.xml)
-        $SUBJECTS = array(
+        global $CFG;
+        $SUBJECTS = $CFG->SUBJECTS;
+        /*$SUBJECTS = array(
             0=>'Please Select a Subject',
             1=>'Physics',
             2=>'Chemistry',
             3=>'Maths',
             4=>'Biology',
             5=>'Zoology'
-        );
+        );*/
+        $SUBJECTS[0] = 'Please Select a Subject';
         $subjects = $mform->addElement('select', 'subject', 'Subject', $SUBJECTS);
+        require_once(__DIR__.'/../local/raotopiceditor/locallib.php');
+        $topics = get_topic_list_array();
+        $topics = $mform->addElement('select','rao_topic','Topic',$topics);
         // CUSTOM FIELDS END
 
         // additional fields that course format has defined

@@ -1,0 +1,25 @@
+<div>
+    <table border='1'>
+        <thead>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Type</th>
+            <th>Action</th>
+            <th colspan='2'>Sort</th>
+            <th>Edit</th>
+        </thead>
+        <tbody>
+            {{#entries}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{value}}</td>
+                    <td>{{type}}</td>
+                    <td><a class="btn btn-danger" href='topicentries.php?topic={{topicid}}&entry={{id}}&action=del'><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                    <td><a class="btn btn-warning" href='topicentries.php?topic={{topicid}}&entry={{id}}&action=up'><i class="fa fa-arrow-up" aria-hidden="true"></i></a></td>
+                    <td><a class="btn btn-inverse" href='topicentries.php?topic={{topicid}}&entry={{id}}&action=down'><i class="fa fa-arrow-down" aria-hidden="true"></i></a></td>
+                    <td><a class="btn btn-inverse" href='topicentries.php?topic={{topicid}}&entry={{id}}&action=edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                </tr>
+            {{/entries}}
+        </tbody>
+    </table>
+</div>

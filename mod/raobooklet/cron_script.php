@@ -20,7 +20,7 @@ $LOGFILE = $CFG->dataroot.'/raobooklets/logfile.log';
 
 function log2file($message, $type=null){
     global $LOGFILE;
-    echo $message."<br>";
+    echo $message."<br>".PHP_EOL;
     if($type == 0) $message = "[SUCCESS] ".$message.'\n';
     else if($type == 1) $message = "[WARNING] ".$message.'\n';
     else if($type == 2) $message = "[ERROR] ".$message.'\n';
@@ -33,7 +33,7 @@ function log2file($message, $type=null){
 // $booklets = $DB->get_records('files', array('component'=>'mod_raobooklet'));
 $context = context_system::instance();
 $files = $fs->get_area_files($context->id, 'mod_raobooklet', 'uploads', 0);
-echo count($files);
+echo count($files).PHP_EOL;
 foreach ($files as $file) {
     if(is_dir($PARENTPATH.'/'.$file->get_id())) continue;
     if($file->get_filename() == '.') continue;
@@ -49,6 +49,7 @@ foreach ($files as $file) {
     else {
         // Start Conversion;
         log2file("Starting conversion at: ".time());
+        log2file($file->get_filename());
         $cmd = 'convert -density 200 -quality 90 "'.$filepath.'" "'.$dir.'/%d.jpg"';
         log2file('Executing the following command : '.$cmd);
         $ret = exec($cmd,$output,$ret_var);

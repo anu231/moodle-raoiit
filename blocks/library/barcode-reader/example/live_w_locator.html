@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>index</title>
+    
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+</head>
+  <style>
+  select,input {
+    display:none;
+}
+.img-responsive {
+    display:block;
+    max-width:100%;
+    height:auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+.deviceSelection {
+    display:inline;
+}
+</style>
+   
+   
+
+   <body>
+        <div class='container'>
+
+
+            
+            <div class='row'>
+                
+            </div>
+        </div>
+        <section id="container" class="container">
+            <h3>The user's camera</h3>
+            <p>Simply allow the page to access your web-cam and point it to a barcode.</p>
+            <div class="controls">
+  <!--
+<div class="container" style="width:600px;">  
+    
+    <br />  
+   <fieldset class="input-group" id="staticParent">
+            <label>
+                    <span>Book Name</span>
+                    <select  name="book_name" id="student-list" class='deviceSelection'>
+                        <option></option>
+                    </select>
+            </label>
+          </fieldset>
+//-->
+<fieldset class="input-group" id="staticParent">
+    <input type="radio" name="book_status" id="issue" value="issue"> Issue
+    <input type="radio" name="book_status" id="return" value="return"> Return
+   </fieldset>
+   <br><br><br><br><br>
+        <fieldset class="input-group" id="staticParent">
+            <label>Branch Issuer</label><br/>
+            <input type="text" name="branch_issuer" id="branch_issuer" placeholder="Branch Issuer code" maxlength="6" value="admin">
+        </fieldset>
+        <br/><br/><br/>
+        <fieldset class="input-group" id="staticParent">
+            <label>Branch Issuer Password</label><br/>
+            <input type="text" name="branch_issuer_password" id="branch_issuer_password" placeholder="Branch Issuer Password" maxlength="20" value="admin">
+        </fieldset>
+        <br/><br/><br/>
+        <fieldset class="input-group" id="staticParent">
+            <label>Student Roll Number</label><br/>
+            <input type="text" name="student_username" id="student_username" placeholder="Enter Student Roll Number" maxlength="6" value="918016">
+        </fieldset>
+        <br/><br/><br/>
+        <fieldset class="input-group" id="staticParent">
+        <label>Remarks</label><br/>
+              <input type="text" name="remark" id="remark" placeholder="Enter remark" value="Test">
+        </fieldset>
+         <br/><br/><br/>
+         
+        <fieldset class="input-group">
+        <button class="stop">Stop</button>
+        </fieldset><br/>
+
+        <label>
+        <span>Camera</span>
+        <select name="input-stream_constraints" id="deviceSelection" class='deviceSelection'>
+        </select>
+        </label>
+
+        <fieldset class="reader-config-group">
+
+        <select name="decoder_readers">
+        <option value="ean" >EAN</option>
+        <option value="ean_extended">EAN-extended</option>
+        <option value="ean_8" selected="selected">EAN-8</option>
+        <option value="upc">UPC</option>
+        <option value="upc_e">UPC-E</option>
+        <option value="codabar">Codabar</option>
+        <option value="i2of5">Interleaved 2 of 5</option>
+        <option value="2of5">Standard 2 of 5</option>
+        <option value="code_93">Code 93</option>
+        </select>
+
+
+        <select name="input-stream_constraints">
+        <option value="320x240">320px</option>
+        <option selected="selected" value="640x480">640px</option>
+        <option value="800x600">800px</option>
+        <option value="1280x720">1280px</option>
+        <option value="1600x960">1600px</option>
+        <option value="1920x1080">1920px</option>
+        </select>
+
+        <select name="locator_patch-size">
+        <option value="x-small">x-small</option>
+        <option value="small">small</option>
+        <option selected="selected" value="medium">medium</option>
+        <option value="large">large</option>
+        <option value="x-large">x-large</option>
+        </select>
+
+        <input type="checkbox" checked="checked" name="locator_half-sample" />
+
+        <select name="numOfWorkers">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option selected="selected" value="2">2</option>
+        <option value="4">4</option>
+        <option value="8">8</option>
+        </select>
+
+        <select name="input-stream_constraints" id="deviceSelection">
+        </select>
+
+
+        <select name="settings_zoom"></select>
+
+
+        <input type="checkbox" name="settings_torch" />
+        </fieldset>
+            </div>
+          <div id="result_strip">
+            <ul class="thumbnails"></ul>
+            <ul class="collector"></ul>
+          </div>
+          <div id="interactive" class="viewport"></div>
+        </section>
+            <p>
+              <center>Copyright &#169; <a href="https://raoiit.com/" target="_blank">Rao IIT Academy</a> 2017</center>
+            </p>
+        <script src="vendor/jquery-1.9.0.min.js" type="text/javascript"></script>
+        <script src="//webrtc.github.io/adapter/adapter-latest.js" type="text/javascript"></script>
+        <script src="../dist/quagga.js" type="text/javascript"></script>
+        <script src="live_w_locator.js" type="text/javascript"></script>
+        <!--
+        <script>
+        $.ajax({
+        type: "GET",
+        url: "../../bookmaster_helper.php",
+        
+        success: function(data){
+    
+            $("#student-list").html(data);
+        }
+        });
+        </script>
+        -->
+      </body>
+    </html>

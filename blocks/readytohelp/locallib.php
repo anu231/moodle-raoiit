@@ -1,8 +1,8 @@
 <?php
 defined('MOODLE_INTERNAL') || die();
 
-
 require($CFG->dirroot.'/vendor/autoload.php');
+require_once($CFG->dirroot.'/lib/raolib.php');
 // require_once($CFG->dirroot.'/vendor/phpmailer/phpmailer/PHPMailerAutoload.php');
 
 // Permission functions
@@ -237,6 +237,8 @@ function _send_grievance_dept_emails($gid, $data, $type){
 function batch_send_grievance_dept_emails($gid, $type){
     global $DB;
     $query = $DB->get_record('grievance_entries', array('id' => $gid));
+    //get user info
+    $user = get_basic_student_info($query->username);
     if($query) {
         if(!$query->department)
             return FALSE;
@@ -245,7 +247,12 @@ function batch_send_grievance_dept_emails($gid, $type){
             $data = new stdClass();
             $data->deptid = $dept;
             $data->subject = $query->subject;
-            $data->description = $query->description;
+            $data->description = <<<EOT
+            Roll No. - $user->username<br>
+            Center - $user->center<br>
+            Batch - $user->batch<br>
+            Descritption - $query->description
+EOT;
             $success = _send_grievance_dept_emails($gid, $data, $type);
         }
         return TRUE;
@@ -269,8 +276,14 @@ function send_rejection_email($gid, $rid, $deptid){
         return 0;
     $response = $resp->body;
     $query = $DB->get_record('grievance_entries', array('id' => $gid));
+    $userinfo = get_basic_student_info($query->username);
     $subject = $query->subject;
-    $description = $query->description;
+    $description = <<<EOT
+    Roll No - $userinfo->username<br>
+    Batch - $userinfo->batch<br>
+    Center - $userinfo->center<br>
+    Descritpion - $query->description
+EOT;
 
 
     $hash = sha1($gid.$customsalt.$resp->email);
@@ -324,12 +337,16 @@ function send_grievance_notification_admin($data){
     global $CFG;
     $grievance_categories = get_grievance_categories();
     $category = $grievance_categories[$data->category];
+    $userinfo = get_basic_student_info($data->username);
     $email_text = <<<EOT
     Roll No - $data->username<br>
+    Center - $userinfo->center<br>
+    Batch - $userinfo->batch<br>
     Category - $category<br>
     Subject - $data->subject<br>
     Descirption - $data->description<br>
 EOT;
+    //send_sendgrid_email('New Grievance By - '.$data->username, $email_text, $CFG->grievance_admin_emails, 'edumate-noreply@raoiit.com','Edumate-Ready To Help');
     $task = new block_readytohelp_emailnotification();
     $task->set_custom_data(array(
         'email' => $CFG->grievance_admin_emails,

@@ -27,7 +27,7 @@ class block_readytohelp_emailnotification extends \core\task\adhoc_task {
             )
         );
         $mail->isHTML(true);                                  // Set email format to HTML
-        $mail->setFrom('admin-noreply@raoiit.com', 'Grievance Portal');
+        $mail->setFrom('edumate-noreply@raoiit.com', 'Grievance Portal');
         if (is_array($email)){
             foreach($email as $addr){
                 $mail->addAddress($addr);

@@ -345,8 +345,16 @@ SQL;
                 $g->index = $index;
                 $g->edescription = strlen($g->edescription) >=120 ? substr($g->edescription, 0, 120).'...' : $g->edescription;  // Culled to 120 chars
                 $g->username = $g->username;
-                $g->centre = $centre_map[$g->centerid]->name;
-                $g->ttbatch = $batch_map[$g->ttbatchid]->name;
+                if ($g->centerid != 0){
+                    $g->centre = $centre_map[$g->centerid]->name;    
+                } else{
+                    $g->centre = 'None';
+                }
+                if ($g->ttbatchid != 0){
+                    $g->ttbatch = $batch_map[$g->ttbatchid]->name;
+                } else{
+                    $g->ttbatch = 'None';
+                }
                 $g->approvedcount = $g->rapproved == '1' && $g->rapproved != null && !$isuser ? 1 : 0; // Don't count user replies
                 $g->replycount = $g->body != NULL && !$isuser ? 1 : 0; // Don't count user replies
                 $g->userreplycount = 0;

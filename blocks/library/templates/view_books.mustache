@@ -1,0 +1,33 @@
+<div>
+    
+    <table class="view_student_list_table_td_th view_student_list_table">
+      <tbody>
+      <tr>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Book Name</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Book Id</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Price</th>
+      </tr>
+       {{#user_list}}
+     <tr class="view_student_list_table_td_th ">
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px; text-align:left;">{{name}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:left;">{{bookid}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{price}}</td>
+
+     </tr>
+     {{/user_list}}
+
+        </tbody>
+    </table>
+</div>
+<style>
+.view_student_list_table_td_th {
+    border: 1px solid #ddd;
+}
+.view_student_list_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.view_student_list_th:hover  {
+    height: 10px;    border: 1px solid #ddd; background:#eaedef; font-weight:bold;
+}
+</style>

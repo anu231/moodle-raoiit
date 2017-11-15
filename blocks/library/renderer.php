@@ -1,6 +1,7 @@
 <?php
 defined('MOODLE_INTERNAL') || die;
 require_once('../../config.php');
+require_once('../branchadmin/locallib.php');
 require_once('locallib.php');
 
 class block_library_renderer extends plugin_renderer_base {
@@ -9,8 +10,64 @@ class block_library_renderer extends plugin_renderer_base {
         $data = $page->export_for_template($this);
         return parent::render_from_template('block_library/view_books', $data); 
     }
-      
+    
+    public function render_view_issued_books($page){
+        $data = array();
+        $data['issued_books'] = $page->export_for_template($this);
+        return $this->render_from_template('block_library/issued_books', $data);
+    }
+
+    public function render_view_available_books($page){
+        $data = array();
+        $data['available_books'] = $page->export_for_template($this);
+        return $this->render_from_template('block_library/available_books', $data);
+    }
 }
+
+class view_issued_books implements renderable, templatable {
+    
+    private function get_issued_books(){
+        global $USER, $DB;
+        $center_id = get_user_center($USER->id);
+        //get books issued at this center
+        $sql = <<<SQL
+        select book.id, book.name,
+        issue.student_username, issue.issue_date
+        from {lib_bookmaster} as book join {lib_issue_record} as issue
+        on book.id = issue.bookid
+        where issue.status = 0 and issue.branch_id=?
+SQL;
+        $issued_books = $DB->get_records_sql($sql,array($center_id));
+        $issued_books_array = array();
+        foreach($issued_books as $entry){
+            $issued_books_array[] = $entry;
+        }
+        return $issued_books_array;
+    }
+
+    private function export_for_template(renderer_base $output){
+        $data = $this->get_issued_books();
+        return $data;
+    }
+}
+
+class view_available_books implements renderable, templatable {
+    private function get_available_books(){
+        global $USER, $DB;
+        $center_id = get_user_center($USER->id);
+        $available_books = $DB->get_records('lib_bookmaster', array('status'=>0));
+        $available_books_array = array();
+        foreach($available_books as $book){
+            $available_books_array[] = $book;
+        }
+        return $available_books_array;
+    }
+    private function export_for_template(renderer_base $output){
+        $data = $this->get_available_books();
+        return $data;
+    }
+}
+
 class view_all_books implements renderable,templatable {
     private function get_all_books(){
         global $CFG,$USER,$DB;

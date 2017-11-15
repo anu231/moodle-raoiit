@@ -42,6 +42,6 @@ class block_rao_mocktest extends block_base {
     public function instance_allow_multiple() {
           return false;
     }
-    function has_config() {return true;}             
+    function has_config() {return false;}             
                   
 }

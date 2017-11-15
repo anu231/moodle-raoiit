@@ -4,6 +4,7 @@
 defined('MOODLE_INTERNAL') || die;                                                                                                  
 require_once('../../config.php');
 require_once('locallib.php');
+//require_once($CFG->dirroot.'/lib/raolib.php');
 //use plugin_renderer_base;  
 //require_once('classes/output/view_students.php');
  
@@ -68,8 +69,6 @@ class view_students implements renderable, templatable{
             $temp['username'] = $user->username;
 
             $temp['email'] = $user->email;
-           //  $temp['id'] = $user->id;echo "<br>";
-            //array_push($user_list,$temp);
             $user_list[] = $temp;
         }
         return $user_list;

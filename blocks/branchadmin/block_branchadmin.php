@@ -26,6 +26,6 @@ class block_branchadmin extends block_list {
           return true;
     }
 
-    function has_config() {return true;}             
+    function has_config() {return false;}             
                   
 }

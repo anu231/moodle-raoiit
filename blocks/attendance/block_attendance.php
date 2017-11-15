@@ -24,6 +24,6 @@ class block_attendance extends block_base {
           return false;
     }
 
-    function has_config() {return true;}             
+    function has_config() {return false;}             
                   
 }

@@ -30,6 +30,6 @@ class block_readytohelp extends block_list {
 
 
     // Configuration
-    function has_config() { return true; }
+    function has_config() { return false; }
 
 }

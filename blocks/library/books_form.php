@@ -1,6 +1,8 @@
 <?php
 defined('MOODLE_INTERNAL') || die();
 require_once("{$CFG->libdir}/formslib.php");
+require_once("{$CFG->libdir}/raolib.php");
+require_once('../branchadmin/locallib.php');
 require_once('locallib.php');
 class add_books_form extends moodleform {
     //Add elements to form
@@ -19,23 +21,7 @@ class add_books_form extends moodleform {
         $mform->setType('price', PARAM_INT);
         $mform->addElement('text', 'barcode', get_string('barcode', 'block_library'),'maxlength="13" ');
         $mform->setType('barcode', PARAM_INT);
-        $center_list = array(
-        '1' => 'Thane (Lokpuram)',
-        '2' => 'Thane',
-        '3' => 'Dombivali',
-        '4' => 'Powai (CSC)',
-        '5' => 'Andheri',
-        '6' => 'Kandivali (TVM)',
-        '7' => 'Borivali',
-        '8' => 'Kalyan (Birla)',
-        '9' => 'Sion',
-        '10' => 'Nerul',
-        '11' => 'Kandivali (Thakur)',
-        '12' => 'Kandivali (T.P. Bhatia)',
-        '13' => 'Silvassa',
-        '14' => 'Mumbai (HO)',
-        '15' => 'Kota (Talwandi)'      
-        );
+        $center_list = convert_std_to_array(get_centers());
         $mform->addElement('select', 'branch', get_string('branch', 'block_library'), $center_list);
         $options = array('1' => 'Available','0' => 'Lost');
         $select = $mform->addElement('select', 'status', get_string('status', 'block_library'), $options);

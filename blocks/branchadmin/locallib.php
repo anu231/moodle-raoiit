@@ -4,10 +4,19 @@ require_once(__DIR__.'/../../config.php');
 require_once(__DIR__.'/../timetable/locallib.php');
 
 
+function get_centers(){
+    global $DB;
+    $centers = $DB->get_records('branchadmin_centre_info',array('status'=>1));
+    return $centers;
+}
+
+
+
 /*
-gets users who belong to the same center as the current user
+gets the centre id of the current user
 */
 function get_user_center($userid=null){
+    global $DB, $CFG;
     $user_id = null;
     if ($userid==null){
         global $USER;
@@ -15,10 +24,12 @@ function get_user_center($userid=null){
     } else{
         $user_id = $userid;
     }
-    $user = new stdClass();
-    $user->id = $user_id;
-    profile_load_data($user);
-    return $user->profile_field_center;
+    $res = $DB->get_records('user_info_data',array('userid'=>$userid,'fieldid'=>$CFG->CENTER_FIELD_ID));
+    if ($res != null){
+        return $res->data;
+    }else {
+        return null;
+    }
 }
 
 function get_center_obj($centre_name){

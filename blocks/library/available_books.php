@@ -11,7 +11,7 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_heading('View Issued books');
 
 $output = $PAGE->get_renderer('block_library');
-$renderable = new view_issued_books();
+$renderable = new view_available_books();
 echo $output->header();
 echo $output->render($renderable);
 echo $output->footer();

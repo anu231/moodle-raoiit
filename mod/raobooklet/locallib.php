@@ -20,3 +20,10 @@ class pdf2jpg extends \core\task\adhoc_task {
         //exit
     }
 }
+
+function list_booklets_select(){
+    //lists all the booklets in the system
+    global $DB;
+    $booklets = $DB->get_records_menu('raobooklet_info', null, $sort='', $fields='bookletid, name');
+    return $booklets;
+}

@@ -18,10 +18,9 @@ $PAGE->requires->js('/blocks/library/js/barcode.js');
 //render the form
 $issue_form = new issue_book_form();
 if ($data = $issue_form->get_data()){
-    
+    //create an issue entry
 } else {
     //render the form
     $issue_form->display();
 }
-//$renderable = new view_available_books();
 echo $output->footer();

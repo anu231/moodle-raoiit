@@ -9,6 +9,8 @@ var field_selector = '#id_book_barcode';
 $(field_selector).focus();
 $(field_selector).scannerDetection(function(barcode,qty){
     console.log(barcode);
+    //fetch info for this book
+    //via ajax
 });
 
 

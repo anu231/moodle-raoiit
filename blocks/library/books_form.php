@@ -32,3 +32,14 @@ class add_books_form extends moodleform {
         $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
     }
 }
+
+class issue_book_form extends moodleform {
+    function definition(){
+        $mform =& $this->_form;
+        $mform->addElement('text', 'book_barcode', "barcode for the book");
+        $mform->setType('book_barcode', PARAM_TEXT);
+        $mform->addElement('text', 'student_username', "Student Username who is issuing the book");
+        $mform->setType('student_username', PARAM_INT); 
+        $this->add_action_buttons(true,'Issue Book');
+    }
+}

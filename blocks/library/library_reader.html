@@ -1,0 +1,45 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>index</title>
+    
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=no" />
+    <!--<link rel="stylesheet" type="text/css" href="css/styles.css" />-->
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script type='text/javascript' src='js/jquery.scannerdetection.min.js'></script>
+    <script type='text/javascript'>
+        var last_key_ts = 0;
+        var min_valid_diff = 5;//in ms
+        var delay = (function(){
+            var timer = 0;
+            return function(callback, ms){
+                clearTimeout (timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+        $(document).ready(function(){
+            //$('#barcode_value').hide();
+            $('#barcode_value').focus();
+            $('#barcode_value').scannerDetection(function(barcode,qty){
+                console.log(barcode);
+            });
+            
+
+            $("#barcode_value").on("input", function() {
+                delay(function(){
+                    if ($("#barcode_value").val().length < 8) {
+                        $("#barcode_value").val("");
+                    }
+                }, 20 );
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <input type='text' name='barcode' id='barcode_value'/>
+    </div>
+</body>
+</html>

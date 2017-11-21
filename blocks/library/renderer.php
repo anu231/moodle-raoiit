@@ -45,7 +45,7 @@ SQL;
         return $issued_books_array;
     }
 
-    private function export_for_template(renderer_base $output){
+    public function export_for_template(renderer_base $output){
         $data = $this->get_issued_books();
         return $data;
     }
@@ -62,7 +62,7 @@ class view_available_books implements renderable, templatable {
         }
         return $available_books_array;
     }
-    private function export_for_template(renderer_base $output){
+    public function export_for_template(renderer_base $output){
         $data = $this->get_available_books();
         return $data;
     }

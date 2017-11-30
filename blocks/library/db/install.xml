@@ -27,13 +27,13 @@
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
                 <FIELD NAME="bookid" TYPE="char" LENGTH="10" NOTNULL="false" SEQUENCE="false" />
-                <FIELD NAME="branch_issuer" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" />
+              <!-- <FIELD NAME="branch_issuer" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" />-->
                 <FIELD NAME="student_username" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" />
                 <FIELD NAME="issue_date" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" />
-                <FIELD NAME="limit_date" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" />
+              <!-- <FIELD NAME="limit_date" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" />-->
                 <FIELD NAME="return_date" TYPE="char" LENGTH="10" NOTNULL="false" SEQUENCE="false" />
                 <FIELD NAME="branch_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" />
-                <FIELD NAME="remark" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <!--<FIELD NAME="remark" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" />-->
                 <FIELD NAME="status" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" />
                 <!-- status => 0 issued, 1 returned, -1 lost/damaged -->
                 <!--<FIELD NAME="lost" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" />-->

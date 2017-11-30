@@ -10,3 +10,5 @@ $string['branch'] = 'Add Branch';
 $string['status'] = 'Set Status';
 $string['fine_status'] = 'Update Fine Status';
 $string['student_username'] = 'Student Roll Number';
+$string['issue'] = 'Book Issue';
+$string['return'] = 'Book Return';

@@ -11,6 +11,24 @@ $(field_selector).scannerDetection(function(barcode,qty){
     console.log(barcode);
     //fetch info for this book
     //via ajax
+     // $.getJSON({
+        $.getJSON({
+        method: 'post',
+        url: 'fetch_book_info.php',
+        data: 'barcode='+barcode,
+        success: function(resp){
+            $book_id=resp.bookid;
+            $volume=resp.volume;
+            $publisher=resp.publisher;
+            $author=resp.author;
+            alert("book Name : "+$book_id+"\nvolume : "+$volume+"\npublisher : "+$publisher+"\nauthor : "+$author);
+           return false;
+            //document.getElementById("book_id").innerHTML = $book_id;
+         }
+         //success function end
+    });
+   
+
 });
 
 

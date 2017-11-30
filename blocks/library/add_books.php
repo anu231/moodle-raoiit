@@ -1,6 +1,7 @@
 <?php
 require_once('../../config.php');
 require_once('books_form.php');
+//require_once('fetch_book_info.php');
 $PAGE->set_url('/blocks/library/add_books.php');
 if (is_siteadmin())
 {

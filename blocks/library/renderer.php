@@ -55,7 +55,7 @@ class view_available_books implements renderable, templatable {
     private function get_available_books(){
         global $USER, $DB;
         $center_id = get_user_center($USER->id);
-        $available_books = $DB->get_records('lib_bookmaster', array('status'=>0));
+        $available_books = $DB->get_records('lib_bookmaster', array('status'=>1,'branch'=>get_user_center()));
         $available_books_array = array();
         foreach($available_books as $book){
             $available_books_array[] = $book;
@@ -86,7 +86,7 @@ class view_all_books implements renderable,templatable {
             //array_push($user_list,$temp);
             $user_list[] = $temp;
         }
-        print_r($user_list);
+        //print_r($user_list);
         return $user_list;
     }
     public function export_for_template(renderer_base $output) {                                                                    

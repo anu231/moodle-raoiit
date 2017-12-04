@@ -69,7 +69,7 @@ function get_student_batches($link, $username){
     return $batches;
 }
 
-function get_timetable($start_date,$end_date,$username){
+function get_timetable($start_date,$end_date,$username=null,$batchids=null){
     /*$subj_map = array(
 		'p'=>'Physics',
 		'c'=>'Chemistry',
@@ -78,7 +78,13 @@ function get_timetable($start_date,$end_date,$username){
 		'b'=>'Botany'
     );*/
     $link = connect_analysis_db();
-    $batches = get_student_batches($link, $username);
+    $batches = null;
+    if ($username != null){
+        $batches = get_student_batches($link, $username);    
+    }else if ($batches != null){
+        $batches = $batchids;
+    }
+    
     $qry = "SELECT S.sid,S.batchid, S.lecturenum, S.testnum, S.date, S.from, S.to, S.facultyid, S.event, S.iscancel, S.istest, B.centreid, B.targetyear, B.batch, B.name AS batchname, C.name AS centrename, T.targetyear, T.batch, T.name AS classname, F.id AS ffid, F.name AS facultyname, F.shortname, F.type as facultytype, F.subject, Z.name as topicname, Y.type AS testtype FROM schedule AS S, ttbatches AS B, centreinfo AS C, classes AS T, facultyinfo AS F, topics AS Z, testtypes AS Y WHERE S.batchid=B.id AND B.centreid=C.id AND T.targetyear=B.targetyear AND T.batch=B.batch AND S.facultyid=F.id AND S.topicid=Z.id AND S.testtype=Y.id AND `date` >= '$start_date' AND `date` <= '$end_date' AND B.id IN ($batches) ORDER BY `date`, `from`";
     $res = $link->query($qry);
     if (!$res){
@@ -160,5 +166,25 @@ function get_ptm_records($username){
     }
     close_analysis_db($link);
     return $records;
+
+}
+
+function check_batch_access($batchid){
+    //checks if the current logged in user has access to the specified batch
+    //batchid is the batchid in analysis and not the id in moodle tables
+    //logic - 
+    //the branch admin will be enrolled in branchadmin course whereas the student will not be enrolled in one
+    global $USER, $CFG;
+    if ($USER->id == 0){
+        return False;
+    }
+    $course_context = context_course::instance($CFG->branchadmin_course_id);
+    if (is_enrolled($course_context, $USER)){
+        //enrolled in branchadmin, check the batches belonging  to the user's branch
+
+    } else{
+        //its a student
+        
+    }
 
 }

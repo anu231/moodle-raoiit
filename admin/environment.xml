@@ -1911,8 +1911,9 @@
         <ON_ERROR message="unicoderequired" />
       </FEEDBACK>
     </UNICODE>
-    <DATABASE level="required">
-      <VENDOR name="mariadb" version="5.5.31" />
+    <DATABASE level="optional">
+      <!--<VENDOR name="mariadb" version="5.5.5" />-->
+      <VENDOR name="mariadb" version="5.5.5.10.1.25.1" />
       <VENDOR name="mysql" version="5.5.31" />
       <VENDOR name="postgres" version="9.3" />
       <VENDOR name="mssql" version="10.0" />

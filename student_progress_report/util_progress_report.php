@@ -4,12 +4,6 @@ include('db_connect.php');
 include('active_batch.php');
 
 require __DIR__ . '/vendor/autoload.php';
-
-
-
-echo "<link href='css/bootstrap.css' rel='stylesheet'>  </style>";
-
-
 /*
     function for get all the active_user_info form batch
     arguments - $link_id(for connection), $key(active batch id)
@@ -291,8 +285,7 @@ function format_email_spr_data($user,$user_spr,$key){
     summary - sends email to user using SendGrid\Mail
 */
 function email_report($user,$user_spr,$format_spr_data){
-    include('config.php');
-    if(!empty($user_spr)){    
+    include('config.php');   
     $user_emails=$user['email'];
 
     $user_email_id=explode(",", $user_emails);
@@ -312,8 +305,8 @@ function email_report($user,$user_spr,$format_spr_data){
     Rao IIT Academy
     </td></tr></table>";
     
-    echo $email_message."<br/>";
-    echo "";
+    //echo $email_message."<br/>";
+    //echo "";
     $from = new SendGrid\Email("Rao IIT Notification", "sg@raoiit.com");
     $subject = "Performance Report - Rao IIT Academy";
 
@@ -340,14 +333,10 @@ function email_report($user,$user_spr,$format_spr_data){
     //For multiple email ids--------End
     $apiKey = "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";
     $sg = new \SendGrid($apiKey);
-
     $response = $sg->client->mail()->send()->post($mail);
     echo PHP_EOL;
     echo 'Sending Email to : '.$user['username'].PHP_EOL;
     echo $response->statusCode().PHP_EOL;
-    
-  }
-
 }
 
 
@@ -365,16 +354,22 @@ function close_analysis_db($link_id){
 require_once('config.php');
 global $test_spr;
 $link_id=connect_analysis_db();    // Database Connection 
-//$active_batch=get_active_batches($link_id);         // All active batches
-$active_batch=array("760"=>"ARJ1");
+$active_batch=get_active_batches($link_id);         // All active batches
+//$active_batch=array("760"=>"ARJ1");
+$student_found = False;
 foreach ($active_batch as $key => $value){ 
+    echo $value.PHP_EOL;
     $user=get_batch_user_info($link_id,$key);   // Userinfo of current batch
     $max = sizeof($user);
     //echo 'Total Users belonging to this batch - '.$max.PHP_EOL;
     for($i = 0; $i < $max;$i++){
-        //echo $user[$i]['userid'];
+        echo $user[$i]['userid'].PHP_EOL;
         $user_spr=get_user_spr($user[$i]);      // get student performance report
         //echo 'Formatted Email - '.PHP_EOL;
+        if (empty($user_spr)){
+            continue;
+        }
+        $student_found = True;
         $format_spr_data=format_email_spr_data($user[$i],$user_spr,$key);     // Email format
         email_report($user[$i],$user_spr,$format_spr_data);      // sends email to user 
         if ($test_spr){
@@ -382,10 +377,10 @@ foreach ($active_batch as $key => $value){
         }
 
     }
-    
+    if ($test_spr && $student_found){
+        break;
+    }
 }
-
-
 
 close_analysis_db($link_id);         // close database connection
 

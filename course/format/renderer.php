@@ -929,7 +929,7 @@ abstract class format_section_renderer_base extends plugin_renderer_base {
             } else {
                 echo $this->section_header($thissection, $course, false, 0);
                 if ($thissection->uservisible) {
-                    echo $this->courserenderer->course_section_rao_list($course, $thissection, $topic_cache);
+                    //echo $this->courserenderer->course_section_rao_list($course, $thissection, $topic_cache);
                     echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
                     echo $this->courserenderer->course_section_add_cm_control($course, $section, 0);
                 }

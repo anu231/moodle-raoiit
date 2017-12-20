@@ -2,7 +2,10 @@
 
 $services = array(
       'raowebservice' => array(             
-          'functions' => array ('local_raowebservice_user_info','local_raowebservice_user_course_info','local_raowebservice_user_paper_list','local_raowebservice_user_grievance_list','local_raowebservice_user_grievance_response'),
+          'functions' => array (
+              'local_raowebservice_user_info','local_raowebservice_user_course_info',
+              'local_raowebservice_user_paper_list','local_raowebservice_user_grievance_list',
+              'local_raowebservice_user_grievance_response','local_raowebservice_user_timetable'),
           'requiredcapability' => '',
           'restrictedusers' =>0,
           'enabled'=>1,
@@ -63,5 +66,12 @@ $functions = array(
         'type'        => 'write',
         'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
     ),
-     
+    'local_raowebservice_user_timetable' => array(
+        'classname'   => 'local_raowebservice_external',
+        'methodname'  => 'get_user_timetable',
+        'classpath'   => 'local/raowebservice/externallib.php',
+        'description' => 'Get the timetable of User',
+        'type'        => 'read',
+        'services' => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
+    ), 
 );

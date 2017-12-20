@@ -97,11 +97,13 @@ function get_timetable($start_date,$end_date,$username=null,$batchids=null){
         //$day = array();
         //foreach($lectures as $lecture){
         $tmp = array();
+        $tmp['sid'] = $lecture['sid'];
         $tmp['fancydate'] = date('Y-m-d',strtotime($lecture['date']));
         //$tmp['date'] = "{$lecture['d']}-{$lecture['m']}-{$lecture['y']}";
         $tmp['starttime'] = date('H:i',strtotime($lecture['from']));//$lecture['sh'].':'.$lecture['sm'];
         $tmp['endtime'] = date('H:i',strtotime($lecture['to']));//$lecture['eh'].':'.$lecture['em'];
         //$tmp['teacher'] = isset($lecture['sn']) ? $lecture['sn'] : '';
+        $tmp['istest'] = $lecture['istest'];//web service
         if ($lecture['istest']=='0'){
             $tmp['teacher'] = $lecture['shortname'];
             $tmp['subject'] = get_subject_name($lecture['subject']);
@@ -109,6 +111,10 @@ function get_timetable($start_date,$end_date,$username=null,$batchids=null){
             $tmp['notes'] = $lecture['event'];
         } else{
             $tmp['notes'] = $lecture['testtype'].'-'.$lecture['testnum'].' '.$lecture['event'];
+            //entering null values for the purpose of web service
+            $tmp['teacher'] = '';
+            $tmp['subject'] = '';
+            $tmp['topicname'] = '';
         }
         $tmp['cancelclass'] = $lecture['iscancel'] == '1' ? 'cancelled' : '';
         $tmp['batch'] = $lecture['centrename'].' - '.$lecture['batchname'];
@@ -127,6 +133,26 @@ function get_timetable($start_date,$end_date,$username=null,$batchids=null){
     }
     close_analysis_db($link);
     return $processed_lectures;
+}
+
+function get_week_start_end_dates(){
+    date_default_timezone_set("Asia/Calcutta");
+    /*$start_date = date("Y-m-d", strtotime('monday this week', strtotime(date('Y-m-d'))));
+    $end_date = date("Y-m-d", strtotime('sunday this week', strtotime(date('Y-m-d'))));*/
+    $ts = strtotime('now');
+    $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
+    $start_date = date('Y-m-d', $start);
+    $end_date = date('Y-m-d', strtotime('next sunday', $start));
+    if (date('w',$ts)==6){
+        $end_date = date('Y-m-d',strtotime('next sunday',strtotime($end_date)));
+    }
+    return array('start_date'=>$start_date,'end_date'=>$end_date);
+}
+
+function get_week_timetable(){
+    global $USER;
+    $dates = get_week_start_end_dates();
+    return get_timetable($dates['start_date'],$dates['end_date'],$USER->username);
 }
 
 function get_completed_topics($username){

@@ -137,7 +137,45 @@ class local_raowebservice_external extends external_api {
           return new external_value(PARAM_TEXT, 'Get User-grievance Responses');
     }
 
-    
+    ///////////////////////////////////Get Student Timetable///////////////////////////////////////////
+    public static function get_user_timetable_parameters(){
+        return new external_function_parameters(array());
+    }
+
+    public static function get_user_timetable(){
+        require_once('../../blocks/timetable/locallib.php');
+        return get_week_timetable();
+    }
+
+    public static function get_user_timetable_returns(){
+        return new external_function_parameters(
+            array(
+                new external_single_structure(
+                    array(
+                        //'day' => new external_value(PARAM_TEXT, 'day'),
+                        'items' => new external_multiple_structure(
+                            new external_single_structure(
+                                array(
+                                    'sid' => new external_value(PARAM_INT, 'schedule id'),
+                                    'fancydate' => new external_value(PARAM_TEXT, 'Fancy Date'),
+                                    'starttime'  => new external_value(PARAM_TEXT, 'start time'),
+                                    'endtime'  => new external_value(PARAM_TEXT, 'end time'),
+                                    'istest'  => new external_value(PARAM_INT, 'Is Test'),
+                                    'teacher'  => new external_value(PARAM_TEXT, 'Teacher'),
+                                    'subject'  => new external_value(PARAM_TEXT, 'Subject'),
+                                    'topicname'  => new external_value(PARAM_TEXT, 'Topic'),
+                                    'notes'  => new external_value(PARAM_TEXT, 'Notes'),
+                                    'cancelclass' => new external_value(PARAM_TEXT, 'Cancelled'),
+                                    'batch' => new external_value(PARAM_TEXT, 'Batch')
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 

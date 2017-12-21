@@ -72,3 +72,38 @@ function get_basic_student_info($username){
     $user->center = get_user_center_name($user->id);
     return $user;
 }
+
+function get_dlp_student_access(){
+    //checks whether the student is dlp, if yes whether he has to video, booklets or not
+    //check whether student is dlp
+    global $DB, $USER;
+    $sql = <<<EOT
+    select uif.shortname, uid.data 
+    from (select id, shortname from {user_info_field} where shortname in ('dlp', 'videoaccess', 'bookletaccess')) as uif 
+    join 
+    (select fieldid, data from {user_info_data} where userid=?) as uid 
+    on uif.id=uid.fieldid 
+EOT;
+    $user_data = $DB->get_records_sql($sql, array($USER->id));
+    $arr_access_control = Array();
+    $access_control = new stdClass();
+    foreach($user_data as $data){
+        $arr_access_control[$data->shortname] = $data->data;
+    }
+    if (array_key_exists('dlp', $arr_access_control)){
+        $access_control->dlp = $arr_access_control['dlp'];
+    } else {
+        $access_control->dlp = '0';
+    }
+    if (array_key_exists('videoaccess', $arr_access_control)){
+        $access_control->videoaccess = $arr_access_control['videoaccess'];
+    } else {
+        $access_control->videoaccess = '1';
+    }
+    if (array_key_exists('bookletaccess', $arr_access_control)){
+        $access_control->bookletaccess = $arr_access_control['bookletaccess'];
+    } else {
+        $access_control->bookletaccess = '1';
+    }
+    return $access_control;
+}

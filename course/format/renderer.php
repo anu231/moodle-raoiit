@@ -774,7 +774,10 @@ abstract class format_section_renderer_base extends plugin_renderer_base {
      */
     public function print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection) {
         global $PAGE;
-
+        global $CFG;
+        require_once($CFG->libdir.'/raolib.php');
+        global $access_control;
+        $access_control = get_dlp_student_access();
         $modinfo = get_fast_modinfo($course);
         $course = course_get_format($course)->get_course();
 
@@ -884,14 +887,6 @@ abstract class format_section_renderer_base extends plugin_renderer_base {
         // Now the list of sections..
         echo $this->start_section_list();
         $numsections = course_get_format($course)->get_last_section_number();
-        //load all rao topics
-        require_once(__DIR__.'/../../local/raotopiceditor/locallib.php');
-        //fetching the topic entry cache
-        $topic_cache = cache::make('local_raotopiceditor', 'topicentries');
-        if (!$topic_cache->get('topicentries') || $topic_cache->get('topicentries') == 0){
-            cache_topics_with_entries();
-        }
-        //$topic_content = null;//list_topics();
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
             if ($section == 0) {
                 // 0-section is displayed a little different then the others

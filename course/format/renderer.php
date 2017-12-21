@@ -774,10 +774,6 @@ abstract class format_section_renderer_base extends plugin_renderer_base {
      */
     public function print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection) {
         global $PAGE;
-        global $CFG;
-        require_once($CFG->libdir.'/raolib.php');
-        global $access_control;
-        $access_control = get_dlp_student_access();
         $modinfo = get_fast_modinfo($course);
         $course = course_get_format($course)->get_course();
 

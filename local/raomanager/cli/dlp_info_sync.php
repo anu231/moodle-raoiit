@@ -5,7 +5,7 @@ require_once($CFG->libdir.'/clilib.php');
 
 function get_student_dlp_info($username){
     global $DB;
-    $info_records = $DB->get_records_sql('select fid.id as id, fid.data as data, fid.fieldid as fieldid, fid.userid as userid, fid.shortname as fname from {user_info_data} as fid join {user_info_field} as fi join {user} as u on fid.userid=u.id and fid.fieldid=fi.id where u.username=? and fi.shortname in (?,?,?,?)',array($username,'dlp','videoaccess','bookletaccess','testaccess'));
+    $info_records = $DB->get_records_sql('select fid.id as id, fid.data as data, fid.fieldid as fieldid, fid.userid as userid, fi.shortname as fname from {user_info_data} as fid join {user_info_field} as fi join {user} as u on fid.userid=u.id and fid.fieldid=fi.id where u.username=? and fi.shortname in (?,?,?,?)',array($username,'dlp','videoaccess','bookletaccess','testaccess'));
     $ret_records = array();
     foreach($info_records as $rec){
         $ret_records[$rec->fieldid] = $rec;

@@ -5,7 +5,7 @@ require_once($CFG->libdir.'/clilib.php');
 
 function get_student_dlp_info($username){
     global $DB;
-    $info_records = $DB->get_records_sql('select fid.id as id, fid.data as data, fid.fieldid as fieldid, fid.userid as userid from {user_info_data} as fid join {user_info_field} as fi join {user} as u on fid.userid=u.id and fid.fieldid=fi.id where u.username=? and fi.shortname in (?,?,?)',array($username,'videoaccess','bookletaccess','testaccess'));
+    $info_records = $DB->get_records_sql('select fid.id as id, fid.data as data, fid.fieldid as fieldid, fid.userid as userid, fid.shortname as fname from {user_info_data} as fid join {user_info_field} as fi join {user} as u on fid.userid=u.id and fid.fieldid=fi.id where u.username=? and fi.shortname in (?,?,?,?)',array($username,'dlp','videoaccess','bookletaccess','testaccess'));
     $ret_records = array();
     foreach($info_records as $rec){
         $ret_records[$rec->fieldid] = $rec;
@@ -22,12 +22,13 @@ $field_map = array(
     'username'=>1,
     'videoaccess'=>7,
     'testaccess'=>8,
-    'bookletaccess'=>9
+    'bookletaccess'=>9,
+    'dlp'=>10
 );
 //get user list from csv file
-//get id codes for videoaccess, testaccess and bookletaccess
+//get id codes for videoaccess, testaccess and bookletaccess and dlp
 global $DB;
-$id_records = $DB->get_records_sql('select id, shortname from {user_info_field} where shortname in (?,?,?)', array('videoaccess', 'testaccess', 'bookletaccess'));
+$id_records = $DB->get_records_sql('select id, shortname from {user_info_field} where shortname in (?,?,?)', array('dlp','videoaccess', 'testaccess', 'bookletaccess'));
 $field_id_map = array();
 foreach($id_records as $rec){
     $field_id_map[$rec->shortname] = $rec->id;
@@ -50,6 +51,7 @@ if (($handle = fopen($filename, "r")) !== FALSE) {
         $student_info = get_student_dlp_info($data[$field_map['username']]);
         #print_r($student_info);
         echo $user->username.PHP_EOL;
+        $data[10] = '1';
         foreach($field_to_csv_map as $key=>$value){
             //check if this entry exists in student info
             #print_r($student_info[$key]);

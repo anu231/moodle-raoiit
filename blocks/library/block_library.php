@@ -11,7 +11,8 @@ class block_library extends block_list {
         }
         $this->content = new stdClass;
         $this->content->items = array();
-        if (is_siteadmin()){
+        $course_active = get_config('library','manager_course');
+        if ($COURSE->shortname == $course_active){
             $books_add_url = new moodle_url('/blocks/library/add_books.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
             $this->content->items[] = html_writer::link($books_add_url,"Add Books");
             $total_fine_url = new moodle_url('/blocks/library/view_total_fine.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
@@ -43,5 +44,5 @@ class block_library extends block_list {
           return false;
     }
 
-    function has_config() {return false;}         
+    function has_config() {return true;}         
 }

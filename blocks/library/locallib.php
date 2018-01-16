@@ -7,7 +7,7 @@ function compute_date_diff($issue_date,$return_date){
     $issue_date=date_create($issue_date);
     $return_date = date_create($return_date);
     $diff=date_diff($issue_date,$return_date);
-    return int($diff->format("%a"));
+    return $diff->format("%a");
 }
 
 function limit_date(){
@@ -24,3 +24,10 @@ function issue_date(){
     $book = $DB->get_records('lib_bookmaster', array("status"=>1,"barcode"=>357121072993705));
     return $book;
 }
+/*
+function get_instance(){
+    global $DB;
+    $instance = $DB->get_record('block_instances', array("blockname"=>"library"));
+    return $instance_id = $instance->id;
+}
+*/

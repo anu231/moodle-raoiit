@@ -12,3 +12,4 @@ $string['fine_status'] = 'Update Fine Status';
 $string['student_username'] = 'Student Roll Number';
 $string['issue'] = 'Book Issue';
 $string['return'] = 'Book Return';
+$string['student'] = 'Student Username who is issuing the book';

@@ -21,7 +21,8 @@ $(field_selector).scannerDetection(function(barcode,qty){
             $volume=resp.volume;
             $publisher=resp.publisher;
             $author=resp.author;
-            alert("book Name : "+$book_id+"\nvolume : "+$volume+"\npublisher : "+$publisher+"\nauthor : "+$author);
+            $price=resp.price;
+            alert("book Name : "+$book_id+"\nvolume : "+$volume+"\npublisher : "+$publisher+"\nauthor : "+$author+"\nprice : "+$price+"\nPlease verify above book info correct or not");
            return false;
             //document.getElementById("book_id").innerHTML = $book_id;
          }

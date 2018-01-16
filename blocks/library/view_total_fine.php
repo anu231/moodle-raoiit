@@ -7,13 +7,14 @@ require_login();
 global $DB, $USER, $CFG, $PAGE;
 $context = context_course::instance($CFG->branchadmin_courseid);
 if(is_enrolled($context, $USER->id, '', true)){
+$PAGE->set_url('/blocks/library/issued_books.php');
+$PAGE->set_pagelayout('standard');
+$PAGE->set_heading('View Issued books');
 $output = $PAGE->get_renderer('block_library');
-$renderable = new view_available_books();
+$renderable = new view_all_booksfine();
+
 echo $output->header();
 
-$PAGE->set_url('/blocks/library/available_books.php');
-$PAGE->set_pagelayout('standard');
-$PAGE->set_heading('View Available books');
 
 echo $output->render($renderable);
 echo $output->footer();
@@ -29,7 +30,7 @@ $lastname= $USER->lastname;
  $fullname=$firstname." ".$lastname;
 echo "<h5>Dear, $fullname </h5>";
 echo "<br>";
-echo "<h5>You are not Authorised Person to access this page</h5>";
+echo "<h5>You are not Authorised Person to view this page</h5>";
 echo $OUTPUT->continue_button($CFG->wwwroot);
 
 echo $OUTPUT->footer();

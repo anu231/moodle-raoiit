@@ -12,7 +12,6 @@ $barcode = required_param('barcode',PARAM_TEXT);
 $book_barcode = $DB->get_record('lib_bookmaster', array("status"=>1,"barcode"=>$barcode));
 $book_barcode_data=json_encode($book_barcode);
 echo $book_barcode_data;
-
 // get barcode from book library //
 
 

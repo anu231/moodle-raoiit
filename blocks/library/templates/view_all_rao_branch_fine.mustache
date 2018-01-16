@@ -1,0 +1,38 @@
+<div>
+    <h3>All Rao Branches Book Fine Submitted in HO</h3>
+    <table class="view_student_list_table_td_th view_student_list_table">
+      <tbody>
+      <tr>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Branch Center Code</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Amount (Rs.)</th>
+   
+      </tr>
+       {{#all_rao_branch_fine}}
+     <tr class="view_student_list_table_td_th ">
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px; text-align:left; text-align:center;">{{branch_id}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:left;text-align:center;">{{sumaount}}</td>
+   
+     </tr>
+     {{/all_rao_branch_fine}}
+
+    <p>Total Fine Collected : Rs.{{#all_rao_branch_fine}} <b style="color:#555;">{{totalamount}} </b> {{/all_rao_branch_fine}}</p>
+    {{^all_rao_branch_fine}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td" colspan="2" style="padding:5px; text-align:center;">There are no fine available in library</td>
+            </tr>
+    {{/all_rao_branch_fine}}
+        </tbody>
+    </table>
+</div>
+<style>
+.view_student_list_table_td_th {
+    border: 1px solid #ddd;
+}
+.view_student_list_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.view_student_list_th:hover  {
+    height: 10px;    border: 1px solid #ddd; background:#eaedef; font-weight:bold;
+}
+</style>

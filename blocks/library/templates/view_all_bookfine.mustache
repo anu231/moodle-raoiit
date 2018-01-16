@@ -1,0 +1,43 @@
+<div>
+    <h3>Pending Fine yet not submitted in HO</h3>
+    <table class="view_student_list_table_td_th view_student_list_table">
+      <tbody>
+      <tr>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Branch Center Code</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Amount(Rs.)</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Submitted By HO</th>
+      </tr>
+       {{#branch_book_fine}}
+     <tr class="view_student_list_table_td_th ">
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px; text-align:left; text-align:center;">{{branch_id}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:left;text-align:center;">{{sumaount}}</td>
+     <td class="view_student_list_th view_student_list_table_td_td" style='text-align:center;'><a onclick="branch_alert()" href='submitted_by_ho.php?branch_id={{branch_id}}'>Click to submit</a></td>
+     </tr>
+     {{/branch_book_fine}}
+
+      {{^branch_book_fine}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td" colspan="3" style=" text-align:center; padding:5px;">There are no pending fine in library</td>
+            </tr>
+    {{/branch_book_fine}}
+
+        </tbody>
+    </table>
+</div>
+<style>
+.view_student_list_table_td_th {
+    border: 1px solid #ddd;
+}
+.view_student_list_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.view_student_list_th:hover  {
+    height: 10px;    border: 1px solid #ddd; background:#eaedef; font-weight:bold;
+}
+</style>
+<script>
+function branch_alert() {
+    alert("Please ensure that an Authorised person submit fine in Head Office\nIf Fine submitted successfully then entry will be removed from here ");
+}
+</script>

@@ -1,0 +1,50 @@
+<div>
+        <h3><center>All Lost Books</center></h3>
+    <table class="view_student_list_table_td_th view_student_list_table">
+      <tbody>
+     <tr>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Id</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Name</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Volume</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Publisher</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Author</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Price</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Barcode</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Remark</th>
+            </tr>
+       {{#lost_books}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td">{{bookid}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{name}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{volume}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{publisher}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{author}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{price}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{barcode}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" >{{remark}}</td>
+            </tr>
+     {{/lost_books}}
+
+      {{^lost_books}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td" colspan="8" style="padding:5px; text-align:center;">There are no lost books in library</td>
+            </tr>
+    {{/lost_books}}
+        </tbody>
+    </table>
+</div>
+<style>
+   .view_student_list_table_td_th {
+   border: 1px solid #314c9a;
+   }
+   .view_student_list_table {
+   border-collapse: collapse;
+   width: 100%; text-align: center;  
+   }
+    .view_student_list_table_td_td {
+   border: 1px solid #ccc;   padding:5px;
+   }
+   .view_bg{ background:#21409a; color:#fff;}
+   h6{color:#21409a;}
+
+</style>

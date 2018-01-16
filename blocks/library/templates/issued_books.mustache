@@ -1,14 +1,56 @@
 <div>
-    <table>
+    <h3 align="center">Issued Books Records</h3>
+  
+<h6 align="right"><a href="#">Back to Page</a></h6>
+    <table class="view_student_list_table_td_th view_student_list_table" width="100%">
         <thead>
-            <th>Name</th>
+            <tr>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Id</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Name</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Price</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Student Roll Number</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Issue Date</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Return Date</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >If Lost Book</th>
+            </tr>
         </thead>
+        <tbody>
+    {{#issued_books}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td">{{bookid}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{name}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{price}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{student_username}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{issue_date}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{return_date}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td"><a onclick="branch_alert()" href="lost_book.php?issue_id={{id}}">Lost</a></td>
+            </tr>
+    {{/issued_books}}
+    
+    {{^issued_books}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td" colspan="7" style="padding:5px; text-align:center;">There are no issued books in library</td>
+            </tr>
+    {{/issued_books}}
+        </tbody>
     </table>
-    <tbody>
-        {{#issued_books}}
-        <tr>
-            <td>{{name}}</td>
-        </tr>
-        {{/issued_books}}
-    </tbody>
 </div>
+<style>
+   .view_student_list_table_td_th {
+   border: 1px solid #314c9a; 
+   }
+   .view_student_list_table {
+   border-collapse: collapse;
+   width: 100%; text-align: center;
+   }
+    .view_student_list_table_td_td {
+   border: 1px solid #ccc; 
+   }
+   .view_bg{ background:#21409a; color:#fff;}
+   h6{color:#21409a;}
+</style>
+<script>
+function branch_alert() {
+    alert("Please ensure that book is lost from Student only");
+}
+</script>

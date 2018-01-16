@@ -1,14 +1,75 @@
+
 <div>
-    <table>
+    <h3 align="center">Available Books Records</h3>
+
+    <table class="view_student_list_table_td_th view_student_list_table" width="100%">
         <thead>
-            <th>Name</th>
+            <tr>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Subject</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Id</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Name</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Volume</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Publisher</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Author</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Price</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Barcode</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >If Lost Book</th>
+            </tr>
         </thead>
+        <tbody>
+        
+    {{#available_books}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{subject}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{bookid}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{name}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{volume}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{publisher}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{author}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{price}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{barcode}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;"><a onclick="branch_alert()" href='lost_book_branch.php?book_id={{id}}'>Lost Book (From Branch)</a></td>
+            </tr>
+    {{/available_books}}
+    
+    {{^available_books}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td" colspan="9" style="padding:5px;">There are no books available in library</td>
+            </tr>
+    {{/available_books}}
+
+        </tbody>
     </table>
-    <tbody>
-        {{#available_books}}
-        <tr>
-            <td>{{name}}</td>
-        </tr>
-        {{/available_books}}
-    </tbody>
 </div>
+<style>
+   .view_student_list_table_td_th {
+   border: 1px solid #314c9a; 
+   }
+   .view_student_list_table {
+   border-collapse: collapse;
+   width: 100%; text-align: center;
+   }
+    .view_student_list_table_td_td {
+   border: 1px solid #ccc; 
+   }
+   .view_bg{ background:#21409a; color:#fff;}
+   h6{color:#21409a;}
+   
+   .btn-group .button {
+    background-color: #21409a; /* Green */
+    border: 1px solid blue;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    float: left;
+}
+</style>
+<script>
+function branch_alert() {
+    alert("Please ensure that book is lost from branch only");
+}
+</script>

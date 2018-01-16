@@ -5,15 +5,16 @@ require_once('renderer.php');
 require_once('locallib.php');
 require_login();
 global $DB, $USER, $CFG, $PAGE;
+$PAGE->set_url('/blocks/library/lost_update.php');
+$PAGE->set_pagelayout('standard');
+$PAGE->set_heading('View all lost books');
 $context = context_course::instance($CFG->branchadmin_courseid);
 if(is_enrolled($context, $USER->id, '', true)){
 $output = $PAGE->get_renderer('block_library');
-$renderable = new view_available_books();
+$renderable = new view_all_lost_books();
+
 echo $output->header();
 
-$PAGE->set_url('/blocks/library/available_books.php');
-$PAGE->set_pagelayout('standard');
-$PAGE->set_heading('View Available books');
 
 echo $output->render($renderable);
 echo $output->footer();

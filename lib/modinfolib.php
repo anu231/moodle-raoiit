@@ -2604,7 +2604,7 @@ class section_info implements IteratorAggregate {
         // Custom Data
         $section_custom_data = $DB->get_record('course_sections', array('id'=>$data->id)); 
         $this->_subject = $section_custom_data->subject;  // Inject subject      
-        $this->_raotopic = $section_custom_data->rao_topic;  // Inject Raotopic      
+        //$this->_raotopic = $section_custom_data->rao_topic;  // Inject Raotopic      
 
         // Cached course format data.
         $course = $modinfo->get_course();

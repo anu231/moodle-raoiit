@@ -24,7 +24,7 @@ function get_user_center($userid=null){
     } else{
         $user_id = $userid;
     }
-    $res = $DB->get_records('user_info_data',array('userid'=>$userid,'fieldid'=>$CFG->CENTER_FIELD_ID));
+    $res = $DB->get_record('user_info_data',array('userid'=>$user_id,'fieldid'=>$CFG->CENTER_FIELD_ID));
     if ($res != null){
         return $res->data;
     }else {

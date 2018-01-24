@@ -1,45 +1,117 @@
 
 <div>
-    <h3 align="center">Available Books Records</h3>
-
+    {{#books}}
+    <h3 align="center">Available Books at Center</h3>
+    
     <table class="view_student_list_table_td_th view_student_list_table" width="100%">
         <thead>
             <tr>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg" >Subject</th>
-                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Id</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Name</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg" >Volume</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg" >Publisher</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg" >Author</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg" >Price</th>
-                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Barcode</th>
+                {{#branchadmin}}
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Id</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg" >If Lost Book</th>
+                {{/branchadmin}}
             </tr>
         </thead>
         <tbody>
         
-    {{#available_books}}
+    {{#available}}
             <tr>
                 <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{subject}}</td>
-                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{bookid}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{name}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{volume}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{publisher}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{author}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{price}}</td>
-                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{barcode}}</td>
-                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;"><a onclick="branch_alert()" href='lost_book_branch.php?book_id={{id}}'>Lost Book (From Branch)</a></td>
+                {{#branchadmin}}
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{bookid}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;"><a onclick="branch_alert()" href='lost_book.php?book_id={{bookid}}&from=branch'>Lost Book (From Branch)</a></td>
+                {{/branchadmin}}
             </tr>
-    {{/available_books}}
-    
+    {{/available}}
+    <!--
     {{^available_books}}
             <tr>
                 <td class="view_student_list_th view_student_list_table_td_td" colspan="9" style="padding:5px;">There are no books available in library</td>
             </tr>
     {{/available_books}}
-
+    -->
         </tbody>
     </table>
+    <h3 align="center">Issued Books</h3>
+    <table class="view_student_list_table_td_th view_student_list_table" width="100%">
+        <thead>
+            <tr>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Subject</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Name</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Volume</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Publisher</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Author</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Price</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Expected Return Date</th>
+                {{#branchadmin}}
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Issued to</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >If Lost Book</th>
+                {{/branchadmin}}
+            </tr>
+        </thead>
+        <tbody>
+        
+    {{#issued}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{subject}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{name}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{volume}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{publisher}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{author}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{price}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{return_date}}</td>
+                {{#branchadmin}}
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{student}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;"><a href='lost_book.php?book_id={{bookid}}&from=student&issue_id={{issue_id}}'>Lost Book (From Student)</a></td>
+                {{/branchadmin}}
+            </tr>
+    {{/issued}}
+        </tbody>
+    </table>
+    {{#branchadmin}}
+    <h3 align="center">Lost Books</h3>
+    <table class="view_student_list_table_td_th view_student_list_table" width="100%">
+        <thead>
+            <tr>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Subject</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Name</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Volume</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Publisher</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Author</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Price</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Book Id</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" >Lost Remark</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+    {{#lost}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{subject}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{name}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{volume}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{publisher}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{author}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{price}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{bookid}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td" style="padding:5px;">{{book_remark}}</td>
+            </tr>
+    {{/lost}}
+        </tbody>
+    </table>
+    {{/branchadmin}}
+    {{/books}}
 </div>
 <style>
    .view_student_list_table_td_th {

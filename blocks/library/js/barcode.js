@@ -17,13 +17,24 @@ $(field_selector).scannerDetection(function(barcode,qty){
         url: 'fetch_book_info.php',
         data: 'barcode='+barcode,
         success: function(resp){
-            $book_id=resp.bookid;
-            $volume=resp.volume;
-            $publisher=resp.publisher;
-            $author=resp.author;
-            $price=resp.price;
-            alert("book Name : "+$book_id+"\nvolume : "+$volume+"\npublisher : "+$publisher+"\nauthor : "+$author+"\nprice : "+$price+"\nPlease verify above book info correct or not");
-           return false;
+            book_id=resp.bookid;
+            volume=resp.volume;
+            publisher=resp.publisher;
+            author=resp.author;
+            price=resp.price;
+            var main_region = document.getElementById('region-main');
+            var para = document.createElement("p");
+            //var node = document.createTextNode(
+            var p_ihtml = "book Name : "+resp.bookid+
+            "<br>volume : "+resp.volume+
+            "<br>publisher : "+resp.publisher+
+            "<br>author : "+resp.author+
+            "<br>Please verify above book info correct or not";
+            //para.appendChild(node);
+            para.innerHTML = p_ihtml;
+            main_region.appendChild(para);
+            //alert("book Name : "+$book_id+"\nvolume : "+$volume+"\npublisher : "+$publisher+"\nauthor : "+$author+"\nprice : "+$price+"\nPlease verify above book info correct or not");
+            return false;
             //document.getElementById("book_id").innerHTML = $book_id;
          }
          //success function end

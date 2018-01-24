@@ -70,12 +70,19 @@ class lost_books_form extends moodleform {
         $mform =& $this->_form;
         $mform->addElement('hidden', 'issue_id','Lost Issue Id');
         $mform->setType('issue_id', PARAM_INT);
-        $mform->setDefault('issue_id',$this->_customdata['lost_issue_id']);
+        $mform->setDefault('issue_id',$this->_customdata['issue_id']);
         
-        $mform->addElement('static', 'static_student_username', 'Student Roll Number',
-        $this->_customdata['lost_student_username']);
+        $mform->addElement('hidden', 'book_id','Lost Book Id');
+        $mform->setType('book_id', PARAM_INT);
+        $mform->setDefault('book_id',$this->_customdata['book_id']);
 
-        $mform->addElement('hidden', 'lost_student_username','Student Roll Number','maxlength="6"');
+        $mform->addElement('hidden', 'from','Lost From');
+        $mform->setType('from', PARAM_TEXT);
+        $mform->setDefault('from',$this->_customdata['from']);
+        //$mform->addElement('static', 'static_student_username', 'Student Roll Number',
+        //$this->_customdata['lost_student_username']);
+
+        /*$mform->addElement('hidden', 'lost_student_username','Student Roll Number','maxlength="6"');
         $mform->setType('lost_student_username', PARAM_INT);
         $mform->setDefault('lost_student_username',$this->_customdata['lost_student_username']);
         
@@ -84,16 +91,16 @@ class lost_books_form extends moodleform {
 
         $mform->addElement('hidden', 'lost_bookid','Lost Book Id');
         $mform->setType('lost_bookid', PARAM_INT);
-        $mform->setDefault('lost_bookid',$this->_customdata['lost_bookid']);
+        $mform->setDefault('lost_bookid',$this->_customdata['lost_bookid']);*/
         
         $mform->addElement('textarea', 'lost_remark', 'Remark', 'wrap="virtual" rows="10" cols="50",required');
         $mform->setType('lost_remark', PARAM_RAW);
 
-        $lost_options = array('-1' => 'Lost Book from Student');
-        $select = $mform->addElement('select', 'lost_status','Lost Status',$lost_options);
-        $select->setSelected('-1');
+        /*$lost_options = array('-1' => 'Lost Book from Student');*/
+        //$select = $mform->addElement('select', 'lost_status','Lost Status',$lost_options);
+        //$select->setSelected('-1');
         $buttonarray=array();
-        $buttonarray[] = $mform->createElement('submit', 'submit', "Lost Book from Student");
+        $buttonarray[] = $mform->createElement('submit', 'submit', "Update Lost Book");
         $buttonarray[] = $mform->createElement('cancel');
         $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
     }
@@ -151,21 +158,21 @@ class lost_books_form extends moodleform {
                 $mform->setType('fine_amount', PARAM_INT);
                 $mform->setDefault('fine_amount',$this->_customdata['fine_amount']);
                 
-                $mform->addElement('static', 'static_lost_bookname', 'Branch Issuer',
+                /*$mform->addElement('static', 'static_lost_bookname', 'Branch Issuer',
                 $this->_customdata['branch_issuer']);
 
                 $mform->addElement('hidden', 'branch_issuer','Branch Issuer');
                 $mform->setType('branch_issuer', PARAM_INT);
-                $mform->setDefault('branch_issuer',$this->_customdata['branch_issuer']);
+                $mform->setDefault('branch_issuer',$this->_customdata['branch_issuer']);*/
                 
                 $mform->addElement('textarea', 'fine_remark', 'Remark', 'wrap="virtual" rows="10" cols="50",required');
                 $mform->setType('fine_remark', PARAM_RAW);
         
-                $fine_options = array('1' => 'Pay Fine');
-                $select = $mform->addElement('select', 'fine_status','Pay Status',$fine_options);
-                $select->setSelected('1');
+                //$fine_options = array('1' => 'Pay Fine');
+                //$select = $mform->addElement('select', 'fine_status','Pay Status',$fine_options);
+                //$select->setSelected('1');
                 $buttonarray=array();
-                $buttonarray[] = $mform->createElement('submit', 'submit', "Lost Books");
+                $buttonarray[] = $mform->createElement('submit', 'submit', "Pay Fine");
                 $buttonarray[] = $mform->createElement('cancel');
                 $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
             }
@@ -212,8 +219,8 @@ class issue_book_form extends moodleform {
             if(!empty($issue_rec)){
                 $curr_date = date('Y-m-d');
                 $return_date = $issue_rec->return_date;
-                //$curr_date.'-'.$return_date;
-                $next_issue_date = date('Y-m-d', strtotime($return_date.'7 days'));
+                $reissue_days = get_config('library','reissue');
+                $next_issue_date = date('Y-m-d', strtotime($return_date.$reissue_days.' days'));
                 if($curr_date <= $next_issue_date){
                     $errors['book_barcode'] = 'You are not allowed to take this book till after '.$next_issue_date;
                 } 

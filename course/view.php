@@ -56,7 +56,12 @@
     }
 
     require_login($course);
-
+    ////////setup rao access control///////////////////////////////
+    global $CFG;
+    require_once($CFG->libdir.'/raolib.php');
+    global $access_control;
+    $access_control = get_dlp_student_access();
+    ///////////////////////////////////////////////////////////////
     // Switchrole - sanity check in cost-order...
     $reset_user_allowed_editing = false;
     if ($switchrole > 0 && confirm_sesskey() &&

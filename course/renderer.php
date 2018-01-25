@@ -835,6 +835,7 @@ class core_course_renderer extends plugin_renderer_base {
      * @return string
      */
     public function course_section_cm($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
+        global $access_control;
         $output = '';
         // We return empty string (because course module will not be displayed at all)
         // if:
@@ -846,7 +847,15 @@ class core_course_renderer extends plugin_renderer_base {
         if (!$mod->is_visible_on_course_page()) {
             return $output;
         }
-
+        if ($access_control->dlp == '1'){
+            //check video and booklet access
+            //echo $mod->name.'|'.$mod->modname.'|'.$access_control->videoaccess.'<br>';
+            if ($mod->modname == 'url'  && strpos($mod->name, 'Video') !== False && $access_control->videoaccess == '0'){
+                return $output;
+            } else if ($mod->modname == 'raobooklet' && $access_control->bookletaccess == '0'){
+                return $output;
+            }
+        }
         $indentclasses = 'mod-indent';
         if (!empty($mod->indent)) {
             $indentclasses .= ' mod-indent-'.$mod->indent;

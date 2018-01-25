@@ -12,6 +12,7 @@
         "mikey179/vfsStream": "^1.6"
     },
     "require":{
-        "phpmailer/phpmailer": "^5.2"
+        "phpmailer/phpmailer": "^5.2",
+        "sendgrid/sendgrid": "^6.0"
     }
 }

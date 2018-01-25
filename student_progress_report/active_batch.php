@@ -12,6 +12,7 @@ function get_active_batches($link_id){
     if(mysqli_num_rows($result) > 0){
         while ($row=mysqli_fetch_assoc($result)){
             $data[$row['id']] = $row['name'];
+            echo $row['name'].PHP_EOL;
         }
     }
     return $data;        

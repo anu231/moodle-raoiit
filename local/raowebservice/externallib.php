@@ -2,81 +2,180 @@
 
 require_once($CFG->libdir . "/externallib.php");
 require_once($CFG->dirroot.'/user/profile/lib.php');
-////////////////////////////////////////////////// Rao Web Services ////////////////////////////////////////////////////////////////
+//require_once('/locallib.php');
+require_once("$CFG->dirroot/local/raowebservice/locallib.php");
+require_once("$CFG->dirroot/enrol/externallib.php");
+///////////////////////////// Rao Web Services /////////////////////////////////////
 
 class local_raowebservice_external extends external_api {
 
  
-    public static function list_user_parameters() {
+    
+/////////////////////////////////// Rao Web Services - User Info/////////////////////////////////////////
+
+    public static function user_info_parameters() {
         return new external_function_parameters(
-               array('courseid' => new external_value(PARAM_INT, 'grievance categories name list', VALUE_REQUIRED))
+            array()
         );
     }
 
-    public static function list_user($courseid) {
-     global $USER, $DB;
+    public static function user_info() {
+        global $USER;
+        return json_encode($USER);
+        
+        }
+   
+    
+    public static function user_info_returns() {
+          return new external_value(PARAM_TEXT, 'Get User Information');
+    }
 
-        //Parameter validation
-        //REQUIRED
-        $params = self::validate_parameters(self::list_user_parameters(),
-                  array('courseid' => $courseid));
+    /////////////////////////////////// Rao Web Services - Course Information /////////////////////////////////////////
 
-        //Context validation
-        //OPTIONAL but in most web service it should present
-        $context = get_context_instance(CONTEXT_USER, $USER->id);
-        self::validate_context($context);
+    public static function get_course_info_parameters() {
+        return new external_function_parameters(
+            array()
+        );
+    }
 
-        //Capability checking
-        //OPTIONAL but in most web service it should present
-       
+    public static function get_course_info() {
+        
+        global $USER, $DB;
+        $userid = $USER->id;
 
-       $grievance_name = $DB->get_records('grievance_entries',array());
-       return json_encode((array)$grievance_name) ;
+        $course_info = core_enrol_external::get_users_courses($userid);
+        
+        $courseid  = $course_info[0]['id'];
+        echo $courseid;
 
+        $course_info = json_encode($course_info);
+        
+        return $course_info;
+
+        }
+   
+    
+    public static function get_course_info_returns() {
+          return new external_value(PARAM_TEXT, 'Get Course Information');
+    }
+
+    /////////////////////////////////// Rao Web Services - Paper List /////////////////////////////////////////
+
+    public static function get_user_paper_list_parameters() {
+        return new external_function_parameters(
+            array()
+        );
+    }
+
+    public static function get_user_paper_list() {
+        
+        global $USER, $DB;
+        $userid = $USER->id;
+
+        $course_info = core_enrol_external::get_users_courses($userid);
+        $courseid  = $course_info[0]['id'];
+
+        //echo $courseid;
+        $paper_list = get_paper_list($courseid);
+        return json_encode($paper_list);
+
+        }
+   
+    
+    public static function get_user_paper_list_returns() {
+          return new external_value(PARAM_TEXT, 'Get user Course paper list');
+    }
+
+
+    /////////////////////////////////// Rao Web Services - User-grievance /////////////////////////////////////////
+
+    public static function get_user_grievance_list_parameters() {
+        return new external_function_parameters(
+            array()
+        );
+    }
+
+    public static function get_user_grievance_list() {
+        
+        $grievance_list = get_grievance_list();
+        return json_encode($grievance_list);
     }
    
     
-    public static function list_user_returns() {
-          return new external_value(PARAM_TEXT, 'List of grievance categories availbale in the specified course');
+    public static function get_user_grievance_list_returns() {
+          return new external_value(PARAM_TEXT, 'Get User-grievance list');
     }
 
-}
 
-////////////////////////////////////////////////// User Profile Web Services ////////////////////////////////////////////////////////////////
-class local_raowebservice_profile extends external_api {
+    //////////////////// Rao Web Services - User-grievance Responses ///////////////////////////
 
-    public static function raouser_profile_update_parameters() {
+    public static function get_user_grievance_response_parameters() {
         return new external_function_parameters(
-                array('username' => new external_value(PARAM_TEXT, 'User name whose info is to be modified', VALUE_REQUIRED),
-                        'field' => new external_value(PARAM_TEXT, 'Field name whose info is going to be modified', VALUE_REQUIRED),
-                        'value' => new external_value(PARAM_TEXT, 'New Value of the field', VALUE_REQUIRED),
-                )
+            array()
         );
     }
 
-    public static function raouser_profile_update($username, $field, $value) {
-        global $USER, $DB ,$CFG ;
-
-        //check if the user is site admin
-        /*if (!is_siteadmin($USER->id)){
-            //user is not admin deny webservice
-            return json_encode(array('status'=>'Failed','Info'=>'Only admin has access to this service'));
-        }*/
-
-        $params = self::validate_parameters(self::raouser_profile_update_parameters(), array('username' => $username,'field'=>$field,'value'=>$value));
-
-        $user_data = $DB->get_record('user',array('username' => $username),'id',$strictness=IGNORE_MULTIPLE);
-
-        $new_user = new stdClass();
-        $new_user->id= $user_data->id;
-
-        profile_load_data($new_user);
-        $new_user->$field = $value;
-        profile_save_data($new_user);
-        return json_encode((array)$new_user);
+    public static function get_user_grievance_response() {
+        
+        $grievance_list = get_grievance_list();
+        
+        $greivance_id = array();
+        $greivance_response = array();
+        foreach ($grievance_list as $key => $value) {
+            $greivance_id[] = $grievance_list[$key]->id;
+        }
+        
+        foreach ($greivance_id as $key => $value) {
+            $greivance_response[] = get_greivance_response($value);
+        }
+        
+        return json_encode($greivance_response);
+    }
+   
+    
+    public static function get_user_grievance_response_returns() {
+          return new external_value(PARAM_TEXT, 'Get User-grievance Responses');
     }
 
-    public static function raouser_profile_update_returns() {
-        return new external_value(PARAM_RAW, 'userdata');
+    ///////////////////////////////////Get Student Timetable///////////////////////////////////////////
+    public static function get_user_timetable_parameters(){
+        return new external_function_parameters(array());
     }
+
+    public static function get_user_timetable(){
+        require_once('../../blocks/timetable/locallib.php');
+        return get_week_timetable();
+    }
+
+    public static function get_user_timetable_returns(){
+        return new external_function_parameters(
+            array(
+                new external_single_structure(
+                    array(
+                        //'day' => new external_value(PARAM_TEXT, 'day'),
+                        'items' => new external_multiple_structure(
+                            new external_single_structure(
+                                array(
+                                    'sid' => new external_value(PARAM_INT, 'schedule id'),
+                                    'fancydate' => new external_value(PARAM_TEXT, 'Fancy Date'),
+                                    'starttime'  => new external_value(PARAM_TEXT, 'start time'),
+                                    'endtime'  => new external_value(PARAM_TEXT, 'end time'),
+                                    'istest'  => new external_value(PARAM_INT, 'Is Test'),
+                                    'teacher'  => new external_value(PARAM_TEXT, 'Teacher'),
+                                    'subject'  => new external_value(PARAM_TEXT, 'Subject'),
+                                    'topicname'  => new external_value(PARAM_TEXT, 'Topic'),
+                                    'notes'  => new external_value(PARAM_TEXT, 'Notes'),
+                                    'cancelclass' => new external_value(PARAM_TEXT, 'Cancelled'),
+                                    'batch' => new external_value(PARAM_TEXT, 'Batch')
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 }
+
+

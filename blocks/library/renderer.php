@@ -19,7 +19,7 @@ class block_library_renderer extends plugin_renderer_base {
 
     public function render_view_available_books($page){
         $data = array();
-        $data['available_books'] = $page->export_for_template($this);
+        $data['books'] = $page->export_for_template($this);
         return $this->render_from_template('block_library/available_books', $data);
     }
 
@@ -33,10 +33,10 @@ class block_library_renderer extends plugin_renderer_base {
         $data['lost_books'] = $page->export_for_template($this);
         return $this->render_from_template('block_library/lost_books', $data);
     }
-    public function render_view_student_fine($page){
+    public function render_view_paid_fine($page){
         $data = array();
-        $data['view_student_fine'] = $page->export_for_template($this);
-        return $this->render_from_template('block_library/view_student_fine', $data);
+        $data['view_paid_fine'] = $page->export_for_template($this);
+        return $this->render_from_template('block_library/view_paid_fine', $data);
     }
     public function render_view_all_booksfine($page){
         $data = array();
@@ -86,21 +86,66 @@ SQL;
 }
 
 class view_available_books implements renderable, templatable {
-    //
+    var $branchadmin = null;
+
+    public function __construct($branchadmin){
+        $this->branchadmin = $branchadmin;
+    }
+
     private function get_available_books(){
-     
        global $USER, $DB;
        $center_id = get_user_center($USER->id);
-       $available_books = $DB->get_records('lib_bookmaster', array('status'=>1,'issued'=>0,'branch'=>$center_id));
-       $available_books_array = array();
-        foreach($available_books as $book){
-            $available_books_array[] = $book;
-           
-        }
-        //print_r($available_books_array);
-        return $available_books_array;
-   
-}
+       $total_books = $DB->get_records('lib_bookmaster', array('branch'=>$center_id));
+       $book_records_sql = <<<SQL
+       select bm.id as bookid, bm.status as status,
+              bm.name as name, bm.subject as subject,bm.publisher as publisher, bm.volume as volume, bm.author as author, bm.price as price, bm.remark as book_remark,
+              issue_rec.student_username as student, issue_rec.id as issue_id, issue_rec.issue_date as issue_date, issue_rec.return_date as return_date
+       from {lib_bookmaster} as bm left outer join (select * from {lib_issue_record} where status=0) as issue_rec on bm.id=issue_rec.bookid
+       where bm.branch=?
+SQL;
+       $book_records = $DB->get_records_sql($book_records_sql, array($center_id));
+       
+       /*$issued_records_sql = <<<EOT
+       select * from {lib_bookmaster} as bm join {lib_issue_record} as record on bm.id=record.bookid
+       where bm.branch=? and bm.issued=1 and bm.status=1
+EOT;
+       $issued_records = $DB->get_records_sql($issued_records_sql,array($center_id));*/
+       $available_books = array();
+       $issued_books = array();
+       $lost_books = array();
+       foreach($book_records as $book_entry){
+           if ($book_entry->status == '-1'){
+               //lost book
+               array_push($lost_books, $book_entry);
+           }else if ($book_entry->issue_id == null){
+               //available book
+               array_push($available_books, $book_entry);
+           } else if ($book_entry->issue_id != null){
+               //issued book
+               array_push($issued_books, $book_entry);
+           }
+       }
+       /*foreach($total_books as $book){
+           //$available_books_array[] = $book;
+           if ($book->status == '-1'){
+               array_push($lost_books, $book);
+           } else{
+               array_push($available_books, $book);
+           }
+       }
+       foreach($issued_records as $book){
+           //get the expected return date
+           array_push($issued_books, $book);
+       }*/
+       $books = new stdClass();
+       $books->available = $available_books;
+       $books->issued = $issued_books;
+       if ($this->branchadmin){
+           $books->lost = $lost_books;
+       }
+       $books->branchadmin = $this->branchadmin;
+       return $books;
+    }
     public function export_for_template(renderer_base $output){
         $data = $this->get_available_books();
         return $data;
@@ -116,8 +161,8 @@ class view_fine_books implements renderable, templatable {
         //
         $sql = <<<SQL
         select issue.id as issue_id,issue.bookid,fine.id as fineid,fine.student_username,fine.issue_id,fine.amount,fine.branch_issuer,fine.remark,fine.paid
-        from {lib_issue_record} as issue join {lib_fine_record} as fine
-        on issue_id = fine.issue_id
+        from {lib_issue_record} as issue join {lib_fine_record} as fine join {lib_bookmaster} as book
+        on issue.id = fine.issue_id and book.id = issue.bookid
         where issue.student_username = fine.student_username and paid = 0 and issue.branch_id=?
 SQL;
         $issued_books = $DB->get_records_sql($sql,array($center_id));
@@ -184,8 +229,8 @@ class view_all_lost_books implements renderable, templatable {
     }
 }
 //
-class view_student_fine implements renderable, templatable {
-    private function get_student_fine(){
+class view_paid_fine implements renderable, templatable {
+    private function get_paid_fines(){
         global $USER, $DB;
         $center_id = get_user_center($USER->id);
         $toatal_amount=NULL;
@@ -194,7 +239,7 @@ class view_student_fine implements renderable, templatable {
         select issue.id as newissueid,issue.bookid, issue.branch_id as issuebranch_id,fine.student_username,fine.id as fineid,fine.branch_id as finebranch_id, fine.amount,fine.branch_issuer,fine.paid,fine.remark,book.name, book.bookid as newbookid
         from {lib_issue_record} as issue join {lib_fine_record} as fine
         on issue.id = fine.issue_id join {lib_bookmaster} book on book.id = issue.bookid
-        where issue.student_username = fine.student_username and issue.branch_id = fine.branch_id and fine.paid=1
+        where fine.paid=1
 SQL;
         // added branch_id in where condition //
       $fine = $DB->get_records_sql($sql,array($center_id));
@@ -208,7 +253,7 @@ SQL;
         return $paid_fine_entry;
     }
     public function export_for_template(renderer_base $output){
-        $data = $this->get_student_fine();
+        $data = $this->get_paid_fines();
         return $data;
     }
 }

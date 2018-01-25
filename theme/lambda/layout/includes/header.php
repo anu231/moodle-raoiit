@@ -156,11 +156,11 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 		$st_encoded = base64_encode($st);
 		$hash_encoded = base64_encode($hash_msg);
 		$nonce_enc = base64_encode($nonce);
-		echo '<div style="text-align:right; position:relative; display:block;">'.
-			 '<a style="padding-right:105px; display:block;" href="'.$CFG->discussions_url.'" target="_blank">Discussions Forum</a>'.
+		//'<div style="text-align:right; position:relative; display:block;">'.
+		echo '<a style="padding-right:105px; display:block;" href="'.$CFG->discussions_url.'" target="_blank">Discussions Forum</a>'.
 			 '<a style="padding-right:105px; display:block;" href="'.$CFG->old_portal_url.'sig='.$st_encoded.'&hash='.$hash_encoded.'&nonce='.$nonce_enc.'" target="_blank">Old Portal</a>';
-		echo '</div>';
-		echo '</div>';
+		//echo '</div>';
+		//echo '</div>';
 
 	}?>
 

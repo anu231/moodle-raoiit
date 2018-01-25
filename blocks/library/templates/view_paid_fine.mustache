@@ -11,7 +11,7 @@
       <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Remark</th>
 
       </tr>
-       {{#view_student_fine}}
+       {{#view_paid_fine}}
      <tr class="view_student_list_table_td_th ">
      <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{newbookid}}</td>
      <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{name}}</td>
@@ -20,13 +20,13 @@
      <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{branch_issuer}}</td>
      <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{remark}}</td>
      </tr>
-     {{/view_student_fine}}
+     {{/view_paid_fine}}
 
-    {{^view_student_fine}}
+    {{^view_paid_fine}}
             <tr>
                 <td class="view_student_list_th view_student_list_table_td_td" colspan="7" style="padding:5px; text-align:center;">There are no paid fine available in library</td>
             </tr>
-    {{/view_student_fine}}
+    {{/view_paid_fine}}
      
         </tbody>
     </table>

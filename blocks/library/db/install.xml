@@ -21,6 +21,7 @@
                 <FIELD NAME="issued" TYPE="int" LENGTH="3" NOTNULL="false" SEQUENCE="false" />
                 <FIELD NAME="remark" TYPE="char" LENGTH="200" NOTNULL="false" SEQUENCE="false" />
                 <FIELD NAME="status" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
+                <FIELD NAME="is_scanned" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" />
                 <!--status = 0 available, 1 issued, -1 lost or out of system -->
             </FIELDS>
             <KEYS>

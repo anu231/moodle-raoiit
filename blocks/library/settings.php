@@ -1,8 +1,8 @@
 <?php
-$day_setting = new admin_setting_configtext(
-            'library/issuedays',
+$day_setting = new admin_setting_text(
+            'library_issuedays',
             'Days to return the book in',
-            'Standard days the book should be returned in','7'
+            'Standard days the book should be returned in'
         );
 $settings->add($day_setting);
 

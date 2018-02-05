@@ -1,0 +1,75 @@
+<div>
+    <h3 align="center">ID Cards</h3>
+  <script>var p1 = "success";</script>
+<h6 align="right"><a href="#">Back to Page</a></h6>
+<form action='view_student_idcard.php?idcard_id' method='POST'>
+    <table class="view_student_list_table_td_th view_student_list_table" width="100%">
+        <thead>
+       
+            <tr>
+             <th class="view_student_list_th view_student_list_table_td_th view_bg"><input type="checkbox" class="po_status" id="checkAll" ></th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Roll Number</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Pic</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Student Fullname</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Center</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Student Course</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Student Target Year</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Mobile No</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">ID Card Valid Date</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Print</th>
+            </tr>
+        </thead>
+        <tbody>
+    {{#view_idcards}}
+            <tr>
+            <td class="view_student_list_th view_student_list_table_td_td">
+                <input type="checkbox" class="checkItem" name="select_idcard[]"  value="{{id}}">
+            </td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{student_username}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">
+                <img src='{{src}}' style='width:80px;'/></td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{student_fullname}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{branch}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{student_course}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{student_targetyear}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{student_mobile_number}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{idcard_valid}}</td>
+                
+                <td class="view_student_list_th view_student_list_table_td_td"><a href="view_student_idcard.php?idcard_id={{id}}">Print</a></td>
+            </tr>
+          
+    {{/view_idcards}}
+  
+        </tbody>
+    </table>
+    <input type="submit" name="print" value="Print" id='btnApprovepo' style="display:none;" />    
+ <form>
+    
+</div>
+<style>
+   .view_student_list_table_td_th {
+   border: 1px solid #314c9a; 
+   }
+   .view_student_list_table {
+   border-collapse: collapse;
+   width: 100%; text-align: center;
+   }
+    .view_student_list_table_td_td {
+   border: 1px solid #ccc; 
+   }
+   .view_bg{ background:#21409a; color:#fff;}
+   h6{color:#21409a;}
+</style>
+ <script type="text/javascript">
+    $('#checkAll').click(function () {    
+    $(':checkbox.checkItem').prop('checked', this.checked);    
+ });		
+
+ $('.po_status').click(function () {
+    if($(".po_status:checked").length === 1 && $("#checkAll").is(":checked") == true){
+         $('#btnApprovepo').show();
+    } else {
+         $('#btnApprovepo').hide(); 
+    }
+});
+      </script>

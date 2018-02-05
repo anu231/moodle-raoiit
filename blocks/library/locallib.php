@@ -43,3 +43,9 @@ function is_branch_admin(){
     } 
     return false;
 }
+
+function get_centers_book(){
+    global $DB;
+    $get_books = $DB->get_records('lib_bookmaster', array("status"=>1,"branch"=>get_user_center(),"is_scanned"=>0));
+    return $get_books;
+}

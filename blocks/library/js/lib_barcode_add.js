@@ -19,11 +19,6 @@ $('#id_book').on('change', function(){
         url: 'fetch_book_info_id.php',
         data: 'id='+$(this).val(),
         success: function(resp){
-            book_id=resp.bookid;
-            volume=resp.volume;
-            publisher=resp.publisher;
-            author=resp.author;
-            price=resp.price;
             var main_region = document.getElementById('region-main');
             var para = document.getElementById('new_book_info');
             var created = false;
@@ -33,7 +28,7 @@ $('#id_book').on('change', function(){
                 para.setAttribute('id','new_book_info');
             }
 
-            var p_ihtml = "Book Name : "+resp.bookid+
+            var p_ihtml = "Book Name : "+resp.name+
             "<br>Volume : "+resp.volume+
             "<br>Publisher : "+resp.publisher+
             "<br>Author : "+resp.author+

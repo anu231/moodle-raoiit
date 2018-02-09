@@ -10,15 +10,7 @@ if (is_siteadmin())
     $PAGE->set_title('Add New ID Card in Edumate');
     $PAGE->set_heading('Add New ID Card in Edumate');
     $PAGE->set_pagelayout('standard');
-    // profile pic //
-    //$size = array('large' => 'f1', 'small' => 'f2');
-    //$src = false;
-    //if ($USER->picture) {
-        //$src = get_file_url($USER->id.'/'.$size['large'].'.jpg', null, 'user');
-    //}
-    //var_dump($src);
 
-    
     echo $OUTPUT->header();
     global $USER,$DB,$CFG,$COURSE;
     $heading="Student ID Card Information";
@@ -35,27 +27,24 @@ if (is_siteadmin())
     //var_dump($src);
 
     // load profile data //
-    $idcard_valid="07-JUNE ".$user->profile_field_xiiyear;
+    $idcard_valid="07-JUNE ".$user->profile_field_center;
     $student_idcard = $DB->get_record('student_idcard_submit', array("student_username"=>$student_username));
    
     if ($student_idcard == true)
     {
-       // echo "YES";
         // UPDATE QUERY //
-        
         $mform = new view_profile_form (null, array('student_username'=>$student_username,'profile_pic'=>$src,'student_fullname'=>$user->firstname." ".$user->lastname,'student_course'=>$user->profile_field_coursetypename['text'],'student_targetyear'=>$user->profile_field_xiiyear,
         'idcard_valid'=>$idcard_valid,'student_mobile_number'=>$user->profile_field_studentmobile,
-        'branch'=>$user->profile_field_studycenter));
+        'branch'=>$user->profile_field_center));
         
         if ($data = $mform->get_data())
         {
             $new_data = new stdClass();
             $new_data->id = $student_idcard->id;
             $new_data->student_fullname = $data->student_fullname;
-            $new_data->profile_pic =$CFG->id_card_image.$student_username;
+            //$new_data->profile_pic =$CFG->id_card_image.$student_username;
             // $CFG->id_card_image.$student_username
             $result = $DB->update_record('student_idcard_submit', $new_data);
-            print_r($new_data);
             echo $OUTPUT->continue_button($CFG->wwwroot.'/blocks/idcard_tracker/view_idcards.php');
             // UPDATE QUERY //
         }
@@ -67,15 +56,14 @@ if (is_siteadmin())
     else
     {
         echo "NO";
-      
         $mform = new view_profile_form (null, array('student_username'=>$student_username,'profile_pic'=>$src,'student_fullname'=>$user->firstname." ".$user->lastname,'student_course'=>$user->profile_field_coursetypename['text'],'student_targetyear'=>$user->profile_field_xiiyear,'student_mobile_number'=>$user->profile_field_studentmobile,
         'idcard_valid'=>$idcard_valid,
-        'branch'=>$user->profile_field_studycenter));
+        'branch'=>$user->profile_field_center));
         
        if ($data = $mform->get_data()){
           $student_idcard_submit = new stdClass();  
           $student_idcard_submit->student_username = $data->student_username;
-          $student_idcard_submit->profile_pic = $CFG->id_card_image.$student_username;
+          //$student_idcard_submit->profile_pic = $CFG->id_card_image.$student_username;
           $student_idcard_submit->student_fullname = $data->student_fullname;
           $student_idcard_submit->branch = $data->branch;
           $student_idcard_submit->student_course = $data->student_course;
@@ -103,18 +91,16 @@ if (is_siteadmin())
 }
 else
 {
-$PAGE->set_pagelayout('standard');
-
-echo $OUTPUT->header();
-GLOBAL $USER;
-$firstname=$USER->firstname;
-$lastname= $USER->lastname;
- $fullname=$firstname." ".$lastname;
-echo "<h5>Dear, $fullname </h5>";
-echo "<br>";
-echo "<h5>You are not Authorised Person to add or delete books</h5>";
-echo "<a href='$CFG->wwwroot'>Back to Page</a>";
-
-echo $OUTPUT->footer();
+    $PAGE->set_pagelayout('standard');
+    echo $OUTPUT->header();
+    GLOBAL $USER;
+    $firstname=$USER->firstname;
+    $lastname= $USER->lastname;
+    $fullname=$firstname." ".$lastname;
+    echo "<h5>Dear, $fullname </h5>";
+    echo "<br>";
+    echo "<h5>You are not Authorised Person to add or delete books</h5>";
+    echo "<a href='$CFG->wwwroot'>Back to Page</a>";
+    echo $OUTPUT->footer();
 }
 ?>

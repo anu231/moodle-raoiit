@@ -30,16 +30,18 @@ class view_idcards implements renderable, templatable {
        $idcards_array = array();
         foreach($idcards as $idcard){
             $idcards_array[] = $idcard;
-          $count_id = count($idcard->student_username);
+            $count_id = count($idcard->student_username);
             for ($i=0;$i<$count_id;$i++){
                 $user = $DB->get_record('user',array('username'=>$idcard->student_username));
                 profile_load_data($user);
                 $user_picture = new user_picture($user);
-                $user_picture->size = true;
+                //$user_picture->size = true;
+                $user_picture->size = 200;
                 $src = $user_picture->get_url($PAGE);
-               // echo "<img src='$src' />";
+                echo "<img src='$src' style='width:200px; height:200px;' />";
             }
         }
+        
         return $idcards_array;
 }
     public function export_for_template(renderer_base $output){
@@ -53,16 +55,27 @@ class view_student_idcard implements renderable, templatable {
     private function get_student_idcard(){
         global $USER, $DB;
       
-        $id = required_param('idcard_id',PARAM_INT);
-        if (!empty($id)) {
-                echo "Id Found";
-        }
-        else {
-            echo "Multiple id found";
-        }
-        // $new_id = required_param('idcard_id',PARAM_INT);
-        $idcards = $DB->get_record('student_idcard_submit', array('id'=>$id));
+        //$id = optional_param('idcard_id', array(),PARAM_INT);
+       
+        if (isset($id)) {
+            $idcards = $DB->get_record('student_idcard_submit', array('id'=>$id));
         return $idcards;
+        }
+        
+        else {
+            $new_id = array('1','2','3','4');
+            
+            foreach($new_id as $value){
+
+                for($i=0; $i<count($new_id);$i++){
+                    $idcards[] = $DB->get_record('student_idcard_submit', array('id'=>$new_id[$i]));
+                
+                }
+                return $idcards;
+            }
+
+        }
+       
        
 }
     public function export_for_template(renderer_base $output){

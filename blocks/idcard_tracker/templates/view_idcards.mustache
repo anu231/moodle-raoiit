@@ -8,14 +8,14 @@
        
             <tr>
              <th class="view_student_list_th view_student_list_table_td_th view_bg"><input type="checkbox" class="po_status" id="checkAll" ></th>
-                <th class="view_student_list_th view_student_list_table_td_th view_bg">Roll Number</th>
-                <th class="view_student_list_th view_student_list_table_td_th view_bg">Pic</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Username</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Profile</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg">Student Fullname</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg">Center</th>
-                <th class="view_student_list_th view_student_list_table_td_th view_bg">Student Course</th>
-                <th class="view_student_list_th view_student_list_table_td_th view_bg">Student Target Year</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Course</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Target Year</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg">Mobile No</th>
-                <th class="view_student_list_th view_student_list_table_td_th view_bg">ID Card Valid Date</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Valid Date</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg">Print</th>
             </tr>
         </thead>
@@ -26,8 +26,8 @@
                 <input type="checkbox" class="checkItem" name="select_idcard[]"  value="{{id}}">
             </td>
                 <td class="view_student_list_th view_student_list_table_td_td">{{student_username}}</td>
-                <td class="view_student_list_th view_student_list_table_td_td">
-                <img src='{{src}}' style='width:80px;'/></td>
+                <td class="view_student_list_th view_student_list_table_td_td circle">
+                <img src='{{src}}' style='width:80px;' /></td>
                 <td class="view_student_list_th view_student_list_table_td_td">{{student_fullname}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td">{{branch}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td">{{student_course}}</td>
@@ -42,23 +42,34 @@
   
         </tbody>
     </table>
-    <input type="submit" name="print" value="Print" id='btnApprovepo' style="display:none;" />    
+    <br>
+    <input type="submit" name="print" value="Print ID Card" id='btnApprovepo' style="display:none;" />    
  <form>
     
 </div>
 <style>
    .view_student_list_table_td_th {
-   border: 1px solid #314c9a; 
+   border: 1px solid #314c9a;
    }
    .view_student_list_table {
    border-collapse: collapse;
-   width: 100%; text-align: center;
+   width: 100%; text-align: center; 
    }
     .view_student_list_table_td_td {
-   border: 1px solid #ccc; 
+   border: 1px solid #ccc;  /* padding:5px; */
    }
    .view_bg{ background:#21409a; color:#fff;}
    h6{color:#21409a;}
+
+   .circle img {
+        transition: 1s ease;
+   }
+
+   .circle img:hover {
+        border-radius:50%;
+        transition: 1s ease;
+   }
+
 </style>
  <script type="text/javascript">
     $('#checkAll').click(function () {    

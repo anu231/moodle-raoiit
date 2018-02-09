@@ -1,121 +1,120 @@
- <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+
+
+{{#student_idcard}}
+<div class="left">
 
 <div class="container-fluid">
+
+    <div class="row">
+    <div class="col-sm-12">
+    
+        <div class="col-sm-12"  align="left">
+            <img src='https://www.raoiit.com/img/Rao%20IIT%20Full%20New%20website-Logo.png' class='img-responsive' style="width:400px;" />
+        </div>
+
+
+        
+            <div class="col-sm-1" style="font-size:22px; font-weight:bold;  text-align: left;">
+            &nbsp;
+            </div>
+       
+
+   
+            <div class="col-sm-10" style=" font-size:22px; font-weight:bold;  text-align: left;">
+            {{student_fullname}}
+            </div>
+       
+
+
      
-  <div class="row">
-  <div class="col-sm-12">
-    <div class="col-sm-12"  align="left">
-      <img src='https://www.raoiit.com/img/Rao%20IIT%20Full%20New%20website-Logo.png' class='img-responsive' style="width:400px;" />
-    </div>
+            <div class="col-sm-1" style="font-size:22px; font-weight:bold;  text-align: left;">
+            &nbsp;
+            </div>
 
-
-    {{#student_idcard}}
-    <div class="col-sm-1" style="font-size:22px; font-weight:bold;  text-align: left;">
-    &nbsp;
-    </div>
-    {{/student_idcard}}
-
-      {{#student_idcard}}
-    <div class="col-sm-10" style=" font-size:22px; font-weight:bold;  text-align: left;">
-    {{student_fullname}}
-    </div>
-    {{/student_idcard}}
-
-
-{{#student_idcard}}
-    <div class="col-sm-1" style="font-size:22px; font-weight:bold;  text-align: left;">
-    &nbsp;
-    </div>
-    {{/student_idcard}}
     
 
-    {{#student_idcard}}
-    <div class="col-sm-1" style="font-size:22px; font-weight:bold;  text-align: left;">
-    &nbsp;
-    </div>
-    {{/student_idcard}}
 
-      {{#student_idcard}}
-    <div class="col-sm-10" style=" font-size:22px; font-weight:bold;  text-align: left;">
-     ROLL NUMBER : {{student_username}}
-     <script>
-     var student_rollnumber = {{student_username}} ;
-     </script>
-    </div>
-    {{/student_idcard}}
+            <div class="col-sm-1" style="font-size:22px; font-weight:bold;  text-align: left;">
+            &nbsp;
+            </div>
+        
+   
+            <div class="col-sm-10" style=" font-size:22px; font-weight:bold;  text-align: left;">
+                ROLL NUMBER : {{student_username}}
+                <script>
+                var student_rollnumber = {{student_username}} ;
+                </script>
+            </div>
+       
 
-
-
-
-{{#student_idcard}}
-    <div class="col-sm-1" style="font-size:22px; font-weight:bold;  text-align: left;">
-    &nbsp;
-    </div>
-    {{/student_idcard}}
-    
-    {{#student_idcard}}
-    <div class="col-sm-1" style="font-size:22px; font-weight:bold;  text-align: left;">
-    &nbsp;
-    </div>
-    {{/student_idcard}}
-
-    {{#student_idcard}}
-    <div class="col-sm-4">
-     <img src="{{profile_pic}}" class="img-responsive" />
-     <img src="https://analysis.raoiit.com/images/riitstamp.png" class='img-responsive' style='position: absolute;top: 190px;left: -10px;'>
-    </div>
-    {{/student_idcard}}
-        {{#student_idcard}}
-    <div class="col-sm-1" style='writing-mode: vertical-rl; color:#103c9d; text-orientation: upright;'>
-    <p>{{student_course}}</p>
-    </div>
-    {{/student_idcard}}
-
-
-{{#student_idcard}}
-    <div class="col-sm-7" style="font-size:22px; font-weight:bold;  text-align: left;">
-    &nbsp;
-    </div>
-    {{/student_idcard}}
-    
-
-    {{#student_idcard}}
-    <div class="col-sm-1" style=" font-size:22px; font-weight:bold;  text-align: left;">
-    &nbsp;
-    </div>
-    {{/student_idcard}}
+      
+            <div class="col-sm-1" style="font-size:22px; font-weight:bold;  text-align: left;">
+            &nbsp;
+            </div>
     
     
-    {{#student_idcard}}
-    <div class="col-sm-12" style=" font-size:22px; font-weight:bold;  text-align: left;">
-    <div class="col-sm-1" style=" font-size:22px; font-weight:bold;  text-align: left;">
-    &nbsp;
-    </div>
-    TARGET YEAR : {{student_targetyear}}
-    </div>
-    </div>
-    {{/student_idcard}}
+  
+            <div class="col-sm-1" style="font-size:22px; font-weight:bold;  text-align: left;">
+            &nbsp;
+            </div>
+     
 
-
-
-{{#student_idcard}}
-    <div class="col-sm-12" style=" font-size:15px;">
-    <div class="col-sm-6" style=" font-size:15px;  text-align: center;">
-    Contact No : {{student_mobile_number}}
-    </div>
-    </div>
-     {{/student_idcard}}
     
-{{#student_idcard}}
- <div class="col-sm-6" style=" font-size:15px;  text-align: center;">
-    {{idcard_valid}}    
-    </div>
-{{/student_idcard}}
+            <div class="col-sm-4">
+                <img src="https://www.ldatschool.ca/wp-content/uploads/2015/03/Young-student.jpg" class="img-responsive" />
+                <img src="https://analysis.raoiit.com/images/riitstamp.png" class='img-responsive' style='position: absolute;top: 190px;left: -10px;'>
+            </div>
 
-<a onclick="idcard_print()" target="_blank" href=''>Print this page</a>
+
+
+            <div class="col-sm-1" style='writing-mode: vertical-rl; color:#103c9d; text-orientation: upright;'>
+            <p>{{student_course}}</p>
+            </div>
+
+
+
+            <div class="col-sm-7" style="font-size:22px; font-weight:bold;  text-align: left;">
+            &nbsp;
+            </div>
+    
+    
+
+
+            <div class="col-sm-1" style=" font-size:22px; font-weight:bold;  text-align: left;">
+            &nbsp;
+            </div>
+
+    
+
+            <div class="col-sm-12" style=" font-size:22px; font-weight:bold;  text-align: left;">
+                <div class="col-sm-1" style=" font-size:22px; font-weight:bold;  text-align: left;">
+                &nbsp;
+                </div>
+            TARGET YEAR : {{student_targetyear}}
+            </div>
+    
+
+
+
+        <div class="col-sm-12" style=" font-size:15px;">
+            <div class="col-sm-6" style=" font-size:15px;  text-align: center;">
+            Contact No : {{student_mobile_number}}
+            </div>
+        </div>
+      
+    
+      
+            <div class="col-sm-6" style=" font-size:15px;  text-align: center;">
+            {{idcard_valid}}    
+            </div>
+        
+
+    
 
 <script>
 function idcard_print() {
@@ -125,8 +124,29 @@ function idcard_print() {
     document.title = tempTitle;
 }
 </script>
-  </div>
-  </div>
+    </div>
+    </div>
 </div>
-<div>
-   
+
+
+</div>
+{{/student_idcard}}
+
+<a onclick="idcard_print()" target="_blank" href=''>Print this page</a>
+<style>
+.left {
+  float: left;
+  width: 40%;
+  text-align: right;
+  margin: 2px 10px;
+  display: inline;                                                                 
+}
+.right {
+  float: left;
+  text-align: left;
+  margin: 2px 10px;
+  display: inline; border:1px solid #000;
+}
+</style>
+
+

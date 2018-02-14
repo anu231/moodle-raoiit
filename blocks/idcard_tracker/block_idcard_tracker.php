@@ -15,8 +15,8 @@ class block_idcard_tracker extends block_list {
         if (is_siteadmin()){
             $idcard_add_url = new moodle_url('/blocks/idcard_tracker/add_idcard.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
             $this->content->items[] = html_writer::link($idcard_add_url,"Add Student Id Card");
-            $view_idcards = new moodle_url('/blocks/idcard_tracker/view_idcards.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
-            $this->content->items[] = html_writer::link($view_idcards,"All Id cards");
+            $view_idcards = new moodle_url('/blocks/idcard_tracker/view_pending_idcards.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
+            $this->content->items[] = html_writer::link($view_idcards,"All Pending Id cards");
         }
         return $this->content;
 }

@@ -16,11 +16,11 @@ class add_idcard_form extends moodleform {
         //$mform->addElement('filepicker', 'profile_pic', get_string('profile_pic', 'block_idcard_tracker'), null, array('accepted_types' => '*'));
         $mform->addElement('file', 'profile_pic', get_string('profile_pic', 'block_idcard_tracker'), null, array('maxbytes' => $maxbytes, 'accepted_types' => '*'));
         $mform->setType('profile_pic', PARAM_RAW);
-        $status_options = array('1' => 'Available');
-        $select = $mform->addElement('select', 'idcard_status', get_string('idcard_status', 'block_idcard_tracker'), $status_options);
-        $select->setSelected('1');
+        //$status_options = array('1' => 'Available');
+        //$select = $mform->addElement('select', 'idcard_status', get_string('idcard_status', 'block_idcard_tracker'), $status_options);
+        //$select->setSelected('1');
         $buttonarray=array();
-        $buttonarray[] = $mform->createElement('submit', 'submit', "Submit ID Card");
+        $buttonarray[] = $mform->createElement('submit', 'submit', "Submit ID Card Photo");
         $buttonarray[] = $mform->createElement('cancel');
         $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
         
@@ -28,31 +28,31 @@ class add_idcard_form extends moodleform {
     
     function validation($data, $files){
         $errors = array();
-        global $DB, $USER,$COURSE;
+        global $DB, $USER, $CFG;
         
+        require_once("$CFG->dirroot/blocks/library/locallib.php");
+        if (!is_branch_admin()){
+            $errors['student_username'] = 'Only Branch administrators are allowed to add id cards';
+        }
         $user = $DB->get_records('user', array('username'=>$data['student_username']));
         if(empty($user)){
             $errors['student_username'] = 'Student Not created in Edumate';
         }
         $student_user = $DB->get_record('user',array('username'=>$data['student_username']));
-        profile_load_data($student_user);
-        if ($student_user->profile_field_studycenter!=get_user_center()){
+        //profile_load_data($student_user);
+        $student_center = get_user_center($student_user->id);
+        if ($student_center != get_user_center()){
             $errors['student_username'] = 'Student does not belong to your center';
         }
-        // get context id 
-        $courseid = 6;
-        $course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
-        $context = context_course::instance($courseid);
-        $contextid = $context->id;
         
         $data = getimagesize($files['profile_pic']);
-        $filesize = filesize($files['profile_pic']);
-        print_r($data);
+        //$filesize = filesize($files['profile_pic']);
+        //print_r($data);
         $width = $data[0];
         $height = $data[1];
         $image_type = $data['mime'];
         // W = 413 and H = 531 //
-        if($width != 413 && $height != 531){
+        if($width < 413 && $height < 531){
                 $errors['profile_pic'] = "ID Card Photo size in not valid";
         }
 
@@ -60,11 +60,10 @@ class add_idcard_form extends moodleform {
             $errors['profile_pic'] = "Image should be in JPG Format";
         }
         return $errors;
-
     }
-    
-   
 }
+
+
 class view_profile_form extends moodleform {
     function definition(){
         $mform =& $this->_form;
@@ -112,9 +111,9 @@ class view_profile_form extends moodleform {
         $mform->setType('idcard_valid', PARAM_TEXT);
         $mform->setDefault('idcard_valid',$this->_customdata['idcard_valid']);
 
-        $status_options = array('1' => 'APPROVE', '0' => 'REJECT');
-        $select = $mform->addElement('select', 'idcard_status', 'APPROVE / REJECT', $status_options);
-        $select->setSelected('1');
+        //$status_options = array('1' => 'APPROVE', '0' => 'REJECT');
+        //$select = $mform->addElement('select', 'idcard_status', 'APPROVE / REJECT', $status_options);
+        //$select->setSelected('1');
         $buttonarray=array();
         $buttonarray[] = $mform->createElement('submit', 'submit', "Submit ID card");
         $buttonarray[] = $mform->createElement('cancel');

@@ -4,19 +4,6 @@
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
     <TABLES>
-        <TABLE NAME="student_idcard" COMMENT="List of Id Cards">
-            <FIELDS>
-                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
-                <FIELD NAME="student_username" TYPE="char" LENGTH="100" NOTNULL="true"  SEQUENCE="false" />
-                 <FIELD NAME="profile_pic" TYPE="char" LENGTH="200" NOTNULL="true" SEQUENCE="false" />
-                <FIELD NAME="issue_date" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
-                <FIELD NAME="branch" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
-                <FIELD NAME="idcard_status" TYPE="int" LENGTH="2" NOTNULL="true" SEQUENCE="false" COMMENT="1-Approved. 0-Pending"/>
-            </FIELDS>
-            <KEYS>
-                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
-            </KEYS>
-        </TABLE>
          <TABLE NAME="student_idcard_submit" COMMENT="List of submitted Id Cards">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" />
@@ -28,7 +15,7 @@
                 <FIELD NAME="student_mobile_number" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
                 <FIELD NAME="student_targetyear" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" />
                 <FIELD NAME="idcard_valid" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" />
-                <FIELD NAME="idcard_status" TYPE="int" LENGTH="2" NOTNULL="true" SEQUENCE="false" COMMENT="1-Approved. 0-Pending"/>
+                <FIELD NAME="idcard_status" TYPE="int" LENGTH="2" NOTNULL="true" SEQUENCE="false" COMMENT="1:Approved by HO. 0:approved by branch -1:Rejected by HO"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />

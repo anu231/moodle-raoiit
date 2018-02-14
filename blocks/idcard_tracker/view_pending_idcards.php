@@ -9,7 +9,7 @@ $PAGE->set_url('/blocks/idcard_tracker/view_idcards.php');
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading('View IDCARDS');
 $output = $PAGE->get_renderer('block_idcard_tracker');
-$renderable = new view_idcards();
+$renderable = new view_pending_idcards();
 echo $output->header();
 echo $output->render($renderable);
 echo $output->footer();

@@ -8,10 +8,10 @@ require_once($CFG->libdir.'/filelib.php');
 
 class block_idcard_tracker_renderer extends plugin_renderer_base {
     
-    public function render_view_idcards($page){
+    public function render_view_pending_idcards($page){
         $data = array();
         $data['view_idcards'] = $page->export_for_template($this);
-        return $this->render_from_template('block_idcard_tracker/view_idcards', $data);
+        return $this->render_from_template('block_idcard_tracker/view_pending_idcards', $data);
     }
     public function render_view_student_idcard($page){
         $data = array();
@@ -20,28 +20,21 @@ class block_idcard_tracker_renderer extends plugin_renderer_base {
     }
 }
 
-class view_idcards implements renderable, templatable {
+class view_pending_idcards implements renderable, templatable {
     
     private function get_all_idcards(){
         global $USER, $DB,$PAGE;
        //$center_id = get_user_center($USER->id);
        // center not assigned yet
-       $idcards = $DB->get_records('student_idcard_submit', array('idcard_status'=>1));
+       $idcards = $DB->get_records('student_idcard_submit', array('idcard_status'=>0));
        $idcards_array = array();
         foreach($idcards as $idcard){
+            $user = $DB->get_record('user', array('username'=>$idcard->student_username));
+            $user_picture = new user_picture($user);
+            $user_picture->size = 200;
+            $idcard->src = $user_picture->get_url($PAGE);
             $idcards_array[] = $idcard;
-            $count_id = count($idcard->student_username);
-            for ($i=0;$i<$count_id;$i++){
-                $user = $DB->get_record('user',array('username'=>$idcard->student_username));
-                profile_load_data($user);
-                $user_picture = new user_picture($user);
-                //$user_picture->size = true;
-                $user_picture->size = 200;
-                $src = $user_picture->get_url($PAGE);
-                echo "<img src='$src' style='width:200px; height:200px;' />";
-            }
         }
-        
         return $idcards_array;
 }
     public function export_for_template(renderer_base $output){

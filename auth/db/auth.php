@@ -203,9 +203,8 @@ class auth_plugin_db extends auth_plugin_base {
      */
     function get_userinfo($username) {
         global $CFG;
-
+        
         $extusername = core_text::convert($username, 'utf-8', $this->config->extencoding);
-
         $authdb = $this->db_init();
 
         // Array to map local fieldnames we want, to external fieldnames.
@@ -222,7 +221,6 @@ class auth_plugin_db extends auth_plugin_base {
             $sql = "SELECT $select
                       FROM {$this->config->table}
                      WHERE {$this->config->fielduser} = '".$this->ext_addslashes($extusername)."'";
-
             if ($rs = $authdb->Execute($sql)) {
                 if (!$rs->EOF) {
                     $fields = $rs->FetchRow();
@@ -347,13 +345,12 @@ class auth_plugin_db extends auth_plugin_base {
             }
             unset($removeusers);
         }
-
+        
         if (!count($userlist)) {
             // Exit right here, nothing else to do.
             $trace->finished();
             return 0;
         }
-
         // Update existing accounts.
         if ($do_updates) {
             // Narrow down what fields we need to update.
@@ -511,7 +508,7 @@ class auth_plugin_db extends auth_plugin_base {
 
         // Fetch userlist.
         $rs = $authdb->Execute("SELECT {$this->config->fielduser}
-                                  FROM {$this->config->table} where id>1253");
+                                  FROM {$this->config->table} where status='1' and rollnumber!=''");
 
         if (!$rs) {
             print_error('auth_dbcantconnect','auth_db');

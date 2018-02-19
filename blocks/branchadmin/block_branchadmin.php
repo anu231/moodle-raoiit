@@ -12,12 +12,13 @@ class block_branchadmin extends block_list {
             return $this->content;
         }
     
-        $this->content         =  new stdClass;
+        $this->content =  new stdClass;
         $this->content->items = array();
         $student_view_url = new moodle_url('/blocks/branchadmin/view_students.php', array('blockid' => $this->instance->id));
-        $sms_url = new moodle_url('/blocks/branchadmin/send_sms.php');
+        $student_attendance = new moodle_url('/blocks/branchadmin/mark_attendance.php', array('blockid' => $this->instance->id));
         $this->content->items[0] = html_writer::link($student_view_url,"View Branch Students");
         $this->content->items[1] = html_writer::link($sms_url,"Send SMS to students");
+        $this->content->items[2] = html_writer::link($student_attendance,"Mark Student Absent");
         return $this->content;
     }
 

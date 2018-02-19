@@ -81,8 +81,10 @@ function get_timetable($start_date,$end_date,$username=null,$batchids=null){
     $batches = null;
     if ($username != null){
         $batches = get_student_batches($link, $username);    
-    }else if ($batches != null){
+    }else if ($batchids != null){
         $batches = $batchids;
+    } else {
+        return false;
     }
     
     $qry = "SELECT S.sid,S.batchid, S.lecturenum, S.testnum, S.date, S.from, S.to, S.facultyid, S.event, S.iscancel, S.istest, B.centreid, B.targetyear, B.batch, B.name AS batchname, C.name AS centrename, T.targetyear, T.batch, T.name AS classname, F.id AS ffid, F.name AS facultyname, F.shortname, F.type as facultytype, F.subject, Z.name as topicname, Y.type AS testtype FROM schedule AS S, ttbatches AS B, centreinfo AS C, classes AS T, facultyinfo AS F, topics AS Z, testtypes AS Y WHERE S.batchid=B.id AND B.centreid=C.id AND T.targetyear=B.targetyear AND T.batch=B.batch AND S.facultyid=F.id AND S.topicid=Z.id AND S.testtype=Y.id AND `date` >= '$start_date' AND `date` <= '$end_date' AND B.id IN ($batches) ORDER BY `date`, `from`";

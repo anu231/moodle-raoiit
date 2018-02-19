@@ -109,7 +109,7 @@ function sendSMS(&$s_mobile, &$s_text){
         //this is the message that we want to send
         $param["message"] = stripslashes($s_text);
         //these are the recipients of the message
-        $param["to"] = '8879986939';//$s_mobile;
+        $param["to"] = $s_mobile;
         //this is our sender
         $param["sender"] = "RAOIIT";
 

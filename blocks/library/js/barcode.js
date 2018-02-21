@@ -37,6 +37,7 @@ $(field_selector).scannerDetection(function(barcode,qty){
                 }
                 //var node = document.createTextNode(
                 var p_ihtml = "Book Name : "+resp.name+
+                "<br>Book ID : "+resp.bookid+
                 "<br>Volume : "+resp.volume+
                 "<br>Publisher : "+resp.publisher+
                 "<br>Author : "+resp.author+

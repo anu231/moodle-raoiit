@@ -206,8 +206,11 @@ class todays_birthday implements renderable, templatable {
         from {user_info_data} as userdata join {user} as user
         on userdata.userid = user.id
         where userdata.fieldid = ? AND MONTH(userdata.data) = $current_month AND DAY(userdata.data) = $current_date AND user.suspended = 0
+        AND 
+        user.id in 
+        (select userid from {user_info_data} as ud join {user_info_field} as ufi on ud.fieldid=ufi.id where ufi.shortname='center' and ud.data=?)
 SQL;
-        $get_records = $DB->get_records_sql($sql,array(1));
+        $get_records = $DB->get_records_sql($sql,array(1,get_user_center()));
         $result = array();
         foreach($get_records as $entry){
             $result[] = $entry;

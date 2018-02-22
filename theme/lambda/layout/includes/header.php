@@ -139,7 +139,7 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 		echo $OUTPUT->navbar_plugin_output();
 		echo $OUTPUT->user_menu();
 		echo $OUTPUT->user_picture($USER, array('size' => 80, 'class' => 'welcome_userpicture'));		
-		//*****generating signatures and needed authentication for logging into old portal*****
+		/*****generating signatures and needed authentication for logging into old portal*****
 		function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 		{
 			$str = '';
@@ -155,11 +155,11 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 		$hash_msg = hash_hmac('sha256',$st,$secret);
 		$st_encoded = base64_encode($st);
 		$hash_encoded = base64_encode($hash_msg);
-		$nonce_enc = base64_encode($nonce);
+		$nonce_enc = base64_encode($nonce);*/
 		//'<div style="text-align:right; position:relative; display:block;">'.
-		echo '<a style="padding-right:105px; display:block;" href="'.$CFG->discussions_url.'" target="_blank">Discussions Forum</a>'.
-			 '<a style="padding-right:105px; display:block;" href="'.$CFG->old_portal_url.'sig='.$st_encoded.'&hash='.$hash_encoded.'&nonce='.$nonce_enc.'" target="_blank">Old Portal</a>';
-		//echo '</div>';
+		echo '<a style="padding-right:105px; display:block;" href="'.$CFG->discussions_url.'" target="_blank">Discussions Forum</a>';//.
+			 //'<a style="padding-right:105px; display:block;" href="'.$CFG->old_portal_url.'sig='.$st_encoded.'&hash='.$hash_encoded.'&nonce='.$nonce_enc.'" target="_blank">Old Portal</a>';
+		echo '</div>';
 		//echo '</div>';
 
 	}?>

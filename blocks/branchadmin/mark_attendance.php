@@ -13,7 +13,7 @@ echo $OUTPUT->heading($heading);
 
 if (is_branch_admin()){    
     $PAGE->requires->js('/blocks/branchadmin/js/attendance.js');
-    $mform = new attendance_formq();
+    $mform = new attendance_form();
     if ($data = $mform->get_data()){
         $result = new stdClass();
         $result->date         = $data->date;

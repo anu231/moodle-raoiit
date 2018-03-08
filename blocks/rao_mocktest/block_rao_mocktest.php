@@ -1,8 +1,8 @@
 <?php
-
-class block_rao_mocktest extends block_base {
+class block_rao_mocktest extends block_list {
     public function init() {
-        $this->title = get_string('block_title', 'block_rao_mocktest');
+        $paper_name = get_config('rao_mocktest','rao_papername');
+        $this->title = $paper_name;
     }
      Private function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 		{   
@@ -19,7 +19,8 @@ class block_rao_mocktest extends block_base {
         if ($this->content !== null) {
             return $this->content;
         }
-
+        $paper_name = get_config('rao_mocktest','rao_papername');
+        $raotest_url = get_config('rao_mocktest','raotest_url');
 		$secret = $CFG->secret_key;
 		$nonce = $this->random_str(32);
 		$st = $nonce.$USER->username;
@@ -27,21 +28,20 @@ class block_rao_mocktest extends block_base {
 		$st_encoded = base64_encode($st);
 		$hash_encoded = base64_encode($hash_msg);
 		$nonce_enc = base64_encode($nonce);
-
         $mocktest_url='sig='.$st_encoded.'&hash='.$hash_encoded.'&nonce='.$nonce_enc;
-
         $this->content = new stdClass();
-        $registration = new moodle_url($CFG->mocktest.$mocktest_url, array());
-        $this->content->text = html_writer::link($registration,"Rao online Mock Test Registration");
-        //$this->content->text .= '<br>'.$st;
-        //$this->content->text .= '<br>'.$hash_msg;
+        $this->content->items = array();
+        $registration = new moodle_url($raotest_url.$mocktest_url, array());
+        $this->content->items[] = html_writer::link($registration,$paper_name." Link");
         return $this->content;
     }
 
-
     public function instance_allow_multiple() {
-          return false;
+          return true;
     }
-    function has_config() {return false;}             
+    function has_config() {
+        return true;
+    }          
                   
 }
+

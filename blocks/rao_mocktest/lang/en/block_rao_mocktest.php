@@ -1,3 +1,4 @@
 <?php
-$string['pluginname'] = 'Rao IIT JEE Online Mock Test';
-$string['block_title'] = 'Rao All India Online Mock Test';
+$paper_name = get_config('rao_mocktest','rao_papername');
+$string['pluginname'] = 'Rao IIT Online Test';
+$string['block_title'] = $paper_name;

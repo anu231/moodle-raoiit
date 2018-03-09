@@ -236,10 +236,12 @@ class view_paid_fine implements renderable, templatable {
         $toatal_amount=NULL;
         //$fine = $DB->get_records('lib_fine_record', array('paid'=>1));
         $sql = <<<SQL
-        select issue.id as newissueid,issue.bookid, issue.branch_id as issuebranch_id,fine.student_username,fine.id as fineid,fine.branch_id as finebranch_id, fine.amount,fine.branch_issuer,fine.paid,fine.remark,book.name, book.bookid as newbookid
+        select issue.id as newissueid,issue.bookid, issue.branch_id as issuebranch_id,
+        fine.student_username,fine.id as fineid,fine.branch_id as finebranch_id, 
+        fine.amount,fine.branch_issuer,fine.paid,fine.remark,book.name, book.bookid as newbookid
         from {lib_issue_record} as issue join {lib_fine_record} as fine
         on issue.id = fine.issue_id join {lib_bookmaster} book on book.id = issue.bookid
-        where fine.paid=1
+        where fine.paid=1 and issue.branch_id=?
 SQL;
         // added branch_id in where condition //
       $fine = $DB->get_records_sql($sql,array($center_id));

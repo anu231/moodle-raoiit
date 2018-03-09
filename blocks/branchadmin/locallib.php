@@ -78,7 +78,7 @@ function get_students_by_batch($batch){
     $sql = <<<SQL
     select u.id, concat(u.username," - ",u.firstname," ",u.lastname) as name 
     from {user} as u join 
-    (select udd.userid as userid, udd.data as data from {user_info_data} as udd join {user_info_field} as uif on ud.fieldid = uif.id where uif.shortname='batch') as ud 
+    (select udd.userid as userid, udd.data as data from {user_info_data} as udd join {user_info_field} as uif on udd.fieldid = uif.id where uif.shortname='batch') as ud 
     on u.id=ud.userid where ud.data=?
 SQL;
     //get all the users with the specified batches

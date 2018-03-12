@@ -1,7 +1,9 @@
 <div>
+    {{#ret}}
+    <h5> Student Performance Report for - {{username}}: {{name}}</h5>
    <table class="view_student_list_table_td_th view_student_list_table" width="100%">
       <tbody>
-         <h6>{{paper}}</h6>
+         <h6></h6>
          <tr rowspan="2">
             <th class="view_student_list_th view_student_list_table_td_th view_bg" rowspan="2">Test</th>
             <th class="view_student_list_th view_student_list_table_td_th view_bg" rowspan="2">Total</th>
@@ -55,6 +57,7 @@
          {{/spr}}
       </tbody>
    </table>
+   {{/ret}}
    <br />
 </div>
 <style>

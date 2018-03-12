@@ -171,7 +171,11 @@ class view_student_performance implements renderable, templatable{
         $req_user_center = get_user_center($user->id);
         if ($user_center==$req_user_center){
             $spr = get_student_full_report($user->username);
-            return $spr;
+            $ret = new stdClass();
+            $ret->username = $this->username;
+            $ret->name = $user->firstname.' '.$user->lastname;
+            $ret->spr = $spr;
+            return $ret;
         } else {
             $msg = new stdClass();
             $msg->error_message = 'Requested Student does not belong to the centre assigned to you';
@@ -187,7 +191,7 @@ class view_student_performance implements renderable, templatable{
     public function export_for_template(renderer_base $output) {                                                                    
         //get all the students with the same center
         $data = $this->get_student_performance();
-        return array('spr'=>$data);                                                                                                               
+        return array('ret'=>$data);                                                                                                               
     }
 }
 

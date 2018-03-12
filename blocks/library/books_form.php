@@ -203,7 +203,13 @@ class issue_book_form extends moodleform {
         $book = $DB->get_record('lib_bookmaster', array("status"=>1,"barcode"=>$data['book_barcode']));
         if (empty($book)){
             $errors['book_barcode'] = 'Book does not exist in the system or is damaged/lost';
-            return  $errors;
+            //return  $errors;
+        }
+        //check if student has paid the library money
+        $student = $DB->get_record('user',array('username'=>$data['student_username']));
+        $library_fee = get_rao_user_profile_fields(array('libraryfee'),$student->id);
+        if ((int)$library_fee['libraryfee'] < 2000){
+            $errors['student_username'] = 'Can\'t issue books as student has not paid the library fee';
         }
         //check if book is already issued
         if($book->issued=='1' && $data['status']==0){

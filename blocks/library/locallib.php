@@ -49,3 +49,12 @@ function get_centers_book(){
     $get_books = $DB->get_records('lib_bookmaster', array("status"=>1,"branch"=>get_user_center(),"is_scanned"=>0));
     return $get_books;
 }
+
+
+function convert_std_to_array_bookid($tl){
+    $ts_arr = Array();
+    foreach($tl as $t){
+        $ts_arr[$t->id] = $t->bookid." - ".$t->name;
+    }
+    return $ts_arr;
+}

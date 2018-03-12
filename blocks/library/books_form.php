@@ -363,7 +363,7 @@ class view_submitted_ho_form extends moodleform {
             function definition(){
                 $a= get_centers_book();
                 $mform =& $this->_form;
-                $book_list = convert_std_to_array(get_centers_book());
+                $book_list = convert_std_to_array_bookid(get_centers_book());
                 $mform->addElement('select', 'book', 'Name of Book',$book_list);
                 $mform->addElement('text', 'book_barcode', "barcode for the book",'maxlength="13",required');
                 $mform->setType('book_barcode', PARAM_INT);

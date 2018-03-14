@@ -16,6 +16,7 @@ class add_idcard_form extends moodleform {
         //$mform->addElement('filepicker', 'profile_pic', get_string('profile_pic', 'block_idcard_tracker'), null, array('accepted_types' => '*'));
         $mform->addElement('file', 'profile_pic', get_string('profile_pic', 'block_idcard_tracker'), null, array('maxbytes' => $maxbytes, 'accepted_types' => '*'));
         $mform->setType('profile_pic', PARAM_RAW);
+        
         //$status_options = array('1' => 'Available');
         //$select = $mform->addElement('select', 'idcard_status', get_string('idcard_status', 'block_idcard_tracker'), $status_options);
         //$select->setSelected('1');
@@ -52,10 +53,16 @@ class add_idcard_form extends moodleform {
         $height = $data[1];
         $image_type = $data['mime'];
         // W = 413 and H = 531 //
+        /*
         if($width < 413 && $height < 531){
                 $errors['profile_pic'] = "ID Card Photo size in not valid";
         }
-
+        */
+        
+        if($width < 250 && $height < 250){
+                $errors['profile_pic'] = "ID Card Photo size in not valid";
+        }
+        
         if ($image_type != 'image/jpeg' && $image_type != 'image/jpg'){
             $errors['profile_pic'] = "Image should be in JPG Format";
         }
@@ -68,7 +75,7 @@ class view_profile_form extends moodleform {
     function definition(){
         $mform =& $this->_form;
         $profile=$this->_customdata['profile_pic'];
-        $mform->addElement('html', "<img src='$profile' style='width:100px; height:100px; margin-left:80px' />");
+        $mform->addElement('html', "<img src='$profile' style='max-width: 100%; height: auto;width: 150px; resize: both; margin-left:80px' />");
         $mform->addElement('static', 'static_student_username', 'Student Username',
         $this->_customdata['student_username']);
         $mform->addElement('hidden', 'student_username','Student Roll Number');
@@ -132,3 +139,40 @@ class view_profile_form extends moodleform {
     
    
 }        
+
+
+class single_idcard_form extends moodleform {
+    function definition(){
+        $mform =& $this->_form;
+        $mform->addElement('text', 'student_username','Student Roll Number','maxlength="6"');
+        $mform->setType('student_username', PARAM_TEXT);
+        $buttonarray=array();
+        $buttonarray[] = $mform->createElement('submit', 'submit', "Submit ID card");
+        $buttonarray[] = $mform->createElement('cancel');
+        $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
+    }
+}
+
+class multiple_idcard_form extends moodleform {
+    function definition(){
+        $mform =& $this->_form;
+        $center_list = convert_std_to_array(get_centers());
+        $mform->addElement('select', 'branch', 'List of Centers', $center_list);
+        $buttonarray=array();
+        $buttonarray[] = $mform->createElement('submit', 'submit', "Print ID Cards");
+        $buttonarray[] = $mform->createElement('cancel');
+        $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
+    }
+}
+
+class view_sent_idcard_form extends moodleform {
+    function definition(){
+        $mform =& $this->_form;
+        $center_list = convert_std_to_array(get_centers());
+        $mform->addElement('select', 'branch', 'List of Centers', $center_list);
+        $buttonarray=array();
+        $buttonarray[] = $mform->createElement('submit', 'submit', "View ID Cards");
+        $buttonarray[] = $mform->createElement('cancel');
+        $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
+    }
+}

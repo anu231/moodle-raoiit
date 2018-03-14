@@ -314,6 +314,7 @@ class auth_plugin_db extends auth_plugin_base {
                 foreach ($internalusersrs as $internaluser) {
                     if (!array_key_exists($internaluser->username, $usernamelist)) {
                         $removeusers[] = $internaluser;
+                        echo 'Suspending user :'.$internaluser->username.PHP_EOL;
                     }
                 }
                 $internalusersrs->close();
@@ -348,6 +349,7 @@ class auth_plugin_db extends auth_plugin_base {
         
         if (!count($userlist)) {
             // Exit right here, nothing else to do.
+            echo 'No Users fetched from remote db'.PHP_EOL;
             $trace->finished();
             return 0;
         }
@@ -385,6 +387,7 @@ class auth_plugin_db extends auth_plugin_base {
 
                     foreach ($update_users as $user) {
                         if ($this->update_user_record($user->username, $updatekeys)) {
+                            echo 'Updated :'.$user->username.PHP_EOL;
                             $trace->output(get_string('auth_dbupdatinguser', 'auth_db', array('name'=>$user->username, 'id'=>$user->id)), 1);
                         } else {
                             $trace->output(get_string('auth_dbupdatinguser', 'auth_db', array('name'=>$user->username, 'id'=>$user->id))." - ".get_string('skipped'), 1);
@@ -432,6 +435,7 @@ class auth_plugin_db extends auth_plugin_base {
                         $updateuser->id = $olduser->id;
                         $updateuser->suspended = 0;
                         user_update_user($updateuser);
+                        echo 'Unsuspended User :'.$olduser->username.PHP_EOL;
                         $trace->output(get_string('auth_dbreviveduser', 'auth_db', array('name' => $username,
                             'id' => $olduser->id)), 1);
                         continue;

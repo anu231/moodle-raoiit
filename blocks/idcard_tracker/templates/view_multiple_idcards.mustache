@@ -1,20 +1,23 @@
-{{#student_idcard}}
- <table>
+{{#view_multiple_idcards}}
+<title>Center Code:{{branch}}</title>
+<div style='float:left;'>
+
+    <table>
         <tr>
             <td>
-                <table cellspacing='0' cellpadding='0' id='idcardtable' style='width:8.8cm; height: 8.4cm; padding:0; margin:0; vertical-align: top; margin-bottom:-10px;'>
+                <table cellspacing='0' cellpadding='0' id='idcardtable' style='width:8.8cm; height: 8.4cm; padding:0; margin:0; vertical-align: top; margin-bottom:-10px; '>
                     <tr>
                         <td style='height:1.8cm; vertical-align: bottom; padding-bottom: 10px;' colspan='2'>
-                            <img src='https://www.raoiit.com/img/Rao%20IIT%20Full%20New%20website-Logo.png'' border='0' style='max-width: 7.6cm;' />
+                            <img src='pix/logo.png' border='0' style='max-width: 7.6cm;' />
                         </td>
                     </tr>
 
                     <tr>
-                        <td style='font-size: 18px; margin-left:100px; font-weight: bold;' colspan='2'>  {{student_fullname}}</td>
+                        <td style='font-size: 18px; margin-left:100px; font-weight: bold; padding-bottom: 5px;' colspan='2'>  {{student_fullname}}</td>
                     </tr>
 
                     <tr>
-                        <td style='font-size: 18px; height:0.7cm;' colspan='2'>ROLL NUMBER : <b>{{student_username}}</b></td>
+                        <td style='font-size: 18px; height:0.7cm; padding-bottom: 5px;' colspan='2'>ROLL NUMBER : <b>{{student_username}}</b></td>
                     </tr>
 
                     <tr>
@@ -34,7 +37,7 @@
                             /* Opera */
                             -o-transform: rotate(-90deg);
 
-                            float: left; border:1px solid #fff; color:#103c9d; width:100px; margin-left:-31px;margin-top:40px;'>{{student_course}}<br/>Center Code : {{branch}}
+                            float: left; border:1px solid #fff; color:#103c9d; width:108px; margin-left:-39px;margin-top:72px; font-size:14px;'>{{student_course}}
                         </td>
                     </tr>
 
@@ -60,9 +63,14 @@
         </tr>
     </table>
 </div>
-{{/student_idcard}}
 
+{{/view_multiple_idcards}}
 
+   {{^view_multiple_idcards}}
+   <tr>
+        <td class="view_student_list_table_td_td" align="center" style="padding:5px; text-align:center;" colspan="10"> <center>There are no ID Cards found</center></td>
+    </tr>
+{{/view_multiple_idcards}}   
 
 
 <style>

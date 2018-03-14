@@ -15,7 +15,7 @@
                 <FIELD NAME="student_mobile_number" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" />
                 <FIELD NAME="student_targetyear" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" />
                 <FIELD NAME="idcard_valid" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" />
-                <FIELD NAME="idcard_status" TYPE="int" LENGTH="2" NOTNULL="true" SEQUENCE="false" COMMENT="1:Approved by HO. 0:approved by branch -1:Rejected by HO"/>
+                <FIELD NAME="idcard_status" TYPE="int" LENGTH="2" NOTNULL="true" SEQUENCE="false" COMMENT="1:Approved by HO. 0:approved by branch -1:Rejected by HO 2: Sent for printing"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />

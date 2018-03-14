@@ -1,13 +1,14 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div>
-    <h3 align="center">ID Cards</h3>
+    <h3 align="center">Pending ID Cards</h3>
   <script>var p1 = "success";</script>
 <h6 align="right"><a href="#">Back to Page</a></h6>
-<form action='view_student_idcard.php?idcard_id' method='POST'>
+
     <table class="view_student_list_table_td_th view_student_list_table" width="100%">
         <thead>
        
             <tr>
-             <th class="view_student_list_th view_student_list_table_td_th view_bg"><input type="checkbox" class="po_status" id="checkAll" ></th>
+      
                 <th class="view_student_list_th view_student_list_table_td_th view_bg">Username</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg">Profile</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg">Student Fullname</th>
@@ -16,15 +17,13 @@
                 <th class="view_student_list_th view_student_list_table_td_th view_bg">Target Year</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg">Mobile No</th>
                 <th class="view_student_list_th view_student_list_table_td_th view_bg">Valid Date</th>
-                <th class="view_student_list_th view_student_list_table_td_th view_bg">Print</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Approve / Reject</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg">Show</th>
             </tr>
         </thead>
         <tbody>
     {{#view_idcards}}
             <tr>
-            <td class="view_student_list_th view_student_list_table_td_td">
-                <input type="checkbox" class="checkItem" name="select_idcard[]"  value="{{id}}">
-            </td>
                 <td class="view_student_list_th view_student_list_table_td_td">{{student_username}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td circle">
                 <img src='{{src}}' style='width:80px;' /></td>
@@ -34,19 +33,87 @@
                 <td class="view_student_list_th view_student_list_table_td_td">{{student_targetyear}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td">{{student_mobile_number}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td">{{idcard_valid}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">
+                <button style='background:none;' class="accept_class" name="1" value="{{id}}" id="accept_button"  />
+                <img src="pix/correct.png" style="width:30px;height:30px;" class='accept_img' id="{{id}}" />
+                </button>
+                <button style='background:none;' class="reject_class" type="button" name="-1" value="{{id}}" id="reject_button"  />
+                <img src="pix/wrong.png"  style="width:23px;height:23px;" class='reject_img' id="{{id}}" />
+                </button>
+                </td>
+                <td class="view_student_list_th view_student_list_table_td_td"><a href="view_student_idcard.php?idcard_id={{id}}" target="_blank"><img src='pix/view.jpg' style="width:30px;height:30px;" /></a></td>
                 
-                <td class="view_student_list_th view_student_list_table_td_td"><a href="view_student_idcard.php?idcard_id={{id}}">Print</a></td>
             </tr>
           
     {{/view_idcards}}
   
         </tbody>
     </table>
-    <br>
-    <input type="submit" name="print" value="Print ID Card" id='btnApprovepo' style="display:none;" />    
- <form>
+    {{^view_idcards}}
+    <tr>
+        <td class="view_student_list_table_td_td" align="center" style="padding:5px; text-align:center;" colspan="10"> <center>There are no record found</center></td>
+    </tr>
+{{/view_idcards}}  
+
     
 </div>
+
+<script>
+ $('.accept_class').click(function(){
+    var id = $(this).val();
+    var button_status = $(this).attr('name');
+   
+    var r = confirm("Do you really want to Accept this ID Card ??");
+        if (r == true) {
+        $.ajax({
+                type: "POST",
+                url: "update_data.php",
+                data:'id='+id+'&button_status='+button_status,   
+                success:function(res)
+                {   
+                    //alert("ID Card successfully submit to print");
+                    $("#wait").css("display", "block");
+                    setTimeout(function(){
+                        $("#wait").hide();
+                    },800);
+                     //$("#id").show(800);
+                     $('#'+ id +'.accept_img').show();
+                     $('#'+ id +'.reject_img').hide();
+                }
+            });
+        } else {
+        return false;
+        }
+});
+
+$('.reject_class').click(function(){
+    var id = $(this).val();
+    var button_status = $(this).attr('name');
+    var r = confirm("Do you really want to reject this ID Card ??");
+     if (r == true) {
+        $.ajax({
+                type: "POST",
+                url: "update_data.php",
+                data:'id='+id+'&button_status='+button_status,   
+                success:function(res)
+                {   
+                    $("#wait").css("display", "block");
+                    setTimeout(function(){
+                        $("#wait").hide();
+                    },800);
+                    $('#'+ id +'.accept_img').hide();
+                     $('#'+ id +'.reject_img').show();
+                    //location.reload();
+                }
+            });
+            } else {
+                return false;
+            }
+});
+</script>
+
+
+<div id="wait" style="display:none;position:absolute;top:50%;left:50%;padding:2px;"><img src='pix/loader.gif' width="120" height="120" /></div>
 <style>
    .view_student_list_table_td_th {
    border: 1px solid #314c9a;
@@ -66,21 +133,6 @@
    }
 
    .circle img:hover {
-        border-radius:50%;
-        transition: 1s ease;
+    transform: scale(2.0); 
    }
-
 </style>
- <script type="text/javascript">
-    $('#checkAll').click(function () {    
-    $(':checkbox.checkItem').prop('checked', this.checked);    
- });		
-
- $('.po_status').click(function () {
-    if($(".po_status:checked").length === 1 && $("#checkAll").is(":checked") == true){
-         $('#btnApprovepo').show();
-    } else {
-         $('#btnApprovepo').hide(); 
-    }
-});
-      </script>

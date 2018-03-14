@@ -1,0 +1,58 @@
+html, 
+body {
+    width: 1200px !important; 
+}
+
+.hidden{display:none;visibility:hidden}
+.visible-phone{display:none!important}
+.visible-tablet{display:none!important}
+.hidden-desktop{display:none!important}
+.visible-desktop{display:inherit!important}
+
+#idcardtable
+{ display: none;
+border-collapse:collapse;
+font-family: arial;
+margin:0;
+padding:0;
+}
+
+#idcardtable
+{
+border: 0px solid #000;
+margin:0;
+padding:0;
+}
+
+#idcardtable th
+{
+background-color: #e2fdff;
+color: blue;
+font-weight: bold;
+font-size: 10px;
+margin:0;
+padding:0;
+}
+
+#idcardtable td
+{
+text-align: center;
+vertical-align: top;
+font-size: 12px;
+margin:0;
+padding:0;
+}
+
+#riitstamp
+{
+position: relative;
+bottom: 4.0cm;
+left: 0.25cm;
+z-index: 100;
+}
+.student_name{
+    font-size: 18px; height:0.7cm; font-weight: bold;
+}
+.roll_number{
+    font-size: 18px; height:0.7cm;
+}

@@ -13,21 +13,8 @@ global $DB, $USER, $CFG, $PAGE;
 
 echo $output->header();
 
-if (isset($idcard_id)) {
-    $idcard_id = optional_param('idcard_id', array(), PARAM_INT);
-}
-else{
-    $select_idcard = optional_param('select_idcard', array(), PARAM_INT);
-}
+$idcard_id = required_param('idcard_id',PARAM_INT);
 
-
-
-
-/*
-foreach ($select_idcard as $new_id){
-   echo  $new_id;
-}
-*/
-$renderable = new view_student_idcard();
+$renderable = new view_student_idcard($idcard_id);
 echo $output->render($renderable);
 echo $output->footer();

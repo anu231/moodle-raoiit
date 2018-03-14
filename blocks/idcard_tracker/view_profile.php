@@ -36,6 +36,7 @@ if (is_branch_admin())
     if ($student_idcard != null)
     {
         echo html_writer::div('ID Card Already Submitted');
+        echo $OUTPUT->continue_button($CFG->wwwroot);
         //TODO:ABHISHEK
         //SHOW THE ID CARD
         // UPDATE QUERY //
@@ -82,6 +83,7 @@ if (is_branch_admin())
             $newpicture = (int)process_new_icon($context, 'user', 'icon', 0,$CFG->id_card_image.$user->username);
             $DB->set_field('user', 'picture', $newpicture, array('id'=>$user->id));
             echo html_writer::div('ID Card Successfully Submitted');
+            echo $OUTPUT->continue_button($CFG->wwwroot.'/blocks/idcard_tracker/add_idcard.php');
         } 
         else{
             $mform->display();

@@ -52,7 +52,7 @@ class view_student_idcard implements renderable, templatable {
        
         if (isset($id)) {
             $idcards = $DB->get_record('student_idcard_submit', array('id'=>$id));
-        return $idcards;
+            return $idcards;
         }
         
         else {

@@ -265,6 +265,83 @@ class auth_plugin_db extends auth_plugin_base {
         }
     }
 
+    function get_remote_user($username){
+        $authdb = $this->db_init();
+        $result = null;
+        // Fetch userlist.
+        $rs = $authdb->Execute("SELECT {$this->config->fielduser}
+                                  FROM {$this->config->table} 
+                                  where status='1' and rollnumber='$username'");
+        
+        if (!$rs) {
+            print_error('auth_dbcantconnect','auth_db');
+        } else if (!$rs->EOF) {
+            $rec = $rs->FetchRow();
+            $result = $rec[strtolower($this->config->fielduser)];
+        }
+        $authdb->Close();
+        return $result;
+    }
+    /**
+    * SYnchronizes a single user from external db
+    * create a new user/suspends/updates the entries for the user
+    **/
+    function sync_user($username){
+        global $CFG, $DB;
+        require_once($CFG->dirroot . '/user/lib.php');
+        //verify if user exists remotely
+        $remote_user = $this->get_remote_user($username);
+        //verfiy if the user exists locally
+        $local_user = $DB->get_record('user', 
+            array(
+                'username'=>$username,
+                'suspended'=>0,
+                'auth'=>$this->authtype,
+                'deleted'=>0));
+        if ($remote_user == null){
+            if (!empty($local_user)){
+                if ($this->config->removeuser == AUTH_REMOVEUSER_FULLDELETE) {
+                    delete_user($local_user);
+                } else if ($this->config->removeuser == AUTH_REMOVEUSER_SUSPEND) {
+                    $updateuser = new stdClass();
+                    $updateuser->id   = $local_user->id;
+                    $updateuser->suspended = 1;
+                    user_update_user($updateuser, false);
+                    return -1;
+                }
+            }
+        } else {
+            if (empty($local_user)){
+                //create the user or unsuspend the user
+                if ($this->config->removeuser == AUTH_REMOVEUSER_SUSPEND) {
+                    if ($olduser = $DB->get_record('user', array('username' => $username, 'deleted' => 0, 'suspended' => 1,
+                             'auth' => $this->authtype))) {
+                        $updateuser = new stdClass();
+                        $updateuser->id = $olduser->id;
+                        $updateuser->suspended = 0;
+                        user_update_user($updateuser);
+                        return 1;
+                    }
+                }
+            } else {
+                //update the user
+                $all_keys = array_keys(get_object_vars($this->config));
+                $updatekeys = array();
+                foreach ($all_keys as $key) {
+                    if (preg_match('/^field_updatelocal_(.+)$/',$key, $match)) {
+                        if ($this->config->{$key} === 'onlogin') {
+                            array_push($updatekeys, $match[1]); // The actual key name.
+                        }
+                    }
+                }
+                unset($all_keys); unset($key);
+                if (!empty($updatekeys)){
+                    $this->update_user_record($username, $updatekeys);
+                    return 2;
+                }
+            }
+        }
+    }
     /**
      * Synchronizes user from external db to moodle user table.
      *

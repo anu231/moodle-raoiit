@@ -14,7 +14,7 @@ $rowcount     = $DB->count_records('student_idcard_submit');
 $sort         = optional_param('sort', 'student_username', PARAM_ALPHA);
 $dir          = optional_param('dir', 'ASC', PARAM_ALPHA);
 $page         = optional_param('page', 1, PARAM_INT);
-$perpage      = optional_param('perpage', 5, PARAM_INT);
+$perpage      = optional_param('perpage', 30, PARAM_INT);
 $baseurl      = new moodle_url('/blocks/idcard_tracker/view_pending_idcards.php',array('perpage' => $perpage));
 $renderable = new view_pending_idcards($page, $perpage);
 echo $output->header();

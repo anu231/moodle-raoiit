@@ -26,7 +26,7 @@
             <tr>
                 <td class="view_student_list_th view_student_list_table_td_td">{{student_username}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td circle">
-                <img src='{{src}}' style='width:80px;' /></td>
+                <img src='{{profile_pic}}' style='width:80px;' /></td>
                 <td class="view_student_list_th view_student_list_table_td_td">{{student_fullname}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td">{{branch}}</td>
                 <td class="view_student_list_th view_student_list_table_td_td">{{student_course}}</td>
@@ -41,10 +41,10 @@
                 <img src="pix/wrong.png"  style="width:23px;height:23px;" class='reject_img' id="{{id}}" />
                 </button>
                 </td>
-                <td class="view_student_list_th view_student_list_table_td_td"><a href="view_student_idcard.php?idcard_id={{id}}" target="_blank"><img src='pix/view.jpg' style="width:30px;height:30px;" /></a></td>
+                <td class="view_student_list_th view_student_list_table_td_td"><a href="javascript:opencentredpopup('view_student_idcard.php?idcard_id={{id}}')"><img src='pix/view.jpg' style="width:30px;height:30px;" /></a></td>
                 
             </tr>
-          
+
     {{/view_idcards}}
   
         </tbody>
@@ -55,9 +55,40 @@
     </tr>
 {{/view_idcards}}  
 
-    
-</div>
+<script>
+$(document).ready(function() {
+	$('#page-help').each(function() {
+		var $link = $(this);
+		var $dialog = $('<div></div>')
+			.load($link.attr('href'))
+			.dialog({
+				autoOpen: false,
+				title: $link.attr('title'),
+				width: 500,
+				height: 300
+			});
 
+		$link.click(function() {
+			$dialog.dialog('open');
+
+			return false;
+		});
+	});
+});
+</script>
+
+</div>
+<script language="JavaScript">
+
+function opencentredpopup(MyURL){
+
+pagewidth=800;
+pageheight=400;
+
+NewPage1 = this.open(MyURL, "newpage1", "toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes,height=" + pageheight + ",width=" + pagewidth +",top=" + ((screen.height - pageheight)/2) + ",left=" + (screen.width - pagewidth)/2);
+NewPage1.focus();
+}
+</script>
 <script>
  $('.accept_class').click(function(){
     var id = $(this).val();

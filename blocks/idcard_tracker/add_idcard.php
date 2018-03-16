@@ -31,8 +31,9 @@ if (is_branch_admin())
         //$idcard_record->id = $DB->insert_record('student_idcard', $idcard_record, $returnid=true);
         $content = $mform->get_file_content('profile_pic');
         $name = $data->student_username.'-'.$mform->get_new_filename('profile_pic');
-       // check image file is exist //
+        // check image file is exist //
         if (file_exists($CFG->id_card_image.$data->student_username)) {
+            //echo $CFG->id_card_image.$data->student_username;
             echo "Image file is already exists. System successfully replaced image file";
             unlink($CFG->id_card_image.$data->student_username);
             $success = $mform->save_file('profile_pic',$CFG->id_card_image.$data->student_username);
@@ -41,6 +42,7 @@ if (is_branch_admin())
             redirect(new moodle_url('view_profile.php?student_username='.$data->student_username));
         }
         else{
+            //echo $CFG->id_card_image.$data->student_username;
             $success = $mform->save_file('profile_pic',$CFG->id_card_image.$data->student_username);
             //$newpicture = (int)process_new_icon($context, 'user', 'icon', 0,$CFG->id_card_image.$data->student_username);
             redirect(new moodle_url('view_profile.php?student_username='.$data->student_username));

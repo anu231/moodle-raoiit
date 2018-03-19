@@ -2,7 +2,7 @@
 
 require(__DIR__.'/../../../config.php');
 
-allowed_ips = array('203.123.46.194', '144.168.165.242', '104.227.244.29');
+$allowed_ips = array('203.123.46.194', '144.168.165.242', '104.227.244.29');
 
 function get_client_ip() {
     $ipaddress = '';

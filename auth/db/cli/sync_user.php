@@ -2,7 +2,7 @@
 
 require(__DIR__.'/../../../config.php');
 
-//$allowed_ips = array('203.123.46.194', '144.168.165.242', '104.227.244.29');
+$allowed_ips = array('203.123.46.194', '144.168.165.242', '104.227.244.29','192.168.1.19');
 
 function get_client_ip() {
     $ipaddress = '';
@@ -22,10 +22,11 @@ function get_client_ip() {
         $ipaddress = 'UNKNOWN';
     return $ipaddress;
 }
-echo get_client_ip().'<br>';
-if (!array_key_exists(get_client_ip(), $allowed_ips)){
+//echo get_client_ip().'<br>';
+if (!in_array(get_client_ip(), $allowed_ips)){
     echo 'ACCESS DENIED';
-    //exit;
+    //print_r($allowed_ips);
+    exit;
 }
 
 $username = required_param('username',PARAM_TEXT);

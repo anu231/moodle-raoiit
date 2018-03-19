@@ -22,7 +22,7 @@ function get_client_ip() {
         $ipaddress = 'UNKNOWN';
     return $ipaddress;
 }
-
+echo get_client_ip().'<br>';
 if (!array_key_exists(get_client_ip(), allowed_ips)){
     echo 'ACCESS DENIED';
     exit;

@@ -26,7 +26,8 @@ if (is_branch_admin())
     profile_load_data($user);
     //$user_picture = new user_picture($user);
     //$user_picture->size = true;
-    $src = $CFG->wwwroot.'/blocks/idcard_tracker/id_img_serve.php?username='.$user->username;//$user_picture->get_url($PAGE);
+    $src = $CFG->wwwroot.'/blocks/idcard_tracker/id_img_serve.php?username='.$user->username;
+    //$user_picture->get_url($PAGE);
     //var_dump($src);
 
     // load profile data //
@@ -47,7 +48,7 @@ if (is_branch_admin())
        if ($data = $mform->get_data()){
             $student_idcard_submit = new stdClass();  
             $student_idcard_submit->student_username = $data->student_username;
-            //$student_idcard_submit->profile_pic = $CFG->id_card_image.$student_username;
+            $student_idcard_submit->profile_pic = $src;
             $student_idcard_submit->student_fullname = $data->student_fullname;
             $student_idcard_submit->branch = $data->branch;
             $student_idcard_submit->student_course = $data->student_course;
@@ -66,7 +67,7 @@ if (is_branch_admin())
         else{
             $mform->display();
         }
-      echo $OUTPUT->footer();
+    echo $OUTPUT->footer();
     }
     
 }

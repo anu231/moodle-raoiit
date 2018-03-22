@@ -1,21 +1,31 @@
 <!--
    Displays the topic completion report for the user
    -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <h3>Chapter Completion Report</h3>
+   <span style='color:red; '>Note : (B) is denoted to Boards<br/></span>
 {{#data}}
 <div id="accordion">
    {{#report}}
-   <h3 class='accord_h4'>{{subject}} &#8595;</h3>
+   <h3 class='accord_h4'>{{subject}}</h3>
    <div class='shadow'>
-      <ul>
+  <div class="row"  >
+     {{#items}}  
+  <div class="col-sm-3 topics">{{name}}</div>
+     {{/items}}  
+</div>
+
+         <!--<ul style='list-style: none;'>
          {{#items}}
-         <li>{{name}}</li>
+         <li style='font-size: 15px; color:#333; list-style=none; margin-bottom:2px;'> &#8594; {{name}}</li>
          {{/items}}
-      </ul>
+      </ul>-->
    </div>
    {{/report}}
 </div>
 <div class='ptmrecords'>
-   <h3>Batch Records</h3>
+   <h3>Parents Teacher Meeting Records</h3>
    <table id="batch_records">
       <thead>
          <tr>
@@ -36,7 +46,8 @@
 {{/data}}
 <link rel="stylesheet" href="templates/css/view.css">
 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
    $( function() {
      $( "#accordion" ).accordion();

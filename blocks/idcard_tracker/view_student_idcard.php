@@ -11,10 +11,10 @@ $output = $PAGE->get_renderer('block_idcard_tracker');
 
 global $DB, $USER, $CFG, $PAGE;
 
-echo $output->header();
+//echo $output->header();
 
 $idcard_id = required_param('idcard_id',PARAM_INT);
 
 $renderable = new view_student_idcard($idcard_id);
 echo $output->render($renderable);
-echo $output->footer();
+//echo $output->footer();

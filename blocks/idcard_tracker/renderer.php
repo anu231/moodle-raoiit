@@ -59,6 +59,7 @@ class view_pending_idcards implements renderable, templatable {
             $idcard->src = $user_picture->get_url($PAGE);
             $idcards_array[] = $idcard;
         }
+       
         return $idcards_array;
 }
     public function export_for_template(renderer_base $output){
@@ -76,7 +77,7 @@ class view_student_idcard implements renderable, templatable {
     private function get_student_idcard(){
         global $USER, $DB,$PAGE;
         $student_idcard = $DB->get_record('student_idcard_submit', array('id'=>$this->idcard_id,'idcard_status'=>0));
-        $user = $DB->get_record('user', array('username'=>$student_idcard->student_username));
+        /*$user = $DB->get_record('user', array('username'=>$student_idcard->student_username));
         $user_picture = new user_picture($user);
         $user_picture->size = 300;
         $student_idcard->src = $user_picture->get_url($PAGE);
@@ -99,10 +100,12 @@ class view_single_idcard implements renderable, templatable {
     private function single_idcard(){
        global $USER, $DB,$PAGE;
        $idcard = $DB->get_record('student_idcard_submit', array('student_username'=>$this->single_id,'idcard_status'=>1));
-       $user = $DB->get_record('user', array('username'=>$idcard->student_username));
+       
+       /*$user = $DB->get_record('user', array('username'=>$idcard->student_username));
        $user_picture = new user_picture($user);
        $user_picture->size = 300;
        $idcard->src = $user_picture->get_url($PAGE);
+       */
        //$idcard->idcard_status=2;
        //$DB->update_record('student_idcard_submit', $idcard);
        return $idcard;

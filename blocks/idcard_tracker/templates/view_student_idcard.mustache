@@ -1,64 +1,65 @@
 {{#student_idcard}}
- <table>
-        <tr>
-            <td>
-                <table cellspacing='0' cellpadding='0' id='idcardtable' style='width:8.8cm; height: 8.4cm; padding:0; margin:0; vertical-align: top; margin-bottom:-10px;'>
-                    <tr>
-                        <td style='height:1.8cm; vertical-align: bottom; padding-bottom: 10px;' colspan='2'>
-                            <img src='https://www.raoiit.com/img/Rao%20IIT%20Full%20New%20website-Logo.png'' border='0' style='max-width: 7.6cm;' />
-                        </td>
-                    </tr>
+<title>Roll Number : {{student_username}} &amp; Center Code : {{branch}}</title>
+<table>
+    <tr>
+        <td>
+            <table cellspacing='0' cellpadding='0' id='idcardtable' style='width:8.8cm; height: 8.4cm; padding:0; margin:0; vertical-align: top; margin-bottom:-10px; '>
+                <tr>
+                    <td style='height:1.8cm; vertical-align: bottom; padding-bottom: 10px;' colspan='2'>
+                        <img src='pix/logo.png' border='0' style='max-width: 7.6cm;' />
+                    </td>
+                </tr>
 
-                    <tr>
-                        <td style='font-size: 18px; margin-left:100px; font-weight: bold;' colspan='2'>  {{student_fullname}}</td>
-                    </tr>
+                <tr>
+                    <td style='font-size: 18px; margin-left:100px; font-weight: bold; padding-bottom: 5px;' colspan='2'>  {{student_fullname}}</td>
+                </tr>
 
-                    <tr>
-                        <td style='font-size: 18px; height:0.7cm;' colspan='2'>ROLL NUMBER : <b>{{student_username}}</b></td>
-                    </tr>
+                <tr>
+                    <td style='font-size: 18px; height:0.7cm; padding-bottom: 5px;' colspan='2'>ROLL NUMBER : <b>{{student_username}}</b></td>
+                </tr>
 
-                    <tr>
-                        <td style='height:5.3cm; text-align: right; width: 6.0cm;' >
-                            <img src='{{src}}'  style='height:5.1cm; margin-left:50px; border:1px solid #000;  ' />
-                        </td>
-                        <td style='
-                            /* Safari */
-                            -webkit-transform: rotate(-90deg);
+                <tr>
+                    <td style='height:5.3cm; text-align: right; width: 6.0cm;' >
+                        <img src='{{profile_pic}}'  style='height:205px; width:205px; margin-left:50px; border:1px solid #000;' />
+                    </td>
+                    <td style='
+                        /* Safari */
+                        -webkit-transform: rotate(-90deg);
 
-                            /* Firefox */
-                            -moz-transform: rotate(-90deg);
+                        /* Firefox */
+                        -moz-transform: rotate(-90deg);
 
-                            /* IE */
-                            -ms-transform: rotate(-90deg);
+                        /* IE */
+                        -ms-transform: rotate(-90deg);
 
-                            /* Opera */
-                            -o-transform: rotate(-90deg);
+                        /* Opera */
+                        -o-transform: rotate(-90deg);
 
-                            float: left; border:1px solid #fff; color:#103c9d; width:100px; margin-left:-31px;margin-top:40px;'>{{student_course}}<br/>Center Code : {{branch}}
-                        </td>
-                    </tr>
+                        float: left; border:1px solid #fff; color:#103c9d; width:108px; margin-left:-39px;margin-top:72px; font-size:14px;'>{{student_course}}
+                    </td>
+                </tr>
 
-                    <tr>
-                        <td style='font-size: 18px; height:0.7cm; float:left; margin-left:75px; 'colspan=2>
-                           <b> TARGET YEAR : {{student_targetyear}} </b>
-                        </td>
-                    </tr>
+                <tr>
+                    <td style='font-size: 18px; height:0.7cm; float:left; margin-left:75px; 'colspan=2>
+                        <b> TARGET YEAR : {{student_targetyear}} </b>
+                    </td>
+                </tr>
 
-                    <tr>
-                        <td style='font-size: 11px; height:0.5cm; font-weight:bold; 'colspan=2>
-                            <center>CONTACT NO :  {{student_mobile_number}} </center>
-                        </td>
-                    </tr>
+                <tr>
+                    <td style='font-size: 11px; height:0.5cm; font-weight:bold; 'colspan=2>
+                        <center>CONTACT NO :  {{student_mobile_number}} </center>
+                    </td>
+                </tr>
 
-                    <tr>
-                        <td style='font-size: 11px; height:0.5cm; font-weight:bold;' colspan=2>
-                           <center> VALID TILL :    {{idcard_valid}} </center>
-                        </td>
-                    </tr>
-                </table><img src='https://analysis.raoiit.com/images/riitstamp.png' width='80' id='riitstamp' />
-            </td>
-        </tr>
-    </table>
+                <tr>
+                    <td style='font-size: 11px; height:0.5cm; font-weight:bold;' colspan=2>
+                        <center> VALID TILL :    {{idcard_valid}} </center>
+                    </td>
+                </tr>
+            </table><img src='https://analysis.raoiit.com/images/riitstamp.png' width='80' id='riitstamp' />
+        </td>
+    </tr>
+</table>
 </div>
 {{/student_idcard}}
 

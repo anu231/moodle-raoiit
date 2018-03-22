@@ -48,8 +48,15 @@
     text-align: center !important;
     font-weight: bold;
     font-size: 1.4em;
-    background-color: #3f51b5;
     color: white;
+    background: rgba(208,228,247,1);
+background: -moz-linear-gradient(left, rgba(208,228,247,1) 0%, rgba(10,118,213,1) 50%, rgba(10,118,213,1) 51%, rgba(208,228,247,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(208,228,247,1)), color-stop(50%, rgba(10,118,213,1)), color-stop(51%, rgba(10,118,213,1)), color-stop(100%, rgba(208,228,247,1)));
+background: -webkit-linear-gradient(left, rgba(208,228,247,1) 0%, rgba(10,118,213,1) 50%, rgba(10,118,213,1) 51%, rgba(208,228,247,1) 100%);
+background: -o-linear-gradient(left, rgba(208,228,247,1) 0%, rgba(10,118,213,1) 50%, rgba(10,118,213,1) 51%, rgba(208,228,247,1) 100%);
+background: -ms-linear-gradient(left, rgba(208,228,247,1) 0%, rgba(10,118,213,1) 50%, rgba(10,118,213,1) 51%, rgba(208,228,247,1) 100%);
+background: linear-gradient(to right, rgba(208,228,247,1) 0%, rgba(10,118,213,1) 50%, rgba(10,118,213,1) 51%, rgba(208,228,247,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0e4f7', endColorstr='#d0e4f7', GradientType=1 );
 }
 
 tr:hover .date {
@@ -86,7 +93,7 @@ tr.cancelled {
 
 /* new css code */
 
-.accord_h4 { padding-top: 12px; padding-bottom: 12px; padding-left: 5px;
+.accord_h4 { padding-top: 2px; padding-bottom: 2px; padding-left: 5px;
     text-align: left;background-color: #21409a; color: white;}
 
 .hr_class{border-bottom:1px solid #eee;}
@@ -107,8 +114,8 @@ tr.cancelled {
 #batch_records tr:hover {background-color: #ddd;}
 
 #batch_records th {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 2px;
+    padding-bottom: 2px;
     text-align: left;
     background-color: #21409a;
     color: white;
@@ -120,6 +127,44 @@ box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
 -webkit-box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
 -moz-box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
 -o-box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
+padding: 10px;
+}
+.topics{ border-collapse: collapse; display: table; margin-left:20px; color: #2f41a5;}
+.topics:hover{color: #000; font-weight:bold;}
+.ui-accordion .ui-accordion-header{background:#21409a; color: #fff;}
+/*
+.physics {
+    background-color: #ffcdd2 !important;
+}
+.chemistry {
+    background-color: #FFF59D !important;
+}
+.mathematics {
+    background-color: #DCE775 !important;
+}
+.bio {
+    background-color: #FFAB91 !important;
+}
+.zoo {
+    background-color: #B3E5FC !important;
+}
+*/
+.physics {
+    background-color: #d32f2f !important;  color:#fff !important;
 }
 
-/* end new css code */
+.chemistry {
+    background-color: #0d47a1 !important; color:#fff !important;
+}
+
+.mathematics {
+    background-color: #f57c00 !important; color:#fff !important;
+}
+
+.bio {
+    background-color: #6d4c41 !important; color:#fff !important;
+}
+
+.zoo {
+    background-color: #1b5e20 !important;  color:#fff !important;
+}

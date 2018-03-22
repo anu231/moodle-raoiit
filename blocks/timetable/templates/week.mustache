@@ -8,7 +8,30 @@
         <div class="index-item">{{fancydate}}</div>
         {{/days}}
     </div>
+<table>
+<tr>
+<td><div style='background:#d32f2f; height:10px; width:10px;'>&nbsp;</div></td>
+<td class="index-header">Physics </td>
+<td style="width:10px;">&nbsp;</td>
 
+<td><div style='background:#0d47a1; height:10px; width:10px;'>&nbsp;</div></td>
+<td class="index-header">Chemistry </td>
+<td style="width:10px;">&nbsp;</td>
+
+<td><div style='background:#f57c00; height:10px; width:10px;'>&nbsp;</div></td>
+<td class="index-header">Mathematics </td>
+<td style="width:10px;">&nbsp;</td>
+
+<td><div style='background:#6d4c41; height:10px; width:10px;'>&nbsp;</div></td>
+<td class="index-header">Botony </td>
+<td style="width:10px;">&nbsp;</td>
+
+<td><div style='background:#1b5e20; height:10px; width:10px;'>&nbsp;</div></td>
+<td class="index-header">Zoology </td>
+<td style="width:10px;">&nbsp;</td>
+
+</tr>
+</table>
 <div id="accordion">
  {{#days}}
   <h3 id="{{fancydate}}" class="date" >{{fancydate}}</h3>
@@ -24,9 +47,10 @@
                 <th>Notes</th>
                 <th>Batch</th>
             </tr>
-            <tr>
+            
+            <!--<tr>
                 <td id="{{fancydate}}" colspan="7" class="date">{{fancydate}}</td>
-            </tr>
+            </tr>-->
             {{#items}}
                 <tr class="{{subject}} {{testclass}} {{cancelclass}}">
                     <td>{{starttime}}</td>

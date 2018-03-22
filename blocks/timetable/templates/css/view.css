@@ -132,23 +132,7 @@ padding: 10px;
 .topics{ border-collapse: collapse; display: table; margin-left:20px; color: #2f41a5;}
 .topics:hover{color: #000; font-weight:bold;}
 .ui-accordion .ui-accordion-header{background:#21409a; color: #fff;}
-/*
-.physics {
-    background-color: #ffcdd2 !important;
-}
-.chemistry {
-    background-color: #FFF59D !important;
-}
-.mathematics {
-    background-color: #DCE775 !important;
-}
-.bio {
-    background-color: #FFAB91 !important;
-}
-.zoo {
-    background-color: #B3E5FC !important;
-}
-*/
+
 .physics {
     background-color: #d32f2f !important;  color:#fff !important;
 }
@@ -161,10 +145,10 @@ padding: 10px;
     background-color: #f57c00 !important; color:#fff !important;
 }
 
-.bio {
+.botany {
     background-color: #6d4c41 !important; color:#fff !important;
 }
 
-.zoo {
+.zoology {
     background-color: #1b5e20 !important;  color:#fff !important;
 }

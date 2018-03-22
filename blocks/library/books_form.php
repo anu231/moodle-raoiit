@@ -186,7 +186,7 @@ class issue_book_form extends moodleform {
         $mform =& $this->_form;
         $mform->addElement('text', 'book_barcode', "barcode for the book",'maxlength="100",required');
         $mform->setType('book_barcode', PARAM_TEXT);
-        $mform->addElement('text', 'student_username', get_string('student', 'block_library'),'maxlength="6",required');
+        $mform->addElement('text', 'student_username', get_string('student', 'block_library'),'maxlength="10",required');
         $mform->setType('student_username', PARAM_INT); 
         $radioarray=array();
         $radioarray[] = $mform->createElement('radio', 'status', '', get_string('issue', 'block_library'), 0);

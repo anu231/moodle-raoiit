@@ -23,11 +23,11 @@ class week implements renderable {
         $this->days = $this->get_week_timetable();
     }
     private $subj_map = array(
-		'p'=>'Physics',
-		'c'=>'Chemistry',
-		'm'=>'Maths',
-		'z'=>'Zoology',
-		'b'=>'Botany'
+		'p'=>'physics',
+		'c'=>'chemistry',
+		'm'=>'mathematics',
+		'z'=>'zoology',
+		'b'=>'botany'
 	);
 
     private function get_week_start_end_dates(){

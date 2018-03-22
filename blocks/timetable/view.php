@@ -10,7 +10,7 @@ $PAGE->set_heading("Weekly Timetable");
 $PAGE->set_pagelayout('standard');
 
 $output = $PAGE->get_renderer('block_timetable');
-$PAGE->requires->js_call_amd('block_timetable/ttview','init');
+//$PAGE->requires->js_call_amd('block_timetable/ttview','init');
 echo $output->header();
 echo $output->week();
 echo $output->footer();

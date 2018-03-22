@@ -46,28 +46,30 @@
 
 
 
-.label.Physics {
-    background-color: lightcoral;
-    text-shadow: none;    
+.label.physics {
+    /*background-color: lightcoral;
+    text-shadow: none;    */
+    background-color: #d32f2f !important;  color:#fff !important;
 }
-.label.Chemistry {
-    background-color: lightgreen;
+.label.chemistry {
+    /*background-color: lightgreen;
     color: #333333;
-    text-shadow: none;
+    text-shadow: none;*/
+    background-color: #0d47a1 !important; color:#fff !important;
 }
-.label.Maths {
-    background-color: red;
-    text-shadow: none;
-    
+.label.mathematics {
+    /*background-color: red;
+    text-shadow: none;*/
+    background-color: #f57c00 !important; color:#fff !important;
 }
-.label.Biology {
-    background-color: red;
-    text-shadow: none;
-    
+.label.botany {
+    /*background-color: red;
+    text-shadow: none;*/
+    background-color: #6d4c41 !important; color:#fff !important;
 }
-.label.Zoology {
-    background-color: red;
-    text-shadow: none;
-    
+.label.zoology {
+    /*background-color: red;
+    text-shadow: none;*/
+    background-color: #1b5e20 !important;  color:#fff !important;
 }
 

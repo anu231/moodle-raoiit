@@ -2,11 +2,11 @@
 
 function get_subject_name($shortname){
     $subj_map = array(
-		'p'=>'Physics',
-		'c'=>'Chemistry',
-		'm'=>'Maths',
-		'z'=>'Zoology',
-		'b'=>'Botany'
+		'p'=>'physics',
+		'c'=>'chemistry',
+		'm'=>'maths',
+		'z'=>'zoology',
+		'b'=>'botany'
     );
     if (!array_key_exists($shortname, $subj_map)){
         return 'Unknown Subject';

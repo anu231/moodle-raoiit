@@ -37,28 +37,6 @@ if (is_branch_admin())
     {
         echo html_writer::div('ID Card Already Submitted');
         echo $OUTPUT->continue_button($CFG->wwwroot);
-        //TODO:ABHISHEK
-        //SHOW THE ID CARD
-        // UPDATE QUERY //
-        /*$mform = new view_profile_form (null, array('student_username'=>$student_username,'profile_pic'=>$src,'student_fullname'=>$user->firstname." ".$user->lastname,'student_course'=>$user->profile_field_coursetypename['text'],'student_targetyear'=>$user->profile_field_xiiyear,
-        'idcard_valid'=>$idcard_valid,'student_mobile_number'=>$user->profile_field_studentmobile,
-        'branch'=>$user->profile_field_center));
-        
-        if ($data = $mform->get_data())
-        {
-            $new_data = new stdClass();
-            $new_data->id = $student_idcard->id;
-            $new_data->student_fullname = $data->student_fullname;
-            //$new_data->profile_pic =$CFG->id_card_image.$student_username;
-            // $CFG->id_card_image.$student_username
-            $result = $DB->update_record('student_idcard_submit', $new_data);
-            echo $OUTPUT->continue_button($CFG->wwwroot.'/blocks/idcard_tracker/view_idcards.php');
-            // UPDATE QUERY //
-        }
-        else{
-            $mform->display();
-        }
-        */
     }
     else
     {

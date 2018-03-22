@@ -75,7 +75,7 @@ class view_profile_form extends moodleform {
     function definition(){
         $mform =& $this->_form;
         $profile=$this->_customdata['profile_pic'];
-        $mform->addElement('html', "<img src='$profile' style='max-width: 100%; height: auto;width: 150px; resize: both; margin-left:80px' />");
+        $mform->addElement('html', "<img id='id_img' src='$profile' style='max-width: 100%; height: auto;width: 150px; resize: both; margin-left:80px;' />");
         $mform->addElement('static', 'static_student_username', 'Student Username',
         $this->_customdata['student_username']);
         $mform->addElement('hidden', 'student_username','Student Roll Number');

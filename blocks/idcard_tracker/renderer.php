@@ -50,13 +50,12 @@ class view_pending_idcards implements renderable, templatable {
         global $USER, $DB,$PAGE;
        /*$idcards = $DB->get_records('student_idcard_submit', array('idcard_status'=>0),'','*',
        ($this->page)*$this->perpage, $this->perpage);*/
-       $idcards = $DB->get_records('student_idcard_submit', array('idcard_status'=>0),'','*',
-       ($this->page)*$this->perpage, $this->perpage);
+       $idcards = $DB->get_records('student_idcard_submit', array('idcard_status'=>0),'id','id,student_username',($this->page)*$this->perpage, $this->perpage);
        $idcards_array = array();
         foreach($idcards as $idcard){
             $user = $DB->get_record('user', array('username'=>$idcard->student_username));
             $user_picture = new user_picture($user);
-            $user_picture->size = 200;
+            $user_picture->size = 400;
             $idcard->src = $user_picture->get_url($PAGE);
             $idcards_array[] = $idcard;
         }

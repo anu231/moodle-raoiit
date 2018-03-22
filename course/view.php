@@ -296,4 +296,4 @@
     include_course_ajax($course, $modnamesused);
 
     echo $OUTPUT->footer();
-    echo "<link rel='stylesheet' href='$CFG->wwwroot/course/format/topics/custom.css'>";
+    echo "<link rel='stylesheet' href='$CFG->wwwroot/course/format/custom.css'>";

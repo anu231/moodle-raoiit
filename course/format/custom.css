@@ -1,0 +1,30 @@
+.physics {
+    background-color: #d32f2f !important;
+}
+.physics h3{
+    color:#fff !important;
+}
+.chemistry {
+    background-color: #0d47a1 !important;
+}
+.chemistry h3{
+    color:#fff !important;
+}
+.mathematics {
+    background-color: #f57c00 !important;
+}
+.mathematics h3{
+    color:#fff !important;
+}
+.bio {
+    background-color: #6d4c41 !important;
+}
+.bio h3{
+    color:#fff !important;
+}
+.zoo {
+    background-color: #1b5e20 !important;
+}
+.zoo h3{
+    color:#fff !important;
+}

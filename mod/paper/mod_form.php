@@ -31,7 +31,7 @@ class mod_paper_mod_form extends moodleform_mod {
         // Populate the select element with papers
         $PAPERS = array('0'=>'Select a paper');
         foreach ($papers['names'] as $paper) {
-            $PAPERS["$paper->id"] = $paper->name;
+            $PAPERS["$paper->id"] = $paper->id.' '.$paper->name;
         }
         $name = $mform->addElement('select', 'paperid', 'Paper name', $PAPERS, array('onchange' => 'javascript:updateFields();', 'required'));
         $name->setSelected('0');

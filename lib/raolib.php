@@ -107,3 +107,26 @@ EOT;
     }
     return $access_control;
 }
+
+function get_rao_user_profile_fields($profilefields, $user=null){
+    //gets the specified user profile fields
+    global $DB;
+    if ($user==null){
+      global $USER;
+      $user = $USER;  
+    }
+    list($usql, $params) = $DB->get_in_or_equal($profilefields);
+    $sql = <<<SQL
+    select ud.data, uif.shortname from
+    {user} as u join (select * from {user_info_field} where shortname $usql) as uif join {user_info_data} as ud
+    on
+    u.id = ud.userid and ud.fieldid = uif.id and u.id=$user
+SQL;
+    $res = $DB->get_records_sql($sql, $params);
+    $out = array();
+    foreach($res as $record){
+        //$fname = $record->shortname;
+        $out[$record->shortname] = $record->data; 
+    }
+    return $out;
+}

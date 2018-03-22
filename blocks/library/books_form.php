@@ -203,7 +203,13 @@ class issue_book_form extends moodleform {
         $book = $DB->get_record('lib_bookmaster', array("status"=>1,"barcode"=>$data['book_barcode']));
         if (empty($book)){
             $errors['book_barcode'] = 'Book does not exist in the system or is damaged/lost';
-            return  $errors;
+            //return  $errors;
+        }
+        //check if student has paid the library money
+        $student = $DB->get_record('user',array('username'=>$data['student_username']));
+        $library_fee = get_rao_user_profile_fields(array('libraryfee'),$student->id);
+        if ((int)$library_fee['libraryfee'] < 2000){
+            //$errors['student_username'] = 'Can\'t issue books as student has not paid the library fee';
         }
         //check if book is already issued
         if($book->issued=='1' && $data['status']==0){
@@ -358,32 +364,32 @@ class view_submitted_ho_form extends moodleform {
     }
     
 }
-        // add barcode //
-        class add_barcode_form extends moodleform {
-            function definition(){
-                $a= get_centers_book();
-                $mform =& $this->_form;
-                $book_list = convert_std_to_array_bookid(get_centers_book());
-                $mform->addElement('select', 'book', 'Name of Book',$book_list);
-                $mform->addElement('text', 'book_barcode', "barcode for the book",'maxlength="13",required');
-                $mform->setType('book_barcode', PARAM_INT);
-                $this->add_action_buttons(true,'Add Barcode');
-                
-            }
-            function validation($data, $files){
-                $errors = array();
-                global $DB, $USER,$CFG;
-                $book = $DB->get_record('lib_bookmaster', array("status"=>1,"barcode"=>$data['book_barcode']));
-                if (!empty($book)){
-                    $errors['book_barcode'] = 'Barcode is already scanned';
-                    return  $errors;
-                }
-                if (strlen($data['book_barcode']) != 13){
-                    $errors['book_barcode'] = 'Invalid Barcode';
-                    return  $errors;
-                }
-               
-                return $errors;
-            }
-           
+// add barcode //
+class add_barcode_form extends moodleform {
+    function definition(){
+        $a= get_centers_book();
+        $mform =& $this->_form;
+        $book_list = convert_std_to_array_bookid(get_centers_book());
+        $mform->addElement('select', 'book', 'Name of Book',$book_list);
+        $mform->addElement('text', 'book_barcode', "barcode for the book",'maxlength="13",required');
+        $mform->setType('book_barcode', PARAM_INT);
+        $this->add_action_buttons(true,'Add Barcode');
+        
+    }
+    function validation($data, $files){
+        $errors = array();
+        global $DB, $USER,$CFG;
+        $book = $DB->get_record('lib_bookmaster', array("status"=>1,"barcode"=>$data['book_barcode']));
+        if (!empty($book)){
+            $errors['book_barcode'] = 'Barcode is already scanned';
+            return  $errors;
         }
+        if (strlen($data['book_barcode']) != 13){
+            $errors['book_barcode'] = 'Invalid Barcode';
+            return  $errors;
+        }
+        
+        return $errors;
+    }
+    
+}

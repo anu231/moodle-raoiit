@@ -75,11 +75,14 @@ function get_batch_names($batches){
 
 function get_students_by_batch($batch){
     global $DB, $CFG;
+    $sql = <<<SQL
+    select u.id, concat(u.username," - ",u.firstname," ",u.lastname) as name 
+    from {user} as u join 
+    (select udd.userid as userid, udd.data as data from {user_info_data} as udd join {user_info_field} as uif on udd.fieldid = uif.id where uif.shortname='batch') as ud 
+    on u.id=ud.userid where ud.data=?
+SQL;
     //get all the users with the specified batches
-    $users = $DB->get_records_sql('select u.id, concat(u.username," - ",u.firstname," ",u.lastname) as name from {user} as u join (select userid, data from {user_info_data} where fieldid=?) as ud on u.id=ud.userid where ud.data=?',array($CFG->batch_field_id,$batch));
-    //$userids = $DB->get_records_list('user_info_data','data',get_batch_names($batches),null,'userid');
-    //$userid_list = array();
-    //foreach($userids as $userid){array_push($userid_list, $userid);}
+    $users = $DB->get_records_sql($sql,array($batch));
     return $users;
 }
 

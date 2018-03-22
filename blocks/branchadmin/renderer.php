@@ -171,7 +171,11 @@ class view_student_performance implements renderable, templatable{
         $req_user_center = get_user_center($user->id);
         if ($user_center==$req_user_center){
             $spr = get_student_full_report($user->username);
-            return $spr;
+            $ret = new stdClass();
+            $ret->username = $this->username;
+            $ret->name = $user->firstname.' '.$user->lastname;
+            $ret->spr = $spr;
+            return $ret;
         } else {
             $msg = new stdClass();
             $msg->error_message = 'Requested Student does not belong to the centre assigned to you';
@@ -187,7 +191,7 @@ class view_student_performance implements renderable, templatable{
     public function export_for_template(renderer_base $output) {                                                                    
         //get all the students with the same center
         $data = $this->get_student_performance();
-        return array('spr'=>$data);                                                                                                               
+        return array('ret'=>$data);                                                                                                               
     }
 }
 
@@ -206,8 +210,11 @@ class todays_birthday implements renderable, templatable {
         from {user_info_data} as userdata join {user} as user
         on userdata.userid = user.id
         where userdata.fieldid = ? AND MONTH(userdata.data) = $current_month AND DAY(userdata.data) = $current_date AND user.suspended = 0
+        AND 
+        user.id in 
+        (select userid from {user_info_data} as ud join {user_info_field} as ufi on ud.fieldid=ufi.id where ufi.shortname='center' and ud.data=?)
 SQL;
-        $get_records = $DB->get_records_sql($sql,array(1));
+        $get_records = $DB->get_records_sql($sql,array(1,get_user_center()));
         $result = array();
         foreach($get_records as $entry){
             $result[] = $entry;

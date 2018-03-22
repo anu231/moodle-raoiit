@@ -48,16 +48,13 @@ function paper_update_instance($paper, $mform=NULL){
     global $DB, $COURSE;
 
     // Fill in invisible fields.
-    $paperinfo = json_decode($paper->paperinfo);
-    foreach ($paperinfo as $p) {
-        if($paper->paperid == $p->id){
-            $paper->name = $p->name;
-            $paper->paperid = $p->id; // Add paperid to $mform;
-            $paper->date = $p->startdate;
-            $paper->duration = $p->time;
-            $paper->markingscheme = paper_generate_markingscheme($p); // TODO
-            break;
-        }
+    $p = paper_remote_fetch_info($paper->paperid);
+    if($paper->paperid == $p->id){
+        $paper->name = $p->name;
+        $paper->paperid = $p->id; // Add paperid to $mform;
+        $paper->date = $p->startdate;
+        $paper->duration = $p->time;
+        $paper->markingscheme = paper_generate_markingscheme($p); // TODO
     }
     $paper->courseid = $COURSE->id;
     $paper->timecreated = time();

@@ -81,8 +81,7 @@ class view_student_idcard implements renderable, templatable {
         /*$user = $DB->get_record('user', array('username'=>$student_idcard->student_username));
         $user_picture = new user_picture($user);
         $user_picture->size = 300;
-        $student_idcard->src = $user_picture->get_url($PAGE);*/
-       
+        $student_idcard->src = $user_picture->get_url($PAGE);
         return $student_idcard;
 }
     public function export_for_template(renderer_base $output){

@@ -80,7 +80,7 @@ class profile_field_databasefieldmap extends profile_field_base {
     function edit_validate_field($usernew) {
       $errors = array();
       if (isset($usernew->{$this->inputname})) {
-          if ($usernew->{$this->inputname}['text'] === '') {
+          if ($usernew->{$this->inputname} === '') {
             $errors[$this->inputname] = 'error';
           }
       }

@@ -265,6 +265,112 @@ class auth_plugin_db extends auth_plugin_base {
         }
     }
 
+    function get_remote_user($username){
+        $authdb = $this->db_init();
+        $result = null;
+        // Fetch userlist.
+        $rs = $authdb->Execute("SELECT {$this->config->fielduser}
+                                  FROM {$this->config->table} 
+                                  where status='1' and rollnumber='$username'");
+        
+        if (!$rs) {
+            print_error('auth_dbcantconnect','auth_db');
+        } else if (!$rs->EOF) {
+            $rec = $rs->FetchRow();
+            $result = $rec[strtolower($this->config->fielduser)];
+        }
+        $authdb->Close();
+        return $result;
+    }
+    /**
+    * SYnchronizes a single user from external db
+    * create a new user/suspends/updates the entries for the user
+    **/
+    function sync_user($username){
+        global $CFG, $DB;
+        require_once($CFG->dirroot . '/user/lib.php');
+        //verify if user exists remotely
+        $remote_user = $this->get_remote_user($username);
+        //verfiy if the user exists locally
+        $local_user = $DB->get_record('user', 
+            array(
+                'username'=>$username,
+                'suspended'=>0,
+                'auth'=>$this->authtype,
+                'deleted'=>0));
+        if ($remote_user == null){
+            if (!empty($local_user)){
+                if ($this->config->removeuser == AUTH_REMOVEUSER_FULLDELETE) {
+                    delete_user($local_user);
+                } else if ($this->config->removeuser == AUTH_REMOVEUSER_SUSPEND) {
+                    $updateuser = new stdClass();
+                    $updateuser->id   = $local_user->id;
+                    $updateuser->suspended = 1;
+                    user_update_user($updateuser, false);
+                    return -1;
+                }
+            }
+        } else {
+            if (empty($local_user)){
+                //create the user or unsuspend the user
+                if ($this->config->removeuser == AUTH_REMOVEUSER_SUSPEND) {
+                    if ($olduser = $DB->get_record('user', array('username' => $username, 'deleted' => 0, 'suspended' => 1,
+                             'auth' => $this->authtype))) {
+                        $updateuser = new stdClass();
+                        $updateuser->id = $olduser->id;
+                        $updateuser->suspended = 0;
+                        user_update_user($updateuser);
+                        return 1;
+                    } else {
+                        //create this user
+                        $user = $this->get_userinfo_asobj($user);
+                        $user->username   = $username;
+                        $user->confirmed  = 1;
+                        $user->auth       = $this->authtype;
+                        $user->mnethostid = $CFG->mnet_localhost_id;
+                        if (empty($user->lang)) {
+                            $user->lang = $CFG->lang;
+                        }
+                        if ($collision = $DB->get_record_select('user', "username = :username AND mnethostid = :mnethostid AND auth <> :auth", array('username'=>$user->username, 'mnethostid'=>$CFG->mnet_localhost_id, 'auth'=>$this->authtype), 'id,username,auth')) {
+                            //$trace->output(get_string('auth_dbinsertuserduplicate', 'auth_db', array('username'=>$user->username, 'auth'=>$collision->auth)), 1);
+                            return -2;
+                        }
+                        try {
+                            $id = user_create_user($user, false); // It is truly a new user.
+                            //$trace->output(get_string('auth_dbinsertuser', 'auth_db', array('name'=>$user->username, 'id'=>$id)), 1);
+                        } catch (moodle_exception $e) {
+                            //$trace->output(get_string('auth_dbinsertusererror', 'auth_db', $user->username), 1);
+                            return -3;
+                        }
+                        // If relevant, tag for password generation.
+                        if ($this->is_internal()) {
+                            set_user_preference('auth_forcepasswordchange', 1, $id);
+                            set_user_preference('create_password',          1, $id);
+                        }
+                        // Make sure user context is present.
+                        context_user::instance($id);
+                        return 3;
+                    }
+                }
+            } else {
+                //update the user
+                $all_keys = array_keys(get_object_vars($this->config));
+                $updatekeys = array();
+                foreach ($all_keys as $key) {
+                    if (preg_match('/^field_updatelocal_(.+)$/',$key, $match)) {
+                        if ($this->config->{$key} === 'onlogin') {
+                            array_push($updatekeys, $match[1]); // The actual key name.
+                        }
+                    }
+                }
+                unset($all_keys); unset($key);
+                if (!empty($updatekeys)){
+                    $this->update_user_record($username, $updatekeys);
+                    return 2;
+                }
+            }
+        }
+    }
     /**
      * Synchronizes user from external db to moodle user table.
      *
@@ -314,6 +420,7 @@ class auth_plugin_db extends auth_plugin_base {
                 foreach ($internalusersrs as $internaluser) {
                     if (!array_key_exists($internaluser->username, $usernamelist)) {
                         $removeusers[] = $internaluser;
+                        echo 'Suspending user :'.$internaluser->username.PHP_EOL;
                     }
                 }
                 $internalusersrs->close();
@@ -348,6 +455,7 @@ class auth_plugin_db extends auth_plugin_base {
         
         if (!count($userlist)) {
             // Exit right here, nothing else to do.
+            echo 'No Users fetched from remote db'.PHP_EOL;
             $trace->finished();
             return 0;
         }
@@ -385,6 +493,7 @@ class auth_plugin_db extends auth_plugin_base {
 
                     foreach ($update_users as $user) {
                         if ($this->update_user_record($user->username, $updatekeys)) {
+                            echo 'Updated :'.$user->username.PHP_EOL;
                             $trace->output(get_string('auth_dbupdatinguser', 'auth_db', array('name'=>$user->username, 'id'=>$user->id)), 1);
                         } else {
                             $trace->output(get_string('auth_dbupdatinguser', 'auth_db', array('name'=>$user->username, 'id'=>$user->id))." - ".get_string('skipped'), 1);
@@ -432,6 +541,7 @@ class auth_plugin_db extends auth_plugin_base {
                         $updateuser->id = $olduser->id;
                         $updateuser->suspended = 0;
                         user_update_user($updateuser);
+                        echo 'Unsuspended User :'.$olduser->username.PHP_EOL;
                         $trace->output(get_string('auth_dbreviveduser', 'auth_db', array('name' => $username,
                             'id' => $olduser->id)), 1);
                         continue;

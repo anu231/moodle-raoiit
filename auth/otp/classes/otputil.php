@@ -7,7 +7,7 @@ class auth_otp_otputil {
     //generates a 6 digit otp
     const max = 999999;
     const min = 100001;
-    const validity = 2;//validity of otp in min
+    const validity = 15;//validity of otp in min
     const sms_text = 'OTP for edumate.raoiit.com is - ';
     public $success;
     public $error;

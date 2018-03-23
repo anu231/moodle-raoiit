@@ -9,8 +9,12 @@ if (isset($SESSION->otp_username)){
   //redirecto login page 
   redirect(new moodle_url('/login/index.php'));
 }
+if (isset($SESSION->otp_error)){
+  $otp_error = $SESSION->otp_error;
+}
 $sesskey = $USER->sesskey;
-$formaction = $CFG->wwwroot.'/auth/otp/otplogin.php';
+//$formaction = $CFG->wwwroot.'/auth/otp/otplogin.php';
+$formaction = $CFG->wwwroot.'/login/index.php';
 ?>
 
 <html dir="ltr" lang="en" xml:lang="en">
@@ -24,6 +28,22 @@ $formaction = $CFG->wwwroot.'/auth/otp/otplogin.php';
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google web fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Open+Sans:700" rel="stylesheet">
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+  <script type='text/javascript'>
+    function resend_otp_sms(){
+      //var username = '<?php echo $username; ?>';
+      $.ajax({
+        url:'/auth/otp/otp_resend.php?t='+Math.random(),
+        success: function(data, text){
+          alert(data);
+        },
+        error: function (request, status, error) {
+          alert(request.responseText);
+        } 
+      })
+    };
+    
+</script>
 </head>
 
 <body id="page-login-index" class="format-site  path-login safari dir-ltr lang-en yui-skin-sam yui3-skin-sam localhost--moodle pagelayout-login course-1 context-1 notloggedin login_lambda has-region-footer-left empty-region-footer-left has-region-footer-middle empty-region-footer-middle has-region-footer-right empty-region-footer-right content-only">
@@ -56,10 +76,11 @@ $formaction = $CFG->wwwroot.'/auth/otp/otplogin.php';
                         <label for="password">Enter OTP to continue</label>
                       </div>
                       <div class="form-input">
-                        <input type="text" name="password" id="password" size="15" value="" />
+                        <input type="text" name="password" id="password" size="15" value="" placeholder="Enter OTP"/>
                       </div>
                     </div>
                     <input type="submit" id="loginbtn" value="Submit" />
+                    <input type="button" id="resend_otp" value="Resend OTP" onclick="resend_otp_sms()" />
                   </form>
                 </div>
               </div>

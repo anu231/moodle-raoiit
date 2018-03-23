@@ -4265,7 +4265,8 @@ function authenticate_user_login($username, $password, $ignorelockout=false, &$f
             return false;
         }
         $auths = array($auth);
-        if (isset($CFG->otp_login)){
+        //if (isset($CFG->otp_login) || isset($CFG->parent_login)){
+        if (in_array('otp', $authsenabled)){
             array_push($auths,'otp');
         }
     } else {

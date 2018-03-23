@@ -10,6 +10,7 @@
         <FIELD NAME="username" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="otp" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The time of the creation of otp"/>
+        <FIELD NAME="mobile" TYPE="char" LENGTH="15" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="used" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>

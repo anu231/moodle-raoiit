@@ -7,7 +7,8 @@ class auth_otp_otputil {
     //generates a 6 digit otp
     const max = 999999;
     const min = 100001;
-    const validity = 10;//validity of otp in min
+    const validity = 2;//validity of otp in min
+    const sms_text = 'OTP for edumate.raoiit.com is - ';
     public $success;
     public $error;
     private function sendSMS(&$s_mobile, &$s_text){
@@ -91,6 +92,53 @@ class auth_otp_otputil {
             return false;
         }
     }
+
+    public function send_parent_login_otp($username, $mob){
+        $otp = mt_rand(self::min,self::max);
+        global $DB;
+        //store this otp in database
+        $data = new stdClass();
+        $data->username = $username;
+        $data->otp = $otp;
+        $data->timecreated = time();
+        $data->used = 0;
+        $data->mobile = $mob;
+        $ret = $DB->insert_record('auth_otp',$data);
+        if (!empty($ret)){
+            //otp created successfully
+            //send it to user
+            $text = self::sms_text.$otp;
+            if ($this->sendSMS($mob,$text)){
+                //successfully sent sms
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            $this->error = 'Error in entering the OTP in database';
+            return false;
+        }
+    }
+
+    public function resend_otp_sms($username) {
+        global $DB;
+        $otp_record = $DB->get_record('auth_otp', array('username'=>$username, 'used'=>0));
+        if (empty($otp_record)){
+            return -1;
+        } else{
+            if ((time()-$otp_record->timecreated)/60 > self::validity){
+                return -2;
+            } else {
+                //resend otp
+                $sms_text = self::sms_text.$otp_record->otp;
+                if ($this->sendSMS($otp_record->mobile, $sms_text)){
+                    return 1;
+                } else {
+                    return -3;
+                }
+            }
+        }
+    }
     /*
     checks the otp, if valid deletes it from the table
     Also checks the validity of the otp
@@ -116,7 +164,7 @@ class auth_otp_otputil {
                 $this->use_otp_by_id($rec->id);
                 return false;
             }
-            $this->use_otp($rec->user);
+            $this->use_otp($rec->username);
             return true;
         }
         $this->error = 'Wrong OTP';
@@ -137,7 +185,7 @@ class auth_otp_otputil {
     private function use_otp($user_id){
         global $DB;
         $data = array();
-        $data['user'] = $user_id;
+        $data['username'] = $user_id;
         $DB->execute('update mdl_auth_otp set used=1 where username=?',$data);
     }
 }

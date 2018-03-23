@@ -91,7 +91,8 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 			
 			$login_link_url = '';
 			$login_link_txt = '';
-			if ($login_link=='1') {$login_link_url = $wwwroot.'/login/signup.php'; $login_link_txt = get_string('startsignup');}
+			//if ($login_link=='1') {$login_link_url = $wwwroot.'/login/signup.php'; $login_link_txt = get_string('startsignup');}
+			if ($login_link=='1') {$login_link_url = $wwwroot.'/login/signup.php'; $login_link_txt = 'Create Demo Account';}
 			else if ($login_link=='2') {$login_link_url = $wwwroot.'/login/forgot_password.php'; $login_link_txt = get_string('forgotten');}
 			else if ($login_link=='3') {$login_link_url = $wwwroot.'/login/index.php'; $login_link_txt = get_string('moodle_login_page','theme_lambda');}
 			if ($login_custom_url != '') {$login_link_url = $login_custom_url;}
@@ -123,10 +124,12 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 					<input type="submit" id="submit" name="submit" value=""/>
 					</div>
         
-        			<div class="forgotpass">
+        			<div class="forgotpass" style="line-height:18px">
         			<?php 
 					if ($login_link_url != '' and $login_link_txt != '') { ?>
-						<a target="_self" href="<?php echo $login_link_url; ?>"><?php echo $login_link_txt; ?></a>
+						<a target="_self" href="<?php echo $login_link_url; ?>"><?php echo $login_link_txt; ?></a><br>
+						<a target="_self" href="/login/parent_login.php">Parent Login</a><br>
+						<a target="_self" href="/login/forgot_password.php">Forgot Password</a><br>
             		<?php } ?> 
 					</div>
         

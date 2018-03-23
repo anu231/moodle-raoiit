@@ -62,13 +62,14 @@ class auth_plugin_otp extends auth_plugin_base {
         $status = $otp->check_otp($username,$password);
         if (!$status){
             $SESSION->otp_error = $otp->error;
+            redirect(new moodle_url('/auth/otp/otpchk.php'));
             return false;
         }
         return true;
     }
 
     function pre_loginpage_hook(){
-        redirect(new moodle_url('/auth/otp/login.php'));
+        //redirect(new moodle_url('/auth/otp/login.php'));
     }
 }
 

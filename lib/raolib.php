@@ -132,6 +132,6 @@ SQL;
 }
 
 function get_rao_password($user){
-    $dob = get_rao_user_profile_fields(array('dob'), $user);
-    return $dob['dob'];
+    $dob = get_rao_user_profile_fields(array('birthdate'), $user);
+    return $dob['birthdate'];
 }

@@ -120,7 +120,7 @@ function get_rao_user_profile_fields($profilefields, $user=null){
     select ud.data, uif.shortname from
     {user} as u join (select * from {user_info_field} where shortname $usql) as uif join {user_info_data} as ud
     on
-    u.id = ud.userid and ud.fieldid = uif.id and u.id=$user
+    u.id = ud.userid and ud.fieldid = uif.id and u.id=$user->id
 SQL;
     $res = $DB->get_records_sql($sql, $params);
     $out = array();

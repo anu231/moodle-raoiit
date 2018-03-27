@@ -55,6 +55,10 @@ define('FIRSTUSEDEXCELROW', 3);
 define('MOD_CLASS_ACTIVITY', 0);
 define('MOD_CLASS_RESOURCE', 1);
 
+define('COURSE_TIMELINE_PAST', 'past');
+define('COURSE_TIMELINE_INPROGRESS', 'inprogress');
+define('COURSE_TIMELINE_FUTURE', 'future');
+
 function make_log_url($module, $url) {
     switch ($module) {
         case 'course':
@@ -863,6 +867,7 @@ function course_create_section($courseorid, $position = 0, $skipcheck = false) {
     $cw->name = null;
     $cw->visible = 1;
     $cw->availability = null;
+    $cw->timemodified = time();
     $cw->id = $DB->insert_record("course_sections", $cw);
 
     // Now move it to the specified position.
@@ -1105,10 +1110,7 @@ function set_coursemodule_name($id, $name) {
     grade_update_mod_grades($grademodule);
 
     // Update calendar events with the new name.
-    $refresheventsfunction = $cm->modname . '_refresh_events';
-    if (function_exists($refresheventsfunction)) {
-        call_user_func($refresheventsfunction, $cm->course);
-    }
+    course_module_update_calendar_events($cm->modname, $grademodule, $cm);
 
     return true;
 }
@@ -1200,8 +1202,10 @@ function course_delete_module($cmid, $async = false) {
 
     // Delete events from calendar.
     if ($events = $DB->get_records('event', array('instance' => $cm->instance, 'modulename' => $modulename))) {
+        $coursecontext = context_course::instance($cm->course);
         foreach($events as $event) {
-            $calendarevent = calendar_event::load($event->id);
+            $event->context = $coursecontext;
+            $calendarevent = calendar_event::load($event);
             $calendarevent->delete();
         }
     }
@@ -1377,6 +1381,83 @@ function delete_mod_from_section($modid, $sectionid) {
 
     }
     return false;
+}
+
+/**
+ * This function updates the calendar events from the information stored in the module table and the course
+ * module table.
+ *
+ * @param  string $modulename Module name
+ * @param  stdClass $instance Module object. Either the $instance or the $cm must be supplied.
+ * @param  stdClass $cm Course module object. Either the $instance or the $cm must be supplied.
+ * @return bool Returns true if calendar events are updated.
+ * @since  Moodle 3.3.4
+ */
+function course_module_update_calendar_events($modulename, $instance = null, $cm = null) {
+    global $DB;
+
+    if (isset($instance) || isset($cm)) {
+
+        if (!isset($instance)) {
+            $instance = $DB->get_record($modulename, array('id' => $cm->instance), '*', MUST_EXIST);
+        }
+        if (!isset($cm)) {
+            $cm = get_coursemodule_from_instance($modulename, $instance->id, $instance->course);
+        }
+        if (!empty($cm)) {
+            course_module_calendar_event_update_process($instance, $cm);
+        }
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Update all instances through out the site or in a course.
+ *
+ * @param  string  $modulename Module type to update.
+ * @param  integer $courseid   Course id to update events. 0 for the whole site.
+ * @return bool Returns True if the update was successful.
+ * @since  Moodle 3.3.4
+ */
+function course_module_bulk_update_calendar_events($modulename, $courseid = 0) {
+    global $DB;
+
+    $instances = null;
+    if ($courseid) {
+        if (!$instances = $DB->get_records($modulename, array('course' => $courseid))) {
+            return false;
+        }
+    } else {
+        if (!$instances = $DB->get_records($modulename)) {
+            return false;
+        }
+    }
+
+    foreach ($instances as $instance) {
+        if ($cm = get_coursemodule_from_instance($modulename, $instance->id, $instance->course)) {
+            course_module_calendar_event_update_process($instance, $cm);
+        }
+    }
+    return true;
+}
+
+/**
+ * Calendar events for a module instance are updated.
+ *
+ * @param  stdClass $instance Module instance object.
+ * @param  stdClass $cm Course Module object.
+ * @since  Moodle 3.3.4
+ */
+function course_module_calendar_event_update_process($instance, $cm) {
+    // We need to call *_refresh_events() first because some modules delete 'old' events at the end of the code which
+    // will remove the completion events.
+    $refresheventsfunction = $cm->modname . '_refresh_events';
+    if (function_exists($refresheventsfunction)) {
+        call_user_func($refresheventsfunction, $cm->course, $instance, $cm);
+    }
+    $completionexpected = (!empty($cm->completionexpected)) ? $cm->completionexpected : null;
+    \core_completion\api::update_completion_date_event($cm->id, $cm->modname, $instance, $completionexpected);
 }
 
 /**
@@ -1611,6 +1692,7 @@ function course_update_section($course, $section, $data) {
 
     // Update record in the DB and course format options.
     $data['id'] = $section->id;
+    $data['timemodified'] = time();
     $DB->update_record('course_sections', $data);
     rebuild_course_cache($courseid, true);
     course_get_format($courseid)->update_section_format_options($data);
@@ -2934,6 +3016,11 @@ class course_request {
         $data->visibleold         = $data->visible;
         $data->lang               = $courseconfig->lang;
         $data->enablecompletion   = $courseconfig->enablecompletion;
+        $data->numsections        = $courseconfig->numsections;
+        $data->startdate          = usergetmidnight(time());
+        if ($courseconfig->courseenddateenabled) {
+            $data->enddate        = usergetmidnight(time()) + $courseconfig->courseduration;
+        }
 
         $course = create_course($data);
         $context = context_course::instance($course->id, MUST_EXIST);
@@ -3399,32 +3486,32 @@ function duplicate_module($course, $cm) {
         }
     }
 
-    // If we know the cmid of the new course module, let us move it
-    // right below the original one. otherwise it will stay at the
-    // end of the section.
-    if ($newcmid) {
-        $info = get_fast_modinfo($course);
-        $newcm = $info->get_cm($newcmid);
-        $section = $DB->get_record('course_sections', array('id' => $cm->section, 'course' => $cm->course));
-        moveto_module($newcm, $section, $cm);
-        moveto_module($cm, $section, $newcm);
-
-        // Update calendar events with the duplicated module.
-        $refresheventsfunction = $newcm->modname . '_refresh_events';
-        if (function_exists($refresheventsfunction)) {
-            call_user_func($refresheventsfunction, $newcm->course);
-        }
-
-        // Trigger course module created event. We can trigger the event only if we know the newcmid.
-        $event = \core\event\course_module_created::create_from_cm($newcm);
-        $event->trigger();
-    }
-    rebuild_course_cache($cm->course);
-
     $rc->destroy();
 
     if (empty($CFG->keeptempdirectoriesonbackup)) {
         fulldelete($backupbasepath);
+    }
+
+    // If we know the cmid of the new course module, let us move it
+    // right below the original one. otherwise it will stay at the
+    // end of the section.
+    if ($newcmid) {
+        $section = $DB->get_record('course_sections', array('id' => $cm->section, 'course' => $cm->course));
+        $modarray = explode(",", trim($section->sequence));
+        $cmindex = array_search($cm->id, $modarray);
+        if ($cmindex !== false && $cmindex < count($modarray) - 1) {
+            $newcm = get_coursemodule_from_id($cm->modname, $newcmid, $cm->course);
+            moveto_module($newcm, $section, $modarray[$cmindex + 1]);
+        }
+
+        // Update calendar events with the duplicated module.
+        // The following line is to be removed in MDL-58906.
+        course_module_update_calendar_events($newcm->modname, null, $newcm);
+
+        // Trigger course module created event. We can trigger the event only if we know the newcmid.
+        $newcm = get_fast_modinfo($cm->course)->get_cm($newcmid);
+        $event = \core\event\course_module_created::create_from_cm($newcm);
+        $event->trigger();
     }
 
     return isset($newcm) ? $newcm : null;
@@ -3813,18 +3900,15 @@ function course_get_user_navigation_options($context, $course = null) {
 
     // Frontpage settings?
     if ($isfrontpage) {
-        if ($course->id == SITEID) {
-            $options->participants = has_capability('moodle/site:viewparticipants', $sitecontext);
-        } else {
-            $options->participants = has_capability('moodle/course:viewparticipants', context_course::instance($course->id));
-        }
-
+        // We are on the front page, so make sure we use the proper capability (site:viewparticipants).
+        $options->participants = course_can_view_participants($sitecontext);
         $options->badges = !empty($CFG->enablebadges) && has_capability('moodle/badges:viewbadges', $sitecontext);
         $options->tags = !empty($CFG->usetags) && $isloggedin;
         $options->search = !empty($CFG->enableglobalsearch) && has_capability('moodle/search:query', $sitecontext);
         $options->calendar = $isloggedin;
     } else {
-        $options->participants = has_capability('moodle/course:viewparticipants', $context);
+        // We are in a course, so make sure we use the proper capability (course:viewparticipants).
+        $options->participants = course_can_view_participants($context);
         $options->badges = !empty($CFG->enablebadges) && !empty($CFG->badges_allowcoursebadges) &&
                             has_capability('moodle/badges:viewbadges', $context);
         // Add view grade report is permitted.
@@ -4002,6 +4086,46 @@ function course_check_updates($course, $tocheck, $filter = array()) {
 }
 
 /**
+ * This function classifies a course as past, in progress or future.
+ *
+ * This function may incur a DB hit to calculate course completion.
+ * @param stdClass $course Course record
+ * @param stdClass $user User record (optional - defaults to $USER).
+ * @param completion_info $completioninfo Completion record for the user (optional - will be fetched if required).
+ * @return string (one of COURSE_TIMELINE_FUTURE, COURSE_TIMELINE_INPROGRESS or COURSE_TIMELINE_PAST)
+ */
+function course_classify_for_timeline($course, $user = null, $completioninfo = null) {
+    global $USER;
+
+    if ($user == null) {
+        $user = $USER;
+    }
+
+    $today = time();
+    // End date past.
+    if (!empty($course->enddate) && $course->enddate < $today) {
+        return COURSE_TIMELINE_PAST;
+    }
+
+    if ($completioninfo == null) {
+        $completioninfo = new completion_info($course);
+    }
+
+    // Course was completed.
+    if ($completioninfo->is_enabled() && $completioninfo->is_course_complete($user->id)) {
+        return COURSE_TIMELINE_PAST;
+    }
+
+    // Start date not reached.
+    if (!empty($course->startdate) && $course->startdate > $today) {
+        return COURSE_TIMELINE_FUTURE;
+    }
+
+    // Everything else is in progress.
+    return COURSE_TIMELINE_INPROGRESS;
+}
+
+/**
  * Check module updates since a given time.
  * This function checks for updates in the module config, file areas, completion, grades, comments and ratings.
  *
@@ -4117,4 +4241,64 @@ function course_check_module_updates_since($cm, $from, $fileareas = array(), $fi
     }
 
     return $updates;
+}
+
+/**
+ * Returns true if the user can view the participant page, false otherwise,
+ *
+ * @param context $context The context we are checking.
+ * @return bool
+ */
+function course_can_view_participants($context) {
+    $viewparticipantscap = 'moodle/course:viewparticipants';
+    if ($context->contextlevel == CONTEXT_SYSTEM) {
+        $viewparticipantscap = 'moodle/site:viewparticipants';
+    }
+
+    return has_any_capability([$viewparticipantscap, 'moodle/course:enrolreview'], $context);
+}
+
+/**
+ * Checks if a user can view the participant page, if not throws an exception.
+ *
+ * @param context $context The context we are checking.
+ * @throws required_capability_exception
+ */
+function course_require_view_participants($context) {
+    if (!course_can_view_participants($context)) {
+        $viewparticipantscap = 'moodle/course:viewparticipants';
+        if ($context->contextlevel == CONTEXT_SYSTEM) {
+            $viewparticipantscap = 'moodle/site:viewparticipants';
+        }
+        throw new required_capability_exception($context, $viewparticipantscap, 'nopermissions', '');
+    }
+}
+
+/**
+ * Return whether the user can download from the specified backup file area in the given context.
+ *
+ * @param string $filearea the backup file area. E.g. 'course', 'backup' or 'automated'.
+ * @param \context $context
+ * @param stdClass $user the user object. If not provided, the current user will be checked.
+ * @return bool true if the user is allowed to download in the context, false otherwise.
+ */
+function can_download_from_backup_filearea($filearea, \context $context, stdClass $user = null) {
+    $candownload = false;
+    switch ($filearea) {
+        case 'course':
+        case 'backup':
+            $candownload = has_capability('moodle/backup:downloadfile', $context, $user);
+            break;
+        case 'automated':
+            // Given the automated backups may contain userinfo, we restrict access such that only users who are able to
+            // restore with userinfo are able to download the file. Users can't create these backups, so checking 'backup:userinfo'
+            // doesn't make sense here.
+            $candownload = has_capability('moodle/backup:downloadfile', $context, $user) &&
+                           has_capability('moodle/restore:userinfo', $context, $user);
+            break;
+        default:
+            break;
+
+    }
+    return $candownload;
 }

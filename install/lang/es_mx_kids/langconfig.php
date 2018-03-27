@@ -31,8 +31,4 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['parentlanguage'] = 'es_mx';
-<<<<<<< HEAD
-$string['thislanguage'] = 'Español - México - kids';
-=======
-$string['thislanguage'] = 'Español de México para niños';
->>>>>>> v3.3.0
+$string['thislanguage'] = 'Español - México para niños';

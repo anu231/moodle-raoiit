@@ -24,4 +24,6 @@
 
 $string['pluginname'] = 'Database field Map';
 
-
+$plugin->version  = 2017111300;
+$plugin->requires = 2017110800;
+$plugin->component = 'quiz_overview';

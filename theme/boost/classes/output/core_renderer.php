@@ -465,7 +465,7 @@ class core_renderer extends \core_renderer {
         $context->logourl = $url;
         $context->sitename = format_string($SITE->fullname, true, ['context' => context_course::instance(SITEID), "escape" => false]);
 
-        return $this->render_from_template('core/login', $context);
+        return $this->render_from_template('core/loginform', $context);
     }
 
     /**
@@ -662,7 +662,7 @@ class core_renderer extends \core_renderer {
      * @param boolean $onlytopleafnodes
      * @return boolean nodesskipped - True if nodes were skipped in building the menu
      */
-    private function build_action_menu_from_navigation(action_menu $menu,
+    protected function build_action_menu_from_navigation(action_menu $menu,
                                                        navigation_node $node,
                                                        $indent = false,
                                                        $onlytopleafnodes = false) {

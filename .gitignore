@@ -11,6 +11,7 @@
 #
 #/mod/raopaper
 #/blocks/timetable
+composer.lock
 *.feature
 *behat*
 /config.php

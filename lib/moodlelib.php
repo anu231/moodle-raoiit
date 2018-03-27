@@ -6133,7 +6133,13 @@ function setnew_password_and_mail($user, $fasthash = false) {
 
     $supportuser = core_user::get_support_user();
 
-    $newpassword = generate_password();
+    if ($user->auth == 'db'){
+        require_once($CFG->libdir.'/raolib.php');
+        $newpassword = get_rao_password($user)['dob'];
+    } else {
+        $newpassword = generate_password();
+    }
+    
 
     update_internal_user_password($user, $newpassword, $fasthash);
 

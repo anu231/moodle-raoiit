@@ -57,9 +57,16 @@ function get_center_name($cid){
 function get_batches_for_user(){
     //gets the names of all batches with the current user
     //initialize curl handle
-    //get centre object
+    //get centre 
+    //CHANGES MADE FOR ANALYSIS_ID
     global $DB, $USER;
-    $batches = $DB->get_records_sql('select tt.id, tt.name from (select id, name, centreid from {branchadmin_ttbatches} where status=1) as tt join (select data as d, userid as uid from {user_info_data} where fieldid=57) as ud join {branchadmin_centre_info} as ci on tt.centreid=ci.analysis_id and ci.id=ud.d where ud.uid=?',array($USER->id));
+    $sql = <<<EOT
+    select tt.analysis_id, tt.name 
+    from (select id, name, centreid from {branchadmin_ttbatches} where status=1) as tt 
+    join (select data as d, userid as uid from {user_info_data} as udata join {user_info_field} as uif on udata.fieldid=uif.id where uif.shortname='center') as ud 
+    join {branchadmin_centre_info} as ci on tt.centreid=ci.analysis_id and ci.analysis_id=ud.d where ud.uid=?
+EOT;
+    $batches = $DB->get_records_sql($sql, array($USER->id));
     return $batches;
 }
 

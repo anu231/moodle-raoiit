@@ -1733,6 +1733,10 @@ social media
 	font-size: 1.25em;
     padding: 0 0 0 20px;
 }
+
+.social_contact a {
+    color:white !important;
+}
 .socials-header .socials .social_icons a.social {
 	color:[[setting:socials_color]];
     float: left;

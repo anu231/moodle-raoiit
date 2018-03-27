@@ -1,6 +1,7 @@
 <?php
 require(__DIR__.'/../../config.php');
-
+global $CFG;
+require_once($CFG->libdir.'/raolib.php');
 if ((isset($_SERVER['REMOTE_ADDR']) && ($_SERVER['REMOTE_ADDR'] == '203.123.46.194' || $_SERVER['REMOTE_ADDR'] == '192.168.1.19'))
  || (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] == '203.123.46.194')){
     //good
@@ -8,16 +9,17 @@ if ((isset($_SERVER['REMOTE_ADDR']) && ($_SERVER['REMOTE_ADDR'] == '203.123.46.1
     echo 'Not Allowed from this IP. Access Denied';
     exit;
 }
-
+$passwd = '';
 $userid = $_GET['userid'];
-$passwd = $_GET['passwd'];
+
+
 $auth = $_GET['auth'];
 
 if ($auth != 'v1Bdyp'){
     echo 'Wrong Auth';
     exit;
 }
-if ($passwd==null || $userid==null){
+if ($userid==null){
     echo 'No Info provided';
     exit;
 }
@@ -33,6 +35,12 @@ if (!$user = $DB->get_record('user',array('username'=>$userid))){
     exit;
 }
 
+if (isset($_GET['passwd'])){
+    $passwd = $_GET['passwd'];
+} else {
+    $dob = get_rao_user_profile_fields(array('dob'));
+    $passwd = $dob['dob'];
+}
 
 $hashedpassword = hash_internal_user_password($passwd);
 

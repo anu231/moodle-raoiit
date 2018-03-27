@@ -1789,6 +1789,7 @@ $string['startdate'] = 'Course start date';
 $string['startdate_help'] = 'This setting determines the start of the first week for a course in weekly format. It also determines the earliest date that logs of course activities are available for. If the course is reset and the course start date changed, all dates in the course will be moved in relation to the new start date.';
 $string['startingfrom'] = 'Starting from';
 $string['startsignup'] = 'Create new account';
+$string['demosignup'] = 'Create Demo account';
 $string['state'] = 'State/Province';
 $string['statistics'] = 'Statistics';
 $string['statisticsgraph'] = 'Statistics graph';

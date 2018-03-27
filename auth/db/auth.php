@@ -363,7 +363,9 @@ class auth_plugin_db extends auth_plugin_base {
                         }
                     }
                 }
+                print_r($all_keys);
                 unset($all_keys); unset($key);
+                print_r($updatekeys);
                 if (!empty($updatekeys)){
                     $this->update_user_record($username, $updatekeys);
                     return 2;

@@ -164,10 +164,6 @@ class core_course_external extends external_api {
 
             //for each sections (first displayed to last displayed)
             $modinfosections = $modinfo->get_sections();
-            $topic_cache = cache::make('local_raotopiceditor', 'topicentries');
-            if (!$topic_cache->get('topicentries') || $topic_cache->get('topicentries') == 0){
-                cache_topics_with_entries();
-            }
             foreach ($sections as $key => $section) {
 
                 // Show the section if the user is permitted to access it, OR if it's not available
@@ -323,20 +319,6 @@ class core_course_external extends external_api {
 
                     }
                 }
-                if ($section->_raotopic != 0){
-                    $rao_topics = array();
-                    $topic_entries = json_decode($topic_cache->get($section->_raotopic));
-                    foreach($topic_entries as $entry){
-                        $temp = array();
-                        $temp['type'] = $entry->type;
-                        $temp['value'] = $entry->value;
-                        $temp['name'] = $entry->name;
-                        $rao_topics[] = $temp; 
-                    }
-                    $sectionvalues['raotopics'] = $rao_topics;
-                }else {
-                    $sectionvalues['raotopics'] = array();
-                }
                 $sectionvalues['modules'] = $sectioncontents;
                 // assign result to $coursecontents
                 $coursecontents[] = $sectionvalues;
@@ -370,15 +352,6 @@ class core_course_external extends external_api {
                                                                 VALUE_OPTIONAL),
                     'uservisible' => new external_value(PARAM_BOOL, 'Is the section visible for the user?', VALUE_OPTIONAL),
                     'availabilityinfo' => new external_value(PARAM_RAW, 'Availability information.', VALUE_OPTIONAL),
-                    'raotopics' => new external_multiple_structure(
-                        new external_single_structure(
-                            array(
-                                'type' => new external_value(PARAM_RAW, 'type'),
-                                'value' => new external_value(PARAM_RAW, 'value'),
-                                'name' => new external_value(PARAM_RAW, 'name'),
-                            )
-                        )
-                    ),
                     'modules' => new external_multiple_structure(
                             new external_single_structure(
                                 array(

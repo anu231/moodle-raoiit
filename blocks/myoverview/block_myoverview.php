@@ -49,7 +49,6 @@ class block_myoverview extends block_base {
         if (isset($this->content)) {
             return $this->content;
         }
-
         $renderable = new \block_myoverview\output\main();
         $renderer = $this->page->get_renderer('block_myoverview');
 

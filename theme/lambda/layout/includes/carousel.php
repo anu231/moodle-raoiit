@@ -66,6 +66,7 @@ $has_additional_html = (!empty($PAGE->theme->settings->carousel_add_html));
 					$url = $PAGE->theme->settings->$current_url;
 					$current_btntext = 'carousel_btntext_'.$i;
 					$btntext = $PAGE->theme->settings->$current_btntext;
+					$btntext = format_text($btntext, FORMAT_HTML);
 					if ($url!='') echo '<a class="info" href="'.$url.'">'.$btntext.'</a>';
 					echo '</div></div>';
 				}

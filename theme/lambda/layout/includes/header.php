@@ -19,7 +19,7 @@
  * Built on: Essential by Julian Ridden
  *
  * @package   theme_lambda
- * @copyright 2016 redPIthemes
+ * @copyright 2018 redPIthemes
  *
  */
 
@@ -48,133 +48,13 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 <?php
 } ?>
 
-    <header id="page-header" class="clearfix">
-       
-    <div class="container-fluid">    
-    <div class="row-fluid">
-    <!-- HEADER: LOGO AREA -->
-        	
-            <?php if (!$haslogo) { ?>
-            	<div class="span6">
-                	<div class="title-text">
-              		<h1 id="title"><?php echo $SITE->fullname; ?></h1>
-                    </div>
-                </div>
-            <?php } else { ?>
-            	<div class="span6">
-                <div class="logo-header">
-                	<a class="logo" href="<?php echo $CFG->wwwroot; ?>" title="<?php print_string('home'); ?>">
-                    <?php 
-					echo html_writer::empty_tag('img', array('src'=>$PAGE->theme->setting_file_url('logo', 'logo'), 'class'=>'img-responsive', 'alt'=>'logo'));
-					?>
-                    </a>
-                </div>
-                </div>
-            <?php } ?>      	
-            
-            <div class="span6 login-header">
-            <div class="profileblock">
-            
-            <?php 
-	function get_content () {
-	global $USER, $CFG, $SESSION, $COURSE;
-	$wwwroot = '';
-	$signup = '';}
-
-	if (empty($CFG->loginhttps)) {
-		$wwwroot = $CFG->wwwroot;
-	} else {
-		$wwwroot = str_replace("http://", "https://", $CFG->wwwroot);
-	}
-
-		if (!isloggedin() or isguestuser()) {
-			
-			$login_link_url = '';
-			$login_link_txt = '';
-			//if ($login_link=='1') {$login_link_url = $wwwroot.'/login/signup.php'; $login_link_txt = get_string('startsignup');}
-			if ($login_link=='1') {$login_link_url = $wwwroot.'/login/signup.php'; $login_link_txt = 'Create Demo Account';}
-			else if ($login_link=='2') {$login_link_url = $wwwroot.'/login/forgot_password.php'; $login_link_txt = get_string('forgotten');}
-			else if ($login_link=='3') {$login_link_url = $wwwroot.'/login/index.php'; $login_link_txt = get_string('moodle_login_page','theme_lambda');}
-			if ($login_custom_url != '') {$login_link_url = $login_custom_url;}
-			if ($login_custom_txt != '') {$login_link_txt = $login_custom_txt;}
-        	
-			if ($auth_googleoauth2) {
-        		require_once($CFG->dirroot . '/auth/googleoauth2/lib.php'); auth_googleoauth2_display_buttons(); ?>
-                <div style="clear:both;"></div>
-                <div class="forgotpass oauth2">
-        			<?php 
-					if ($login_link_url != '' and $login_link_txt != '') { ?>
-						<a target="_self" href="<?php echo $login_link_url; ?>"><?php echo $login_link_txt; ?></a>
-            		<?php } ?> 
-				</div>
-			<?php } else { ?>
-				<?php 
-				if (isset($CFG->otp_login)){
-					$action= $CFG->otp_login;
-				} else {
-					$action=$wwwroot."/login/index.php?authldap_skipntlmsso=1";
-				}
-				?>
-				<form class="navbar-form pull-right" method="post" action="<?php echo $action;?>">
-					<div id="block-login">
-					<label id="user"><i class="fa fa-user"></i></label>	
-					<input id="inputName" class="span2" type="text" name="username" placeholder="<?php echo $username; ?>">
-					<label id="pass"><i class="fa fa-key"></i></label>
-        			<input id="inputPassword" class="span2" type="password" name="password" id="password" placeholder="<?php echo get_string('password'); ?>">
-					<input type="submit" id="submit" name="submit" value=""/>
-					</div>
-        
-        			<div class="forgotpass" style="line-height:18px">
-        			<?php 
-					if ($login_link_url != '' and $login_link_txt != '') { ?>
-						<a target="_self" href="<?php echo $login_link_url; ?>"><?php echo $login_link_txt; ?></a><br>
-						<a target="_self" href="/login/parent_login.php">Parent Login</a><br>
-						<a target="_self" href="/login/forgot_password.php">Forgot Password</a><br>
-            		<?php } ?> 
-					</div>
-        
-				</form>
-			<?php } ?>
- 
-	<?php } else {
-
- 		echo '<div id="loggedin-user">';		
-		echo $OUTPUT->navbar_plugin_output();
-		echo $OUTPUT->user_menu();
-		echo $OUTPUT->user_picture($USER, array('size' => 80, 'class' => 'welcome_userpicture'));		
-		/*****generating signatures and needed authentication for logging into old portal*****
-		function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
-		{
-			$str = '';
-			$max = mb_strlen($keyspace, '8bit') - 1;
-			for ($i = 0; $i < $length; ++$i) {
-				$str .= $keyspace[random_int(0, $max)];
-			}
-			return $str;
-		}
-		$secret = $CFG->secret_key;
-		$nonce = random_str(32);
-		$st = $nonce.$USER->username;
-		$hash_msg = hash_hmac('sha256',$st,$secret);
-		$st_encoded = base64_encode($st);
-		$hash_encoded = base64_encode($hash_msg);
-		$nonce_enc = base64_encode($nonce);*/
-		//'<div style="text-align:right; position:relative; display:block;">'.
-		echo '<a style="padding-right:105px; display:block;" href="'.$CFG->discussions_url.'" target="_blank">Discussions Forum</a>';//.
-			 //'<a style="padding-right:105px; display:block;" href="'.$CFG->old_portal_url.'sig='.$st_encoded.'&hash='.$hash_encoded.'&nonce='.$nonce_enc.'" target="_blank">Old Portal</a>';
-		echo '</div>';
-		//echo '</div>';
-
-	}?>
-
-	</div>
-    </div>
-            
-    </div>
-    </div>
+<header id="page-header" class="clearfix">              	
+		<?php 
+			if ($PAGE->theme->settings->page_centered_logo==0) {require_once(dirname(__FILE__).'/header_var1.php');}
+			else {require_once(dirname(__FILE__).'/header_var2.php');}
+		?>               
 </header>
-
-<header role="banner" class="navbar">
+<header role="banner" class="navbar" <?php if (($PAGE->theme->settings->headercolor != "#ffffff") || (!empty($PAGE->theme->settings->header_background))) { ?> style="padding: 0;" <?php } ?>>
     <nav role="navigation" class="navbar-inner">
         <div class="container-fluid">
             <?php
@@ -210,16 +90,17 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
                 
                 <?php
 				$moodle_release = $CFG->version;
-				if ($moodle_release > 2015111600) {
+				if ($moodle_release > 2015111610) {
 					if (!empty($CFG->enableglobalsearch) && has_capability('moodle/search:query', context_system::instance())) {
 						$moodle_global_search = 1;
 					}
 				}?>
                 
                 <form id="search" action="<?php if ($moodle_global_search) {echo $CFG->wwwroot.'/search/index.php';} else {echo $CFG->wwwroot.'/course/search.php';} ?>" >
-                <div class="nav-divider-left"></div>							
+                <div class="divider pull-left"></div>
+                	<label for="coursesearchbox" class="lambda-sr-only"><?php if ($moodle_global_search) {echo get_string('search', 'search');} else {echo get_string('searchcourses');} ?></label>						
 					<input id="coursesearchbox" type="text" onFocus="if(this.value =='<?php if ($moodle_global_search) {echo get_string('search', 'search');} else {echo get_string('searchcourses');} ?>' ) this.value=''" onBlur="if(this.value=='') this.value='<?php if ($moodle_global_search) {echo get_string('search', 'search');} else {echo get_string('searchcourses');} ?>'" value="<?php if ($moodle_global_search) {echo get_string('search', 'search');} else {echo get_string('searchcourses');} ?>" <?php if ($moodle_global_search) {echo 'name="q"';} else {echo 'name="search"';} ?> >
-					<input type="submit" value="">							
+					<button type="submit"><span class="lambda-sr-only"><?php echo get_string('submit'); ?></span></button>						
 				</form>
                 
             </div>
@@ -228,5 +109,5 @@ if (strpos($checkuseragent, 'MSIE 8')) {$username = str_replace("'", "&prime;", 
 </header>
 
 <?php if ($shadow_effect) { ?>
-<div class="container-fluid"><img src="<?php echo $OUTPUT->image_url('bg/lambda-shadow', 'theme'); ?>" class="lambda-shadow" alt=""></div>
+<div class="container-fluid"><img src="<?php echo $OUTPUT->pix_url('bg/lambda-shadow', 'theme'); ?>" class="lambda-shadow" alt=""></div>
 <?php } ?>

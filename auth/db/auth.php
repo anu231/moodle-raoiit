@@ -557,7 +557,7 @@ class auth_plugin_db extends auth_plugin_base {
                 // Do not try to undelete users here, instead select suspending if you ever expect users will reappear.
 
                 // Prep a few params.
-                $user = $this->get_userinfo_asobj($user);
+                $user = $this->get_userinfo_asobj($username);
                 $user->username   = $username;
                 $user->confirmed  = 1;
                 $user->auth       = $this->authtype;

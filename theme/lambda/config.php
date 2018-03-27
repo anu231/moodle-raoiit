@@ -19,7 +19,7 @@
  * Built on: Essential by Julian Ridden
  *
  * @package   theme_lambda
- * @copyright 2016 redPIthemes
+ * @copyright 2018 redPIthemes
  *
  */
 
@@ -27,10 +27,22 @@ $THEME->name = 'lambda';
 
 $THEME->doctype = 'html5';
 $THEME->parents = array('bootstrapbase');
-$THEME->sheets = array('slider', 'font-awesome.min', 'style', 'typographie', 'auth');
+if ($THEME->settings->use_fa5 == 1) {
+	$THEME->sheets = array('slider', 'typographie', 'auth', 'fa-5', 'style');
+}
+else {
+	$THEME->sheets = array('slider', 'typographie', 'auth', 'fa-4', 'style');
+}
 $THEME->editor_sheets = array();
 $THEME->supportscssoptimisation = false;
-$THEME->enable_dock = true;
+if ($THEME->settings->block_layout == 2) {
+	$THEME->enable_dock = false;
+	$report_block_pos = 'side-pre';
+}
+else {
+	$THEME->enable_dock = true;
+	$report_block_pos = 'hidden-dock';
+}
 $THEME->yuicssmodules = array();
 
 $THEME->editor_sheets = array();
@@ -102,16 +114,14 @@ $THEME->layouts = array(
     ),
     // Pages that appear in pop-up windows - no navigation, no blocks, no header.
     'popup' => array(
-        'file' => 'columns1.php',
-        'regions' => array('footer-left', 'footer-middle', 'footer-right'),
-        'defaultregion' => '',
-        'options' => array('nofooter'=>true, 'nonavbar'=>true, 'noheader'=>true),
+        'file' => 'embedded.php',
+        'regions' => array()
     ),
     // The pagelayout used for reports.
     'report' => array(
         'file' => 'report.php',
-        'regions' => array('footer-left', 'footer-middle', 'footer-right', 'hidden-dock'),
-        'defaultregion' => 'hidden-dock',
+        'regions' => array('footer-left', 'footer-middle', 'footer-right', $report_block_pos),
+        'defaultregion' => $report_block_pos,
     ),
 	// TOTARA Grade report
 	'noblocks' => array(

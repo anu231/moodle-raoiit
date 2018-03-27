@@ -38,8 +38,8 @@ if (!$user = $DB->get_record('user',array('username'=>$userid))){
 if (isset($_GET['passwd'])){
     $passwd = $_GET['passwd'];
 } else {
-    $dob = get_rao_user_profile_fields(array('dob'));
-    $passwd = $dob['dob'];
+    $passwd = get_rao_password($user);
+    //$passwd = $dob['birthdate'];
 }
 
 $hashedpassword = hash_internal_user_password($passwd);

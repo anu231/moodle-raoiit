@@ -46,6 +46,6 @@ $hashedpassword = hash_internal_user_password($passwd);
 
 $DB->set_field('user', 'password', $hashedpassword, array('id'=>$user->id));
 
-echo "Password changed\n";
+echo "Password changed\n".$passwd;
 
 exit(0); // 0 means success.

@@ -35,7 +35,7 @@ class parent_login_form extends moodleform {
             return $errors;
         }
         $info_fields = array('fathermobile','mothermobile');
-        $parent_nos = get_rao_user_profile_fields($info_fields, $user->id);
+        $parent_nos = get_rao_user_profile_fields($info_fields, $user);
         if ($parent_nos['fathermobile'] != $data['mobile'] && $parent_nos['mothermobile'] != $data['mobile']){
             $errors['mobile'] = 'Mobile number is not registered as parent number for this student';
         }

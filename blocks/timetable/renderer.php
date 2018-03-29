@@ -85,7 +85,7 @@ class batchreport implements renderable{
     public function __construct(){
         $this->data = new stdClass();
         $this->data->report = $this->get_completion_report();
-        $this->data->ptm = $this->get_ptm_records();
+        $this->data->ptm = $this->get_ptm_record_renderer();
     }
 
     private function get_completion_report(){
@@ -93,7 +93,7 @@ class batchreport implements renderable{
         $report = get_completed_topics($USER->username);
         return $report;
     }
-    private function get_ptm_records(){
+    private function get_ptm_record_renderer(){
         global $USER;
         return get_ptm_records($USER->username);
     }

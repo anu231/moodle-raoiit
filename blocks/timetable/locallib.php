@@ -181,7 +181,14 @@ function get_completed_topics($username){
 
 function get_ptm_records($username){
     $link = connect_analysis_db();
-    $qry = "select sch.date as date, sch.event as event from schedule as sch join (select ttbatchid as ttbatchid, extbatchid as extbatchid from userinfo where userid=".$username.") as user on user.ttbatchid=sch.batchid or user.extbatchid=sch.batchid where sch.event like '%Meeting%' order by sch.date asc"; 
+    $qry = <<<SQL
+    select sch.date as date, sch.event as event 
+    from schedule as sch 
+    join (select centre as centre from userinfo where userid=$username) as user 
+    join (select id, centreid from ttbatches where name like 'Student Improvement Session') as tt
+    on user.centre = tt.centreid and sch.batchid = tt.id
+    where sch.event like '%PTM%' order by sch.date asc; 
+SQL;
     $res = $link->query($qry);
     if (!$res){
         return false;

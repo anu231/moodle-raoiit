@@ -207,7 +207,7 @@ class issue_book_form extends moodleform {
         }
         //check if student has paid the library money
         $student = $DB->get_record('user',array('username'=>$data['student_username']));
-        $library_fee = get_rao_user_profile_fields(array('libraryfee'),$student->id);
+        $library_fee = get_rao_user_profile_fields(array('libraryfee'),$student);
         if ((int)$library_fee['libraryfee'] < 2000){
             //$errors['student_username'] = 'Can\'t issue books as student has not paid the library fee';
         }

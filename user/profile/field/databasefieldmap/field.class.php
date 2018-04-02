@@ -56,7 +56,7 @@ class profile_field_databasefieldmap extends profile_field_base {
 
       $attributelist=array();
       foreach($result as $res){
-        $attributelist[$res->id] = $res->name;
+        $attributelist[$res->analysis_id] = $res->name;
       } 
       $checkbox = &$mform->addElement('select', $this->inputname, format_string('Select '.$this->field->name), $attributelist);
 
@@ -64,7 +64,7 @@ class profile_field_databasefieldmap extends profile_field_base {
 
     function display_data() {
       global $DB;
-      $result_new=$DB->get_record($this->field->param1,array('id'=>$this->data));
+      $result_new=$DB->get_record($this->field->param1,array('analysis_id'=>$this->data));
       return $result_new->name;
     }
 

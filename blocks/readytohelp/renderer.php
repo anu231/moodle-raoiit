@@ -321,12 +321,20 @@ SQL;
     private function get_centre_list(){
         global $DB;
         $centrelist = $DB->get_records('branchadmin_centre_info');
-        return $centrelist;
+        $centre_mod = array();
+        foreach($centrelist as $c){
+            $centre_mod[$c->analysis_id] = $c->name;
+        }
+        return $centre_mod;
     }
     private function get_batch_list(){
         global $DB;
         $batches = $DB->get_records('branchadmin_ttbatches');
-        return $batches;
+        $batch_mod = array();
+        foreach($batches as $b){
+            $batch_mod[$b->analysis_id] = $b->name;
+        }
+        return $batch_mod;
     }
     private function process_grievances($grievances){
         global $CFG, $COURSE, $DB;

@@ -38,7 +38,7 @@ function get_user_center_name($user_id=null){
     global $DB, $CFG;
     $sql = <<<SQL
     select bic.name as name
-    from {user_info_data} as uid join {branchadmin_centre_info} as bic on uid.data = bic.id
+    from {user_info_data} as uid join {branchadmin_centre_info} as bic on uid.data = bic.analysis_id
     where uid.userid = ? and uid.fieldid=?
 SQL;
     $result = $DB->get_records_sql($sql, array($userid, $CFG->CENTER_FIELD_ID));
@@ -57,7 +57,7 @@ function get_user_batch_name($user_id=null){
     global $DB, $CFG;
     $sql = <<<SQL
     select bic.name as name
-    from {user_info_data} as uid join {branchadmin_ttbatches} as bic on uid.data = bic.id
+    from {user_info_data} as uid join {branchadmin_ttbatches} as bic on uid.data = bic.analysis_id
     where uid.userid = ? and uid.fieldid=?
 SQL;
     $result = $DB->get_records_sql($sql, array($userid, $CFG->BATCH_FIELD_ID));

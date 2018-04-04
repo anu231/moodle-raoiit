@@ -135,3 +135,29 @@ function get_rao_password($user){
     $dob = get_rao_user_profile_fields(array('birthdate'), $user);
     return $dob['birthdate'];
 }
+
+function set_profile_field($f_shortname, $userid, $newval){
+    global $DB;
+    //fetch the object if already exists
+    $fetch_sql = <<<SQL
+    select uid.* from {user_info_field} as uif join {user_info_data} as uid
+    on uif.id = uid.fieldid where uif.shortname = ? and uid.userid= ?
+SQL;
+    $record = $DB->get_records_sql($fetch_sql,array($f_shortname, $userid));
+    if (empty($record)){
+        //create new record
+        //fetch the field id
+        $field = $DB->get_record('user_info_field',array('shortname'=>$f_shortname));
+        $record = new stdClass();
+        $record->userid = $userid;
+        $record->fieldid = $field->id;
+        $record->data = $newval;
+        $DB->insert_record('user_info_data', $record);
+    } else {
+        $record = $record[array_keys($record)[0]];
+        if ($record->data != $newval){
+            $record->data = $newval;
+            $DB->update_record('user_info_data', $record);
+        }
+    }
+}

@@ -36,7 +36,7 @@ class profile_field_text extends profile_field_base {
 
  public function __construct($fieldid = 0, $userid = 0) {
         // First call parent constructor.
-        parent::__construct($fieldid, $userid);
+        parent::__construct($fieldid, $userid, null);
 
         // Param 1 for menu type is the options.
         if (isset($this->field->param1)) {

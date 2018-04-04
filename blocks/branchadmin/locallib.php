@@ -44,7 +44,7 @@ function get_center_obj($centre_name){
 
 function get_batch_name($batchid){
     global $DB;
-    $batchname = $DB->get_record('branchadmin_ttbatches',array('id'=>$batchid));
+    $batchname = $DB->get_record('branchadmin_ttbatches',array('analysis_id'=>$batchid));
     return $batchname->name;
 }
 
@@ -56,7 +56,6 @@ function get_center_name($cid){
 
 function get_batches_for_user(){
     //gets the names of all batches with the current user
-    //initialize curl handle
     //get centre 
     //CHANGES MADE FOR ANALYSIS_ID
     global $DB, $USER;
@@ -247,12 +246,14 @@ EOT;
 function get_batches_branch($branchid){
     //gets the batches belonging to the specific branch
     //$branchid is the analysis id
-    $res = $DB->get_records('branchadmin_ttbatches',array('centreid'=>$branchid));
-    $batchids = Array();
+    global $DB;
+    $res = $DB->get_records('branchadmin_ttbatches',array('centreid'=>$branchid, 'status'=>1));
+    return $res;
+    /*$batchids = Array();
     foreach($res as $r){
         $batchids[] = $res->analysis_id;
     }
-    return implode(',',$batchids);
+    return implode(',',$batchids);*/
 }
 
 /********************************************************************************************/

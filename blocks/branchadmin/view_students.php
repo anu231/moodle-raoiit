@@ -13,12 +13,11 @@ $PAGE->set_url('/blocks/branchadmin/view_students.php', array('id' => $COURSE->i
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading('View Branch Students');
 
-/*$output = $PAGE->get_renderer('block_branchadmin');
-$renderable = new view_students();
+$output = $PAGE->get_renderer('block_branchadmin');
+$renderable = new branch_batches();
 
 echo $output->header();
 echo $output->render($renderable);
-echo $output->footer();*/
 
 $mform = new branchadmin_info_form();
 
@@ -30,6 +29,5 @@ if ($mform->is_cancelled()){
     redirect(new moodle_url('view_student.php?userid='.$username));
 }
 
-echo $OUTPUT->header();
 $mform->display();
-echo $OUTPUT->footer();
+echo $output->footer();

@@ -22,7 +22,6 @@ class block_branchadmin_renderer extends plugin_renderer_base {
         //$data = $page->export_for_template($this);
         $data = array();
         $data['user_list'] = $page->export_for_template($this);
-
         return $this->render_from_template('block_branchadmin/student_list', $data);                                                         
     }        
              
@@ -42,9 +41,19 @@ class block_branchadmin_renderer extends plugin_renderer_base {
         $data = array();
         $data['students_birthdays'] = $page->export_for_template($this);
         return $this->render_from_template('block_branchadmin/todays_birthdays', $data);
-
     }
-    
+
+    public function render_branch_batches($page){
+        $data = array();
+        $data['batches'] = $page->export_for_template($this);
+        return $this->render_from_template('block_branchadmin/branch_batches', $data);
+    }
+
+    public function render_batch_students($page){
+        $data = array();
+        $data['user_list'] = $page->export_for_template($this);
+        return $this->render_from_template('block_branchadmin/student_list', $data);
+    }
 }
 
 
@@ -226,5 +235,61 @@ SQL;
     public function export_for_template(renderer_base $output){
         $data = $this->get_student_birthdays();
         return $data;
+    }
+}
+
+
+class branch_batches implements renderable, templatable {
+
+    private function get_batchlist(){
+        $batches = get_batches_branch(get_user_center());
+        $batchlist = array();
+        foreach($batches as $b){
+            array_push($batchlist, array('id'=>$b->analysis_id, 'name'=>$b->name));
+        }
+        return $batchlist;
+    }
+
+    public function export_for_template(renderer_base $output){
+        return $this->get_batchlist();
+    }
+}
+
+class batch_students implements renderable, templatable {
+    var $batch = null;
+
+    public function __construct($batch){
+        $this->batch = $batch; 
+    }
+
+    private function get_students_by_batch(){
+        global $CFG,$USER,$DB;
+        $sql = <<<SQL
+        select u.* from {user} as u join {user_info_data} as ud join {user_info_field} as uif 
+        ON u.id = ud.userid and ud.fieldid = uif.id
+        where uif.shortname = ? and  ud.data = ?
+SQL;
+        $users_by_batch = $DB->get_records_sql($sql,array('batch',$this->batch));
+        $user_list = array(); 
+      
+        foreach ($users_by_batch as $user){
+            $temp = array();
+            $temp['username'] = $user->username;
+            $temp['email'] = $user->email;
+            $temp['name'] = $user->firstname.' '.$user->lastname;
+            $user_list[] = $temp;
+        }
+        return $user_list;
+    }
+
+    /**                                                                                                                             
+     * Export this data so it can be used as the context for a mustache template.                                                   
+     *                                                                                                                              
+     * @return stdClass                                                                                                             
+     */                                                                                                                             
+    public function export_for_template(renderer_base $output) {                                                                    
+        //get all the students with the same center
+        $data = $this->get_students_by_batch();
+        return $data;                                                                                                               
     }
 }

@@ -47,9 +47,9 @@ class week implements renderable {
     private function get_week_timetable(){
         global $USER;
         $dates = $this->get_week_start_end_dates();
-        return get_timetable($dates['start_date'],$dates['end_date'],$USER->username);
+        return get_timetable($dates['start_date'],$dates['end_date'],$USER);
     }
-
+    /*
     private function get_days_lectures(){
         global $CFG;
         $json = get_timetable();
@@ -78,7 +78,7 @@ class week implements renderable {
         }
         
         return $processed_lectures;
-    }
+    }*/
 }
 
 class batchreport implements renderable{

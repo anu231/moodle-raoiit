@@ -42,9 +42,9 @@ function close_analysis_db($link){
 
 
 
-function get_student_batches($link, $username){
+function get_student_batches($link, $user){
     //assumes the db connections have already been made
-    $batches = '';
+    /*$batches = '';
     $qry = "select ttbatchid, extbatchid, centre from userinfo where userid=".$username;
     $res = $link->query($qry);
     if (!$res){
@@ -66,21 +66,28 @@ function get_student_batches($link, $username){
     while( $row_center = $res_center->fetch_assoc()){
         $batches .= ','.$row_center['id'];
     }
-    return $batches;
+    return $batches;*/
+    global $CFG, $DB;
+    require_once($CFG->libdir.'/raolib.php');
+    //$user = $DB->get_record('user', array('username'=>$username));
+    $batch_data = get_rao_user_profile_fields(array('center','batch','extbatchid'),$user);
+    //get student improvement batch
+    $sib_sql = <<<SQL
+    select analysis_id from {branchadmin_ttbatches} where centreid=? and name like 'Student Improvement Session'
+SQL;
+    $sib = $DB->get_records_sql($sib_sql,array($batch_data['center']));
+    $batches = '';
+    if (isset($batch_data['batch'])){$batches = $batch_data['batch'];}
+    if (isset($batch_data['extbatchid'])){$batches .= ','.$batch_data['extbatchid'];}
+    $sib = $sib[array_keys($sib)[0]]->analysis_id;
+    return $batches.','.$sib;
 }
 
-function get_timetable($start_date,$end_date,$username=null,$batchids=null){
-    /*$subj_map = array(
-		'p'=>'Physics',
-		'c'=>'Chemistry',
-		'm'=>'Maths',
-		'z'=>'Zoology',
-		'b'=>'Botany'
-    );*/
+function get_timetable($start_date,$end_date,$user=null,$batchids=null){
     $link = connect_analysis_db();
     $batches = null;
-    if ($username != null){
-        $batches = get_student_batches($link, $username);    
+    if ($user != null){
+        $batches = get_student_batches($link, $user);    
     }else if ($batchids != null){
         $batches = $batchids;
     } else {
@@ -120,8 +127,6 @@ function get_timetable($start_date,$end_date,$username=null,$batchids=null){
         }
         $tmp['cancelclass'] = $lecture['iscancel'] == '1' ? 'cancelled' : '';
         $tmp['batch'] = $lecture['centrename'].' - '.$lecture['batchname'];
-        //    $day[] = $tmp;
-        //}
         if (!array_key_exists($tmp['fancydate'],$days_added_map)){
             $days_added_map[$tmp['fancydate']] = $index;
             $processed_lectures[$index] = array();
@@ -129,8 +134,6 @@ function get_timetable($start_date,$end_date,$username=null,$batchids=null){
             $processed_lectures[$index]['fancydate'] = $tmp['fancydate'];
             $index++;
         }
-        //$processed_lectures[$days_added_map]['fancydate'] = $tmp['fancydate'];
-        //$processed_lectures[$index]['items'] = $day;
         array_push($processed_lectures[$days_added_map[$tmp['fancydate']]]['items'],$tmp);
     }
     close_analysis_db($link);

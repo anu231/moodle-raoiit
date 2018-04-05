@@ -32,7 +32,7 @@ class block_timetable extends block_base {
         global $USER;
         $html = '<ul class="timetable-list">';
         $date_today = date('Y-m-d');
-        $today_lectures = get_timetable($date_today,$date_today, $USER->username);
+        $today_lectures = get_timetable($date_today,$date_today, $USER);
         if (count($today_lectures)==0 || !$today_lectures){
             return '<b>No Lectures Today</b>';
         }

@@ -4,7 +4,7 @@ function get_subject_name($shortname){
     $subj_map = array(
 		'p'=>'physics',
 		'c'=>'chemistry',
-		'm'=>'maths',
+		'm'=>'mathematics',
 		'z'=>'zoology',
 		'b'=>'botany'
     );

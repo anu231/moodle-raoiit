@@ -3,6 +3,7 @@
 require_once('../../config.php');
 require_once('renderer.php');
 require_once('locallib.php');
+require_once("$CFG->libdir/raolib.php");
 require_login();
 $PAGE->set_url('/blocks/library/paid_fine.php');
 $PAGE->set_pagelayout('standard');

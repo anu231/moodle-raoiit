@@ -1,6 +1,7 @@
 <?php
 require_once('../../config.php');
 require_once('books_form.php');
+require_once("$CFG->libdir/raolib.php");
 $PAGE->set_url('/blocks/library/lost_book.php');
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading('View All Lost Books');

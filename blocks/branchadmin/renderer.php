@@ -240,12 +240,17 @@ SQL;
 
 
 class branch_batches implements renderable, templatable {
+    var $target_url = '';
+
+    public function __construct($url){
+        $this->target_url = $url;
+    }
 
     private function get_batchlist(){
         $batches = get_batches_branch(get_user_center());
         $batchlist = array();
         foreach($batches as $b){
-            array_push($batchlist, array('id'=>$b->analysis_id, 'name'=>$b->name));
+            array_push($batchlist, array('id'=>$b->analysis_id, 'name'=>$b->name, 'url'=>$this->target_url.$b->analysis_id));
         }
         return $batchlist;
     }

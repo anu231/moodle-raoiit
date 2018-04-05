@@ -14,7 +14,7 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_heading('View Branch Students');
 
 $output = $PAGE->get_renderer('block_branchadmin');
-$renderable = new branch_batches();
+$renderable = new branch_batches('student_batchwise.php?id=');
 
 echo $output->header();
 echo $output->render($renderable);

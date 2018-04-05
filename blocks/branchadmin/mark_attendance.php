@@ -2,6 +2,7 @@
 require_once('../../config.php');
 require_once('info_form.php');
 require_once("$CFG->dirroot/blocks/library/locallib.php");
+require_once("$CFG->libdir/raolib.php");
 $PAGE->set_url('/blocks/branchadmin/attendance.php');
 
 $PAGE->set_pagelayout('standard');

@@ -32,7 +32,7 @@ function get_instance(){
 }
 */
 
-function is_branch_admin(){
+/*function is_branch_admin(){
     global $USER, $DB;
     $course_active = get_config('library','manager_course');
     $course_active = $DB->get_record('course',array('shortname'=>$course_active));
@@ -42,7 +42,7 @@ function is_branch_admin(){
         return true;
     } 
     return false;
-}
+}*/
 
 function get_centers_book(){
     global $DB;

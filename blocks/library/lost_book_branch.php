@@ -1,6 +1,7 @@
 <?php
 require_once('../../config.php');
 require_once('books_form.php');
+require_once("$CFG->libdir/raolib.php");
 global $USER, $DB,$PAGE,$OUTPUT;
 $PAGE->set_url('/blocks/library/lost_book_branch.php');
 $PAGE->set_pagelayout('standard');

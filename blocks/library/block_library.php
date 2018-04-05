@@ -2,6 +2,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/blocks/library/locallib.php');
+require_once("$CFG->libdir/raolib.php");
 
 class block_library extends block_list {
     public function init() {

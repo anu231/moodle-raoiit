@@ -3,7 +3,8 @@
 require_once('../../config.php');
 require_once('renderer.php');
 require_once('locallib.php');
-require_once("$CFG->dirroot/blocks/library/locallib.php");
+//require_once("$CFG->dirroot/blocks/library/locallib.php");
+require_once("$CFG->libdir/raolib.php");
 require_login();
 global $DB, $USER, $CFG, $PAGE;
 $PAGE->set_url('/blocks/branchadmin/todays_birthday.php');

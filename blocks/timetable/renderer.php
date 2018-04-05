@@ -3,8 +3,8 @@
 require_once('locallib.php');
 
 class block_timetable_renderer extends plugin_renderer_base {
-    public function week() {
-        return $this->render(new week());
+    public function week($batch=null) {
+        return $this->render(new week($batch));
     }
     public function render_week($context) {
         return $this->render_from_template('block_timetable/week', $context);
@@ -18,9 +18,14 @@ class block_timetable_renderer extends plugin_renderer_base {
 }
 
 class week implements renderable {
-    public function __construct() {
+    public function __construct($batch=null) {
         //$this->days = $this->get_days_lectures();
-        $this->days = $this->get_week_timetable();
+        if ($batch != null){
+            $this->days = $this->get_week_timetable($batch);
+        } else {
+            $this->days = $this->get_week_timetable();
+        }
+        
     }
     private $subj_map = array(
 		'p'=>'physics',
@@ -44,10 +49,15 @@ class week implements renderable {
         return array('start_date'=>$start_date,'end_date'=>$end_date);
     }
 
-    private function get_week_timetable(){
+    private function get_week_timetable($batch=null){
         global $USER;
         $dates = $this->get_week_start_end_dates();
-        return get_timetable($dates['start_date'],$dates['end_date'],$USER);
+        if ($batch != null){
+            return get_timetable($dates['start_date'],$dates['end_date'],null, $batch);
+        } else {
+            return get_timetable($dates['start_date'],$dates['end_date'],$USER);
+        }
+        
     }
     /*
     private function get_days_lectures(){

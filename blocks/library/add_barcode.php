@@ -2,6 +2,7 @@
 require_once('../../config.php');
 require_once('books_form.php');
 require_once('locallib.php');
+require_once("$CFG->libdir/raolib.php");
 $PAGE->set_url('/blocks/library/add_barcode.php');
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Add Barcode in Library');

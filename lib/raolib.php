@@ -161,3 +161,15 @@ SQL;
         }
     }
 }
+
+function is_branch_admin(){
+    global $USER, $DB;
+    $course_active = get_config('library','manager_course');
+    $course_active = $DB->get_record('course',array('shortname'=>$course_active));
+    //check if user is enrolled in the course
+    $context = context_course::instance($course_active->id);
+    if (is_enrolled($context, $USER->id, '', true)){
+        return true;
+    } 
+    return false;
+}

@@ -247,7 +247,14 @@ function get_batches_branch($branchid){
     //gets the batches belonging to the specific branch
     //$branchid is the analysis id
     global $DB;
-    $res = $DB->get_records('branchadmin_ttbatches',array('centreid'=>$branchid, 'status'=>1));
+    $nearby_centers = $DB->get_record('branchadmin_centre_info',array('analysis_id'=>$branchid));
+    //$nearby_centers = (implode(',',explode(',',$nearby_centers->nearbycentres)));
+    $sql = <<<SQL
+    select * from {branchadmin_ttbatches} 
+    where centreid in ($nearby_centers->nearbycentres) 
+    and status=1
+SQL;
+    $res = $DB->get_records_sql($sql);
     return $res;
     /*$batchids = Array();
     foreach($res as $r){

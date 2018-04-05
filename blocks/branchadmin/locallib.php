@@ -50,7 +50,7 @@ function get_batch_name($batchid){
 
 function get_center_name($cid){
     global $DB;
-    $cname = $DB->get_record('branchadmin_centre_info',array('id'=>$cid));
+    $cname = $DB->get_record('branchadmin_centre_info',array('analysis_id'=>$cid));
     return $cname->name;
 }
 

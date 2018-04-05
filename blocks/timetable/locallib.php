@@ -78,7 +78,7 @@ SQL;
     $sib = $DB->get_records_sql($sib_sql,array($batch_data['center']));
     $batches = '';
     if (isset($batch_data['batch'])){$batches = $batch_data['batch'];}
-    if (isset($batch_data['extbatchid'])){$batches .= ','.$batch_data['extbatchid'];}
+    if (isset($batch_data['extbatchid']) && $batch_data['extbatchid'] != ''){$batches .= ','.$batch_data['extbatchid'];}
     $sib = $sib[array_keys($sib)[0]]->analysis_id;
     return $batches.','.$sib;
 }

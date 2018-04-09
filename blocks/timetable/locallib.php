@@ -79,8 +79,12 @@ SQL;
     $batches = '';
     if (isset($batch_data['batch'])){$batches = $batch_data['batch'];}
     if (isset($batch_data['extbatchid']) && $batch_data['extbatchid'] != ''){$batches .= ','.$batch_data['extbatchid'];}
-    $sib = $sib[array_keys($sib)[0]]->analysis_id;
-    return $batches.','.$sib;
+    if (count($sib)>0){
+        $sib = $sib[array_keys($sib)[0]]->analysis_id;
+        return $batches.','.$sib;
+    } else {
+        return $batches;
+    }
 }
 
 function get_timetable($start_date,$end_date,$user=null,$batchids=null){

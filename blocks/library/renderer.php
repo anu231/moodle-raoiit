@@ -97,7 +97,7 @@ class view_available_books implements renderable, templatable {
        $center_id = get_user_center($USER->id);
        $total_books = $DB->get_records('lib_bookmaster', array('branch'=>$center_id));
        $book_records_sql = <<<SQL
-       select bm.id as bookid, dm.bookid as book_id, bm.status as status,
+       select bm.id as bookid, bm.bookid as book_id, bm.status as status,
               bm.name as name, bm.subject as subject,bm.publisher as publisher, bm.volume as volume, bm.author as author, bm.price as price, bm.remark as book_remark,
               issue_rec.student_username as student, issue_rec.id as issue_id, issue_rec.issue_date as issue_date, issue_rec.return_date as return_date
        from {lib_bookmaster} as bm left outer join (select * from {lib_issue_record} where status=0) as issue_rec on bm.id=issue_rec.bookid

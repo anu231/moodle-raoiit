@@ -67,11 +67,6 @@ class view_issued_books implements renderable, templatable {
         where book.issued = 1 and issue.branch_id=?
 SQL;
         $issued_books = $DB->get_records_sql($sql,array($center_id));
-        /*
-        //
-        $issued_books = $DB->get_records('lib_bookmaster', array('status'=>1,'issued'=>'1','branch'=>get_user_center()));
-        //
-        */
         $issued_books_array = array();
         foreach($issued_books as $entry){
             $issued_books_array[] = $entry;

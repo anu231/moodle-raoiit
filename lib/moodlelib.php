@@ -6038,7 +6038,7 @@ function email_to_user($user, $from, $subject, $messagetext, $messagehtml = '', 
     foreach ($tempreplyto as $values) {
         $mail->addReplyTo($values[0], $values[1]);
     }
-
+    
     if ($mail->send()) {
         set_send_count($user);
         if (!empty($mail->SMTPDebug)) {
@@ -6136,7 +6136,7 @@ function setnew_password_and_mail($user, $fasthash = false) {
 
     if ($user->auth == 'db'){
         require_once($CFG->libdir.'/raolib.php');
-        $newpassword = get_rao_password($user)['dob'];
+        $newpassword = get_rao_password($user);
     } else {
         $newpassword = generate_password();
     }

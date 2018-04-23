@@ -327,7 +327,7 @@ class auth_plugin_db extends auth_plugin_base {
                         return 1;
                     } else {
                         //create this user
-                        $user = $this->get_userinfo_asobj($user);
+                        $user = $this->get_userinfo_asobj($username);
                         $user->username   = $username;
                         $user->confirmed  = 1;
                         $user->auth       = $this->authtype;
@@ -346,6 +346,8 @@ class auth_plugin_db extends auth_plugin_base {
                             //$trace->output(get_string('auth_dbinsertusererror', 'auth_db', $user->username), 1);
                             return -3;
                         }
+                        $user_record = $DB->get_record('user',array('username'=>$username));
+                        update_user_record_by_id($user_record->id);
                         // If relevant, tag for password generation.
                         if ($this->is_internal()) {
                             set_user_preference('auth_forcepasswordchange', 1, $id);

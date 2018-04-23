@@ -233,11 +233,13 @@ function sendSMSLib(&$s_mobile, &$s_text){
     {
         $successary = explode(",", trim($responseary[0]));
         $success .= "Message successfully delivered to " . sizeof($successary) . " mobile numbers.";
+        echo $success.PHP_EOL;
         return true;
     }
     if (strlen(trim($responseary[1])) != 0)	// errors
     {
-        $this->error .= "Invalid/DND Numbers: " . trim($responseary[1]);
+        $error .= "Invalid/DND Numbers: " . trim($responseary[1]);
+        echo $error.PHP_EOL;
         return false;
     }
 }

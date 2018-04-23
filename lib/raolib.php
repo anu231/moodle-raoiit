@@ -117,7 +117,7 @@ function get_rao_user_profile_fields($profilefields, $user=null){
     }
     list($usql, $params) = $DB->get_in_or_equal($profilefields);
     $sql = <<<SQL
-    select ud.data, uif.shortname from
+    select ud.id, ud.data, uif.shortname from
     {user} as u join (select * from {user_info_field} where shortname $usql) as uif join {user_info_data} as ud
     on
     u.id = ud.userid and ud.fieldid = uif.id and u.id=$user->id
@@ -172,4 +172,72 @@ function is_branch_admin(){
         return true;
     } 
     return false;
+}
+
+/*function get_jsonweb_request($url, $data){
+    global $CFG;
+    require_once($CFG->dirroot.'/vendor/autoload.php');
+    //Unirest\Request::verifyPeer(false);
+    //$headers = array('Accept' => 'application/json');
+    //$body = Unirest\Request\Body::json($data);
+    //$response = Unirest\Request::get($url, $headers, $data);
+    //return $response->body;
+    $client = new GuzzleHttp\Client();
+    $res = $client->request('GET', $url);
+    return $res->getBody()->getContents();
+}*/
+
+/*function post_web_request(){
+
+}*/
+
+function sendSMSLib(&$s_mobile, &$s_text){
+    //initialize the request variable
+    $success = '';
+    $error = '';
+    $request = "";
+    //this is the key of our sms account
+    $param["workingkey"] = "3693f2jl9yh7375b0o1i";
+    //this is the message that we want to send
+    $param["message"] = stripslashes($s_text);
+    //these are the recipients of the message
+    $param["to"] = $s_mobile;
+    //this is our sender
+    $param["sender"] = "RAOIIT";
+
+    //traverse through each member of the param array
+    foreach($param as $key=>$val){
+        //we have to urlencode the values
+        $request.= $key."=".urlencode($val);
+        //append the ampersand (&) sign after each paramter/value pair
+        $request.= "&";
+    }
+    //remove the final ampersand sign from the request
+    $request = substr($request, 0, strlen($request)-1); 
+
+    //this is the url of the gateway's interface
+    $url = "http://alerts.prioritysms.com/api/web2sms.php";
+
+    //initialize curl handle
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url); //set the url
+    curl_setopt($ch, CURLOPT_POST, count($param)); 
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $request); 	
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER,1); //return as a variable
+    $response = curl_exec($ch); //run the whole process and return the response
+    curl_close($ch); //close the curl handle
+
+    $responseary = explode("Invalid/DND Numbers:", $response);
+
+    if (substr(trim($responseary[0]), 0, 12) == "Message GID=") // delivered successfully
+    {
+        $successary = explode(",", trim($responseary[0]));
+        $success .= "Message successfully delivered to " . sizeof($successary) . " mobile numbers.";
+        return true;
+    }
+    if (strlen(trim($responseary[1])) != 0)	// errors
+    {
+        $this->error .= "Invalid/DND Numbers: " . trim($responseary[1]);
+        return false;
+    }
 }

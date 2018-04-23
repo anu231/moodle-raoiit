@@ -41,11 +41,18 @@ if (isset($_GET['passwd'])){
     $passwd = get_rao_password($user);
     //$passwd = $dob['birthdate'];
 }
+if (isset($_GET['new_password'])){
+    include_once($CFG->libdir.'/moodlelib.php');
+    setnew_password_and_mail($user);
+    echo 'set password and mail';
+    exit(0);
+} else {
+    $hashedpassword = hash_internal_user_password($passwd);
 
-$hashedpassword = hash_internal_user_password($passwd);
+    $DB->set_field('user', 'password', $hashedpassword, array('id'=>$user->id));
 
-$DB->set_field('user', 'password', $hashedpassword, array('id'=>$user->id));
+    echo "Password changed\n".$passwd;
 
-echo "Password changed\n".$passwd;
+    exit(0); // 0 means success.
+}
 
-exit(0); // 0 means success.

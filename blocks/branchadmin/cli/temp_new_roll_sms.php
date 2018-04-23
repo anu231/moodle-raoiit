@@ -12,7 +12,7 @@ $users = $DB->get_records('user', array('lastaccess'=>0,'auth'=>'db'));
 $cnt = 1;
 $total = count($users);
 foreach($users as $user){
-    if (count($user->username) != 8){
+    if (strlen($user->username) != 8){
         continue;
     }
     //get the dob

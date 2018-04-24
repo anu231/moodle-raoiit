@@ -6,7 +6,7 @@ require_once('locallib.php');
 /**
  * Saves or updates a paper
  * @param: $mform
- * @param: int $courseid
+ * @param: int $course
  */
 function paper_add_instance($paper, $mform=NULL){
     global $DB, $COURSE;
@@ -28,7 +28,7 @@ function paper_add_instance($paper, $mform=NULL){
     $paper->markingscheme = paper_generate_markingscheme($paper_info);
     $paper->data = $paper_info->date;
 
-    $paper->courseid = $COURSE->id;
+    $paper->course = $COURSE->id;
     $paper->timecreated = time();
     $paper->timemodified = time();
     $paper->name = $paper_info->name;
@@ -56,7 +56,7 @@ function paper_update_instance($paper, $mform=NULL){
         $paper->duration = $p->time;
         $paper->markingscheme = paper_generate_markingscheme($p); // TODO
     }
-    $paper->courseid = $COURSE->id;
+    $paper->course = $COURSE->id;
     $paper->timecreated = time();
     $paper->timemodified = time();
 
@@ -82,7 +82,7 @@ function paper_add_calendar_event($paper, $instanceid){
     $event->type = CALENDAR_EVENT_TYPE_STANDARD; // This is used for events we only want to display on the calendar, and are not needed on the block_myoverview.
     $event->name = $paper->name;
     $event->description = null;
-    $event->courseid = $paper->courseid;
+    $event->course = $paper->course;
     $event->groupid = 0;
     $event->userid = 0;
     $event->modulename = 'paper';

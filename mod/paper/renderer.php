@@ -91,10 +91,10 @@ class course_paper_list implements renderable {
     private function get_papers_for_course($courseid) {
         global $DB, $CFG;
 
-        $papers = $DB->get_records('mod_paper', array('courseid' => $courseid));
+        $papers = $DB->get_records('mod_paper', array('course' => $courseid));
         $formattedpapers = [];
         foreach($papers as $paper){
-            $paper->viewlink = "$CFG->wwwroot/mod/paper/view.php?pid=$paper->paperid&cid=$paper->courseid";
+            $paper->viewlink = "$CFG->wwwroot/mod/paper/view.php?pid=$paper->paperid&cid=$paper->course";
             $paper->date = strftime('%d/%m/%G',strtotime($paper->date));
             $formattedpapers[] = $paper;
         }
@@ -119,9 +119,9 @@ class all_paper_list implements renderable {
         $papers = $DB->get_records('mod_paper');
         $courses = [];
         foreach($papers as $paper){
-            $paper->viewlink = "$CFG->wwwroot/mod/paper/view.php?pid=$paper->paperid&cid=$paper->courseid";
+            $paper->viewlink = "$CFG->wwwroot/mod/paper/view.php?pid=$paper->paperid&cid=$paper->course";
             $paper->date = strftime('%d/%m/%G',strtotime($paper->date));
-            $coursename = $this->coursemap[$paper->courseid];
+            $coursename = $this->coursemap[$paper->course];
             $courses[$coursename]['coursename'] = $coursename; // Map courseid to course name
             $courses[$coursename]['papers'][] = $paper;
         }

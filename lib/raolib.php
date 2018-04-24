@@ -174,6 +174,21 @@ function is_branch_admin(){
     return false;
 }
 
+function fetch_json_web_resource($url){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url); //set the url
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); //return as a variable
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    $response = curl_exec($ch); //run the whole process and return the response
+    curl_close($ch); //close the curl handle
+    if( $response )
+        return json_decode($response);
+    else{
+        echo "Error getting url";
+        return array();
+    }
+}
+
 /*function get_jsonweb_request($url, $data){
     global $CFG;
     require_once($CFG->dirroot.'/vendor/autoload.php');

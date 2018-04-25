@@ -158,6 +158,7 @@ function format_performance($performance){
     $max_performance = get_performance('999991', $performance->paper_info->id);
     //array_push($subjects, 'marks');
     $total = array();
+    $total['name'] = 'Total';
     $total['obt'] = $performance->marksobt;
     $total['negmarks'] = $performance->negmarks;
     $total['corr'] = 0;
@@ -167,7 +168,7 @@ function format_performance($performance){
     $total['corr_percent'] = 0;
     $total['wrong_percent'] = 0;
     $total['unattempt_percent'] = 0;
-    $total['marks_correct'] = $total['obt']+$total['negmarks'];
+    $total['marks_correct'] = $total['obt']+(-1)*$total['negmarks'];
     $total['rank'] = $performance->rank;
     $total['max_obt'] = $max_performance->marksobt;
     $total_ques = 0;
@@ -183,9 +184,10 @@ function format_performance($performance){
         $subj_p['corr_percent'] = round($subj_p['corr']*100/$cnt);
         $subj_p['wrong_percent'] = round($subj_p['wrong']*100/$cnt);
         $subj_p['unattempt_percent'] = round($subj_p['unattempt']*100/$cnt);
-        $subj_p['marks_correct'] = $subj_p['obt']+$subj_p['negmarks'];
+        $subj_p['marks_correct'] = $subj_p['obt']+(-1)*$subj_p['negmarks'];
         $subj_p['rank'] = $performance->{$subj.'rank'};
         $subj_p['max_obt'] = $max_performance->{$subj.'obt'};
+        $subj_p['nques'] = $cnt;
         $total['corr'] += $subj_p['corr'];
         $total['wrong'] += $subj_p['wrong'];
         $total['unattempt'] += $subj_p['unattempt'];
@@ -196,6 +198,7 @@ function format_performance($performance){
     $total['corr_percent'] = round($total['corr']*100/$total_ques);
     $total['wrong_percent'] = round($total['wrong']*100/$total_ques);
     $total['unattempt_percent'] = round($total['unattempt']*100/$total_ques);
+    $total['nques'] = $total_ques;
     $formatted_performance['total'] = $total;
     return $formatted_performance;
 }

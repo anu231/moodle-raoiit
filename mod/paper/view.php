@@ -7,7 +7,10 @@ global $DB, $COURSE, $USER,$PAGE;
 $id = required_param('id', PARAM_INT);
 // $coursecontext = context_course::instance($COURSE->id);
 // $usercontext = context_user::instance($USER->id);
-$PAGE->requires->js('/mod/paper/js/myJS.js');
+//$PAGE->requires->js('/mod/paper/js/Chart.bundle.js');
+//$PAGE->requires->js('/mod/paper/js/utils.js');
+//$PAGE->requires->js('/mod/paper/js/myJS.js');
+
 
 require_login();
 // Get the instance

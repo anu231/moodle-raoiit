@@ -4,7 +4,7 @@ require_once('../../config.php');
 require_once('locallib.php');
 global $DB, $COURSE, $USER;
 
-$id = required_param('id', PARAM_INT);
+ $id = required_param('id', PARAM_INT);
 
 require_login();
 // Get the instance
@@ -23,7 +23,9 @@ if ($id) {
     return json_encode(array('error'=>'Your must specify a course_module ID or an instance ID'));
 }
 
-$performance = get_performance($USER->username, $paper->paperid);
+//$performance = get_performance($USER->username, $paper->paperid);
+// /$performance = get_performance(920471, 1601);
+$performance = get_performance(920471, 1601);
 $performance = format_performance($performance);
 
 echo json_encode($performance);

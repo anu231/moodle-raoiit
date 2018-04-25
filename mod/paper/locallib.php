@@ -139,7 +139,7 @@ function get_paper_subjects($pinfo){
 }
 
 function format_performance($performance){
-    $subj = array(
+    $subj_map = array(
         'p'=>'Physics',
         'c'=>'Chemistry',
         'm'=>'Mathematics',
@@ -173,6 +173,7 @@ function format_performance($performance){
     $total_ques = 0;
     foreach($subjects as $subj=>$cnt){
         $subj_p = array();
+        $subj_p['name'] = $subj_map[$subj];
         $subj_p['obt'] = $performance->{$subj.'obt'};
         $subj_p['corr'] = $performance->{$subj.'corr'};
         $subj_p['wrong'] = $performance->{$subj.'wrong'};

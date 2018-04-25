@@ -1,7 +1,7 @@
 <?php
 
 require_once('../../config.php');
-
+require_once('locallib.php');
 global $DB, $COURSE, $USER,$PAGE;
 
 $id = required_param('id', PARAM_INT);
@@ -30,7 +30,12 @@ $PAGE->set_heading(format_string("Paper"));
 $PAGE->set_pagelayout('standard');
 
 $output = $PAGE->get_renderer('mod_paper');
+//$performance = get_performance($USER->username, $paper->paperid);
+// /$performance = get_performance(920471, 1601);
+$performance = get_performance(920471, 1601);
+$performance = format_performance($performance);
 
 echo $output->header();
 echo $output->paper($paper);
+
 echo $output->footer();

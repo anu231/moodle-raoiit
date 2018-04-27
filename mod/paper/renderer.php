@@ -34,10 +34,10 @@ class mod_paper_renderer extends plugin_renderer_base {
     public function render_all_paper_list(all_paper_list $papers) {
         return $this->render_from_template('mod_paper/all_paper_list', $papers);
     }
-    public function render_performance($page){
+    public function render_subject_performance($page){
         $data = array();
-        $data['performance'] = $page->export_for_template($this);
-        return $this->render_from_template('mod_paper/paper', $data);
+        $data['subject_performance'] = $page->export_for_template($this);
+        return $this->render_from_template('mod_paper/subject_performance', $data);
     }
 }
 
@@ -145,19 +145,18 @@ class all_paper_list implements renderable {
     }
 }
 
-class performance implements renderable, templatable {
+class subject_performance implements renderable, templatable {
     var $performance = null;
 
     public function __construct($performance){
         $this->performance = $performance;
         //var_dump($this->performance);
     }
-    private function get_performance(){
+    /*private function get_performance(){
         global $USER, $DB,$PAGE;
         return $this->performance;
-    }
+    }*/
     public function export_for_template(renderer_base $output){
-        $data = $this->get_performance();
-        return $data;
+        return $this->performance;
     }
 }

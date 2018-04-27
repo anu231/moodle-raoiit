@@ -1,0 +1,115 @@
+<div id="performance">
+    {{#subject_performance}}
+    <h3> {{name}} Analysis</h3>
+        <table>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <table class='cube table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style="border:1px solid #97a1b2; width:300px; background:#fff;">
+                                    <tr class='headerStyle' style='font-weight: bold;color:white; background:#07889b;' valign="middle">
+                                        <td colspan="2"><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Students Performance in  {{name}} </center></p></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total No. Of Questions</th>
+                                        <td>{{nques}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Correct</th>
+                                        <td>{{corr}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Wrong</th>
+                                        <td>{{ wrong }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Unattempted</th>
+                                        <td>{{ unattempt }}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+        </table>
+        <table>
+                        <tr>
+                                <td>
+                                    <table>
+                                            <tr>
+                                                <td>
+                                                        <table class='cube table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style="border:1px solid #97a1b2; width:300px; background:#fff;">
+                                                            <tr class='headerStyle' style='font-weight: bold;color:white; background:#07889b;' valign="middle">
+                                                                <td colspan="2"><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>{{name}} Analysis in Percentage</center></p></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Correct</th>
+                                                                <td>{{corr_percent}}%</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Wrong</th>
+                                                                <td>{{wrong_percent}}%</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Unattempted</th>
+                                                                <td>{{ unattempt_percent }}%</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Accuracy In Solving</th>
+                                                                <td>{{ corr_accuracy }}%</td>
+                                                            </tr>
+                                                        </table>
+                </td>
+                                            </tr>
+                                    </table>
+
+                                </td>
+                                
+                        </tr>
+                </table>
+
+
+
+                 <table>
+                        <tr>
+                                <td>
+                                    <table>
+                                            <tr>
+                                                <td>
+                                                         <table class='cube table table-bordered table-responsive table-responsive table-condensed myTable' border=1  cellspacing=0 style="border:1px solid #97a1b2; width:300px; background:#fff;">
+                                                            <tr class='headerStyle' style='font-weight: bold;color:white; background:#07889b;' valign="middle">
+                                                                <td colspan="2"><p style='font-size:20px;font-weight: bold;color:white; text-align:center;'><center>Marks Analysis - {{name}}</center></p></td>
+                                                            </tr>
+                                                            
+                                                            <tr>
+                                                                <th>Positive Marks</th>
+                                                                <td>{{marks_correct}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Negative Marks</th>
+                                                                <td>{{ negmarks }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Marks Obtained</th>
+                                                                <td>{{ obt }}</td>
+                                                            </tr>
+                                                        </table>
+                </td>
+                                            </tr>
+                                    </table>
+
+                                </td>
+                                <td>Chart</td>
+                        </tr>
+                </table>
+
+
+        {{/subject_performance}}
+        
+           
+     
+
+    </div>

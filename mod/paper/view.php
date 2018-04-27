@@ -32,18 +32,32 @@ $PAGE->set_pagelayout('standard');
 $output = $PAGE->get_renderer('mod_paper');
 
 //$performance = get_performance($USER->username, $paper->paperid);
-// /$performance = get_performance(920471, 1601);
+//$performance = get_performance(920471, 1601);
 $performance = get_performance(807464,768);
 $performance = format_performance($performance);
 
 echo $output->header();
 echo $output->paper($paper);
-//var_dump($performance);
 
-    foreach ($performance as $result){
-                $renderable = new performance($result);
-                echo $output->render($renderable); 
-    }
+//comparison with highest
+//chart - highest
+
+
+foreach ($performance as $result){
+            $renderable = new subject_performance($result);
+            echo $output->render($renderable); 
+            //charts
+            //chart 1 - total, correct, wrong, unattempted
+            $attempt_chart = new core\chart_bar();
+            $attempt_chart->add_series(new core\chart_series('Total',array($result['nques'])));
+            $attempt_chart->add_series(new core\chart_series('Correct',array($result['corr'])));
+            $attempt_chart->add_series(new core\chart_series('Wrong',array($result['wrong'])));
+            $attempt_chart->add_series(new core\chart_series('Unattempted',array($result['unattempt'])));
+            echo $OUTPUT->render($attempt_chart);
+            //chart 2 - corr_percent, wrong_percent, unattempt_percent, corr_accuracy
+            //chart 3 - obt, marks_correct, negmarks
+}
+
     
 echo $output->footer();
 //chart//

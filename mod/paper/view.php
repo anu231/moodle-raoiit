@@ -30,12 +30,25 @@ $PAGE->set_heading(format_string("Paper"));
 $PAGE->set_pagelayout('standard');
 
 $output = $PAGE->get_renderer('mod_paper');
+
 //$performance = get_performance($USER->username, $paper->paperid);
 // /$performance = get_performance(920471, 1601);
-$performance = get_performance(920471, 1601);
+$performance = get_performance(807464,768);
 $performance = format_performance($performance);
 
 echo $output->header();
 echo $output->paper($paper);
+//var_dump($performance);
 
+    foreach ($performance as $result){
+                $renderable = new performance($result);
+                echo $output->render($renderable); 
+    }
+    
 echo $output->footer();
+//chart//
+
+//chart//
+
+
+

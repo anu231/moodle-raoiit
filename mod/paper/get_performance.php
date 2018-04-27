@@ -25,7 +25,7 @@ if ($id) {
 
 //$performance = get_performance($USER->username, $paper->paperid);
 // /$performance = get_performance(920471, 1601);
-$performance = get_performance(920471, 1601);
+$performance = get_performance(807464, 768);
 $performance = format_performance($performance);
 
 echo json_encode($performance);

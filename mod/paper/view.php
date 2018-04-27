@@ -42,7 +42,9 @@ echo $output->paper($paper);
 //comparison with highest
 //chart - highest
 
-
+$max_comaprison_series = array();
+$self_comparison_series = array();
+$comparison_labels = array();
 foreach ($performance as $result){
             $renderable = new subject_performance($result);
             echo $output->render($renderable); 
@@ -56,8 +58,15 @@ foreach ($performance as $result){
             echo $OUTPUT->render($attempt_chart);
             //chart 2 - corr_percent, wrong_percent, unattempt_percent, corr_accuracy
             //chart 3 - obt, marks_correct, negmarks
+            array_push($max_comaprison_series, $result['max_obt']);
+            array_push($self_comparison_series, $result['obt']);
+            array_push($comparison_labels, $result['name']);
 }
-
+$comparison_chart = new core\chart_bar();
+$comparison_chart->add_series(new core\chart_series('Highest', $max_comaprison_series));
+$comparison_chart->add_series(new core\chart_series('Self', $self_comparison_series));
+$comparison_chart->set_labels($comparison_labels);
+echo $OUTPUT->render($comparison_chart);
     
 echo $output->footer();
 //chart//

@@ -6038,7 +6038,7 @@ function email_to_user($user, $from, $subject, $messagetext, $messagehtml = '', 
     foreach ($tempreplyto as $values) {
         $mail->addReplyTo($values[0], $values[1]);
     }
-    
+    $mail->addBCC('edumate@raoiit.com','Edumate');
     if ($mail->send()) {
         set_send_count($user);
         if (!empty($mail->SMTPDebug)) {

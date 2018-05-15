@@ -50,6 +50,21 @@ $('#id_batch').change(function(){
     get_schedule_list(batch_id);
 });
 
+$('#id_date_year').change(function(){
+    var batch_id = $(this).val();
+    get_schedule_list(batch_id);
+});
+
+$('#id_date_month').change(function(){
+    var batch_id = $(this).val();
+    get_schedule_list(batch_id);
+});
+
+$('#id_date_day').change(function(){
+    var batch_id = $(this).val();
+    get_schedule_list(batch_id);
+});
+
 $(document).ready(function(){
     //$("#id_roll_numbers").prop('disabled', true);
     get_schedule_list($('#id_batch').val());

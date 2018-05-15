@@ -16,6 +16,7 @@ function get_schedule_list(batch_id){
             if (batch_record.lectures.length == 0){
                 alert('No lectures exist for this batch in the specified date');
                 $('#id_schedule_id').empty();
+                clear_student_list();
                 return;
             }
             $.each(batch_record.lectures[0].items, function (i, item) {
@@ -28,6 +29,11 @@ function get_schedule_list(batch_id){
             set_student_list(batch_record.students);
         }
     });
+}
+
+function clear_student_list(){
+    var container = $('#multi_select_student');
+    $(container).html('');
 }
 
 function set_student_list(students){
@@ -51,17 +57,17 @@ $('#id_batch').change(function(){
 });
 
 $('#id_date_year').change(function(){
-    var batch_id = $(this).val();
+    var batch_id = $('#id_batch').val();
     get_schedule_list(batch_id);
 });
 
 $('#id_date_month').change(function(){
-    var batch_id = $(this).val();
+    var batch_id = $('#id_batch').val();
     get_schedule_list(batch_id);
 });
 
 $('#id_date_day').change(function(){
-    var batch_id = $(this).val();
+    var batch_id = $('#id_batch').val();
     get_schedule_list(batch_id);
 });
 

@@ -9,7 +9,7 @@ $PAGE->set_heading('View Delete Fines');
 global $USER, $DB;
 //$context = context_course::instance($CFG->branchadmin_courseid);
 echo $OUTPUT->header();
-if(is_siteadmin()){
+if(is_siteadmin() || is_secondary_user()){
     //$center_id = get_user_center($USER->id);
     $fineid = required_param('fineid',PARAM_INT);
     //$book_id = required_param('book_id',PARAM_RAW);

@@ -24,7 +24,6 @@ if (($handle = fopen($filename, "r")) !== FALSE) {
         if (empty($book_entry)){
             continue;
         }
-        
         //check if the centers are the same in analysis and edumate
         if ($analysis_center == $book_entry->branch){
             continue;

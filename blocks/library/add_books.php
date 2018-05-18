@@ -28,6 +28,7 @@ if (is_siteadmin()){
         $book_record->issued    = 0;
         $book_record->remark    = "Available";
         $book_record->status    = $data->status;
+        $book_record->is_scanned = 0;
         $book_record->id = $DB->insert_record('lib_bookmaster', $book_record, $returnid=true) ; 
         echo html_writer::div('New Book has been successfully added');
         echo $OUTPUT->continue_button($CFG->wwwroot.'/blocks/library/add_books.php');

@@ -23,6 +23,10 @@ class block_library extends block_list {
             $this->content->items[] = html_writer::link($total_fine_url,"Pending Fine yet not submitted");
             $view_all_rao_branch_fine = new moodle_url('/blocks/library/view_all_branch_fine.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
             $this->content->items[] = html_writer::link($view_all_rao_branch_fine,"All Submitted(HO) Rao Branch Fine");
+            $delete_library_fine = new moodle_url('/blocks/library/pending_fine_list.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
+            $this->content->items[] = html_writer::link($delete_library_fine,"Delete Library Fine");
+            $deleted_fine = new moodle_url('/blocks/library/view_all_deleted_fine.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
+            $this->content->items[] = html_writer::link($deleted_fine,"Deleted Fine");
             
         }
         if (is_branch_admin()){

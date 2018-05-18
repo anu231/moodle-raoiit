@@ -1,0 +1,49 @@
+<div>
+        <h3><center>List of Invalidated Fine</center></h3>
+    <table class="view_student_list_table_td_th view_student_list_table">
+      <tbody>
+      <tr>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Student Roll Number</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Book Id</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Amount</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Issue Date</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Return Date</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Branch Issuer</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Remark</th>
+    
+      </tr>
+       {{#deleted_fine}}
+     <tr class="view_student_list_table_td_th ">
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px; text-align:center;">{{student_username}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px; text-align:center;">{{book_id}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{amount}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{issuedate}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{returndate}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{branch_issuer}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{remark}}</td>
+    
+
+     </tr>
+    {{/deleted_fine}}
+
+    {{^deleted_fine}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td" colspan="7" style="padding:5px; text-align:center;">There are no pending fine in library</td>
+            </tr>
+    {{/deleted_fine}}
+     
+        </tbody>
+    </table>
+</div>
+<style>
+.view_student_list_table_td_th {
+    border: 1px solid #ddd;
+}
+.view_student_list_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.view_student_list_th:hover  {
+    height: 10px;    border: 1px solid #ddd; background:#eaedef; font-weight:bold;
+}
+</style>

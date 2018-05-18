@@ -57,6 +57,13 @@ foreach ($performance as $result){
             $attempt_chart->add_series(new core\chart_series('Unattempted',array($result['unattempt'])));
             echo $OUTPUT->render($attempt_chart);
             //chart 2 - corr_percent, wrong_percent, unattempt_percent, corr_accuracy
+            $percentage_chart = new core\chart_bar();
+            $percentage_chart->add_series(new core\chart_series('Total',array($result['corr_percent'])));
+            $percentage_chart->add_series(new core\chart_series('Correct',array($result['wrong_percent'])));
+            $percentage_chart->add_series(new core\chart_series('Wrong',array($result['unattempt_percent'])));
+            $percentage_chart->add_series(new core\chart_series('Unattempted',array($result['corr_accuracy'])));
+            echo $OUTPUT->render($percentage_chart);
+
             //chart 3 - obt, marks_correct, negmarks
             array_push($max_comaprison_series, $result['max_obt']);
             array_push($self_comparison_series, $result['obt']);

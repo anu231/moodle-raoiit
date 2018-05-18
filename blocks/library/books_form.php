@@ -400,3 +400,32 @@ class add_barcode_form extends moodleform {
     }
     
 }
+
+// Pay Delete form //
+class pay_delete_form extends moodleform {
+    function definition(){
+        $mform =& $this->_form;
+        $mform->addElement('hidden', 'fineid','Fine Id');
+        $mform->setType('fineid', PARAM_INT);
+        $mform->setDefault('fineid',$this->_customdata['fineid']);
+      
+        $mform->addElement('static', 'static_fine_amount', 'Fine Amount',
+        $this->_customdata['fine_amount']);
+
+        $mform->addElement('static', 'static_student_username', 'Student Username',
+        $this->_customdata['student_username']);
+
+        $mform->addElement('static', 'static_branch', 'Branch',
+        $this->_customdata['branch']);
+
+        $mform->addElement('static', 'static_returndate', 'Return Date',
+        $this->_customdata['return_date']);
+        
+        $buttonarray=array();
+        $buttonarray[] = $mform->createElement('submit', 'submit', "Invalid");
+        $buttonarray[] = $mform->createElement('cancel');
+        $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
+    }
+}
+
+// Pay Delete form //

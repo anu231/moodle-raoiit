@@ -48,8 +48,17 @@ class block_library_renderer extends plugin_renderer_base {
         $data['all_rao_branch_fine'] = $page->export_for_template($this);
         return $this->render_from_template('block_library/view_all_rao_branch_fine', $data);
     }
-
-  
+    public function render_view_fine_list($page){
+        $data = array();
+        $data['view_fine_list'] = $page->export_for_template($this);
+        return $this->render_from_template('block_library/view_fine_list', $data);
+    }
+    public function render_view_all_deleted_fine($page){
+        $data = array();
+        $data['deleted_fine'] = $page->export_for_template($this);
+        return $this->render_from_template('block_library/view_all_deleted_fine', $data);
+    }
+    
 }
 
 class view_issued_books implements renderable, templatable {
@@ -274,6 +283,40 @@ class view_all_booksfine implements renderable, templatable {
     
 }
 
+// admin delete fine list //
+
+class view_fine_list implements renderable, templatable {
+    private function get_fine_books_list(){
+        global $USER, $DB;
+        //
+        $sql = <<<SQL
+        select issue.id as issue_id,book.bookid as book_id,issue.bookid,issue.issue_date as issuedate,issue.return_date as returndate,issue.branch_id as branchid,fine.id as fineid,fine.student_username,fine.issue_id,fine.amount,fine.branch_issuer,fine.remark,fine.paid
+        from {lib_issue_record} as issue join {lib_fine_record} as fine join {lib_bookmaster} as book
+        on issue.id = fine.issue_id and book.id = issue.bookid
+        where issue.student_username = fine.student_username and paid = 0
+SQL;
+        $issued_books = $DB->get_records_sql($sql);
+        //
+        $issued_books_array = array();
+        foreach($issued_books as $entry){
+            $issued_books_array[] = $entry;
+        }
+        //var_dump($issued_books_array);
+        return $issued_books_array;
+    }
+
+    public function export_for_template(renderer_base $output){
+        $data = $this->get_fine_books_list();
+        return $data;
+    }
+}
+
+
+
+// admin delete fine list //
+
+
+
 class view_all_rao_branch_fine implements renderable, templatable {
     private function get_rao_branchfine(){
         global $USER, $DB;
@@ -300,6 +343,33 @@ private function get_total_branches_fine(){
         $branch_fine = $this->get_rao_branchfine();
         $total_branches_fine = $this->get_total_branches_fine();
         $data = array_merge($branch_fine,$total_branches_fine);
+        return $data;
+    }
+}
+
+
+class view_all_deleted_fine implements renderable, templatable{
+    private function get_all_deleted_fine(){
+        global $USER, $DB;
+        //
+        $sql = <<<SQL
+        select issue.id as issue_id,book.bookid as book_id,issue.bookid,issue.issue_date as issuedate,issue.return_date as returndate,issue.branch_id as branchid,fine.id as fineid,fine.student_username,fine.issue_id,fine.amount,fine.branch_issuer,fine.remark,fine.paid
+        from {lib_issue_record} as issue join {lib_fine_record} as fine join {lib_bookmaster} as book
+        on issue.id = fine.issue_id and book.id = issue.bookid
+        where issue.student_username = fine.student_username and paid = -1
+SQL;
+        $deleted_fine = $DB->get_records_sql($sql);
+        //
+        $deleted_fine_array = array();
+        foreach($deleted_fine as $entry){
+            $deleted_fine_array[] = $entry;
+        }
+        //var_dump($issued_books_array);
+        return $deleted_fine_array;
+    }
+
+    public function export_for_template(renderer_base $output){
+        $data = $this->get_all_deleted_fine();
         return $data;
     }
 }

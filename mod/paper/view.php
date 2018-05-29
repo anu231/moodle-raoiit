@@ -33,15 +33,15 @@ $output = $PAGE->get_renderer('mod_paper');
 
 //$performance = get_performance($USER->username, $paper->paperid);
 //$performance = get_performance(920471, 1601);
-$performance = get_performance(807464,768);
-$performance = format_performance($performance);
+//$performance = get_performance(807464,768);
+//$performance = format_performance($performance);
 
 echo $output->header();
 echo $output->paper($paper);
 
 //comparison with highest
 //chart - highest
-
+/*
 $max_comaprison_series = array();
 $self_comparison_series = array();
 $comparison_labels = array();
@@ -91,7 +91,8 @@ $comparison_chart->add_series(new core\chart_series('Highest', $max_comaprison_s
 $comparison_chart->add_series(new core\chart_series('Self', $self_comparison_series));
 $comparison_chart->set_labels($comparison_labels);
 echo $OUTPUT->render($comparison_chart);
-    
+*/
+
 echo $output->footer();
 //chart//
 

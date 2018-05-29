@@ -58,3 +58,12 @@ function convert_std_to_array_bookid($tl){
     }
     return $ts_arr;
 }
+
+function is_secondary_user(){
+    global $USER;
+    if ($USER->username == 'abhishek.pawar'){
+        return True;
+    } else {
+        return False;
+    }
+}

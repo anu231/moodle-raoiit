@@ -1,0 +1,154 @@
+.timetable .tt-header {
+    will-change: transfrom;
+    transition: 0.1s ease-out transfrom;
+}
+
+.timetable .tt-header-floating {
+    background-color: #3f51b5;
+    color: white;
+    border-radius: 0px;
+}
+.timetable .tt-header-floating th {
+    border-radius: 0px;
+}
+
+.timetable #index {
+    background-color: #f5f5f5;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    margin-left: 1px;
+    margin-right: 2px;
+}
+.timetable #index.tt-index-floating {
+    border-bottom: 2px solid white;
+    border-top: 2px solid white;
+}
+.timetable .index-header {
+    padding: 2px;
+    margin-left: 5px;
+    font-size: 0.9em;
+}
+
+.timetable .index-item {
+    display: block;
+    color: #2196f3;
+    /*border: 1px solid magenta;*/
+    padding: 2px 5px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.timetable .index-item:hover {
+    transform: scale(1.05);
+    color: 3f51b5;
+}
+
+.date {
+    text-align: center !important;
+    font-weight: bold;
+    font-size: 1.4em;
+    color: white;
+    background: rgba(208,228,247,1);
+background: -moz-linear-gradient(left, rgba(208,228,247,1) 0%, rgba(10,118,213,1) 50%, rgba(10,118,213,1) 51%, rgba(208,228,247,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(208,228,247,1)), color-stop(50%, rgba(10,118,213,1)), color-stop(51%, rgba(10,118,213,1)), color-stop(100%, rgba(208,228,247,1)));
+background: -webkit-linear-gradient(left, rgba(208,228,247,1) 0%, rgba(10,118,213,1) 50%, rgba(10,118,213,1) 51%, rgba(208,228,247,1) 100%);
+background: -o-linear-gradient(left, rgba(208,228,247,1) 0%, rgba(10,118,213,1) 50%, rgba(10,118,213,1) 51%, rgba(208,228,247,1) 100%);
+background: -ms-linear-gradient(left, rgba(208,228,247,1) 0%, rgba(10,118,213,1) 50%, rgba(10,118,213,1) 51%, rgba(208,228,247,1) 100%);
+background: linear-gradient(to right, rgba(208,228,247,1) 0%, rgba(10,118,213,1) 50%, rgba(10,118,213,1) 51%, rgba(208,228,247,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0e4f7', endColorstr='#d0e4f7', GradientType=1 );
+}
+
+tr:hover .date {
+    background-color: #2f41a5;
+}
+
+.test {
+    background-color: rgba(0.40, 0, 0, 0.5);
+}
+
+.Physics {
+    background-color: rgba(157, 187, 205, 0.3);
+}
+
+tr.Chemistry {
+    background-color: rgba(220, 220, 220, 0.3);
+}
+
+tr.Maths {
+    background-color: rgba(247, 70, 47, 0.3);
+}
+
+tr.Biology {
+    background-color: rgba(70, 191, 189, 0.3);
+}
+
+tr.Zoology {
+    background-color: rgba(253, 180, 92, 0.3);
+}
+
+tr.cancelled {
+    text-decoration: line-through;
+}
+
+/* new css code */
+
+.accord_h4 { padding-top: 2px; padding-bottom: 2px; padding-left: 5px;
+    text-align: left;background-color: #21409a; color: white;}
+
+.hr_class{border-bottom:1px solid #eee;}
+
+#batch_records {
+   /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#batch_records td, #batch_records th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#batch_records tr:nth-child(even){background-color: #f2f2f2;}
+
+#batch_records tr:hover {background-color: #ddd;}
+
+#batch_records th {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-align: left;
+    background-color: #21409a;
+    color: white;
+}
+.shadow
+{
+border:1px solid #ccc;
+box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
+-webkit-box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
+-moz-box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
+-o-box-shadow: inset -1px -1px 8px 0px #ABABAB,1px 5px 5px 1px #DDDDDD;
+padding: 10px;
+}
+.topics{ border-collapse: collapse; display: table; margin-left:20px; color: #2f41a5;}
+.topics:hover{color: #000; font-weight:bold;}
+.ui-accordion .ui-accordion-header{background:#21409a; color: #fff;}
+
+.physics {
+    background-color: #d32f2f !important;  color:#fff !important;
+}
+
+.chemistry {
+    background-color: #0d47a1 !important; color:#fff !important;
+}
+
+.mathematics {
+    background-color: #f57c00 !important; color:#fff !important;
+}
+
+.botany {
+    background-color: #6d4c41 !important; color:#fff !important;
+}
+
+.zoology {
+    background-color: #1b5e20 !important;  color:#fff !important;
+}

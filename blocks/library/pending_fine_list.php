@@ -12,7 +12,7 @@ $PAGE->set_heading('View Pending book Fine List');
 $output = $PAGE->get_renderer('block_library');
 echo $output->header();
 
-if (is_siteadmin()){
+if (is_siteadmin() || is_secondary_user()){
     $renderable = new view_fine_list();
     echo $output->render($renderable);
     echo $output->footer();

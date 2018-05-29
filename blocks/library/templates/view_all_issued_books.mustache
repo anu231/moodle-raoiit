@@ -1,0 +1,45 @@
+<div>
+    <h3>All Issued Books</h3>
+    <table class="view_student_list_table_td_th view_student_list_table">
+      <tbody>
+      <tr>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Book Id</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Book Name</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Student Roll Number</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Issue Date</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Return Date</th>
+      <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Branch Id</th>
+
+      </tr>
+       {{#issued_books}}
+     <tr class="view_student_list_table_td_th ">
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{bookid}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{name}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{student_username}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{issue_date}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{return_date}}</td>
+     <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{rcentername}}</td>
+     </tr>
+     {{/issued_books}}
+
+    {{^issued_books}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td" colspan="7" style="padding:5px; text-align:center;">There are no record found</td>
+            </tr>
+    {{/issued_books}}
+     
+        </tbody>
+    </table>
+</div>
+<style>
+.view_student_list_table_td_th {
+    border: 1px solid #ddd;
+}
+.view_student_list_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.view_student_list_th:hover  {
+    height: 10px;    border: 1px solid #ddd; background:#eaedef; font-weight:bold;
+}
+</style>

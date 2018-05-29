@@ -27,6 +27,8 @@ class block_library extends block_list {
             $this->content->items[] = html_writer::link($delete_library_fine,"Delete Library Fine");
             $deleted_fine = new moodle_url('/blocks/library/view_all_deleted_fine.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
             $this->content->items[] = html_writer::link($deleted_fine,"Deleted Fine");
+            $issued_books = new moodle_url('/blocks/library/all_issued_books.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
+            $this->content->items[] = html_writer::link($issued_books,"All Issued Books1");
             
         }
         if (is_branch_admin()){

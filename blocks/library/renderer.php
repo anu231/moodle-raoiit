@@ -58,6 +58,11 @@ class block_library_renderer extends plugin_renderer_base {
         $data['deleted_fine'] = $page->export_for_template($this);
         return $this->render_from_template('block_library/view_all_deleted_fine', $data);
     }
+    public function render_view_all_issued_books($page){
+        $data = array();
+        $data['issued_books'] = $page->export_for_template($this);
+        return $this->render_from_template('block_library/view_all_issued_books', $data);
+    }
     
 }
 
@@ -370,6 +375,33 @@ SQL;
 
     public function export_for_template(renderer_base $output){
         $data = $this->get_all_deleted_fine();
+        return $data;
+    }
+}
+
+// All Issued Books //
+
+class view_all_issued_books implements renderable, templatable {
+    private function get_all_issued_books(){
+        global $USER, $DB;
+
+        $sql = <<<SQL
+        select  book.name,book.price,book.bookid,issue.id,issue.branch_id,issue.student_username, issue.issue_date,issue.return_date,issue.branch_id,rcenters.name as rcentername
+        from {lib_bookmaster} as book join {lib_issue_record} as issue join {raomanager_centers} as rcenters
+        on book.id = issue.bookid and rcenters.id=issue.branch_id where book.issued = 0 and issue.status = 0
+SQL;
+        $issued_books = $DB->get_records_sql($sql);
+        //
+        $issued_books_array = array();
+        foreach($issued_books as $entry){
+            $issued_books_array[] = $entry;
+        }
+      
+        return $issued_books_array;
+    }
+
+    public function export_for_template(renderer_base $output){
+        $data = $this->get_all_issued_books();
         return $data;
     }
 }

@@ -51,25 +51,42 @@ foreach ($performance as $result){
             //charts
             //chart 1 - total, correct, wrong, unattempted
             $attempt_chart = new core\chart_bar();
+            $attempt_chart->set_title('Students Performance in Paper');
             $attempt_chart->add_series(new core\chart_series('Total',array($result['nques'])));
             $attempt_chart->add_series(new core\chart_series('Correct',array($result['corr'])));
             $attempt_chart->add_series(new core\chart_series('Wrong',array($result['wrong'])));
             $attempt_chart->add_series(new core\chart_series('Unattempted',array($result['unattempt'])));
+            $attempt_chart->get_xaxis(0, true)->set_label("Students Performance in ".$result['name']); 
+            $attempt_chart->get_yaxis(0, true)->set_label("Students Performance in ".$result['name']);
             echo $OUTPUT->render($attempt_chart);
             //chart 2 - corr_percent, wrong_percent, unattempt_percent, corr_accuracy
             $percentage_chart = new core\chart_bar();
-            $percentage_chart->add_series(new core\chart_series('Total',array($result['corr_percent'])));
-            $percentage_chart->add_series(new core\chart_series('Correct',array($result['wrong_percent'])));
-            $percentage_chart->add_series(new core\chart_series('Wrong',array($result['unattempt_percent'])));
-            $percentage_chart->add_series(new core\chart_series('Unattempted',array($result['corr_accuracy'])));
+            $percentage_chart->set_title('Students Performance Analysis in Percentage');
+            $percentage_chart->add_series(new core\chart_series('Correct',array($result['corr_percent'])));
+            $percentage_chart->add_series(new core\chart_series('Wrong',array($result['wrong_percent'])));
+            $percentage_chart->add_series(new core\chart_series('Unattempted',array($result['unattempt_percent'])));
+            $percentage_chart->add_series(new core\chart_series('Accuracy In Solving',array($result['corr_accuracy'])));
+            $percentage_chart->get_yaxis(0, true)->set_label($result['name']." Performance Analysis in Percentage");
+            $percentage_chart->get_yaxis(0, true)->set_label($result['name']." Performance Analysis in Percentage");
             echo $OUTPUT->render($percentage_chart);
 
             //chart 3 - obt, marks_correct, negmarks
+            $marks_analysis_chart = new core\chart_bar();
+            $marks_analysis_chart->set_title('Students Marks Analysis');
+            $marks_analysis_chart->add_series(new core\chart_series('Positive Marks',array($result['marks_correct'])));
+            $marks_analysis_chart->add_series(new core\chart_series('Negative Marks',array($result['negmarks'])));
+            $marks_analysis_chart->add_series(new core\chart_series('Marks Obtained',array($result['obt'])));
+            $marks_analysis_chart->get_yaxis(0, true)->set_label($result['name']." Marks Analysis");
+            $marks_analysis_chart->get_yaxis(0, true)->set_label($result['name']." Marks Analysis");
+            echo $OUTPUT->render($marks_analysis_chart);
+
+
             array_push($max_comaprison_series, $result['max_obt']);
             array_push($self_comparison_series, $result['obt']);
             array_push($comparison_labels, $result['name']);
 }
 $comparison_chart = new core\chart_bar();
+$comparison_chart->set_title('Highest and Self Comparison Chart');
 $comparison_chart->add_series(new core\chart_series('Highest', $max_comaprison_series));
 $comparison_chart->add_series(new core\chart_series('Self', $self_comparison_series));
 $comparison_chart->set_labels($comparison_labels);

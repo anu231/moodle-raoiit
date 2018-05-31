@@ -4,7 +4,7 @@ require_once('books_form.php');
 require_once('locallib.php');
 //require_once('fetch_book_info.php');
 $PAGE->set_url('/blocks/library/add_books.php');
-if (is_siteadmin()){
+if (is_siteadmin() || is_secondary_user()){
     $PAGE->set_pagelayout('standard');
     $PAGE->set_title('Add New Book in Library');
     $PAGE->set_heading('Add New Book in Library');

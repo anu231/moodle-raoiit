@@ -318,8 +318,11 @@ class auth_plugin_db extends auth_plugin_base {
             if (empty($local_user)){
                 //create the user or unsuspend the user
                 if ($this->config->removeuser == AUTH_REMOVEUSER_SUSPEND) {
-                    if ($olduser = $DB->get_record('user', array('username' => $username, 'deleted' => 0, 'suspended' => 1,
-                             'auth' => $this->authtype))) {
+                    if ($olduser = $DB->get_record('user', array('username' => $username, 'deleted' => 0, 'suspended' => 1))) {
+                        if ($olduser->auth != $this->authtype) {
+                            $olduser->auth = $this->authtype;
+                            $DB->update_record($olduser);
+                        }
                         $updateuser = new stdClass();
                         $updateuser->id = $olduser->id;
                         $updateuser->suspended = 0;
@@ -337,6 +340,7 @@ class auth_plugin_db extends auth_plugin_base {
                         }
                         if ($collision = $DB->get_record_select('user', "username = :username AND mnethostid = :mnethostid AND auth <> :auth", array('username'=>$user->username, 'mnethostid'=>$CFG->mnet_localhost_id, 'auth'=>$this->authtype), 'id,username,auth')) {
                             //$trace->output(get_string('auth_dbinsertuserduplicate', 'auth_db', array('username'=>$user->username, 'auth'=>$collision->auth)), 1);
+                            //check if the user account type is email
                             return -2;
                         }
                         try {

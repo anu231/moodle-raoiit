@@ -1,9 +1,11 @@
 <?php
 // Standard GPL and phpdocs
  
-defined('MOODLE_INTERNAL') || die;                                                                                                  
 require_once('../../config.php');
 require_once('locallib.php');
+require_once("$CFG->dirroot/blocks/library/locallib.php");
+require_once("{$CFG->libdir}/raolib.php");
+
 //require_once($CFG->dirroot.'/lib/raolib.php');
 //use plugin_renderer_base;  
 //require_once('classes/output/view_students.php');
@@ -35,6 +37,14 @@ class block_branchadmin_renderer extends plugin_renderer_base {
         $data = $page->export_for_template($this);
         return $this->render_from_template('block_branchadmin/student_performance', $data);
     }
+
+    public function render_todays_birthday($page){
+        $data = array();
+        $data['students_birthdays'] = $page->export_for_template($this);
+        return $this->render_from_template('block_branchadmin/todays_birthdays', $data);
+
+    }
+    
 }
 
 
@@ -178,5 +188,36 @@ class view_student_performance implements renderable, templatable{
         //get all the students with the same center
         $data = $this->get_student_performance();
         return array('spr'=>$data);                                                                                                               
+    }
+}
+
+
+
+
+class todays_birthday implements renderable, templatable {
+    private function get_student_birthdays(){
+        global $USER, $DB;
+        $center_id = get_user_center($USER->id);
+        $current_month = date('m');
+        $current_date = date('d');
+        //center not set yet //
+        $sql = <<<SQL
+        select userdata.userid, userdata.fieldid,userdata.data,user.username,user.firstname,user.lastname,user.email
+        from {user_info_data} as userdata join {user} as user
+        on userdata.userid = user.id
+        where userdata.fieldid = ? AND MONTH(userdata.data) = $current_month AND DAY(userdata.data) = $current_date AND user.suspended = 0
+SQL;
+        $get_records = $DB->get_records_sql($sql,array(1));
+        $result = array();
+        foreach($get_records as $entry){
+            $result[] = $entry;
+        }
+        //var_dump($result);
+        return $result;
+     }
+
+    public function export_for_template(renderer_base $output){
+        $data = $this->get_student_birthdays();
+        return $data;
     }
 }

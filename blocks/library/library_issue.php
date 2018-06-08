@@ -42,7 +42,7 @@ if(is_enrolled($context, $USER->id, '', true)){
             echo $OUTPUT->continue_button($CFG->wwwroot.'/blocks/library/library_issue.php?courseid='.$CFG->branchadmin_courseid);
 
         }else if ($data->status == '1'){
-            $issue_record = $DB->get_record('lib_issue_record',array('student_username'=>$data->student_username,'bookid'=>$book->id));
+            $issue_record = $DB->get_record('lib_issue_record',array('student_username'=>$data->student_username,'bookid'=>$book->id, 'status'=>0));
             $issue_record->status = 1;
             $issue_record->return_date = date('Y-m-d');
             $DB->update_record('lib_issue_record',$issue_record);

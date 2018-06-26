@@ -23,6 +23,8 @@ class block_branchadmin extends block_list {
         //$this->content->items[1] = html_writer::link($sms_url,"Send SMS to students");
         $this->content->items[2] = html_writer::link($student_attendance,"Mark Student Absent");
         $this->content->items[3] = html_writer::link($student_birthday,"Today's Birthday at Center");
+        $this->content->items[4] = html_writer::link($sms_url,"Send SMS to students");
+
         return $this->content;
     }
 

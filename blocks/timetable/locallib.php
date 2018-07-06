@@ -24,15 +24,7 @@ function x_week_range(&$start_date, &$end_date, $date) {
 
 function connect_analysis_db(){
     global $CFG;
-    //mysql_connect($CFG->analysis_host,$CFG->analysi_db_user,$CFG->analysis_db_pass)or die(mysql_error());
-    //mysql_select_db($CFG->analysis_db) or die(mysql_error());
     $link = new mysqli($CFG->analysis_db_host,$CFG->analysis_db_user,$CFG->analysis_db_password,$CFG->analysis_db_name);
-    /*if (!$link) {
-        echo "Error: Unable to connect to MySQL." . PHP_EOL;
-        echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
-        echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
-        exit;
-    }*/
     return $link;
 }
 
@@ -146,10 +138,10 @@ function get_timetable($start_date,$end_date,$user=null,$batchids=null){
 }
 
 // get faculty timetable //
-function get_faculty_timetable($start_date,$end_date,$fac_empid){
+function get_faculty_timetable($start_date,$end_date,$faculty){
     $link = connect_analysis_db();
     
-  $qry = "SELECT S.sid,S.batchid, S.lecturenum, S.testnum, S.date, S.from, S.to, S.facultyid, S.event, S.iscancel, S.istest, B.centreid, B.targetyear, B.batch, B.name AS batchname, C.name AS centrename, T.targetyear, T.batch, T.name AS classname, F.id AS ffid, F.name AS facultyname, F.shortname, F.type as facultytype, F.subject, Z.name as topicname, Y.type AS testtype FROM schedule AS S, ttbatches AS B, centreinfo AS C, classes AS T, facultyinfo AS F, topics AS Z, testtypes AS Y WHERE S.batchid=B.id AND B.centreid=C.id AND T.targetyear=B.targetyear AND T.batch=B.batch AND S.facultyid=F.id AND S.topicid=Z.id AND S.testtype=Y.id AND `date` >= '$start_date' AND `date` <= '$end_date' AND S.facultyid=$fac_empid ORDER BY `date`, `from`";
+  $qry = "SELECT S.sid,S.batchid, S.lecturenum, S.testnum, S.date, S.from, S.to, S.facultyid, S.event, S.iscancel, S.istest, B.centreid, B.targetyear, B.batch, B.name AS batchname, C.name AS centrename, T.targetyear, T.batch, T.name AS classname, F.id AS ffid, F.name AS facultyname, F.shortname, F.type as facultytype, F.subject, Z.name as topicname, Y.type AS testtype FROM schedule AS S, ttbatches AS B, centreinfo AS C, classes AS T, facultyinfo AS F, topics AS Z, testtypes AS Y WHERE S.batchid=B.id AND B.centreid=C.id AND T.targetyear=B.targetyear AND T.batch=B.batch AND S.facultyid=F.id AND S.topicid=Z.id AND S.testtype=Y.id AND `date` >= '$start_date' AND `date` <= '$end_date' AND S.facultyid=$faculty->empid ORDER BY `date`, `from`";
     $res = $link->query($qry);
 
     if (!$res){
@@ -163,7 +155,7 @@ function get_faculty_timetable($start_date,$end_date,$fac_empid){
         //foreach($lectures as $lecture){
         $tmp = array();
         $tmp['sid'] = $lecture['sid'];
-        $tmp['fancydate'] = date('Y-m-d',strtotime($lecture['date']));
+        $tmp['fancydate'] = date('Y-m-d, D',strtotime($lecture['date']));
         //$tmp['date'] = "{$lecture['d']}-{$lecture['m']}-{$lecture['y']}";
         $tmp['starttime'] = date('H:i',strtotime($lecture['from']));//$lecture['sh'].':'.$lecture['sm'];
         $tmp['endtime'] = date('H:i',strtotime($lecture['to']));//$lecture['eh'].':'.$lecture['em'];

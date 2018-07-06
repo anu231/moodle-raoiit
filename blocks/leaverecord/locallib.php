@@ -3,7 +3,7 @@ function send_leave_request($data){
     global $CFG;
     $ch = curl_init();
     $header = array(
-        'Authorization: Token 390aa78baf9ef435ec92427e1fea9323133f5ce9'
+        "Authorization: Token $CFG->django_token"
     );
     curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
     curl_setopt($ch, CURLOPT_URL, $CFG->django_server.'/leaves/apply/'); //set the url
@@ -64,87 +64,78 @@ function apply_od($date, $reason, $stime, $etime){
 
 
 function faculty_detail($email){
-        global $CFG;
-        $ch = curl_init();
-        $header = array(
-        'Authorization: Token 390aa78baf9ef435ec92427e1fea9323133f5ce9'
-        );
-        $curl=curl_init();
-        curl_setopt($curl,CURLOPT_URL,"http://192.168.1.19:8000/timetable/faculty/search_by_mail/?email=$email");
-        curl_setopt($curl,CURLOPT_HTTPHEADER,$header);
-        curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($curl,CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_1_1);
-        curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,false);
-        curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
-        $response=curl_exec($curl);
-        curl_close($curl);
-            if($response){
-                $rec = json_decode($response);
-                $empid = $rec->empid;
-
-                return $empid;
-            }
-                else{
-                echo "Error getting papers";
-                return array();
-            }
-
+    global $CFG;
+    $ch = curl_init();
+    $header = array(
+        "Authorization: Token $CFG->django_token"
+    );
+    $curl=curl_init();
+    curl_setopt($curl,CURLOPT_URL,$CFG->django_server."/timetable/faculty/search_by_mail/?email=$email");
+    curl_setopt($curl,CURLOPT_HTTPHEADER,$header);
+    curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
+    curl_setopt($curl,CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_1_1);
+    curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,false);
+    curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
+    $response=curl_exec($curl);
+    curl_close($curl);
+    if($response){
+        return json_decode($response);
+    }
+        else{
+        echo "Error getting faculty";
+        return array();
+    }
 }
-
-
-
-
 
 //
 function faculty_attendance($email){
-        global $CFG;
-        $ch = curl_init();
-        $header = array(
-        'Authorization: Token 390aa78baf9ef435ec92427e1fea9323133f5ce9'
-        );
-        $curl=curl_init();
-        curl_setopt($curl,CURLOPT_URL,"http://192.168.1.19:8000/timetable/faculty/search_by_mail/?email=$email");
-        curl_setopt($curl,CURLOPT_HTTPHEADER,$header);
-        curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($curl,CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_1_1);
-        curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,false);
-        curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
-        $response=curl_exec($curl);
-        curl_close($curl);
-            if($response){
-                $rec = json_decode($response);
-                $id = $rec->id;
-                return $id;
-            }
-                else{
-                echo "Error getting papers";
-                return array();
-            }
-
+    global $CFG;
+    $ch = curl_init();
+    $header = array(
+        "Authorization: Token $CFG->django_token"
+    );
+    $curl=curl_init();
+    curl_setopt($curl,CURLOPT_URL,$CFG->django_server."/timetable/faculty/search_by_mail/?email=$email");
+    curl_setopt($curl,CURLOPT_HTTPHEADER,$header);
+    curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
+    curl_setopt($curl,CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_1_1);
+    curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,false);
+    curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
+    $response=curl_exec($curl);
+    curl_close($curl);
+    if($response){
+        $rec = json_decode($response);
+        $id = $rec->id;
+        return $id;
+    }
+        else{
+        echo "Error getting papers";
+        return array();
+    }
 }
 
 function faculty_attendance_detail($id,$from,$to){
-        global $CFG;
-            $ch = curl_init();
-            $header = array(
-            'Authorization: Token 390aa78baf9ef435ec92427e1fea9323133f5ce9'
-            );
-            $curl=curl_init();
-            curl_setopt($curl,CURLOPT_URL,"http://192.168.1.19:8000/timetable/faculty/$id/attendance_details/?from=$from&to=$to");
-            curl_setopt($curl,CURLOPT_HTTPHEADER,$header);
-            curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
-            curl_setopt($curl,CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_1_1);
-            curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,false);
-            curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
-            $response=curl_exec($curl);
-            curl_close($curl);
-                if($response){
-                    $rec = json_decode($response);
-                  // print_r ($rec);
-                    return $rec;
-                }
-                    else{
-                    echo "Error getting papers";
-                    return array();
-                }
+    global $CFG;
+    $ch = curl_init();
+    $header = array(
+        "Authorization: Token $CFG->django_token"
+    );
+    $curl=curl_init();
+    curl_setopt($curl,CURLOPT_URL,$CFG->django_server."/timetable/faculty/$id/attendance_details/?from=$from&to=$to");
+    curl_setopt($curl,CURLOPT_HTTPHEADER,$header);
+    curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
+    curl_setopt($curl,CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_1_1);
+    curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,false);
+    curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
+    $response=curl_exec($curl);
+    curl_close($curl);
+    if($response){
+        $rec = json_decode($response);
+        // print_r ($rec);
+        return $rec;
+    }
+        else{
+        echo "Error getting papers";
+        return array();
+    }
 }

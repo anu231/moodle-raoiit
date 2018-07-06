@@ -19,15 +19,12 @@ class block_timetable_renderer extends plugin_renderer_base {
 
 class week implements renderable {
     public function __construct($batch=null, $faculty=null) {
-        //$this->days = $this->get_days_lectures();
-	//print_r($faculty);
         if ($batch != null){
             $this->days = $this->get_week_timetable($batch);
-
         } else if ($faculty != null){
-	    $this->days = $this->get_week_faculty_timetable($faculty);		
-	} 
-	else if ($batch==null) {
+	        $this->days = $this->get_week_faculty_timetable($faculty);		
+	    } 
+	    else if ($batch==null) {
             $this->days = $this->get_week_timetable();
         } 
     }
@@ -65,14 +62,10 @@ class week implements renderable {
         
     }
 	
-    private function get_week_faculty_timetable($faculty=null){
-	global $USER;
-	     $faculty_timetable = $this->get_week_start_end_dates();
-
-		 if ($faculty != null){
-			
-			return get_faculty_timetable($faculty_timetable['start_date'],$faculty_timetable['end_date'],null,$faculty);
-		} 
+    private function get_week_faculty_timetable($faculty){
+	    global $USER;
+	    $faculty_timetable = $this->get_week_start_end_dates();
+		return get_faculty_timetable($faculty_timetable['start_date'],$faculty_timetable['end_date'],$faculty);
 	}
 
     /*

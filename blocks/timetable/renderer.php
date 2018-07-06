@@ -3,8 +3,8 @@
 require_once('locallib.php');
 
 class block_timetable_renderer extends plugin_renderer_base {
-    public function week($batch=null) {
-        return $this->render(new week($batch));
+    public function week($batch=null, $faculty=null) {
+        return $this->render(new week($batch,$faculty));
     }
     public function render_week($context) {
         return $this->render_from_template('block_timetable/week', $context);
@@ -18,14 +18,18 @@ class block_timetable_renderer extends plugin_renderer_base {
 }
 
 class week implements renderable {
-    public function __construct($batch=null) {
+    public function __construct($batch=null, $faculty=null) {
         //$this->days = $this->get_days_lectures();
+	//print_r($faculty);
         if ($batch != null){
             $this->days = $this->get_week_timetable($batch);
-        } else {
+
+        } else if ($faculty != null){
+	    $this->days = $this->get_week_faculty_timetable($faculty);		
+	} 
+	else if ($batch==null) {
             $this->days = $this->get_week_timetable();
-        }
-        
+        } 
     }
     private $subj_map = array(
 		'p'=>'physics',
@@ -49,9 +53,10 @@ class week implements renderable {
         return array('start_date'=>$start_date,'end_date'=>$end_date);
     }
 
-    private function get_week_timetable($batch=null){
+     private function get_week_timetable($batch=null){
         global $USER;
         $dates = $this->get_week_start_end_dates();
+	
         if ($batch != null){
             return get_timetable($dates['start_date'],$dates['end_date'],null, $batch);
         } else {
@@ -59,6 +64,17 @@ class week implements renderable {
         }
         
     }
+	
+    private function get_week_faculty_timetable($faculty=null){
+	global $USER;
+	     $faculty_timetable = $this->get_week_start_end_dates();
+
+		 if ($faculty != null){
+			
+			return get_faculty_timetable($faculty_timetable['start_date'],$faculty_timetable['end_date'],null,$faculty);
+		} 
+	}
+
     /*
     private function get_days_lectures(){
         global $CFG;

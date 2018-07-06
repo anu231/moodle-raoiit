@@ -3,17 +3,16 @@ require_once('../../config.php');
 require_once('leaves_form.php');
 require_once('locallib.php');
 
-$PAGE->set_url('/blocks/leaverecord/apply_leaves.php');
+$PAGE->set_url('/blocks/leaverecord/edit_faculty_register.php');
 $PAGE->requires->js('/blocks/leaverecord/js/leaves.js');
 
-
     $PAGE->set_pagelayout('standard');
-    $PAGE->set_title('Apply Leaves for faculty');
-    $PAGE->set_heading('Apply Leaves for faculty');
+    $PAGE->set_title('Edit Faculty Register');
+    $PAGE->set_heading('Edit Faculty Register');
     echo $OUTPUT->header();
-    $heading="Apply Leaves for faculty";
+    $heading="Edit Faculty Register";
     echo $OUTPUT->heading($heading);
-    $mform = new leave_application_form();
+    $mform = new edit_faculty_register();
     if ($data = $mform->get_data()){
             $leave_application_form = new stdClass();
             $full_day = date('Y-m-d',$data->date); 

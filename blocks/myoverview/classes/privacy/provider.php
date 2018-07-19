@@ -27,11 +27,16 @@ namespace block_myoverview\privacy;
 defined('MOODLE_INTERNAL') || die();
 
 /**
+<<<<<<< HEAD
  * Privacy Subsystem for block_myoverview implementing null_provider.
+=======
+ * Privacy Subsystem for block_myoverview.
+>>>>>>> v3.5.1
  *
  * @copyright  2018 Zig Tan <zig@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+<<<<<<< HEAD
 class provider implements \core_privacy\local\metadata\null_provider {
 
     /**
@@ -42,5 +47,32 @@ class provider implements \core_privacy\local\metadata\null_provider {
      */
     public static function get_reason() : string {
         return 'privacy:metadata';
+=======
+class provider implements \core_privacy\local\metadata\provider, \core_privacy\local\request\user_preference_provider {
+
+    /**
+     * Returns meta-data information about the myoverview block.
+     *
+     * @param  \core_privacy\local\metadata\collection $collection A collection of meta-data.
+     * @return \core_privacy\local\metadata\collection Return the collection of meta-data.
+     */
+    public static function get_metadata(\core_privacy\local\metadata\collection $collection) :
+            \core_privacy\local\metadata\collection {
+        $collection->add_user_preference('block_myoverview_last_tab', 'privacy:metadata:overviewlasttab');
+        return $collection;
+    }
+
+    /**
+     * Export all user preferences for the myoverview block
+     *
+     * @param int $userid The userid of the user whose data is to be exported.
+     */
+    public static function export_user_preferences(int $userid) {
+        $preference = get_user_preferences('block_myoverview_last_tab', null, $userid);
+        if (isset($preference)) {
+            \core_privacy\local\request\writer::export_user_preference('block_myoverview', 'block_myoverview_last_tab',
+                    $preference, get_string('privacy:metadata:overviewlasttab', 'block_myoverview'));
+        }
+>>>>>>> v3.5.1
     }
 }

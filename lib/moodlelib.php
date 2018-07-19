@@ -115,8 +115,8 @@ define('PARAM_CAPABILITY',   'capability');
 
 /**
  * PARAM_CLEANHTML - cleans submitted HTML code. Note that you almost never want
- * to use this. The normal mode of operation is to use PARAM_RAW when recieving
- * the input (required/optional_param or formslib) and then sanitse the HTML
+ * to use this. The normal mode of operation is to use PARAM_RAW when receiving
+ * the input (required/optional_param or formslib) and then sanitise the HTML
  * using format_text on output. This is for the rare cases when you want to
  * sanitise the HTML on input. This cleaning may also fix xhtml strictness.
  */
@@ -442,7 +442,7 @@ define('FEATURE_USES_QUESTIONS', 'usesquestions');
 /**
  * Maximum filename char size
  */
-define('MAX_FILENAME_SIZE', 90);
+define('MAX_FILENAME_SIZE', 100);
 
 /** Unspecified module archetype */
 define('MOD_ARCHETYPE_OTHER', 0);
@@ -3020,6 +3020,10 @@ function require_course_login($courseorid, $autologinguest = true, $cm = null, $
         // Always login for hidden activities.
         require_login($courseorid, $autologinguest, $cm, $setwantsurltome, $preventredirect);
 
+    } else if (isloggedin() && !isguestuser()) {
+        // User is already logged in. Make sure the login is complete (user is fully setup, policies agreed).
+        require_login($courseorid, $autologinguest, $cm, $setwantsurltome, $preventredirect);
+
     } else if ($issite) {
         // Login for SITE not required.
         // We still need to instatiate PAGE vars properly so that things that rely on it like navigation function correctly.
@@ -3687,6 +3691,9 @@ function get_user_field_name($field) {
         case 'msn' : {
             return get_string('msnid');
         }
+        case 'picture' : {
+            return get_string('pictureofuser');
+        }
     }
     // Otherwise just use the same lang string.
     return get_string($field);
@@ -4068,9 +4075,6 @@ function delete_user(stdClass $user) {
     // Delete all grades - backup is kept in grade_grades_history table.
     grade_user_delete($user->id);
 
-    // Move unread messages from this user to read.
-    message_move_userfrom_unread2read($user->id);
-
     // TODO: remove from cohorts using standard API here.
 
     // Remove user tags.
@@ -4425,7 +4429,7 @@ function authenticate_user_login($username, $password, $ignorelockout=false, &$f
  * @return stdClass A {@link $USER} object - BC only, do not use
  */
 function complete_user_login($user) {
-    global $CFG, $USER, $SESSION;
+    global $CFG, $DB, $USER, $SESSION;
 
     \core\session\manager::login_user($user);
 
@@ -4448,6 +4452,16 @@ function complete_user_login($user) {
         )
     );
     $event->trigger();
+
+    // Queue migrating the messaging data, if we need to.
+    if (!get_user_preferences('core_message_migrate_data', false, $USER->id)) {
+        // Check if there are any legacy messages to migrate.
+        if (\core_message\helper::legacy_messages_exist($USER->id)) {
+            \core_message\task\migrate_message_data::queue_task($USER->id);
+        } else {
+            set_user_preference('core_message_migrate_data', true, $USER->id);
+        }
+    }
 
     if (isguestuser()) {
         // No need to continue when user is THE guest.
@@ -4711,6 +4725,14 @@ function get_complete_user_data($field, $value, $mnethostid = null) {
                 }
                 $user->groupmember[$group->courseid][$group->id] = $group->id;
             }
+        }
+    }
+
+    // Add cohort theme.
+    if (!empty($CFG->allowcohortthemes)) {
+        require_once($CFG->dirroot . '/cohort/lib.php');
+        if ($cohorttheme = cohort_get_user_cohort_theme($user->id)) {
+            $user->cohorttheme = $cohorttheme;
         }
     }
 
@@ -6824,7 +6846,6 @@ function clean_filename($string) {
     return clean_param($string, PARAM_FILE);
 }
 
-
 // STRING TRANSLATION.
 
 /**
@@ -8269,6 +8290,54 @@ function shorten_text($text, $ideal=30, $exact = false, $ending='...') {
     return $truncate;
 }
 
+/**
+ * Shortens a given filename by removing characters positioned after the ideal string length.
+ * When the filename is too long, the file cannot be created on the filesystem due to exceeding max byte size.
+ * Limiting the filename to a certain size (considering multibyte characters) will prevent this.
+ *
+ * @param string $filename file name
+ * @param int $length ideal string length
+ * @param bool $includehash Whether to include a file hash in the shortened version. This ensures uniqueness.
+ * @return string $shortened shortened file name
+ */
+function shorten_filename($filename, $length = MAX_FILENAME_SIZE, $includehash = false) {
+    $shortened = $filename;
+    // Extract a part of the filename if it's char size exceeds the ideal string length.
+    if (core_text::strlen($filename) > $length) {
+        // Exclude extension if present in filename.
+        $mimetypes = get_mimetypes_array();
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        if ($extension && !empty($mimetypes[$extension])) {
+            $basename = pathinfo($filename, PATHINFO_FILENAME);
+            $hash = empty($includehash) ? '' : ' - ' . substr(sha1($basename), 0, 10);
+            $shortened = core_text::substr($basename, 0, $length - strlen($hash)) . $hash;
+            $shortened .= '.' . $extension;
+        } else {
+            $hash = empty($includehash) ? '' : ' - ' . substr(sha1($filename), 0, 10);
+            $shortened = core_text::substr($filename, 0, $length - strlen($hash)) . $hash;
+        }
+    }
+    return $shortened;
+}
+
+/**
+ * Shortens a given array of filenames by removing characters positioned after the ideal string length.
+ *
+ * @param array $path The paths to reduce the length.
+ * @param int $length Ideal string length
+ * @param bool $includehash Whether to include a file hash in the shortened version. This ensures uniqueness.
+ * @return array $result Shortened paths in array.
+ */
+function shorten_filenames(array $path, $length = MAX_FILENAME_SIZE, $includehash = false) {
+    $result = null;
+
+    $result = array_reduce($path, function($carry, $singlepath) use ($length, $includehash) {
+        $carry[] = shorten_filename($singlepath, $length, $includehash);
+        return $carry;
+    }, []);
+
+    return $result;
+}
 
 /**
  * Given dates in seconds, how many weeks is the date from startdate
@@ -9223,8 +9292,8 @@ function get_performance_info() {
                     $mode = ' <span title="request cache">[r]</span>';
                     break;
             }
-            $html .= '<ul class="cache-definition-stats list-unstyled m-l-1 cache-mode-'.$modeclass.' card d-inline-block">';
-            $html .= '<li class="cache-definition-stats-heading p-t-1 card-header bg-inverse font-weight-bold">' .
+            $html .= '<ul class="cache-definition-stats list-unstyled m-l-1 m-b-1 cache-mode-'.$modeclass.' card d-inline-block">';
+            $html .= '<li class="cache-definition-stats-heading p-t-1 card-header bg-dark bg-inverse font-weight-bold">' .
                 $definition . $mode.'</li>';
             $text .= "$definition {";
             foreach ($details['stores'] as $store => $data) {

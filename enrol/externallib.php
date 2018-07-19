@@ -840,7 +840,7 @@ class core_enrol_external extends external_api {
     public static function edit_user_enrolment($courseid, $ueid, $status, $timestart = 0, $timeend = 0) {
         global $CFG, $DB, $PAGE;
 
-        $params = self::validate_parameters(self::edit_user_enrolment_parameters(), [
+        $params = self::validate_parameters(self::edienrol_manual_enrol_userst_user_enrolment_parameters(), [
             'courseid' => $courseid,
             'ueid' => $ueid,
             'status' => $status,

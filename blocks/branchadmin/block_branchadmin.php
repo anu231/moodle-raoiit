@@ -17,12 +17,18 @@ class block_branchadmin extends block_list {
         $student_attendance = new moodle_url('/blocks/branchadmin/mark_attendance.php', array('blockid' => $this->instance->id));
         $student_birthday = new moodle_url('/blocks/branchadmin/todays_birthday.php', array('blockid' => $this->instance->id));
         $branch_timetable_url = new moodle_url('/blocks/branchadmin/branch_timetable.php', array('blockid' => $this->instance->id));
+        $request_timetable = new moodle_url('/blocks/branchadmin/request_timetable.php', array('blockid' => $this->instance->id));
         $sms_url = new moodle_url('/blocks/branchadmin/send_sms.php', array('blockid' => $this->instance->id));
+        $send_email = new moodle_url('/blocks/branchadmin/send_email.php', array('blockid' => $this->instance->id));
+        $biometric_record = new moodle_url('/blocks/branchadmin/biometric_records.php', array('blockid' => $this->instance->id));
         $this->content->items[0] = html_writer::link($student_view_url,"View Branch Students");
         $this->content->items[1] = html_writer::link($branch_timetable_url,"View Branch Timetable");
-        //$this->content->items[1] = html_writer::link($sms_url,"Send SMS to students");
         $this->content->items[2] = html_writer::link($student_attendance,"Mark Student Absent");
         $this->content->items[3] = html_writer::link($student_birthday,"Today's Birthday at Center");
+        $this->content->items[4] = html_writer::link($request_timetable,"Timetable Request");
+        $this->content->items[5] = html_writer::link($sms_url,"SMS URL");
+        $this->content->items[6] = html_writer::link($send_email,"Send Email");
+        $this->content->items[7] = html_writer::link($biometric_record,"Biometric Record");
         return $this->content;
     }
 

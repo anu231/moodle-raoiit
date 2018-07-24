@@ -23,8 +23,8 @@ if (is_siteadmin() || is_secondary_user()){
         $book_record->price   = $data->price;
         $book_record->barcode    = $data->barcode;
         $book_record->branch    = $data->branch;
-        $book_record->purchasedate    = $data->purchasedate;
-        $book_record->branchissuedate    = $data->branchissuedate;
+        $book_record->purchasedate    =  date('Y-m-d',$data->purchasedate);
+        $book_record->branchissuedate    = date('Y-m-d',$data->branchissuedate);
         $book_record->issued    = 0;
         $book_record->remark    = "Available";
         $book_record->status    = $data->status;

@@ -1,0 +1,126 @@
+
+<table class="view_student_list_table_td_th view_student_list_table" width="100%">
+        <thead>
+            <tr>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" colspan="10">Leave Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td">Off</td>
+                <td class="view_student_list_th view_student_list_table_td_td">Came Late</td>
+                <td class="view_student_list_th view_student_list_table_td_td">Absent</td>
+                <td class="view_student_list_th view_student_list_table_td_td">Earn Leave</td>
+                <td class="view_student_list_th view_student_list_table_td_td">Left Early</td>
+                 <td class="view_student_list_th view_student_list_table_td_td">Weekoff</td>
+                <td class="view_student_list_th view_student_list_table_td_td">Working Days</td>
+                <td class="view_student_list_th view_student_list_table_td_td">LWP</td>
+                <td class="view_student_list_th view_student_list_table_td_td">Late</td>
+                <td class="view_student_list_th view_student_list_table_td_td">Present</td>
+            </tr>
+    {{#attendance_data}}
+            <tr>
+            {{#summary}}
+                <td class="view_student_list_th view_student_list_table_td_td"><b>{{off}}</b></td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{came_late}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{abs}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{EL}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{left_early}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{weekoff}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{working_days}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{lwp}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{late}}</td>
+                <td class="view_student_list_th view_student_list_table_td_td">{{present}}</td>
+            {{/summary}}
+            </tr> 
+    {{/attendance_data}}
+  </tbody>
+    </table>
+<br/>
+
+    <table class="view_student_list_table_td_th view_student_list_table" width="100%">
+        <thead>
+            <tr>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg" colspan="4">Attendance  Summary</th>
+            </tr>
+            <tr>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg"><img src="pix/date.png" style="width:25px; height:25px; margin-bottom:5px;" />&nbsp;DATE</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg"><img src="pix/biometric.png" style="width:30px; height:30px;" />&nbsp;BIOMETRIC</th>
+                <th class="view_student_list_th view_student_list_table_td_th view_bg"><img src="pix/timetable.png" style="width:25px; height:25px;" />&nbsp;TIMETABLE</th>
+                 <th class="view_student_list_th view_student_list_table_td_th view_bg"><img src="pix/status.png" style="width:20px; height:20px;" />&nbsp;STATUS</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+        {{#attendance_data}}
+            {{#web}}
+            <tr>
+                <td class="view_student_list_th view_student_list_table_td_td">{{date}}</td>
+                 <td class="view_student_list_th view_student_list_table_td_td">
+                    
+                    {{#biometric}}
+                             <ul>
+                             {{#.}}
+                                    <li class="list_class">{{.}}</li>
+                             {{/.}}
+                            </ul>
+                    {{/biometric}}
+
+                 
+                 
+                </td>
+                
+                <td class="view_student_list_th view_student_list_table_td_td">
+                    {{#timetable}}
+                            <ul>
+                             {{#.}}
+                                    <li class="list_class">{{.}}</li>
+                             {{/.}}
+                            </ul>
+                    {{/timetable}}
+                </td>
+
+                 <td class="view_student_list_th view_student_list_table_td_td">
+                    {{#status}}
+                            <ul>
+                             {{#.}}
+                                <li class="list_class">{{.}}</li>
+                             {{/.}}
+                            </ul>
+                    {{/status}}
+
+                    
+                </td>
+               
+            </tr>
+            {{/web}}
+
+            {{^web}} <tr><td colspan="4">No Data Found</td></tr>{{/web}}
+        {{/attendance_data}}
+        
+  
+ </tbody>
+    </table>
+
+
+
+
+
+<style>
+   .view_student_list_table_td_th {
+   border: 1px solid #eee; 
+   }
+   .view_student_list_table {
+   border-collapse: collapse;
+   width: 100%; text-align: center;
+   }
+    .view_student_list_table_td_td {
+   border: 1px solid #ccc; 
+   }
+   .view_bg{ background:#21409a; color:#fff;}
+   h6{color:#21409a;}
+   
+.square{background:#21409a; height:10px; width:10px;}
+.index-header{font-size:12px;}
+/*.list_class{list-style-type: circle;}*/
+</style>

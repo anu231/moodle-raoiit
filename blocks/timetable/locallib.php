@@ -24,15 +24,7 @@ function x_week_range(&$start_date, &$end_date, $date) {
 
 function connect_analysis_db(){
     global $CFG;
-    //mysql_connect($CFG->analysis_host,$CFG->analysi_db_user,$CFG->analysis_db_pass)or die(mysql_error());
-    //mysql_select_db($CFG->analysis_db) or die(mysql_error());
     $link = new mysqli($CFG->analysis_db_host,$CFG->analysis_db_user,$CFG->analysis_db_password,$CFG->analysis_db_name);
-    /*if (!$link) {
-        echo "Error: Unable to connect to MySQL." . PHP_EOL;
-        echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
-        echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
-        exit;
-    }*/
     return $link;
 }
 
@@ -140,9 +132,65 @@ function get_timetable($start_date,$end_date,$user=null,$batchids=null){
         }
         array_push($processed_lectures[$days_added_map[$tmp['fancydate']]]['items'],$tmp);
     }
+    //print_r($processed_lectures);
     close_analysis_db($link);
     return $processed_lectures;
 }
+
+// get faculty timetable //
+function get_faculty_timetable($start_date,$end_date,$faculty){
+    $link = connect_analysis_db();
+    
+  $qry = "SELECT S.sid,S.batchid, S.lecturenum, S.testnum, S.date, S.from, S.to, S.facultyid, S.event, S.iscancel, S.istest, B.centreid, B.targetyear, B.batch, B.name AS batchname, C.name AS centrename, T.targetyear, T.batch, T.name AS classname, F.id AS ffid, F.name AS facultyname, F.shortname, F.type as facultytype, F.subject, Z.name as topicname, Y.type AS testtype FROM schedule AS S, ttbatches AS B, centreinfo AS C, classes AS T, facultyinfo AS F, topics AS Z, testtypes AS Y WHERE S.batchid=B.id AND B.centreid=C.id AND T.targetyear=B.targetyear AND T.batch=B.batch AND S.facultyid=F.id AND S.topicid=Z.id AND S.testtype=Y.id AND `date` >= '$start_date' AND `date` <= '$end_date' AND S.facultyid=$faculty->empid ORDER BY `date`, `from`";
+    $res = $link->query($qry);
+
+    if (!$res){
+        return false;
+    }
+    $processed_lectures = array();
+    $index = 0;
+    $days_added_map = array();
+    while($lecture = $res->fetch_assoc()){
+        //$day = array();
+        //foreach($lectures as $lecture){
+        $tmp = array();
+        $tmp['sid'] = $lecture['sid'];
+        $tmp['fancydate'] = date('Y-m-d, D',strtotime($lecture['date']));
+        //$tmp['date'] = "{$lecture['d']}-{$lecture['m']}-{$lecture['y']}";
+        $tmp['starttime'] = date('H:i',strtotime($lecture['from']));//$lecture['sh'].':'.$lecture['sm'];
+        $tmp['endtime'] = date('H:i',strtotime($lecture['to']));//$lecture['eh'].':'.$lecture['em'];
+        //$tmp['teacher'] = isset($lecture['sn']) ? $lecture['sn'] : '';
+        $tmp['istest'] = $lecture['istest'];//web service
+        if ($lecture['istest']=='0'){
+            //$tmp['teacher'] = $lecture['shortname'];
+            $tmp['subject'] = get_subject_name($lecture['subject']);
+            $tmp['topicname'] = $lecture['topicname'];
+            $tmp['notes'] = $lecture['event'];
+        } else{
+            $tmp['notes'] = $lecture['testtype'].'-'.$lecture['testnum'].' '.$lecture['event'];
+            //entering null values for the purpose of web service
+            $tmp['teacher'] = '';
+            $tmp['subject'] = '';
+            $tmp['topicname'] = '';
+        }
+        $tmp['cancelclass'] = $lecture['iscancel'] == '1' ? 'cancelled' : '';
+        $tmp['batch'] = $lecture['centrename'].' - '.$lecture['batchname'];
+        if (!array_key_exists($tmp['fancydate'],$days_added_map)){
+            $days_added_map[$tmp['fancydate']] = $index;
+            $processed_lectures[$index] = array();
+            $processed_lectures[$index]['items'] = array();
+            $processed_lectures[$index]['fancydate'] = $tmp['fancydate'];
+            $index++;
+        }
+        array_push($processed_lectures[$days_added_map[$tmp['fancydate']]]['items'],$tmp);
+    }
+
+    close_analysis_db($link);
+    return $processed_lectures;
+}
+
+// 
+
 
 function get_week_start_end_dates(){
     date_default_timezone_set("Asia/Calcutta");
@@ -163,6 +211,7 @@ function get_week_timetable(){
     $dates = get_week_start_end_dates();
     return get_timetable($dates['start_date'],$dates['end_date'],$USER->username);
 }
+
 
 function get_completed_topics($username){
     $link = connect_analysis_db();

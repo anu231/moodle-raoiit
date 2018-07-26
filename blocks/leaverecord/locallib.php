@@ -5,14 +5,14 @@ function send_leave_request($data){
     $header = array(
         "Authorization: Token $CFG->django_token"
     );
-    $fp = fopen(dirname(__FILE__).'/errorlog.txt', 'a');
+    //$fp = fopen(dirname(__FILE__).'/errorlog.txt', 'a');
     curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
     curl_setopt($ch, CURLOPT_URL, $CFG->django_server.'timetable/leaves/apply/'); //set the url
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); //return as a variable
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    curl_setopt($ch, CURLOPT_VERBOSE, 1);
-    curl_setopt($ch, CURLOPT_STDERR, $fp);
+    //curl_setopt($ch, CURLOPT_VERBOSE, 1);
+    //curl_setopt($ch, CURLOPT_STDERR, $fp);
     $response = curl_exec($ch); //run the whole process and return the response
     if($errno = curl_errno($ch)) {
         $error_message = curl_strerror($errno);

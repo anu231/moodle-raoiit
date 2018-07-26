@@ -5,20 +5,31 @@ function send_leave_request($data){
     $header = array(
         "Authorization: Token $CFG->django_token"
     );
+    $fp = fopen(dirname(__FILE__).'/errorlog.txt', 'a');
     curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-    curl_setopt($ch, CURLOPT_URL, $CFG->django_server.'/leaves/apply/'); //set the url
+    curl_setopt($ch, CURLOPT_URL, $CFG->django_server.'timetable/leaves/apply/'); //set the url
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); //return as a variable
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_VERBOSE, 1);
+    curl_setopt($ch, CURLOPT_STDERR, $fp);
     $response = curl_exec($ch); //run the whole process and return the response
-    curl_close($ch); //close the curl handle
-    if( $response )
+    if($errno = curl_errno($ch)) {
+        $error_message = curl_strerror($errno);
+        curl_close($ch); //close the curl handle
+        return "cURL error ({$errno}):\n {$error_message}";
+    }else {
+        curl_close($ch); //close the curl handle
         return json_decode($response);
-    else{
-        echo "Error getting papers";
-        return array();
     }
-
+    /*
+    if( $response )
+    else{
+        if($errno = curl_errno($ch)) {
+            $error_message = curl_strerror($errno);
+            return "cURL error ({$errno}):\n {$error_message}";
+        }
+    }*/
 }
 
 function apply_leave($date, $reason, $is_half_day = False){
@@ -32,7 +43,7 @@ function apply_leave($date, $reason, $is_half_day = False){
         $leave_data['type'] = 'F';
     }
     $leave_data['user'] = $USER->email;
-    $ret = send_leave_request($leave_data);
+    return send_leave_request($leave_data);
 }
 
 // Multiple days //
@@ -44,7 +55,7 @@ function md_leave($sdate, $edate, $reason){
     $leave_data['edate'] = $edate;
     $leave_data['reason'] = $reason;
     $leave_data['user'] = $USER->email;
-    $ret = send_leave_request($leave_data);
+    return send_leave_request($leave_data);
 }
 
 // Multiple days //
@@ -58,8 +69,7 @@ function apply_od($date, $reason, $stime, $etime){
     $leave_data['start_time'] = $stime;
     $leave_data['end_time'] = $etime;
     $leave_data['user'] = $USER->email;
-    $ret = send_leave_request($leave_data);
-   
+    return send_leave_request($leave_data);
 }
 
 

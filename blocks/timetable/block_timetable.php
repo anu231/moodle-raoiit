@@ -14,17 +14,25 @@ class block_timetable extends block_base {
     }
 
     public function get_content() {
-		global $CFG, $PAGE,$COURSE;
+		global $CFG, $PAGE, $USER, $DB;
 	    if ($this->content !== null) {
 	        return $this->content;
         }
         global $COURSE;
         $this->content_type = BLOCK_TYPE_TEXT;
         $this->content =  new stdClass;
-	    $this->content->text   = $this->render_today_timetable();
-	    $this->content->footer = "<a href='$CFG->wwwroot/blocks/timetable/view.php'>View Week Timetable</a>".
+        //get the user full details
+        $user = $DB->get_record('user',array('id'=>$USER->id));
+        if (strpos($user->idnumber,'faculty') === False){
+            $this->content->text   = $this->render_today_timetable();
+            $this->content->footer = "<a href='$CFG->wwwroot/blocks/timetable/view.php'>View Week Timetable</a>".
                                 "<link rel='stylesheet' href='$CFG->wwwroot/blocks/timetable/templates/css/block.css'>";
-        $this->content->footer .= "<br><a href='$CFG->wwwroot/blocks/timetable/batch_report.php'>View Batch Report</a>";
+            $this->content->footer .= "<br><a href='$CFG->wwwroot/blocks/timetable/batch_report.php'>View Batch Report</a>";
+        }else {
+            $this->content->footer = "<a href='$CFG->wwwroot/blocks/timetable/faculty_timetable.php'>View Week Timetable</a>".
+                                "<link rel='stylesheet' href='$CFG->wwwroot/blocks/timetable/templates/css/block.css'>";
+        }
+        
 		//$PAGE->requires->js( new moodle_url($CFG->wwwroot . '/blocks/timetable/templates/js/ttblock.js') );
 	    return $this->content;
 	}
@@ -84,7 +92,6 @@ class block_timetable extends block_base {
                 "</ul>".
                 "<hr>".
                 '<input type="hidden" id="tturl" value="'.$CFG->timetable_url.$_SESSION['USER']->username.'">';
-        // $url = 'http://192.168.1.161/moodle/timetable.php?id='.$_SESSION['USER']->username; // TODO Remove
     }
  
 

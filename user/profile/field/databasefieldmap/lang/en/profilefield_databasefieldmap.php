@@ -23,7 +23,9 @@
  */
 
 
-defined('MOODLE_INTERNAL') || die();
-$plugin->version  = 2018051400;
-$plugin->requires = 2018050800;
-$plugin->component = 'profilefield_databasefieldmaps';
+$string['pluginname'] = 'Database Field Map';
+/*$string['privacy:metadata:profilefield_checkbox:userid'] = 'The ID of the user which data is stored by the Checkbox plugin.';
+$string['privacy:metadata:profilefield_checkbox:fieldid'] = 'The ID of the profile field.';
+$string['privacy:metadata:profilefield_checkbox:data'] = 'The stored user data.';
+$string['privacy:metadata:profilefield_checkbox:dataformat'] = 'The format of the stored user data.';
+$string['privacy:metadata:profilefield_checkbox:tableexplanation'] = 'Additional user information is stored here.';*/

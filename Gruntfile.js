@@ -345,7 +345,7 @@ module.exports = function(grunt) {
             // Run them all!.
             grunt.task.run('css');
             grunt.task.run('js');
-            grunt.task.run('gherkinlint');
+            //grunt.task.run('gherkinlint');
         }
     };
 
@@ -382,11 +382,12 @@ module.exports = function(grunt) {
     grunt.registerTask('gherkinlint', 'Run gherkinlint against the current directory', tasks.gherkinlint);
     grunt.registerTask('ignorefiles', 'Generate ignore files for linters', tasks.ignorefiles);
     grunt.registerTask('yui', ['eslint:yui', 'shifter']);
-    grunt.registerTask('amd', ['eslint:amd', 'uglify']);
+    //grunt.registerTask('amd', ['eslint:amd', 'uglify']);
+    grunt.registerTask('amd', ['uglify']);
     grunt.registerTask('js', ['amd', 'yui']);
 
     // Register CSS taks.
-    grunt.registerTask('css', ['stylelint:scss', 'sass', 'stylelint:less', 'less:bootstrapbase', 'stylelint:css']);
+    grunt.registerTask('css', ['stylelint:scss', 'sass', 'stylelint:less', 'less:bootstrapbase']);//, 'stylelint:css']);
 
     // Register the startup task.
     grunt.registerTask('startup', 'Run the correct tasks for the current directory', tasks.startup);

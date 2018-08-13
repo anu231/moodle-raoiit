@@ -27,27 +27,11 @@ namespace block_myoverview\privacy;
 defined('MOODLE_INTERNAL') || die();
 
 /**
-<<<<<<< HEAD
- * Privacy Subsystem for block_myoverview implementing null_provider.
-=======
  * Privacy Subsystem for block_myoverview.
->>>>>>> v3.5.1
  *
  * @copyright  2018 Zig Tan <zig@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-<<<<<<< HEAD
-class provider implements \core_privacy\local\metadata\null_provider {
-
-    /**
-     * Get the language string identifier with the component's language
-     * file to explain why this plugin stores no data.
-     *
-     * @return  string
-     */
-    public static function get_reason() : string {
-        return 'privacy:metadata';
-=======
 class provider implements \core_privacy\local\metadata\provider, \core_privacy\local\request\user_preference_provider {
 
     /**
@@ -73,6 +57,5 @@ class provider implements \core_privacy\local\metadata\provider, \core_privacy\l
             \core_privacy\local\request\writer::export_user_preference('block_myoverview', 'block_myoverview_last_tab',
                     $preference, get_string('privacy:metadata:overviewlasttab', 'block_myoverview'));
         }
->>>>>>> v3.5.1
     }
 }

@@ -15,6 +15,7 @@ class block_readytohelp extends block_list {
         $this->content->items = array();
         $this->content->icons  = array();
         $this->content->items[] = array();
+        require_once("$CFG->dirroot/local/raomanager/lib.php");
         if(local_raomanager_has_permission('ReadyToHelp')){
                 $this->content->items[0] = html_writer::tag('a','Review Responses',
                     array('href'=>"$CFG->wwwroot/blocks/readytohelp/review_response.php?cid=$COURSE->id"));

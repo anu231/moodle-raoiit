@@ -36,11 +36,8 @@ function xmldb_logstore_database_upgrade($oldversion) {
     // Automatically generated Moodle v3.4.0 release upgrade line.
     // Put any upgrade step following this.
 
-<<<<<<< HEAD
-=======
     // Automatically generated Moodle v3.5.0 release upgrade line.
     // Put any upgrade step following this.
 
->>>>>>> v3.5.1
     return true;
 }

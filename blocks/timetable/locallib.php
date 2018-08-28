@@ -214,8 +214,19 @@ function get_week_timetable(){
 
 
 function get_completed_topics($username){
+    global $CFG;
     $link = connect_analysis_db();
-    $qry = "select top.subject as subj, top.name as topicname from schedule as sch join topics as top join (select ttbatchid as ttbatchid from userinfo where userid=".$username.") as user on sch.topicid=top.id and user.ttbatchid=sch.batchid where sch.topicover=1 order by sch.date asc";
+    //get the batchid for student
+    require_once("$CFG->dirroot/lib/raolib.php");
+    $batch = get_rao_user_profile_fields(array('batch'));
+    $batch=$batch['batch'];
+    $qry = <<<SQL
+    select top.subject as subj, top.name as topicname from 
+    schedule as sch 
+    join topics as top
+    on sch.topicid=top.id
+    where sch.batchid=$batch and sch.topicover=1 order by sch.date asc
+SQL;
     $res = $link->query($qry);
     if (!$res){
         return false;
@@ -236,14 +247,17 @@ function get_completed_topics($username){
 }
 
 function get_ptm_records($username){
+    global $CFG;
     $link = connect_analysis_db();
+    require_once("$CFG->dirroot/lib/raolib.php");
+    $center = get_rao_user_profile_fields(array('center'));
+    $center=$center['center'];
     $qry = <<<SQL
     select sch.date as date, sch.event as event 
-    from schedule as sch 
-    join (select centre as centre from userinfo where userid=$username) as user 
-    join (select id, centreid from ttbatches where name like 'Student Improvement Session') as tt
-    on user.centre = tt.centreid and sch.batchid = tt.id
-    where sch.event like '%PTM%' order by sch.date asc; 
+    from schedule as sch
+    join (select id, centreid from ttbatches where name like '%Student Improvement Session%') as tt
+    on sch.batchid = tt.id
+    where tt.centreid=$center and sch.event like '%PTM%' order by sch.date asc; 
 SQL;
     $res = $link->query($qry);
     if (!$res){

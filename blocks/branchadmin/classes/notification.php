@@ -2,6 +2,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/blocks/branchadmin/locallib.php');
+require_once($CFG->dirroot.'/vendor/autoload.php');
 
 class block_branchadmin_notification extends \core\task\adhoc_task {
     public function execute(){

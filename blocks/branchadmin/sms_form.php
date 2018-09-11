@@ -58,7 +58,7 @@ class branchadmin_batch_students_form extends moodleform {
         $mform->setType('sms',PARAM_TEXT);
         $mform->addElement('hidden','batch',$this->_customdata['batch']);
         $mform->setType('batch',PARAM_INT);
-        $this->add_action_buttons($submitlabel='Send SMS to selected Students');
+        $this->add_action_buttons($cancel=True, $submitlabel='Send SMS to selected Students');
     }
 
     function validation($data, $files){

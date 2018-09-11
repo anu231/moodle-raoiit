@@ -23,7 +23,7 @@ class add_books_form extends moodleform {
         $mform->setType('author', PARAM_TEXT);
         $mform->addElement('text', 'price', get_string('price', 'block_library'),'required');
         $mform->setType('price', PARAM_INT);
-        $mform->addElement('text', 'barcode', get_string('barcode', 'block_library'),'required','maxlength="13"');
+        $mform->addElement('text', 'barcode', get_string('barcode', 'block_library'),'','maxlength="13"');
         $mform->setType('barcode', PARAM_INT);
         $center_list = convert_std_to_array(get_centers());
         $mform->addElement('select', 'branch', get_string('branch', 'block_library'), $center_list);

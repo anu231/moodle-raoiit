@@ -22,7 +22,7 @@ class block_library_renderer extends plugin_renderer_base {
         $data['books'] = $page->export_for_template($this);
         return $this->render_from_template('block_library/available_books', $data);
     }
-
+    
     public function render_view_fine_books($page){
         $data = array();
         $data['fine_books'] = $page->export_for_template($this);
@@ -62,6 +62,21 @@ class block_library_renderer extends plugin_renderer_base {
         $data = array();
         $data['issued_books'] = $page->export_for_template($this);
         return $this->render_from_template('block_library/view_all_issued_books', $data);
+    }
+    public function render_view_pending_books($page){
+        $data = array();
+        $data['pending_books'] = $page->export_for_template($this);
+        return $this->render_from_template('block_library/view_pending_books', $data);
+    }
+    public function render_view_all_books_siteadmin($page){
+        $data = array();
+        $data['view_all_books'] = $page->export_for_template($this);
+        return $this->render_from_template('block_library/view_all_books_siteadmin', $data);
+    }
+    public function render_view_all_delete_books($page){
+        $data = array();
+        $data['books'] = $page->export_for_template($this);
+        return $this->render_from_template('block_library/delete_books', $data);
     }
     
 }
@@ -110,7 +125,7 @@ class view_available_books implements renderable, templatable {
               bm.name as name, bm.subject as subject,bm.publisher as publisher, bm.volume as volume, bm.author as author, bm.price as price, bm.remark as book_remark,
               issue_rec.student_username as student, issue_rec.id as issue_id, issue_rec.issue_date as issue_date, issue_rec.return_date as return_date
        from {lib_bookmaster} as bm left outer join (select * from {lib_issue_record} where status=0) as issue_rec on bm.id=issue_rec.bookid
-       where bm.branch=?
+       where bm.branch=? AND bm.status =1 GROUP BY bm.bookid ORDER BY book_id ASC
 SQL;
        $book_records = $DB->get_records_sql($book_records_sql, array($center_id));
        
@@ -405,3 +420,80 @@ SQL;
         return $data;
     }
 }
+
+// Approval Uploaded Books //
+
+class view_pending_books implements renderable, templatable {
+    private function get_all_pending_books(){
+        global $USER, $DB;
+
+        $sql = <<<SQL
+        select  book.id,book.name,book.subject,book.volume,book.publisher,book.author,book.price,book.barcode,book.branch,book.purchasedate,book.branchissuedate,book.issued,rcenters.name as rcentername
+        from {lib_bookmaster} as book join {raomanager_centers} as rcenters
+        on rcenters.id=book.branch where book.status = -2 and book.is_scanned = 0 ORDER BY rcentername, book.subject ASC;
+SQL;
+        $records = $DB->get_records_sql($sql);
+        //
+        $record_books_array = array();
+        foreach($records as $entry){
+            $record_books_array[] = $entry;
+        }
+        return $record_books_array;
+    }
+
+    public function export_for_template(renderer_base $output){
+        $data = $this->get_all_pending_books();
+        return $data;
+    }
+}
+
+// All Books in Library show //
+
+class view_all_books_siteadmin implements renderable, templatable {
+    private function get_all_books_siteadmin(){
+        global $USER, $DB;
+
+        $sql = <<<SQL
+        select  book.id,book.name,book.bookid,book.status,book.subject,book.volume,book.publisher,book.author,book.price,book.barcode,book.branch,book.purchasedate,book.branchissuedate,book.issued,rcenters.name as rcentername
+        from {lib_bookmaster} as book join {raomanager_centers} as rcenters
+        on rcenters.id=book.branch ORDER BY rcentername, book.subject ASC;
+SQL;
+        $records = $DB->get_records_sql($sql);
+        //
+        $record_books_array = array();
+        foreach($records as $entry){
+            $record_books_array[] = $entry;
+        }
+        return $record_books_array;
+    }
+
+    public function export_for_template(renderer_base $output){
+        $data = $this->get_all_books_siteadmin();
+        return $data;
+    }
+}
+
+//books to be deleted //
+
+class view_all_delete_books implements renderable, templatable {
+    private function get_deletet_book_record(){
+        global $USER, $DB;
+        $sql = <<<SQL
+        select * from {lib_bookmaster} WHERE status = 1 GROUP BY bookid;
+SQL;
+        $records = $DB->get_records_sql($sql);
+        //
+        $record_books_array = array();
+        foreach($records as $entry){
+            $record_books_array[] = $entry;
+        }
+        return $record_books_array;
+    }
+
+    public function export_for_template(renderer_base $output){
+        $data = $this->get_deletet_book_record();
+        return $data;
+    }
+}
+
+

@@ -17,6 +17,8 @@ class block_library extends block_list {
         $this->content->items = array();
         //$course_active = get_config('library','manager_course');
         if (is_siteadmin() || is_secondary_user()){
+            $books_siteadmin = new moodle_url('/blocks/library/view_books_siteadmin.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
+            $this->content->items[] = html_writer::link($books_siteadmin,"All Branches Books");
             $books_add_url = new moodle_url('/blocks/library/add_books.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
             $this->content->items[] = html_writer::link($books_add_url,"Add Books");
             $total_fine_url = new moodle_url('/blocks/library/view_total_fine.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
@@ -29,6 +31,10 @@ class block_library extends block_list {
             $this->content->items[] = html_writer::link($deleted_fine,"Deleted Fine");
             $issued_books = new moodle_url('/blocks/library/all_issued_books.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
             $this->content->items[] = html_writer::link($issued_books,"All Issued Books1");
+            $pending_books = new moodle_url('/blocks/library/pending_books.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
+            $this->content->items[] = html_writer::link($pending_books,"All Pending Books (Branch Uploaded)");
+            $books_to_be_deleted = new moodle_url('/blocks/library/delete_books.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
+            $this->content->items[] = html_writer::link($books_to_be_deleted,"Books to be deleted");
             
         }
         if (is_branch_admin()){
@@ -37,6 +43,9 @@ class block_library extends block_list {
             
             $library_issue_url = new moodle_url('/blocks/library/library_issue.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
             $this->content->items[] = html_writer::link($library_issue_url,"Issue book to student");
+
+             $branch_add_books_url = new moodle_url('/blocks/library/branch_add_books.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
+            $this->content->items[] = html_writer::link($branch_add_books_url,"Library Books add for Branch");
 
             //$pay_fine_url = new moodle_url('/blocks/library/student_fine.php', array('blockid' => $this->instance->id,'courseid'=>$COURSE->id));
             //$this->content->items[] = html_writer::link($pay_fine_url,"Click to pay book fine");

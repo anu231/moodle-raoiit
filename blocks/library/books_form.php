@@ -429,3 +429,115 @@ class pay_delete_form extends moodleform {
 }
 
 // Pay Delete form //
+
+class branch_add_books_form extends moodleform {
+    function definition(){
+        $mform =& $this->_form;
+        $mform->addElement('text', 'name', 'Book Name','required');
+        $mform->setType('name', PARAM_TEXT);
+  
+        $mform->addElement('text', 'volume', get_string('volume', 'block_library'));
+        $mform->setDefault('volume',0);
+        $mform->setType('volume', PARAM_INT); 
+        $options = array(
+            'Physics' => 'Physics',
+            'Chemistry' => 'Chemistry',
+            'Maths' => 'Maths',
+            'Biology' => 'Biology',
+            'General' => 'General'
+        );
+        $select = $mform->addElement('select', 'subject', 'Subjects', $options,'required');
+        $mform->addElement('text', 'publisher', get_string('publisher', 'block_library'),'required');
+        $mform->setType('publisher', PARAM_TEXT);
+        $mform->addElement('text', 'author', get_string('author', 'block_library'),'required');
+        $mform->setType('author', PARAM_TEXT);
+        $mform->addElement('text', 'price', get_string('price', 'block_library'),'required');
+        $mform->setType('price', PARAM_INT);
+        $mform->addElement('text', 'barcode', get_string('barcode', 'block_library'),'required','maxlength="13"');
+        $mform->setType('barcode', PARAM_INT);
+        $mform->addElement('text', 'branch', get_string('branch', 'block_library'));
+        $mform->setDefault('branch',get_user_center());
+        $mform->addElement('date_selector', 'purchasedate', 'Purchase Date');
+        $mform->addElement('date_selector', 'branchissuedate', 'Branch Issue Date');
+        $options = array('-2' => 'Pending for Approval');
+        $select = $mform->addElement('select', 'status', get_string('status', 'block_library'), $options);
+        $select->setSelected('-2');
+        $buttonarray=array();
+        $buttonarray[] = $mform->createElement('submit', 'submit', "Add Book");
+        $buttonarray[] = $mform->createElement('cancel');
+        $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
+    }
+
+    function validation($data, $files){
+        $errors = array();
+        global $DB, $USER,$CFG;
+        /*
+        $book = $DB->get_records('lib_bookmaster', array("status"=>1));
+        foreach($book as $result)
+        {
+             $bookid=$result->bookid;
+             $bookname=$result->name;
+             $bookbarcode=$result->barcode;
+        }
+        if($bookid == $data['bookid']){
+            $errors['bookid'] = 'Book is Already present in database';
+        }
+        if($bookbarcode == $data['barcode']){
+            $errors['barcode'] = 'Book Barcode is Already present in database';
+        }
+        if($bookname == $data['name']){
+            $errors['name'] = 'Book Name is Already present in database';
+        }
+        if ($data['price'] != is_numeric($data['price'])){
+            $errors['price'] = 'Please enter numeric value';    
+        }
+       */
+        return $errors;
+    }
+}
+
+class approval_books_form extends moodleform {
+    function definition(){
+       
+        $mform =& $this->_form;
+        $mform->addElement('hidden', 'id','Book Id');
+        $mform->setType('id', PARAM_INT);
+        $mform->setDefault('id',$this->_customdata['id']);
+        $mform->addElement('static', 'static_bookname', 'Book Name',
+        $this->_customdata['name']);
+        $mform->addElement('static', 'static_subject', 'Subject',
+        $this->_customdata['subject']);
+        $mform->addElement('static', 'static_branch_code', 'Branch Code',
+        $this->_customdata['branch']);
+        $mform->addElement('text', 'bookid', 'Book Code','required');
+        $mform->setType('bookid', PARAM_TEXT);
+        $mform->setDefault('bookid',$this->_customdata['branch'].strtoupper(substr($this->_customdata['subject'], 0, 1)));
+        $mform->addElement('static', 'static_publisher', 'Publisher',
+        $this->_customdata['publisher']);
+        $mform->addElement('static', 'static_author', 'Author',
+        $this->_customdata['author']);
+        $mform->addElement('static', 'static_price', 'Price',
+        $this->_customdata['price']);
+        $buttonarray=array();
+        $buttonarray[] = $mform->createElement('submit', 'submit', "Submit For Approval");
+        $buttonarray[] = $mform->createElement('cancel');
+        $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
+    }
+}
+
+// Book deleted Form
+
+class book_deleted_form extends moodleform {
+    function definition(){
+        $mform =& $this->_form;
+        $mform->addElement('hidden', 'id','book Id');
+        $mform->setType('id', PARAM_INT);
+        $mform->setDefault('id',$this->_customdata['id']);
+        $mform->addElement('textarea', 'remark', 'Remark', 'wrap="virtual" rows="10" cols="50",required');
+        $mform->setType('remark', PARAM_RAW);
+        $buttonarray=array();
+        $buttonarray[] = $mform->createElement('submit', 'submit', "Submit");
+        $buttonarray[] = $mform->createElement('cancel');
+        $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
+    }
+}

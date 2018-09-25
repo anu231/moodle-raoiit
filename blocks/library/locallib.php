@@ -46,8 +46,16 @@ function get_instance(){
 
 function get_centers_book(){
     global $DB;
-    $get_books = $DB->get_records('lib_bookmaster', array("status"=>1,"branch"=>get_user_center(),"is_scanned"=>0));
-    return $get_books;
+    //$get_books = $DB->get_records('lib_bookmaster', array("status"=>1,"branch"=>get_user_center(),"is_scanned"=>0));
+    //return $get_books;
+
+
+    $get_books = <<<SQL
+    select DISTINCT bookid,id,name from {lib_bookmaster}  where status = 1 AND branch =? AND is_scanned = 0 ORDER BY bookid DESC
+SQL;
+   $get_books_records = $DB->get_records_sql($get_books,array(get_user_center()));
+   //var_dump($get_books_records);
+   return $get_books_records;
 }
 
 

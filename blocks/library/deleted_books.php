@@ -9,7 +9,7 @@ $PAGE->set_heading('Delete Books');
 global $USER, $DB;
 //$context = context_course::instance($CFG->branchadmin_courseid);
 echo $OUTPUT->header();
-if(is_siteadmin()){
+if(is_siteadmin() || is_secondary_user()){
     $center_id = get_user_center($USER->id);
     $book_id = required_param('id',PARAM_INT);
     $bookrecords = $DB->get_record('lib_bookmaster', array('id'=>$book_id));

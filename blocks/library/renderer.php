@@ -125,7 +125,7 @@ class view_available_books implements renderable, templatable {
               bm.name as name, bm.subject as subject,bm.publisher as publisher, bm.volume as volume, bm.author as author, bm.price as price, bm.remark as book_remark,
               issue_rec.student_username as student, issue_rec.id as issue_id, issue_rec.issue_date as issue_date, issue_rec.return_date as return_date
        from {lib_bookmaster} as bm left outer join (select * from {lib_issue_record} where status=0) as issue_rec on bm.id=issue_rec.bookid
-       where bm.branch=? AND bm.status =1 GROUP BY bm.bookid ORDER BY book_id ASC
+       where bm.branch=? AND bm.status =1 AND bm.is_scanned=1 GROUP BY bm.bookid ORDER BY book_id ASC
 SQL;
        $book_records = $DB->get_records_sql($book_records_sql, array($center_id));
        

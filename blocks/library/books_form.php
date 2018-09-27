@@ -455,7 +455,7 @@ class branch_add_books_form extends moodleform {
         $mform->setType('price', PARAM_INT);
         $mform->addElement('text', 'barcode', get_string('barcode', 'block_library'),'','maxlength="13"');
         $mform->setType('barcode', PARAM_INT);
-        $mform->addElement('text', 'branch', get_string('branch', 'block_library'));
+        $mform->addElement('static', 'branch', get_string('branch', 'block_library'));
         $mform->setDefault('branch',get_user_center());
         $mform->addElement('date_selector', 'purchasedate', 'Purchase Date');
         $mform->addElement('date_selector', 'branchissuedate', 'Branch Issue Date');

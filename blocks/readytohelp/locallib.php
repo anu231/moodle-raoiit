@@ -333,7 +333,7 @@ function notify_student($resp) {
     return TRUE;
 }
 
-function send_grievance_notification_admin($data){
+function send_grievance_notification_admin($data, $gid){
     global $CFG;
     $grievance_categories = get_grievance_categories();
     $category = $grievance_categories[$data->category];
@@ -347,13 +347,16 @@ function send_grievance_notification_admin($data){
     Descirption - $data->description<br>
 EOT;
     //send_sendgrid_email('New Grievance By - '.$data->username, $email_text, $CFG->grievance_admin_emails, 'edumate-noreply@raoiit.com','Edumate-Ready To Help');
+    $hash = sha1($gid.$CFG->custom_salt.'admin');
+    $replyurl =  $CFG->wwwroot."/blocks/readytohelp/view.php?gid=$gid&deptid=15&reply=1&email=admin&hash=$hash#id_body";
+
     $task = new block_readytohelp_emailnotification();
     $task->set_custom_data(array(
         'email' => $CFG->grievance_admin_emails,
         'type' => 'admin-notification',
         'subject' => $data->username,
         'description' => $email_text,
-        'replyurl' => 'Not Provided'
+        'replyurl' => $replyurl
     ));
     if( !$taskid = \core\task\manager::queue_adhoc_task($task) ) {
         return FALSE;

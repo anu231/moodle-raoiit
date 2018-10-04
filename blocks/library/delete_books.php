@@ -9,7 +9,11 @@ $PAGE->set_url('/blocks/library/delete_books.php');
 $PAGE->set_heading('Books to be deleted');
 $output = $PAGE->get_renderer('block_library');
 echo $output->header();
+<<<<<<< HEAD
 if (is_siteadmin() || is_secondary_user()){                                                                                                                                                           
+=======
+if(is_siteadmin() || is_secondary_user()){                                                                                                                                                               
+>>>>>>> 679663b51403bea1058719016c1ae6bfc9e204ee
     $renderable = new view_all_delete_books();
     echo $output->render($renderable);
 }else {

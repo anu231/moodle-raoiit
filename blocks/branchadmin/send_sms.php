@@ -40,8 +40,8 @@ if ($batch == null){
             //send to all the students of the batch
             $students_temp = convert_std_to_array(get_students_by_batch($sms_form_data->batch));
             $students = Array();
-            foreach($students_temp as $stud){
-                $students[] = explode(' ',$stud)[0];
+            foreach($students_temp as $uid=>$stud){
+                $students[] = $uid;
             }
         }else {
             $students = $sms_form_data->students;

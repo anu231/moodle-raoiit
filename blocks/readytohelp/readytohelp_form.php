@@ -25,6 +25,15 @@ class readytohelp_create_form extends moodleform{
         $mform->addElement('hidden', 'courseid');
         $mform->setType('courseid', PARAM_INT);
         $this->add_action_buttons();
+    }
+    
+    function validation($data, $files){
+        $errors = array();
+        global $USER;
+        if ($USER->auth != 'db'){
+            $errors['description'] = 'Only students registered in our courses with valid roll numbers can raise grievances';
+        }
+        return $errors;
     }   
 }
 

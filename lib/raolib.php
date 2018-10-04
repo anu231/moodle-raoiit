@@ -19,10 +19,10 @@ function send_sendgrid_email($subject, $content, $receipients, $from_email, $fro
     echo $response->statusCode();
 }
 
-function convert_std_to_array($tl){
+function convert_std_to_array($tl,$fname='name'){
     $ts_arr = Array();
     foreach($tl as $t){
-        $ts_arr[$t->id] = $t->name;
+        $ts_arr[$t->id] = $t->$fname;
     }
     return $ts_arr;
 }

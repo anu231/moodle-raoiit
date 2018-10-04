@@ -354,12 +354,12 @@ SQL;
                 $g->edescription = strlen($g->edescription) >=120 ? substr($g->edescription, 0, 120).'...' : $g->edescription;  // Culled to 120 chars
                 $g->username = $g->username;
                 if ($g->centerid != 0){
-                    $g->centre = $centre_map[$g->centerid]->name;    
+                    $g->centre = $centre_map[$g->centerid];    
                 } else{
                     $g->centre = 'None';
                 }
                 if ($g->ttbatchid != 0){
-                    $g->ttbatch = $batch_map[$g->ttbatchid]->name;
+                    $g->ttbatch = $batch_map[$g->ttbatchid];
                 } else{
                     $g->ttbatch = 'None';
                 }

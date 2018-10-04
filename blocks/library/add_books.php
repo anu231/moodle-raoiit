@@ -4,7 +4,7 @@ require_once('books_form.php');
 require_once('locallib.php');
 //require_once('fetch_book_info.php');
 $PAGE->set_url('/blocks/library/add_books.php');
-if (is_siteadmin()){
+if (is_siteadmin() || is_secondary_user()){
     $PAGE->set_pagelayout('standard');
     $PAGE->set_title('Add New Book in Library');
     $PAGE->set_heading('Add New Book in Library');
@@ -23,8 +23,8 @@ if (is_siteadmin()){
         $book_record->price   = $data->price;
         $book_record->barcode    = $data->barcode;
         $book_record->branch    = $data->branch;
-        $book_record->purchasedate    = $data->purchasedate;
-        $book_record->branchissuedate    = $data->branchissuedate;
+        $book_record->purchasedate    =  date('Y-m-d',$data->purchasedate);
+        $book_record->branchissuedate    = date('Y-m-d',$data->branchissuedate);
         $book_record->issued    = 0;
         $book_record->remark    = "Available";
         $book_record->status    = $data->status;

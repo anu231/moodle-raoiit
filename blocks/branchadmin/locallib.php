@@ -1,9 +1,7 @@
 <?php
-
 require_once(__DIR__.'/../../config.php');
 require_once(__DIR__.'/../timetable/locallib.php');
-
-
+//require_once('../../vendor/autoload.php');
 function get_centers(){
     global $DB;
     $centers = $DB->get_records('branchadmin_centre_info',array('status'=>1));
@@ -108,6 +106,9 @@ function fetch_numbers_for_userid($userid){
 }
 
 function sendSMS(&$s_mobile, &$s_text){
+        if ($s_mobile == '' || $s_text == ''){
+            return False;
+        }
         //initialize the request variable
         $success = '';
         $error = '';
@@ -153,24 +154,24 @@ function sendSMS(&$s_mobile, &$s_text){
         }
         if (strlen(trim($responseary[1])) != 0)	// errors
         {
-            $this->error .= "Invalid/DND Numbers: " . trim($responseary[1]);
+            //$this->error .= "Invalid/DND Numbers: " . trim($responseary[1]);
             return false;
         }
     }
 
-    function get_user_center_batch_analysis($userid, $link){
-        /*
-        assumes the connection to analysis db has already been made
-        */
-        $sql = 'select centre, ttbatchid from userinfo where userid='.$userid;
-        $res = $link->query($sql);
-        if(!$res){
-            return False;
-        }
-        $row = $res->fetch_assoc();
-        if(!$row){return False;}
-        else {return $row;}
+function get_user_center_batch_analysis($userid, $link){
+    /*
+    assumes the connection to analysis db has already been made
+    */
+    $sql = 'select centre, ttbatchid from userinfo where userid='.$userid;
+    $res = $link->query($sql);
+    if(!$res){
+        return False;
     }
+    $row = $res->fetch_assoc();
+    if(!$row){return False;}
+    else {return $row;}
+}
     
 function load_field_records_edumate($table_name){
     global $DB;
@@ -263,3 +264,77 @@ SQL;
 }
 
 /********************************************************************************************/
+function get_course_list(){
+global $DB;
+$query = "SELECT id, fullname, shortname from {course}";
+$courselist = $DB->get_records_sql($query);
+return $courselist;
+}
+
+function convert_std_to_array_centername($tl){
+    $ts_arr = Array();
+    foreach($tl as $t){
+        $ts_arr[$t->id] = $t->id." - ".$t->fullname;
+    }
+    return $ts_arr;
+}
+
+function notification_filter($filters){
+    global $DB;
+    $courses = implode(',',$filters['courses']);
+    $field_map = Array('mobile'=>Array('12','14','16'),'email'=>Array('13','15','17'));
+    //$emails = Array();
+    //$mobiles = Array();
+    $student_data = Array();
+    $SQL = <<<EOT
+select ui.id, enroldata.userid as userid, enroldata.email as email, enroldata.username, ui.data as data,ui.fieldid as fieldid from
+        (select ue.userid as userid, uinfo.email as email, uinfo.username as username
+            from mdl_user_enrolments as ue join
+            (select id, courseid from mdl_enrol where courseid in ($courses)) as e
+            join mdl_user as uinfo on e.id=ue.enrolid and uinfo.id=ue.userid) as enroldata
+join mdl_user_info_data as ui
+on enroldata.userid=ui.userid
+where ui.fieldid in (12,13,14,15,16,17) order by enroldata.userid
+EOT;
+    $user_data = $DB->get_records_sql($SQL);
+    $prev_user = null;
+    foreach($user_data as $u){
+        //echo "$u->data <br>";
+        if ($prev_user == null || $prev_user != $u->userid){
+            $student_data[$u->userid] = Array('email'=>Array($u->email),'mobile'=>Array(),'username'=>$u->username);
+            $prev_user = $u->userid;
+        }
+        if ($u->data == ''){
+            continue;
+        }
+        if (in_array($u->fieldid, $field_map['email']) && !in_array($u->data, $student_data[$u->userid]['email'])){
+            array_push($student_data[$u->userid]['email'], $u->data);
+            //var_dump($student_data);
+        } else if (in_array($u->fieldid, $field_map['mobile']) && !in_array($u->data, $student_data[$u->userid]['email'])){
+            array_push($student_data[$u->userid]['mobile'], $u->data);
+        }
+    }
+    return $student_data;
+}
+
+function sendEmail($from, $to_email, $cc_email, $subject, $content){
+    global $CFG;
+    //var_dump($cc_email);
+    $sg = new SendGrid($CFG->sg_apikey);
+    $from = new SendGrid\Email("Edumate", $from);
+    $to = new SendGrid\Email('',$to_email);
+    //$to = new SendGrid\Email('','anu231@gmail.com');
+    $mail_content = new SendGrid\Content("text/html",$content);
+    $mail = new SendGrid\Mail($from, $subject, $to, $mail_content);
+    //add cc
+    if (count($cc_email) != 0){
+        for ($i=0; $i<count($cc_email); $i++){
+            echo $cc_email[$i];
+            $mail->personalization[0]->addCc(new SendGrid\Email('',$cc_email[$i]));
+            //$mail->personalization[0]->addCc(new SendGrid\Email('','abhishek.pawar@raoiit.com'));
+            //break;
+        }
+    }
+    $response = $sg->client->mail()->send()->post($mail);
+    return $response->statusCode();
+}

@@ -54,6 +54,11 @@ class block_branchadmin_renderer extends plugin_renderer_base {
         $data['user_list'] = $page->export_for_template($this);
         return $this->render_from_template('block_branchadmin/student_list', $data);
     }
+    public function render_branchttreg($page){
+        $data = array();
+        $data['branchttreg'] = $page->export_for_template($this);
+        return $this->render_from_template('block_branchadmin/ttbranchregister', $data);
+    }
 }
 
 
@@ -296,5 +301,18 @@ SQL;
         //get all the students with the same center
         $data = $this->get_students_by_batch();
         return $data;                                                                                                               
+    }
+}
+
+//
+
+class branchttreg implements renderable, templatable {
+    private function get_branchttreg(){
+        global $USER, $DB;
+        //return $result;
+     }
+    public function export_for_template(renderer_base $output){
+        $data = $this->get_branchttreg();
+        return $data;
     }
 }

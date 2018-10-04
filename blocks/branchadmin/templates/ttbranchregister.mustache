@@ -1,0 +1,47 @@
+ 
+<div>
+    <h3><center>View Branch Timetable Register</center></h3>
+        <table class="view_student_list_table_td_th view_student_list_table">
+               <tbody>
+                    <tr>
+                    <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Date</th>
+                    <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">From</th>
+                    <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">To</th>
+                    <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Batch</th>
+                    <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">faculty</th>
+                    <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Lecture / Topic</th>
+                    <th class="view_student_list_th view_student_list_table_td_th" style="background:#21409a; color:#fff;">Action</th>
+                    </tr>
+        {{#branchttreg}}
+                    <tr class="view_student_list_table_td_th ">
+                    <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px; text-align:center;">{{username}}</td>
+                    <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{firstname}} {{lastname}}</td>
+                    <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{email}}</td>
+                    <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{data}}</td>
+                    <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{data}}</td>
+                    <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{data}}</td>
+                    <td class="view_student_list_th view_student_list_table_td_th" style="padding:3px;text-align:center;">{{data}}</td>
+                    </tr>
+        {{/branchttreg}}
+
+        {{^branchttreg}}
+                    <tr>
+                        <td class="view_student_list_th view_student_list_table_td_td" colspan="7" style="padding:5px; text-align:center;">There are no record found</td>
+                    </tr>
+        {{/branchttreg}}
+     
+                </tbody>
+        </table>
+</div>
+<style>
+    .view_student_list_table_td_th {
+        border: 1px solid #ddd;
+    }
+    .view_student_list_table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .view_student_list_th:hover  {
+        height: 10px;    border: 1px solid #ddd; background:#eaedef; font-weight:bold;
+    }
+</style>

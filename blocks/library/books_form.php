@@ -381,7 +381,6 @@ class add_barcode_form extends moodleform {
         $mform->addElement('text', 'book_barcode', "barcode for the book",'maxlength="13",required');
         $mform->setType('book_barcode', PARAM_INT);
         $this->add_action_buttons(true,'Add Barcode');
-        
     }
     function validation($data, $files){
         $errors = array();
@@ -455,7 +454,7 @@ class branch_add_books_form extends moodleform {
         $mform->setType('price', PARAM_INT);
         $mform->addElement('text', 'barcode', get_string('barcode', 'block_library'),'required','maxlength="13"');
         $mform->setType('barcode', PARAM_INT);
-        $mform->addElement('text', 'branch', get_string('branch', 'block_library'));
+        $mform->addElement('static', 'branch', get_string('branch', 'block_library'));
         $mform->setDefault('branch',get_user_center());
         $mform->addElement('date_selector', 'purchasedate', 'Purchase Date');
         $mform->addElement('date_selector', 'branchissuedate', 'Branch Issue Date');
@@ -471,6 +470,10 @@ class branch_add_books_form extends moodleform {
     function validation($data, $files){
         $errors = array();
         global $DB, $USER,$CFG;
+        if (is_numeric($data['price'])){
+            $errors['price'] = 'Price is only numerical value';
+        }
+       
         /*
         $book = $DB->get_records('lib_bookmaster', array("status"=>1));
         foreach($book as $result)
@@ -522,6 +525,34 @@ class approval_books_form extends moodleform {
         $buttonarray[] = $mform->createElement('submit', 'submit', "Submit For Approval");
         $buttonarray[] = $mform->createElement('cancel');
         $mform->addGroup($buttonarray, 'buttonar', '', ' ', false);
+    }
+    function validation($data, $files){
+        $errors = array();
+        global $DB, $USER,$CFG;
+        //echo $bookid_count = strlen($data['bookid']);
+        //exit;
+        /*
+        $book = $DB->get_records('lib_bookmaster', array("status"=>1));
+        foreach($book as $result)
+        {
+             $bookid=$result->bookid;
+             $bookname=$result->name;
+             $bookbarcode=$result->barcode;
+        }
+        if($bookid == $data['bookid']){
+            $errors['bookid'] = 'Book is Already present in database';
+        }
+        if($bookbarcode == $data['barcode']){
+            $errors['barcode'] = 'Book Barcode is Already present in database';
+        }
+        if($bookname == $data['name']){
+            $errors['name'] = 'Book Name is Already present in database';
+        }
+        if ($data['price'] != is_numeric($data['price'])){
+            $errors['price'] = 'Please enter numeric value';    
+        }
+       */
+        return $errors;
     }
 }
 

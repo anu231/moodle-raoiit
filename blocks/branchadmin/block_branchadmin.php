@@ -18,11 +18,13 @@ class block_branchadmin extends block_list {
         $student_birthday = new moodle_url('/blocks/branchadmin/todays_birthday.php', array('blockid' => $this->instance->id));
         $branch_timetable_url = new moodle_url('/blocks/branchadmin/branch_timetable.php', array('blockid' => $this->instance->id));
         $sms_url = new moodle_url('/blocks/branchadmin/send_sms.php', array('blockid' => $this->instance->id));
+        $branchttregister = new moodle_url('/blocks/branchadmin/branch_register.php', array('blockid' => $this->instance->id));
         $this->content->items[0] = html_writer::link($student_view_url,"View Branch Students");
         $this->content->items[1] = html_writer::link($branch_timetable_url,"View Branch Timetable");
         //$this->content->items[1] = html_writer::link($sms_url,"Send SMS to students");
         $this->content->items[2] = html_writer::link($student_attendance,"Mark Student Absent");
         $this->content->items[3] = html_writer::link($student_birthday,"Today's Birthday at Center");
+        $this->content->items[4] = html_writer::link($branchttregister,"Branch Timetable Register");
         return $this->content;
     }
 

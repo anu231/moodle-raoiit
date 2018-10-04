@@ -105,7 +105,6 @@ function fetch_numbers_for_userids($userid_list){
 
 function fetch_numbers_for_userid($userid){
     global $DB;
-    
 }
 
 function sendSMS(&$s_mobile, &$s_text){

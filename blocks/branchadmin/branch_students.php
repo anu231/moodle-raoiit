@@ -1,16 +1,18 @@
 <?php
+
 require_once('../../config.php');
 require_once('renderer.php');
 require_once('locallib.php');
-require_once("$CFG->libdir/raolib.php");
+require_once("$CFG->dirroot/blocks/library/locallib.php");
 require_login();
 global $DB, $USER, $CFG, $PAGE;
-$PAGE->set_url('/blocks/library/delete_books.php');
-$PAGE->set_heading('Books to be deleted');
-$output = $PAGE->get_renderer('block_library');
+$PAGE->set_url('/blocks/branchadmin/branch_students.php');
+$PAGE->set_pagelayout('standard');
+$PAGE->set_heading('Branch Students');
+$output = $PAGE->get_renderer('block_branchadmin');
 echo $output->header();
-if (is_siteadmin() || is_secondary_user()){                                                                                                                                                           
-    $renderable = new view_all_delete_books();
+if(is_branch_admin()){
+    $renderable = new branch_students();
     echo $output->render($renderable);
 }else {
     $firstname=$USER->firstname;

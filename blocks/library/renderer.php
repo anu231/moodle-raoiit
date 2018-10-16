@@ -430,7 +430,7 @@ class view_pending_books implements renderable, templatable {
         $sql = <<<SQL
         select  book.id,book.name,book.subject,book.volume,book.publisher,book.author,book.price,book.barcode,book.branch,book.purchasedate,book.branchissuedate,book.issued,rcenters.name as rcentername
         from {lib_bookmaster} as book join {raomanager_centers} as rcenters
-        on rcenters.id=book.branch where book.status = -2 and book.is_scanned = 0 ORDER BY rcentername, book.subject ASC;
+        on rcenters.id=book.branch where book.status = -2 and book.is_scanned = 0 ORDER BY rcentername, rcentername ASC;
 SQL;
         $records = $DB->get_records_sql($sql);
         //

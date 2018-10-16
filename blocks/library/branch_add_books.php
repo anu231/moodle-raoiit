@@ -30,7 +30,7 @@ if (is_branch_admin()){
         $book_record->is_scanned = 0;
         $book_record->id = $DB->insert_record('lib_bookmaster', $book_record, $returnid=true) ; 
         echo html_writer::div('New Book has been successfully added');
-        echo $OUTPUT->continue_button($CFG->wwwroot.'/blocks/library/add_books.php');
+        echo $OUTPUT->continue_button($CFG->wwwroot.'/blocks/library/branch_add_books.php');
     } else {
         $mform->display();
     }

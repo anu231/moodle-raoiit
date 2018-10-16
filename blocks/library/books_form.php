@@ -470,31 +470,13 @@ class branch_add_books_form extends moodleform {
     function validation($data, $files){
         $errors = array();
         global $DB, $USER,$CFG;
-        if (is_numeric($data['price'])){
+        if (!is_numeric($data['price'])){
+            echo $data['price'];
             $errors['price'] = 'Price is only numerical value';
         }
+        
        
-        /*
-        $book = $DB->get_records('lib_bookmaster', array("status"=>1));
-        foreach($book as $result)
-        {
-             $bookid=$result->bookid;
-             $bookname=$result->name;
-             $bookbarcode=$result->barcode;
-        }
-        if($bookid == $data['bookid']){
-            $errors['bookid'] = 'Book is Already present in database';
-        }
-        if($bookbarcode == $data['barcode']){
-            $errors['barcode'] = 'Book Barcode is Already present in database';
-        }
-        if($bookname == $data['name']){
-            $errors['name'] = 'Book Name is Already present in database';
-        }
-        if ($data['price'] != is_numeric($data['price'])){
-            $errors['price'] = 'Please enter numeric value';    
-        }
-       */
+       
         return $errors;
     }
 }
@@ -514,7 +496,7 @@ class approval_books_form extends moodleform {
         $this->_customdata['branch']);
         $mform->addElement('text', 'bookid', 'Book Code','required');
         $mform->setType('bookid', PARAM_TEXT);
-        $mform->setDefault('bookid',$this->_customdata['branch'].strtoupper(substr($this->_customdata['subject'], 0, 1)));
+        $mform->setDefault('bookid',$this->_customdata['branch']);
         $mform->addElement('static', 'static_publisher', 'Publisher',
         $this->_customdata['publisher']);
         $mform->addElement('static', 'static_author', 'Author',
@@ -528,30 +510,16 @@ class approval_books_form extends moodleform {
     }
     function validation($data, $files){
         $errors = array();
-        global $DB, $USER,$CFG;
-        //echo $bookid_count = strlen($data['bookid']);
-        //exit;
-        /*
-        $book = $DB->get_records('lib_bookmaster', array("status"=>1));
+        global $DB;
+        $book = $DB->get_records('lib_bookmaster',array());
         foreach($book as $result)
         {
-             $bookid=$result->bookid;
-             $bookname=$result->name;
-             $bookbarcode=$result->barcode;
+            $bookid = $result->bookid;
+            if($bookid == $data['bookid']){
+                $errors['bookid'] = 'Book Code is Already present in database';
+            }
         }
-        if($bookid == $data['bookid']){
-            $errors['bookid'] = 'Book is Already present in database';
-        }
-        if($bookbarcode == $data['barcode']){
-            $errors['barcode'] = 'Book Barcode is Already present in database';
-        }
-        if($bookname == $data['name']){
-            $errors['name'] = 'Book Name is Already present in database';
-        }
-        if ($data['price'] != is_numeric($data['price'])){
-            $errors['price'] = 'Please enter numeric value';    
-        }
-       */
+        
         return $errors;
     }
 }

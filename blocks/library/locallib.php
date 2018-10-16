@@ -45,7 +45,8 @@ function get_instance(){
 }*/
 
 function get_centers_book(){
-    global $DB;
+    global $DB, $CFG;
+    require_once("$CFG->dirroot/blocks/branchadmin/locallib.php");
     $get_books = <<<SQL
     select DISTINCT bookid,id,name from {lib_bookmaster}  where status = 1 AND branch =? AND is_scanned = 0 ORDER BY bookid DESC
 SQL;
@@ -69,4 +70,28 @@ function is_secondary_user(){
     } else {
         return False;
     }
+}
+
+function get_currently_issued_books(){
+    global $USER, $DB;
+    $query = <<<SQL
+    select bm.id, bm.bookid, bm.name, bm.subject, ir.issue_date, ir.return_date 
+    from {lib_bookmaster} as bm join {lib_issue_record} as ir
+    on bm.id = ir.bookid
+    where ir.student_username = ? and ir.status=0
+SQL;
+    $issued = $DB->get_records_sql($query, array($USER->username));
+    return $issued;
+}
+
+function get_issue_history(){
+    global $USER, $DB;
+        $query = <<<SQL
+    select bm.id, bm.bookid, bm.name, bm.subject, ir.issue_date, ir.return_date 
+    from {lib_bookmaster} as bm join {lib_issue_record} as ir
+    on bm.id = ir.bookid
+    where ir.student_username = ? and ir.status=1
+SQL;
+    $issued = $DB->get_records_sql($query, array($USER->username));
+    return $issued;
 }

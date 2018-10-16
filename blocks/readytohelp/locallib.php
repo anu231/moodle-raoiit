@@ -333,8 +333,9 @@ function notify_student($resp) {
     return TRUE;
 }
 
-function send_grievance_notification_admin($data, $gid){
-    global $CFG;
+function send_grievance_notification_admin($gid){
+    global $CFG, $DB;
+    $data = $DB->get_record('grievance_entries', array('id'=>$gid));
     $grievance_categories = get_grievance_categories();
     $category = $grievance_categories[$data->category];
     $userinfo = get_basic_student_info($data->username);
@@ -347,8 +348,8 @@ function send_grievance_notification_admin($data, $gid){
     Descirption - $data->description<br>
 EOT;
     //send_sendgrid_email('New Grievance By - '.$data->username, $email_text, $CFG->grievance_admin_emails, 'edumate-noreply@raoiit.com','Edumate-Ready To Help');
-    $hash = sha1($gid.$CFG->custom_salt.'admin');
-    $replyurl =  $CFG->wwwroot."/blocks/readytohelp/view.php?gid=$gid&deptid=15&reply=1&email=admin&hash=$hash#id_body";
+    $hash = sha1($data->id.$CFG->custom_salt.'admin');
+    $replyurl =  $CFG->wwwroot."/blocks/readytohelp/view.php?gid=$data->id&deptid=15&reply=1&email=admin&hash=$hash#id_body";
 
     $task = new block_readytohelp_emailnotification();
     $task->set_custom_data(array(

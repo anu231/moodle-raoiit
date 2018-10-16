@@ -116,6 +116,28 @@ function paper_get_request($url) {
     }
 }
 
+function get_testing_portal_token(){
+    global $USER, $CFG;
+    $post = [
+        'username' => $USER->username,
+        'auth_id' => $CFG->django_auth,
+    ];
+
+    $ch = curl_init($CFG->django_server.'api-auth-token/');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    // execute!
+    $response = curl_exec($ch);
+    // close the connection, release resources used
+    curl_close($ch);
+    if ($response == '0' || $response == '-1'){
+        return -1;
+    } else {
+        return $response;
+    }
+}
+
 function get_performance($username, $pid){
     global $CFG;
     $url = $CFG->django_server."student/spr?auth=v1Bdyp&username=$username&pid=$pid";

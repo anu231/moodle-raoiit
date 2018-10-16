@@ -13,4 +13,6 @@ $date = required_param('date', PARAM_TEXT);
 $ret = array();
 $ret['students'] = get_students_by_batch($batch);
 $ret['lectures'] = get_timetable($date, $date, null, $batch);
+//var_dump($ret['lectures'][0]);
 echo json_encode($ret);
+//echo json_last_error_msg();

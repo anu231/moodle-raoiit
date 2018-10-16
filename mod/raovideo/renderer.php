@@ -17,14 +17,7 @@ class view_raovideo implements renderable, templatable {
    
     private function get_raovideo(){
         global $USER, $DB,$CFG;
-        $this->vid_id;
-        $get_videos = $DB->get_record('raovideo',array("id"=>$this->vid_id));
-        $get_videos_array = array('url'=>get_akamai_token($get_videos->url));
-         /*foreach($get_videos as $video){
-             $get_videos_array[] = $video;
-         }*/
-         //var_dump($get_videos_array);
-         return $get_videos_array;
+        return array('url'=>get_video_akamai($this->vid_id));
     }
 
     public function export_for_template(renderer_base $output){

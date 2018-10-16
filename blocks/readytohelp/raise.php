@@ -35,7 +35,7 @@ if ($grievance_form->is_cancelled()) {
         //redirect to list of grievances
         $view_url = new moodle_url('/blocks/readytohelp/list.php');
         //send email to admin about the grievance
-        send_grievance_notification_admin($data, $gid);
+        send_grievance_notification_admin($gid);
         redirect($view_url);
     } else {
         print_error('inserterror', 'block_readytohelp');

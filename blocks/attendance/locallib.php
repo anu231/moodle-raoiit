@@ -6,9 +6,9 @@ function get_attendance_records($start_date, $end_date, $user='self'){
     global $USER;
     global $CFG;
     if ($user == 'self'){
-       echo $user = $USER->username;
+       $user = $USER->username;
     }
-      $user = $USER->username;
+    $user = $USER->username;
     $ch = curl_init();
     $a="http://biometric.raoiit.com:8081/attendance/biometric-test.php?";
     $url = $a.'username='.$user.'&startdate='.$start_date.'&enddate='.$end_date;

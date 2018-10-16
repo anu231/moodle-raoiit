@@ -10,7 +10,6 @@
                 <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="name field for moodle instances (moodle requirement)"/>
                 <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Moodle requirement"/>
                 <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Moodle requirement"/>
-                <FIELD NAME="videoid" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="name field for moodle instances"/>
                 <FIELD NAME="videoname" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="name field for moodle instances"/>
                 <FIELD NAME="url" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Akamai URL for the video"/>
                 <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="Course raobooklet activity belongs to"/>

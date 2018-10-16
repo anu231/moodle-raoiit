@@ -69,4 +69,50 @@ class mod_raobooklet_external extends external_api {
     public static function list_booklet_returns() {
         return new external_value(PARAM_TEXT, 'List of booklets availbale in the specified course');
     }
+
+    public static function info_booklet_parameters() {
+        return new external_function_parameters(
+                array('id' => new external_value(PARAM_INT, 'Booklet ID', VALUE_REQUIRED))
+        );
+    }
+    /**
+     * Returns welcome message
+     * @return string welcome message
+     */
+    public static function info_booklet($bookletid) {
+        global $USER, $DB;
+        //Parameter validation
+        //REQUIRED
+        $params = self::validate_parameters(self::list_booklet_parameters(),
+                array('courseid' => $courseid));
+        //Context validation
+        //OPTIONAL but in most web service it should present
+        $context = get_context_instance(CONTEXT_USER, $USER->id);
+        self::validate_context($context);
+        //Capability checking
+        //OPTIONAL but in most web service it should present
+        /*if (!has_capability('moodle/user:viewdetails', $context)) {
+            throw new moodle_exception('cannotviewprofile');
+        }*/
+        //check if user is enrolled in the specified course
+        $context = context_course::instance($courseid, IGNORE_MISSING);
+        try {
+            self::validate_context($context);
+        } catch (Exception $e) {
+            $exceptionparam = new stdClass();
+            $exceptionparam->message = $e->getMessage();
+            $exceptionparam->courseid = $course->id;
+            throw new moodle_exception('errorcoursecontextnotvalid', 'webservice', '', $exceptionparam);
+        }
+        //fetch all booklets in the specified course
+        $booklet_records = $DB->get_records('raobooklet',array());
+        return json_encode((array)$booklet_records) ;
+    }
+    /**
+     * Returns description of method result value
+     * @return external_description
+     */
+    public static function info_booklet_returns() {
+        return new external_value(PARAM_TEXT, 'List of booklets availbale in the specified course');
+    }
 }

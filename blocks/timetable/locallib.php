@@ -20,6 +20,9 @@ function x_week_range(&$start_date, &$end_date, $date) {
     $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
     $start_date = date('Y-m-d', $start);
     $end_date = date('Y-m-d', strtotime('next sunday', $start));
+    if (date('w',$ts)==6){
+        $end_date = date('Y-m-d',strtotime('next sunday',strtotime($end_date)));
+    }
 }
 
 function connect_analysis_db(){
@@ -209,7 +212,7 @@ function get_week_start_end_dates(){
 function get_week_timetable(){
     global $USER;
     $dates = get_week_start_end_dates();
-    return get_timetable($dates['start_date'],$dates['end_date'],$USER->username);
+    return get_timetable($dates['start_date'],$dates['end_date'],$USER);
 }
 
 

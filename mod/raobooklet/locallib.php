@@ -27,3 +27,22 @@ function list_booklets_select(){
     $booklets = $DB->get_records_menu('raobooklet_info', null, $sort='', $fields='bookletid, name');
     return $booklets;
 }
+
+function get_booklet_info($bookletid){
+    global $CFG;
+    $response_json = array(
+        'status' => '', 
+        'page_cnt' => 0
+    );
+    $path = "$CFG->dataroot/raobooklets/".$bookletid.'/';
+    $images = glob($path.'*');
+    if( count($images) == 0 ){
+        $response_json['status'] = 'noImageError';
+        return $response_json;
+    }
+    else {
+        $response_json['page_cnt'] = count($images);
+        $response_json['status'] = 'ok';
+        return $response_json;
+    }
+}

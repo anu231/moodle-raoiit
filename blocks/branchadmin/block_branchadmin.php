@@ -23,8 +23,9 @@ class block_branchadmin extends block_list {
         $this->content->items[0] = html_writer::link($student_view_url,"View Branch Students");
         $this->content->items[1] = html_writer::link($branch_timetable_url,"View Branch Timetable");
         $this->content->items[2] = html_writer::link($student_attendance,"Mark Student Absent");
-        $this->content->items[3] = html_writer::link($student_birthday,"Today's Birthday at Center");
-        $this->content->items[4] = html_writer::link($branchttregister,"Branch Timetable Register");
+        $this->content->items[3] = html_writer::link($sms_url,"Send SMS to student");
+        $this->content->items[4] = html_writer::link($student_birthday,"Today's Birthday at Center");
+        $this->content->items[5] = html_writer::link($branchttregister,"Branch Timetable Register");
         return $this->content;
     }
 

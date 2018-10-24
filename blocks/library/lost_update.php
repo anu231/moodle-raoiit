@@ -1,5 +1,7 @@
 <?php
-
+/*
+    This page contains list of lost books  //
+*/
 require_once('../../config.php');
 require_once('renderer.php');
 require_once('locallib.php');
@@ -10,10 +12,10 @@ $PAGE->set_url('/blocks/library/lost_update.php');
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading('View all lost books');
 $output = $PAGE->get_renderer('block_library');
-echo $output->header();
+echo $output->header(); 
 if(is_branch_admin()){
-    $renderable = new view_all_lost_books();
-    echo $output->render($renderable);
+    $renderable = new view_all_lost_books();  // get renderer  view_all_lost_books class from renderer.php
+    echo $output->render($renderable); // Renderer output from rendering template
 }else {
     $firstname=$USER->firstname;
     $lastname= $USER->lastname;

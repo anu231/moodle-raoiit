@@ -9,17 +9,16 @@ require_login();
 global $DB, $USER, $CFG, $PAGE;
 
 
-$PAGE->set_url('/blocks/branchadmin/view_students.php', array('id' => $COURSE->id));
-$PAGE->set_pagelayout('standard');
+$PAGE->set_url('/blocks/branchadmin/view_students.php', array('id' => $COURSE->id)); // course id //
+$PAGE->set_pagelayout('standard'); // Set standard Layout
 $PAGE->set_heading('View Branch Students');
 
 $output = $PAGE->get_renderer('block_branchadmin');
 $renderable = new branch_batches('student_batchwise.php?id=');
 
 echo $output->header();
-echo $output->render($renderable);
-
-$mform = new branchadmin_info_form();
+echo $output->render($renderable); // get renderable  branch_batches in renderer.php //
+$mform = new branchadmin_info_form(); // get branchadmin_info_form from info_form.php //
 
 if ($mform->is_cancelled()){
     redirect(new moodle_url('/'));

@@ -1,8 +1,11 @@
 <?php
+/*
+    This page provide functionality to issue or return library books to students // 
+*/
 require_once('../../config.php');
 require_once('locallib.php');
 require_once('books_form.php');
-require_once('../branchadmin/locallib.php');
+require_once('../branchadmin/locallib.php'); // locallib is required
 require_login();
 global $DB, $USER, $CFG, $PAGE;
 $PAGE->set_url('/blocks/library/library_issue.php');
@@ -14,53 +17,53 @@ $PAGE->requires->js('/blocks/library/js/barcode.js');
 $PAGE->set_pagelayout('standard');
 echo $OUTPUT->header();
 
-$active_course = get_config('library','manager_course');
-$active_course = $DB->get_record('course',array('shortname'=>$active_course));
+$active_course = get_config('library','manager_course'); // setting page for active course //
+$active_course = $DB->get_record('course',array('shortname'=>$active_course)); // get course shortname 
 $context = context_course::instance($active_course->id);
 
 if(is_enrolled($context, $USER->id, '', true)){
     $output = $PAGE->get_renderer('block_library');
     $heading="Issue or Return Book to Student";
     echo $OUTPUT->heading($heading);
-    $issue_form = new issue_book_form();
+    $issue_form = new issue_book_form(); // form came from books_form.php
     if ($data = $issue_form->get_data()){
-        $book = $DB->get_record('lib_bookmaster', array("status"=>1,"barcode"=>$data->book_barcode));
-        if( $data->status=='0'){
+        $book = $DB->get_record('lib_bookmaster', array("status"=>1,"barcode"=>$data->book_barcode)); // select query to get all books which status is 1 and barcode is input barcode
+        if( $data->status=='0'){ // if data status 0. Data status 0 means book issue
             $new_issue_bookstatus=1;
             $issue_record = new stdClass();  
-            $issue_record->bookid = $book->id;
+            $issue_record->bookid = $book->id; 
             $issue_record->branch_issuer = $USER->username;
             $issue_record->student_username = $data->student_username;
             $issue_record->issue_date = date('Y-m-d');
             $issue_record->branch_id = get_user_center();
             $issue_record->status = 0;
             $issue_record->return_date = compute_return_date($issue_record->issue_date);
-            $DB->insert_record('lib_issue_record', $issue_record) ;
-            $book->issued = 1;
+            $DB->insert_record('lib_issue_record', $issue_record) ; // insert book record in issue table
+            $book->issued = 1;  // book issue 1 means book is issued
             $DB->update_record('lib_bookmaster',$book);
             echo html_writer::div('Book successfully issued to '.$data->student_username);
             echo $OUTPUT->continue_button($CFG->wwwroot.'/blocks/library/library_issue.php?courseid='.$CFG->branchadmin_courseid);
 
-        }else if ($data->status == '1'){
-            $issue_record = $DB->get_record('lib_issue_record',array('student_username'=>$data->student_username,'bookid'=>$book->id, 'status'=>0));
+        }else if ($data->status == '1'){ // data status 1 means book return
+            $issue_record = $DB->get_record('lib_issue_record',array('student_username'=>$data->student_username,'bookid'=>$book->id, 'status'=>0)); // get record with help of book id
             $issue_record->status = 1;
-            $issue_record->return_date = date('Y-m-d');
-            $DB->update_record('lib_issue_record',$issue_record);
-            $book->issued = 0;
-            $DB->update_record('lib_bookmaster',$book);
+            $issue_record->return_date = date('Y-m-d'); // get return date
+            $DB->update_record('lib_issue_record',$issue_record); // update record with perticular id
+            $book->issued = 0; 
+            $DB->update_record('lib_bookmaster',$book); // update book record in lib bookmaster (Issue status change to 0)
             //echo "Book successfully Returned";
             echo html_writer::div('Book successfully Returned from '.$data->student_username);
             echo $OUTPUT->continue_button($CFG->wwwroot.'/blocks/library/library_issue.php?courseid='.$CFG->branchadmin_courseid);
             //check fine
-            $return_days = get_config('library','issuedays');
-            $fine_price = get_config('library','fine');
-            $date_diff = compute_date_diff($issue_record->issue_date, $issue_record->return_date);
-            if ($date_diff > $return_days){
+            $return_days = get_config('library','issuedays'); // Return date change via setting page
+            $fine_price = get_config('library','fine'); // fine price change via setting page
+            $date_diff = compute_date_diff($issue_record->issue_date, $issue_record->return_date); // compute_date_diff in locallib function
+            if ($date_diff > $return_days){ // if date diff count > return days
                 //compute the fine
-                $fine=(($date_diff-$return_days)*$fine_price);
+                $fine=(($date_diff-$return_days)*$fine_price); // calculate fine
                 //check if a fine record entry exists with this issue id
-                $fine_record = $DB->get_record('lib_fine_record', array('issue_id'=>$issue_record->id));
-                if ($fine_record == NULL){
+                $fine_record = $DB->get_record('lib_fine_record', array('issue_id'=>$issue_record->id)); // record with issue id
+                if ($fine_record == NULL){ // if fine record is equal to null
                     //create one
                     $fine_record = new stdClass();
                     $fine_record->issue_id = $issue_record->id;
@@ -73,13 +76,13 @@ if(is_enrolled($context, $USER->id, '', true)){
                     $fine_record->branch_id = $issue_record->branch_id;
                     $fine_record->paid = 0;
                     $fine_record->is_submitted = 0;
-                    $DB->insert_record('lib_fine_record', $fine_record) ;
+                    $DB->insert_record('lib_fine_record', $fine_record) ; // if fine record is null then insert 
                 } else {
                     //update the record
                     $fine_record->amount = $fine;
                     $fine_record->book_status = $issue_record->status;
                     $fine_record->return_date = date('Y-m-d');
-                    $DB->update_record('lib_fine_record', $fine_record);
+                    $DB->update_record('lib_fine_record', $fine_record); // if fine record is exist then update record in perticular id
                 }
                                 
                 echo "<br>";

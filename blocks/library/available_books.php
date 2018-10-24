@@ -1,5 +1,7 @@
 <?php
-
+/*
+    This page showing three sections available books issued books and lost books
+*/
 require_once('../../config.php');
 require_once('renderer.php');
 require_once('locallib.php');
@@ -21,13 +23,13 @@ if (is_branch_admin()){
     $branchadmin = true;
 }
 $output = $PAGE->get_renderer('block_library');
-$renderable = new view_available_books($branchadmin);
+$renderable = new view_available_books($branchadmin);  // get renderer  view_available_books class from renderer.php
 echo $output->header();
 
 $PAGE->set_url('/blocks/library/available_books.php');
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading('View Available books');
 
-echo $output->render($renderable);
+echo $output->render($renderable); // Renderer output from rendering template
 //echo $OUTPUT->render($renderable);
 echo $output->footer();

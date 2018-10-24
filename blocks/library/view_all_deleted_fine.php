@@ -1,5 +1,7 @@
 <?php
-
+/*
+    This page provide functionality to showing all deleted fines //
+*/
 require_once('../../config.php');
 require_once('renderer.php');
 require_once('locallib.php');
@@ -12,9 +14,9 @@ $PAGE->set_heading('View Deleted book Fine List');
 $output = $PAGE->get_renderer('block_library');
 echo $output->header();
 
-if (is_siteadmin() || is_secondary_user()){
-    $renderable = new view_all_deleted_fine();
-    echo $output->render($renderable);
+if (is_siteadmin() || is_secondary_user()){ // this page can only access siteadmin and secondary user
+    $renderable = new view_all_deleted_fine(); // get renderer  view_all_deleted_fine from renderer.php
+    echo $output->render($renderable); // Renderer output from rendering template
     echo $output->footer();
 } else {
     $firstname=$USER->firstname;

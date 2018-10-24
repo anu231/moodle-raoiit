@@ -12,12 +12,12 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_heading('batch Timetable');
 
 if (!is_branch_admin()){
-    echo 'ACCESS DENIED';
+    echo 'ACCESS DENIED'; // only branchadmin access this page //
 } else {
     //get batches for the branch
     $output = $PAGE->get_renderer('block_timetable');
-    $batch = required_param('id',PARAM_INT);
+    $batch = required_param('id',PARAM_INT); // Get Batch id //
     echo $output->header();
-    echo $output->week($batch);
+    echo $output->week($batch); // weekly timetable //
     echo $output->footer();
 }

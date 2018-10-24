@@ -1,5 +1,7 @@
 <?php
-
+/*
+    This page contains list of paid fine //
+*/
 require_once('../../config.php');
 require_once('renderer.php');
 require_once('locallib.php');
@@ -12,8 +14,8 @@ global $DB, $USER, $CFG, $PAGE;
 $output = $PAGE->get_renderer('block_library');
 echo $output->header();
 if(is_branch_admin()){
-    $renderable = new view_paid_fine();
-    echo $output->render($renderable);
+    $renderable = new view_paid_fine();  // get renderer fine view_paid_fine class from renderer.php
+    echo $output->render($renderable); // Renderer output from rendering template
 }
 else
 {

@@ -1,4 +1,8 @@
 <?php
+/*
+    This page provide functionality to add books only branchadmin
+*/
+
 require_once('../../config.php');
 require_once('books_form.php');
 require_once('locallib.php');
@@ -11,7 +15,7 @@ if (is_branch_admin()){
     echo $OUTPUT->header();
     $heading="Add New Book in Library";
     echo $OUTPUT->heading($heading);
-    $mform = new branch_add_books_form();
+    $mform = new branch_add_books_form(); // get display form 
     if ($data = $mform->get_data()){
         $book_record = new stdClass();
         $book_record->name    = $data->name;
@@ -28,7 +32,7 @@ if (is_branch_admin()){
         $book_record->remark    = "Book Uploaded from Branch";
         $book_record->status    = $data->status;
         $book_record->is_scanned = 0;
-        $book_record->id = $DB->insert_record('lib_bookmaster', $book_record, $returnid=true) ; 
+        $book_record->id = $DB->insert_record('lib_bookmaster', $book_record, $returnid=true) ;  // insert query for book add to library exclude book id
         echo html_writer::div('New Book has been successfully added');
         echo $OUTPUT->continue_button($CFG->wwwroot.'/blocks/library/branch_add_books.php');
     } else {

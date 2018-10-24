@@ -15,11 +15,10 @@ if (!is_branch_admin()){
     echo 'ACCESS DENIED';
 } else {
     //get batches for the branch
-    $output = $PAGE->get_renderer('block_branchadmin');
-    $renderable = new branch_batches('batch_timetable.php?id=');
-
+    $output = $PAGE->get_renderer('block_branchadmin'); // renderer branchadmin block 
+    $renderable = new branch_batches('batch_timetable.php?id='); // 
     echo $output->header();
     echo '<h3>Select Batch</h3>';
-    echo $output->render($renderable);
+    echo $output->render($renderable); 
     echo $output->footer();
 }

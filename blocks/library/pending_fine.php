@@ -1,5 +1,7 @@
 <?php
-
+/*
+    This page showing pending book fine of perticular center //
+*/
 require_once('../../config.php');
 require_once('renderer.php');
 require_once('locallib.php');
@@ -12,8 +14,8 @@ $PAGE->set_heading('View Available books');
 $output = $PAGE->get_renderer('block_library');
 echo $output->header();
 
-if (is_branch_admin()){
-    $renderable = new view_fine_books();
+if (is_branch_admin()){ // This page can only access to branchadmin and siteadmin
+    $renderable = new view_fine_books(); // rendering pending book fine list through templates
     echo $output->render($renderable);
     echo $output->footer();
 } else {

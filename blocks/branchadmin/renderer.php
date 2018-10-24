@@ -46,7 +46,7 @@ class block_branchadmin_renderer extends plugin_renderer_base {
     public function render_branch_batches($page){
         $data = array();
         $data['batches'] = $page->export_for_template($this);
-        return $this->render_from_template('block_branchadmin/branch_batches', $data);
+        return $this->render_from_template('block_branchadmin/branch_batches', $data); // showing data in branch_batches.mustache template
     }
 
     public function render_batch_students($page){
@@ -250,16 +250,15 @@ class branch_batches implements renderable, templatable {
     public function __construct($url){
         $this->target_url = $url;
     }
-
     private function get_batchlist(){
-        $batches = get_batches_branch(get_user_center());
+        $batches = get_batches_branch(get_user_center()); // get batch detail//
         $batchlist = array();
+        // $this->target_url.$b->analysis_id = student_batchwise.php?id= //
         foreach($batches as $b){
             array_push($batchlist, array('id'=>$b->analysis_id, 'name'=>$b->name, 'url'=>$this->target_url.$b->analysis_id));
         }
         return $batchlist;
     }
-
     public function export_for_template(renderer_base $output){
         return $this->get_batchlist();
     }

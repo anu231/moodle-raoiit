@@ -1,6 +1,7 @@
 <?php
 require_once('locallib.php');
 class block_timetable extends block_base {
+// subject shortcode
     private $subj_map = array(
 		'p'=>'physics',
 		'c'=>'chemistry',

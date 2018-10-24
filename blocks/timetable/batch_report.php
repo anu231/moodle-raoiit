@@ -12,5 +12,5 @@ $PAGE->set_pagelayout('standard');
 
 $output = $PAGE->get_renderer('block_timetable');
 echo $output->header();
-echo $output->batchreport();
+echo $output->batchreport(); // get detailed batch report
 echo $output->footer();

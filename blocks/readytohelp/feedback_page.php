@@ -2,7 +2,7 @@
 
 /**
  * feedback_page.php
- * Landing page for displaying feedback/messages to the mods and students
+ * Landing page for displaying feedback/messages to the mods and students.
  * @param action - key for the message to be displayed
  */
 require_once('../../config.php');
@@ -35,11 +35,8 @@ switch ($action) {
         break;
 }
 
-
-
-
 // Page setup
-$PAGE->set_url('/blocks/readytohelp/feedback_page.php', array('id' => $COURSE->id));
+$PAGE->set_url('/blocks/readytohelp/feedback_page.php', array('id' => $COURSE->id)); // url with course id
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Done');
 $PAGE->set_heading(get_string('addgrievance', 'block_readytohelp'));

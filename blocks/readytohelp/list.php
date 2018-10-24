@@ -19,5 +19,5 @@ $PAGE->set_heading(get_string('grievance_list', 'block_readytohelp'));
 $output = $PAGE->get_renderer('block_readytohelp');
 
 echo $output->header();
-echo $output->grievance_list($USER->username);
+echo $output->grievance_list($USER->username); // grievance_list as per username
 echo $output->footer();

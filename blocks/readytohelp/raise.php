@@ -7,7 +7,7 @@ global $DB, $OUTPUT, $PAGE, $USER;
  
 // Check for all required variables.
 //$courseid = required_param('courseid', PARAM_INT);
-$blockid = required_param('blockid', PARAM_INT); 
+$blockid = required_param('blockid', PARAM_INT); // required block id
  
 /*if (!$course = $DB->get_record('course', array('id' => $courseid))) {
     print_error('invalidcourse', 'block_simplehtml', $courseid);
@@ -23,14 +23,14 @@ $PAGE->set_url('/blocks/readytohelp/raise.php');
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading(get_string('addgrievance', 'block_readytohelp'));
 
-$grievance_form = new readytohelp_create_form();
+$grievance_form = new readytohelp_create_form(); // get form from the readytohelp_form.php 
 
 if ($grievance_form->is_cancelled()) {
-    redirect(new moodle_url('/blocks/readytohelp/list.php'));
+    redirect(new moodle_url('/blocks/readytohelp/list.php')); // redirect when cancel button click
 } else if (($data=$grievance_form->get_data())){
-    $data->username = $USER->username;
-    $data->timecreated = time();
-    $data->status='open';
+    $data->username = $USER->username; // roll number
+    $data->timecreated = time(); // current time
+    $data->status='open'; // initial status OPEN
     if (($gid=$DB->insert_record('grievance_entries',$data))){
         //redirect to list of grievances
         $view_url = new moodle_url('/blocks/readytohelp/list.php');

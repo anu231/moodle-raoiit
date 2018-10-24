@@ -22,7 +22,7 @@ class block_readytohelp_external extends external_api {
         //REQUIRED
         $params = self::validate_parameters(self::grievance_departments_parameters(),
                 array('welcomemessage' => $welcomemessage));
-        //Context validation
+        //Context validation 
         //OPTIONAL but in most web service it should present
         $context = get_context_instance(CONTEXT_USER, $USER->id);
         self::validate_context($context);

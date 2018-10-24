@@ -12,7 +12,7 @@ $PAGE->requires->js('/blocks/library/js/lib_barcode_add.js');
 echo $OUTPUT->header();
 $heading="Add Barcodes to Books in Library";
 echo $OUTPUT->heading($heading);
-if (is_branch_admin()){
+if (is_branch_admin() || is_secondary_user()){
     $mform = new add_barcode_form();
     if ($data = $mform->get_data()){
         $addBook_record = new stdClass();

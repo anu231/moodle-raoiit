@@ -28,10 +28,10 @@
 global $CFG, $USER, $PAGE;
 require_once('../../config.php');
 
-$PAGE->set_url('/mod/raobooklet/read.php');
+$PAGE->set_url('/mod/raobooklet/read.php'); // set url for viewing booklet
 
 try {
-    $bookletid = required_param('bookletid', PARAM_INT);
+    $bookletid = required_param('bookletid', PARAM_INT); // require booklet id
     $page = optional_param('page', -1, PARAM_INT); // page = 0 for metadata
     $get_items = optional_param('get_items', 0, PARAM_INT); // get the photoswipe items
 } catch (Exception $e) {
@@ -46,10 +46,10 @@ try {
 
 // Check login TODO CHECK COURSE LOGIN TOO
 // Send authError. The app opens a new tab for login
-if( ! isLoggedIn() ){
-    echo "Please Log in to view the contents";
-    $json['status'] = 'authError';
-    header('Content-Type: application/json');
+if( ! isLoggedIn() ){ // user login require
+    echo "Please Log in to view the contents"; // error message print
+    $json['status'] = 'authError'; 
+    header('Content-Type: applicatin/json'); // header type to be applicatin/json
     echo json_encode(require_login());
     die;
 }

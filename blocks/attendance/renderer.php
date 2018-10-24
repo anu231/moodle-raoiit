@@ -14,18 +14,18 @@ class block_attendance_renderer extends plugin_renderer_base {
     //public function render_biometric_records($)
     public function render_biometric_page($page){
         $data = $page->export_for_template($this);
-        return parent::render_from_template('block_attendance/biometric_page', $data);
+        return parent::render_from_template('block_attendance/biometric_page', $data); // rendering attendance data to biometric_page mustache template
     }
 }
 
 class biometric_page implements renderable, templatable {
     var $records = null;
     public function __construct($records){
-        $this->records = $records;
+        $this->records = $records; // get attendance records data from view_biometric.php page
     }
     public function export_for_template(renderer_base $output){
         $data = new stdClass();
-        $data->records = $this->records;
+        $data->records = $this->records; // data pass to templates
         return $data;
     }
 }

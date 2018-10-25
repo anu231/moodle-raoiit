@@ -36,7 +36,7 @@ function get_grievance_departments(){
     return $result;
 }
 
-// Manage departments assigned to grievance
+// Manage departments assigned to grievance 
 function grievance_assign_department($data, $gid){
     global $DB;
     $grievance = $DB->get_record('grievance_entries', array('id' => $gid));
@@ -44,7 +44,7 @@ function grievance_assign_department($data, $gid){
     $grievance->department = $deptstr;
     return $DB->update_record('grievance_entries', $grievance);
 }
-
+ 
 // Get email addresses of a dept
 // @return (array) Emails
 function get_dept_emails($deptid){
@@ -62,10 +62,10 @@ function get_dept_emails($deptid){
 }
 
 // Create a new grievance reply by a mod
-function create_grievance_reply($mform){
+function create_grievance_reply($mform){ 
     global $DB;
     $mform->timecreated = time();
-    if($mform->email == 'admin') // All admin replies are preapproved by the Lord!
+    if($mform->email == 'admin') // All admin replies are preapproved by the Lord
         $mform->approved = 1;
     if($rid = $DB->insert_record('grievance_responses', $mform)){
         return TRUE;
@@ -101,7 +101,7 @@ function set_response_approval($rid, $approval){
     }
 }
 
-// Open/close a grievance
+// Open/close a grievance 
 function set_grievance_status($gid, $status){
     global $DB;
     $resp = $DB->get_record('grievance_entries', array('id' => $gid));
@@ -113,14 +113,14 @@ function set_grievance_status($gid, $status){
         return;
     }
 }
-
+// add new dept in grievance portal
 function add_new_dept($name){
     global $DB;
     $dept = new stdclass;
     $dept->name = $name;
     return $DB->insert_record('grievance_departments', $dept);
 }
-
+// remove dept in grievance portal
 function remove_dept($deptid){
     global $DB;
     return $DB->delete_records('grievance_departments', array('id'=>$deptid));

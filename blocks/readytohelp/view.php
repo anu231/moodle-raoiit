@@ -9,7 +9,7 @@ require_once('readytohelp_form.php');
 require_once('locallib.php');
 
 // required_param('courseid', PARAM_INT);
-$gid = required_param('gid', PARAM_INT);
+$gid = required_param('gid', PARAM_INT); // grievence id
 $email = optional_param('email', null, PARAM_RAW); // Email id of responder. OR username of student
 $deptid = optional_param('deptid', 0, PARAM_INT); // Deptid is referred to as categoryid in renderer.php
 $hash = optional_param('hash', null, PARAM_RAW); // sha1(gid.'aybabtu'.email);

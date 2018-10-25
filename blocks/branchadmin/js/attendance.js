@@ -49,6 +49,9 @@ function set_student_list(students){
         $('<label />', {for:'mid-'+item.id, text:item.name}).appendTo(container);
         $('<br>').appendTo(container);
     })
+    //set the lecture name
+    var selected_lect = document.getElementById('id_schedule_id');
+    document.getElementById('id_lecture_name').value = selected_lect[selected_lect.selectedIndex].text;
 }
 
 $('#id_batch').change(function(){

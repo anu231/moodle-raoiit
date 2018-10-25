@@ -33,7 +33,7 @@ if (is_branch_admin()){
         $sms_task = new block_branchadmin_smsnotification();
         $sms_task->set_custom_data(array(
             'numbers'=>$stud_data, // mobile numbers
-            'message'=>'Dear Parent, Your child was absent in lecture today.', // SMS body messgae //
+            'message'=>"Dear Parent, Your child was absent in lecture - $data->lecture_name today.", // SMS body messgae //
             'sender'=>$USER->id // user id or roll number of the student
         ));
         //$sms_task->execute();

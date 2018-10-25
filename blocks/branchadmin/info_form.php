@@ -18,22 +18,12 @@ class attendance_form extends moodleform {
     function definition(){
         $mform =& $this->_form;
         $mform->addElement('date_selector', 'date', 'Date');
-        
         $options = convert_std_to_array(get_batches_for_user());
         $mform->addElement('select', 'batch', 'Select Batch', $options);
-   
         $mform->addElement('select', 'schedule_id', 'Select Lecture',array());
-        //$mform->setType('schedule_id', PARAM_INT);
-
-        //$mform->addElement('text', 'topic_id', 'Topic Id','required');
-        //$mform->setType('topic_id', PARAM_INT);
-    
         $mform->addElement('textarea', 'roll_numbers', '', 'wrap="virtual" rows="1" cols="50" style="visibility:hidden",required',array('style'=>'visibility:hidden;'));
-        //$mform->addElement('button', 'finalize_select_student', 'Finalize Absent Students', array('onclick'=>'finalize_students()'));
+        $mform->addElement('textarea','lecture_name','', 'wrap="virtual" rows="1" cols="50" style="visibility:hidden",required',array('style'=>'visibility:hidden;'));
         $roll_select = $mform->addElement('static','select_roll_numbers', 'Select Absent Students','');
-        //$options = array('0' => 'SMS NOT SENT','1' => 'SMS SENT');
-        //$select = $mform->addElement('select', 'sms_status','SMS Status', $options);
-        //$select->setSelected('0');
         $buttonarray=array();
         //$buttonarray[] = $mform->createElement('submit', 'submit', "Submit");
         $buttonarray[] = $mform->createElement('submit', 'submit', "Submit",array('onclick'=>'finalize_students()'));

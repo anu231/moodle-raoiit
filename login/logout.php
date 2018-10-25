@@ -31,7 +31,11 @@ $PAGE->set_context(context_system::instance());
 
 $sesskey = optional_param('sesskey', '__notpresent__', PARAM_RAW); // we want not null default to prevent required sesskey warning
 $login   = optional_param('loginpage', 0, PARAM_BOOL);
-
+global $CFG;
+$logout_script = <<<EOT
+<iframe style="height:0px;" src="$CFG->django_server/logout"></iframe>
+EOT;
+echo $logout_script;
 // can be overridden by auth plugins
 if ($login) {
     $redirect = get_login_url();
@@ -58,5 +62,4 @@ foreach($authsequence as $authname) {
     $authplugin = get_auth_plugin($authname);
     $authplugin->logoutpage_hook();
 }
-
 require_logout();

@@ -21,9 +21,9 @@ class block_readytohelp_renderer extends plugin_renderer_base {
         return $this->render_from_template('block_readytohelp/grievance_detail', $gd);
     }
 
-    public function grievance_responses(){
+    public function grievance_responses($startdate){
         // Mod management page
-        return $this->render(new grievance_responses());
+        return $this->render(new grievance_responses(null, $startdate));
     }
 
     public function render_grievance_responses(grievance_responses $gr){
@@ -248,11 +248,14 @@ class grievance_list implements renderable {
 
 // Grievance overview for mods
 class grievance_responses implements renderable {
-    public function __construct($username=null){
+    public function __construct($username=null,$startdate=null){
+        $this->startdate = $startdate;
+        if ($this->startdate==null){
+            $this->startdate = '2017-01-01';
+        }
         $results = $this->get_all_grievances();
         $this->grievances = $this->process_grievances($results);
         $this->message = $this->grievances ? '' : 'No responses found';
-        // echo var_dump($this->responses);
     }
 
     // Returns grievanceset iterable
@@ -296,6 +299,7 @@ class grievance_responses implements renderable {
         JOIN
             (SELECT userid as userid, data as data, fieldid as fieldid FROM mdl_user_info_data where fieldid = '$CFG->CENTER_FIELD_ID') as userinfo_c
             on user.id = userinfo_c.userid
+        where entry.timecreated > '$this->startdate'
         ORDER BY
             -response.timecreated
 SQL;
@@ -407,8 +411,9 @@ SQL;
             $ids = explode(',', $ids);
             $index = 1;
             foreach ($ids as $id) {
-                if($name = $deptmap[$id]) {
-                    $html .= $index.") ".$name."<br>";
+                //if($name = $deptmap[$id]) {
+                if (array_key_exists($id, $deptmap)){
+                    $html .= $index.") ".$deptmap[$id]."<br>";
                     $index++;
                 }
             }

@@ -84,3 +84,12 @@ class readytohelp_department_form extends moodleform{
         $this->add_action_buttons();
     }   
 }
+
+class readytohelp_startdate_form extends moodleform{
+    function definition(){
+        $mform =& $this->_form;
+        $mform->addElement('date_selector', 'sdate', 'Grievance Start Date');
+        $mform->setDefault('sdate','');
+        $this->add_action_buttons(false, 'Get Grievances Post Selected Date');
+    }
+}

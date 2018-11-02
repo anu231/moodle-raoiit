@@ -103,7 +103,13 @@ if( $message ) {
 if( $action == 'managermode'){
     echo $output->manage_departments();
 } else {
-    echo $output->grievance_responses();
+    $sform = new readytohelp_startdate_form();
+    $sform->display();
+    $sdate = null;
+    if (($data = $sform->get_data())) {
+        $sdate = $data->sdate;
+    }
+    echo $output->grievance_responses($sdate);
 }
 
 echo $output->footer();

@@ -276,7 +276,7 @@ class batch_students implements renderable, templatable {
         $sql = <<<SQL
         select u.* from {user} as u join {user_info_data} as ud join {user_info_field} as uif 
         ON u.id = ud.userid and ud.fieldid = uif.id
-        where uif.shortname = ? and  ud.data = ?
+        where uif.shortname = ? and  ud.data = ? and u.suspended = 0
 SQL;
         $users_by_batch = $DB->get_records_sql($sql,array('batch',$this->batch));
         $user_list = array(); 

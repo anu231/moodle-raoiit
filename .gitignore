@@ -16,8 +16,6 @@ composer.lock
 *behat*
 /config.php
 /lib/editor/tinymce/extra/tools/temp/
-/student_progress_report
-/student_progress_report/config.php
 composer.lock
 *~
 *.swp

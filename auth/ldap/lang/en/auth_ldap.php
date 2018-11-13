@@ -149,6 +149,7 @@ $string['start_tls'] = 'Use regular LDAP service (port 389) with TLS encryption'
 $string['start_tls_key'] = 'Use TLS';
 $string['updateremfail'] = 'Error updating LDAP record. Error code: {$a->errno}; Error string: {$a->errstring}<br/>Key ({$a->key}) - old moodle value: \'{$a->ouvalue}\' new value: \'{$a->nuvalue}\'';
 $string['updateremfailamb'] = 'Failed to update LDAP with ambiguous field {$a->key}; old moodle value: \'{$a->ouvalue}\', new value: \'{$a->nuvalue}\'';
+$string['updateremfailfield'] = 'Failed to update LDAP with non-existent field (\'{$a->ldapkey}\'). Key ({$a->key}) - old Moodle value: \'{$a->ouvalue}\' new value: \'{$a->nuvalue}\'';
 $string['updatepasserror'] = 'Error in user_update_password(). Error code: {$a->errno}; Error string: {$a->errstring}';
 $string['updatepasserrorexpire'] = 'Error in user_update_password() when reading password expiry time. Error code: {$a->errno}; Error string: {$a->errstring}';
 $string['updatepasserrorexpiregrace'] = 'Error in user_update_password() when modifying expirationtime and/or gracelogins. Error code: {$a->errno}; Error string: {$a->errstring}';
@@ -165,3 +166,4 @@ $string['useracctctrlerror'] = 'Error getting userAccountControl for {$a}';
 // Deprecated since Moodle 3.4.
 $string['auth_ldap_creators'] = 'List of groups or contexts whose members are allowed to create new courses. Separate multiple groups with \';\'. Usually something like \'cn=teachers,ou=staff,o=myorg\'';
 $string['auth_ldap_creators_key'] = 'Creators';
+$string['privacy:metadata'] = 'The LDAP server authentication plugin does not store any personal data.';

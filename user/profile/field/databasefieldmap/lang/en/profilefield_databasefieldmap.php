@@ -22,4 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Database field Map';
+defined('MOODLE_INTERNAL') || die();
+
+$plugin->version  = 2018061801;
+$plugin->requires = 2018050800;
+$plugin->component = 'quiz_overview';

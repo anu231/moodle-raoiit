@@ -2960,6 +2960,7 @@ class admin_setting_configselect extends admin_setting {
     public function __construct($name, $visiblename, $description, $defaultsetting, $choices) {
         // Look for optgroup and single options.
         if (is_array($choices)) {
+            $this->choices = [];
             foreach ($choices as $key => $val) {
                 if (is_array($val)) {
                     $this->optgroups[$key] = $val;
@@ -7969,9 +7970,7 @@ function admin_externalpage_setup($section, $extrabutton = '', array $extraurlpa
  * @return object admin_root object
  */
 function admin_get_root($reload=false, $requirefulltree=true) {
-    global $CFG, $DB, $OUTPUT;
-
-    static $ADMIN = NULL;
+    global $CFG, $DB, $OUTPUT, $ADMIN;
 
     if (is_null($ADMIN)) {
     // create the admin tree!

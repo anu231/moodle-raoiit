@@ -736,8 +736,8 @@ function get_module_metadata($course, $modnames, $sectionreturn = null) {
 
                     if (!empty($type->help)) {
                         $subtype->help = $type->help;
-                    } else if (get_string_manager()->string_exists('help' . $subtype->name, $modname)) {
-                        $subtype->help = get_string('help' . $subtype->name, $modname);
+                    } else if (get_string_manager()->string_exists('help' . $typename, $modname)) {
+                        $subtype->help = get_string('help' . $typename, $modname);
                     }
                     $subtype->link = new moodle_url($urlbase, array('add' => $modname, 'type' => $typename));
                     $subtype->name = $modname . ':' . $subtype->link;
@@ -1217,6 +1217,9 @@ function course_delete_module($cmid, $async = false) {
             $grade_item->delete('moddelete');
         }
     }
+
+    // Delete associated blogs and blog tag instances.
+    blog_remove_associations_for_module($modcontext->id);
 
     // Delete completion and availability data; it is better to do this even if the
     // features are not turned on, in case they were turned on previously (these will be
@@ -2988,6 +2991,8 @@ class course_request {
     public function approve() {
         global $CFG, $DB, $USER;
 
+        require_once($CFG->dirroot . '/backup/util/includes/restore_includes.php');
+
         $user = $DB->get_record('user', array('id' => $this->properties->requester, 'deleted'=>0), '*', MUST_EXIST);
 
         $courseconfig = get_config('moodlecourse');
@@ -3021,6 +3026,8 @@ class course_request {
         if ($courseconfig->courseenddateenabled) {
             $data->enddate        = usergetmidnight(time()) + $courseconfig->courseduration;
         }
+
+        list($data->fullname, $data->shortname) = restore_dbops::calculate_course_names(0, $data->fullname, $data->shortname);
 
         $course = create_course($data);
         $context = context_course::instance($course->id, MUST_EXIST);

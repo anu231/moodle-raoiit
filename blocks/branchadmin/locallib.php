@@ -287,7 +287,7 @@ function notification_filter($filters){
     //$mobiles = Array();
     $student_data = Array();
     $SQL = <<<EOT
-select ui.id, enroldata.userid as userid, enroldata.email as email, enroldata.username, ui.data as data,ui.fieldid as fieldid from
+select distinct ui.id, enroldata.userid as userid, enroldata.email as email, enroldata.username, ui.data as data,ui.fieldid as fieldid from
         (select ue.userid as userid, uinfo.email as email, uinfo.username as username
             from mdl_user_enrolments as ue join
             (select id, courseid from mdl_enrol where courseid in ($courses)) as e

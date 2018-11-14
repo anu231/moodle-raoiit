@@ -74,6 +74,11 @@ $('#id_date_day').change(function(){
     get_schedule_list(batch_id);
 });
 
+$('#id_schedule_id').change(function(){
+    var selected_lect = document.getElementById('id_schedule_id');
+    document.getElementById('id_lecture_name').value = selected_lect[selected_lect.selectedIndex].text;
+});
+
 $(document).ready(function(){
     //$("#id_roll_numbers").prop('disabled', true);
     get_schedule_list($('#id_batch').val());
